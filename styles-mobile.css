@@ -21,10 +21,42 @@ body {
     height: 8vh; /* Zmniejszenie wysokości sekcji header */
 }
 
+.logo-container {
+    position: relative;
+    display: inline-block;
+}
+
 .header .logo {
     width: 15vw; /* Zwiększenie szerokości ikony */
     height: auto;
     margin-bottom: 0;
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    z-index: 2;
+    filter: drop-shadow(0 4px 12px rgba(102, 126, 234, 0.4));
+    animation: logo-float-mobile 3s ease-in-out infinite;
+    cursor: pointer;
+}
+
+.header .logo:hover {
+    animation-play-state: paused;
+    transform: scale(1.1) rotate(360deg);
+    filter: drop-shadow(0 8px 20px rgba(102, 126, 234, 0.6));
+}
+
+.header .logo:active {
+    animation-play-state: paused;
+    transform: scale(0.95) rotate(360deg);
+    transition: all 0.2s ease;
+}
+
+@keyframes logo-float-mobile {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-6px);
+    }
 }
 
 .footer {
@@ -60,32 +92,46 @@ body {
     display: none;
     position: absolute;
     background-color: #fff;
-    box-shadow: 0 0.5em 1em rgba(0,0,0,0.1);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    border: 1px solid #e8e8e8;
+    border-radius: 12px;
     z-index: 1;
     right: 0;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    margin-top: 8px;
 }
 
 .dropdown-content a {
     color: #000;
-    padding: 0.5em 1em;
+    padding: 12px 20px;
     text-decoration: none;
     display: flex;
     align-items: center;
+    gap: 12px;
+    transition: all 0.2s ease;
+    font-weight: 500;
     font-size: 0.9em;
 }
 
 .dropdown-content a img {
-    margin-right: 0.5em;
-    width: 5vw;
-    height: auto;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
 }
 
 .dropdown-content a:hover {
-    background-color: #f1f1f1;
+    background-color: rgba(102, 126, 234, 0.1) !important;
+    color: #667eea !important;
 }
 
-.dropdown:hover .dropdown-content {
+.dropdown:hover .dropdown-content,
+.dropdown.active .dropdown-content {
     display: block;
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .dropdown:hover .dropbtn {

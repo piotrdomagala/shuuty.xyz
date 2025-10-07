@@ -8,12 +8,19 @@
     <link rel="stylesheet" href="styles-mobile.css" media="screen and (max-width: 768px)">
 </head>
 <body>
-    <div class="header" style="padding: 10px 20px; min-height: 80px;">
-        <img src="images/shuuty_icon.webp" alt="Shuuty Logo" class="logo" style="max-width: 95%; height: auto; object-fit: contain; max-height: 70px;">
+    <div class="header" style="padding: 15px 30px; min-height: 80px; background: #ffffff; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+        <div class="logo-container">
+            <img src="images/shuuty_icon.webp" alt="Shuuty Logo" class="logo">
+            <div class="logo-glow"></div>
+            <div class="logo-particles"></div>
+        </div>
         <div class="dropdown">
-            <button class="dropbtn" id="language-btn" style="border: 1px solid #e0e0e0; border-radius: 8px; padding: 8px 12px;">
-                <img id="language-icon" src="images/english_icon.png" alt="English"> 
+            <button class="dropbtn" id="language-btn" style="border: 1px solid #e0e0e0; border-radius: 12px; padding: 12px 20px; background: #ffffff; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(0,0,0,0.08); display: flex; align-items: center; gap: 8px; font-weight: 500; color: #2c3e50;">
+                <img id="language-icon" src="images/english_icon.png" alt="English" style="width: 20px; height: 20px; border-radius: 50%;"> 
                 <span id="current-language">English</span>
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style="margin-left: 4px; transition: transform 0.3s ease;">
+                    <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
             </button>
             <div class="dropdown-content">
                 <a href="#" data-lang="en">
@@ -53,12 +60,12 @@
             </div>
         </div>
     </div>
-    <footer class="footer">
-        <span id="footer-text">&copy; 2025 Shuuty. All rights reserved.</span>
-        <div class="footer-links">
-            <a href="documents/support.html" id="support-link">Support</a>
-            <a href="documents/privacy.html" id="privacy-link">Privacy</a>
-            <a href="documents/terms.html" id="terms-link">Terms</a>
+    <footer class="footer" style="background: #ffffff; padding: 25px 30px; border-top: 1px solid #e8e8e8; box-shadow: 0 -2px 4px rgba(0,0,0,0.05);">
+        <span id="footer-text" style="color: #5a6c7d; font-size: 0.9em; margin-bottom: 15px; display: block;">&copy; 2025 Shuuty. All rights reserved.</span>
+        <div class="footer-links" style="display: flex; justify-content: center; gap: 20px;">
+            <a href="documents/support.html" id="support-link" style="color: #5a6c7d; text-decoration: none; padding: 8px 16px; border-radius: 6px; transition: all 0.2s ease;">Support</a>
+            <a href="documents/privacy.html" id="privacy-link" style="color: #5a6c7d; text-decoration: none; padding: 8px 16px; border-radius: 6px; transition: all 0.2s ease;">Privacy</a>
+            <a href="documents/terms.html" id="terms-link" style="color: #5a6c7d; text-decoration: none; padding: 8px 16px; border-radius: 6px; transition: all 0.2s ease;">Terms</a>
         </div>
     </footer>
     <script>
@@ -116,13 +123,44 @@
                 setTextContent(id, langElements[lang][key]);
             }
         }
+        // Handle dropdown clicks
         document.querySelectorAll('.dropdown-content a').forEach(item => {
             item.addEventListener('click', function(event) {
                 event.preventDefault();
                 const lang = this.getAttribute('data-lang');
                 setCookie('lang', lang, 365);
                 applyLanguage(lang);
+                
+                // Hide dropdown after selection
+                const dropdown = document.querySelector('.dropdown');
+                dropdown.classList.remove('active');
             });
+        });
+
+        // Handle dropdown button click (for mobile)
+        document.getElementById('language-btn').addEventListener('click', function(event) {
+            event.preventDefault();
+            const dropdown = document.querySelector('.dropdown');
+            dropdown.classList.toggle('active');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.querySelector('.dropdown');
+            if (!dropdown.contains(event.target)) {
+                dropdown.classList.remove('active');
+            }
+        });
+
+        // Handle logo click for mobile
+        document.querySelector('.header .logo').addEventListener('click', function(event) {
+            event.preventDefault();
+            this.style.animationPlayState = 'paused';
+            this.style.transform = 'scale(1.1) rotate(360deg)';
+            setTimeout(() => {
+                this.style.transform = '';
+                this.style.animationPlayState = 'running';
+            }, 600);
         });
         applyLanguage(getCookie('lang'));
     });
