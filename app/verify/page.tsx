@@ -10,9 +10,17 @@ const IOS_STORE_URL = 'https://apps.apple.com/no/app/shuuty/id6670202422';
 
 type Status = 'loading' | 'redirecting' | 'fallback' | 'error';
 
+// Validate token format (alphanumeric and common URL-safe characters)
+function isValidToken(token: string | null): token is string {
+  if (!token) return false;
+  // Only allow alphanumeric, dash, underscore, and dot
+  return /^[a-zA-Z0-9._-]+$/.test(token) && token.length <= 500;
+}
+
 function VerifyContent() {
   const searchParams = useSearchParams();
-  const token = searchParams.get('token');
+  const rawToken = searchParams.get('token');
+  const token = isValidToken(rawToken) ? rawToken : null;
   const [status, setStatus] = useState<Status>('loading');
   const [countdown, setCountdown] = useState(3);
   const [showConfetti, setShowConfetti] = useState(false);
@@ -23,8 +31,8 @@ function VerifyContent() {
       return;
     }
 
-    // Try to open the app via deeplink
-    const deepLink = `shuuty://auth/verify?token=${token}`;
+    // Try to open the app via deeplink - token is validated above
+    const deepLink = `shuuty://auth/verify?token=${encodeURIComponent(token)}`;
     
     // Create a hidden iframe to attempt app opening without leaving the page
     const iframe = document.createElement('iframe');
@@ -64,7 +72,7 @@ function VerifyContent() {
 
   const handleOpenApp = useCallback(() => {
     if (token) {
-      window.location.href = `shuuty://auth/verify?token=${token}`;
+      window.location.href = `shuuty://auth/verify?token=${encodeURIComponent(token)}`;
     }
   }, [token]);
 
