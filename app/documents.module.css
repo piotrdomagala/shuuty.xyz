@@ -4,6 +4,7 @@
   min-height: 100vh;
   background: linear-gradient(180deg, #ffffff 0%, #f8f9fc 50%, #f0f2f7 100%);
   position: relative;
+  overflow-x: hidden;
 }
 
 .backgroundDecor {
@@ -113,6 +114,8 @@
   max-width: 900px;
   margin: 0 auto;
   padding: var(--space-2xl) var(--space-xl);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .contentCard {
@@ -123,6 +126,7 @@
   padding: var(--space-2xl);
   position: relative;
   overflow: hidden;
+  max-width: 100%;
 }
 
 .contentCard::before {
@@ -141,6 +145,8 @@
 .markdown {
   color: var(--color-text-primary);
   line-height: 1.8;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 .markdown h1 {
