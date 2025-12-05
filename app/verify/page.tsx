@@ -30,7 +30,7 @@ function VerifyContent() {
     document.body.appendChild(iframe);
 
     // Also try window.location for better compatibility
-    setTimeout(() => {
+    const redirectTimeout = setTimeout(() => {
       window.location.href = deepLink;
     }, 100);
 
@@ -50,6 +50,7 @@ function VerifyContent() {
 
     // Cleanup
     return () => {
+      clearTimeout(redirectTimeout);
       clearInterval(countdownInterval);
       if (iframe.parentNode) {
         iframe.parentNode.removeChild(iframe);
