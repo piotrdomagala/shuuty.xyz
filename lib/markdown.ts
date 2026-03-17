@@ -5,6 +5,9 @@
 
 // Allowed HTML tags for sanitization
 const ALLOWED_TAGS = ['h1', 'h2', 'h3', 'p', 'ul', 'ol', 'li', 'strong', 'em', 'a'];
+const HEADING_PATTERN = /^<h[1-3]>.*<\/h[1-3]>$/;
+const ORDERED_LIST_ITEM_PATTERN = /^\d+\.\s+(.*)$/;
+const BULLET_LIST_ITEM_PATTERN = /^-\s+(.*)$/;
 
 // Sanitize HTML string to prevent XSS
 function sanitizeHtml(html: string): string {
@@ -63,7 +66,7 @@ function sanitizeHtml(html: string): string {
  * Parse markdown text to sanitized HTML
  */
 export function parseMarkdown(markdown: string): string {
-  let html = markdown
+  const html = markdown
     // Escape HTML entities first
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
@@ -84,43 +87,79 @@ export function parseMarkdown(markdown: string): string {
         return `<a href="${safeUrl}" target="_blank" rel="noopener noreferrer">${text}</a>`;
       }
       return text;
-    })
-    // Numbered list items
-    .replace(/^\d+\. (.*)$/gm, '<li>$1</li>')
-    // Bullet list items
-    .replace(/^- (.*)$/gm, '<li>$1</li>');
+    });
 
-  // Wrap consecutive list items in ul
-  html = html.replace(/(<li>[\s\S]*?<\/li>)(?=\s*<li>|$)/g, (match) => {
-    return match;
-  });
-  
-  // Wrap orphan li tags in ul
-  html = html.replace(/(?<!<ul>)(<li>)/g, '<ul>$1');
-  html = html.replace(/(<\/li>)(?![\s\S]*?<li>)(?!<\/ul>)/g, '$1</ul>');
-  
-  // Clean up multiple ul tags
-  html = html.replace(/<\/ul>\s*<ul>/g, '');
+  const blocks: string[] = [];
+  const paragraphLines: string[] = [];
+  const listItems: string[] = [];
+  let listType: 'ul' | 'ol' | null = null;
 
-  // Split into paragraphs
-  const blocks = html.split(/\n\n+/);
-  html = blocks
-    .map(block => {
-      block = block.trim();
-      if (!block) return '';
-      if (block.startsWith('<h') || block.startsWith('<ul') || block.startsWith('<ol')) {
-        return block;
+  const flushParagraph = () => {
+    if (paragraphLines.length === 0) {
+      return;
+    }
+
+    blocks.push(`<p>${paragraphLines.join('<br>')}</p>`);
+    paragraphLines.length = 0;
+  };
+
+  const flushList = () => {
+    if (!listType || listItems.length === 0) {
+      return;
+    }
+
+    const items = listItems.map((item) => `<li>${item}</li>`).join('');
+    blocks.push(`<${listType}>${items}</${listType}>`);
+    listType = null;
+    listItems.length = 0;
+  };
+
+  for (const rawLine of html.split('\n')) {
+    const line = rawLine.trim();
+
+    if (!line) {
+      flushParagraph();
+      flushList();
+      continue;
+    }
+
+    if (HEADING_PATTERN.test(line)) {
+      flushParagraph();
+      flushList();
+      blocks.push(line);
+      continue;
+    }
+
+    const orderedListItem = line.match(ORDERED_LIST_ITEM_PATTERN);
+    if (orderedListItem) {
+      flushParagraph();
+      if (listType !== 'ol') {
+        flushList();
+        listType = 'ol';
       }
-      // Wrap text blocks in paragraphs
-      if (!block.startsWith('<p>')) {
-        return `<p>${block.replace(/\n/g, '<br>')}</p>`;
-      }
-      return block;
-    })
-    .filter(Boolean)
-    .join('\n');
+      listItems.push(orderedListItem[1]);
+      continue;
+    }
 
-  return sanitizeHtml(html);
+    const bulletListItem = line.match(BULLET_LIST_ITEM_PATTERN);
+    if (bulletListItem) {
+      flushParagraph();
+      if (listType !== 'ul') {
+        flushList();
+        listType = 'ul';
+      }
+      listItems.push(bulletListItem[1]);
+      continue;
+    }
+
+    flushList();
+    paragraphLines.push(line);
+  }
+
+  flushParagraph();
+  flushList();
+
+  return sanitizeHtml(blocks.join('\n'));
 }
 
 export default parseMarkdown;

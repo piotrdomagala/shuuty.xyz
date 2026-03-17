@@ -18,6 +18,7 @@ interface DocumentPageProps {
 
 const sharedTranslations = {
   en: {
+    languageSwitcher: 'Language',
     support: 'Support',
     privacy: 'Privacy',
     terms: 'Terms',
@@ -26,6 +27,7 @@ const sharedTranslations = {
     error: 'Error loading content. Please try again later.',
   },
   pl: {
+    languageSwitcher: 'Język',
     support: 'Wsparcie',
     privacy: 'Prywatność',
     terms: 'Regulamin',
@@ -34,6 +36,11 @@ const sharedTranslations = {
     error: 'Błąd ładowania treści. Spróbuj ponownie później.',
   },
 };
+
+const languageOptions: { code: Language; label: string }[] = [
+  { code: 'en', label: 'EN' },
+  { code: 'pl', label: 'PL' },
+];
 
 export default function DocumentPage({ titleEn, titlePl, fileEn, filePl }: DocumentPageProps) {
   const [language, setLanguage] = useState<Language>('en');
@@ -76,6 +83,11 @@ export default function DocumentPage({ titleEn, titlePl, fileEn, filePl }: Docum
     }
   }, [mounted, fetchContent]);
 
+  const handleLanguageChange = useCallback((nextLanguage: Language) => {
+    setLanguage(nextLanguage);
+    Cookies.set('lang', nextLanguage, { expires: 365 });
+  }, []);
+
   const t = sharedTranslations[language];
   const pageTitle = language === 'pl' ? titlePl : titleEn;
 
@@ -106,6 +118,25 @@ export default function DocumentPage({ titleEn, titlePl, fileEn, filePl }: Docum
               className={styles.logo}
             />
             <h1 className={styles.headerTitle}>{pageTitle}</h1>
+          </div>
+          <div
+            className={styles.languageSwitcher}
+            role="group"
+            aria-label={t.languageSwitcher}
+          >
+            {languageOptions.map((option) => (
+              <button
+                key={option.code}
+                type="button"
+                className={`${styles.languageButton} ${
+                  language === option.code ? styles.languageButtonActive : ''
+                }`}
+                onClick={() => handleLanguageChange(option.code)}
+                aria-pressed={language === option.code}
+              >
+                {option.label}
+              </button>
+            ))}
           </div>
         </div>
       </header>

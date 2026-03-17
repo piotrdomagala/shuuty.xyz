@@ -76,6 +76,8 @@ function VerifyContent() {
     return null;
   };
 
+  const storeUrl = getStoreUrl();
+
   return (
     <div className={styles.container}>
       <div className={styles.card}>
@@ -126,16 +128,16 @@ function VerifyContent() {
               Open Shuuty app
             </button>
 
-            {getStoreUrl() && (
+            {storeUrl ? (
               <a 
-                href={getStoreUrl() || '#'} 
+                href={storeUrl}
                 className={styles.storeLink}
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 Download app
               </a>
-            )}
+            ) : null}
 
             <p className={styles.helpText}>
               If you already have the app installed, click &quot;Open Shuuty app&quot;.

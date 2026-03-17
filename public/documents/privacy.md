@@ -68,11 +68,6 @@ Nasza Aplikacja jest przeznaczona do użytku wyłącznie przez użytkowników w 
 Szczegółowe informacje zostały zamieszczone w Polityce Cookies.
 
 ## 8. Poufność hasła użytkownika
-Po wybraniu przez użytkownika hasła umożliwiającego mu dostęp do niektórych części naszej Aplikacji, jest on odpowiedzialny za zachowanie tego hasła w tajemnicy. Shuuty wym
-## 7. Pliki cookie i technologie podobnego rodzaju
-Szczegółowe informacje dotyczące używania plików cookie i podobnych technologii zostały zamieszczone w naszej Polityce Cookies.
-
-## 8. Poufność hasła użytkownika
 Po wybraniu przez użytkownika hasła umożliwiającego mu dostęp do niektórych części naszej Aplikacji, jest on odpowiedzialny za zachowanie tego hasła w tajemnicy. Shuuty wymaga od użytkownika, aby nie udostępniał tego hasła żadnej innej osobie.
 
 ## 9. Linki do innych witryn internetowych i serwisów społecznościowych
