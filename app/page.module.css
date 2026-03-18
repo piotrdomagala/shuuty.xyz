@@ -94,7 +94,7 @@
   transition: opacity 0.2s;
 }
 .navLogo:hover { opacity: 0.85; }
-.navLogo img { border-radius: var(--r-sm); }
+.navLogo img { border-radius: 0; }
 .navLinks {
   display: flex;
   gap: var(--s-lg);
@@ -257,7 +257,7 @@
   z-index: -1;
 }
 .phoneFrame {
-  border-radius: 36px;
+  border-radius: 20px;
   overflow: hidden;
   box-shadow:
     0 40px 100px -20px rgba(0, 0, 0, 0.55),
@@ -273,7 +273,7 @@
   display: block;
   width: 280px;
   height: auto;
-  border-radius: 36px;
+  border-radius: 20px;
 }
 
 /* ── Store buttons ── */
@@ -689,8 +689,8 @@
   .showcasePhone .phoneImg { width: 200px; }
 
   .phoneImg { width: 220px; }
-  .phoneFrame { border-radius: 28px; }
-  .phoneImg { border-radius: 28px; }
+  .phoneFrame { border-radius: 16px; }
+  .phoneImg { border-radius: 16px; }
 
   .footerInner {
     flex-direction: column;

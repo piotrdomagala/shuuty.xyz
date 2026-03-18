@@ -113,7 +113,7 @@ export default function DocumentPage({ titleEn, titlePl, fileEn, filePl }: Docum
             <Image
               src="/images/shuuty_icon.webp"
               alt="Shuuty"
-              width={40}
+              width={86}
               height={40}
               className={styles.logo}
             />

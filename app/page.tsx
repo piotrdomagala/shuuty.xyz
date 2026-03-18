@@ -278,7 +278,7 @@ export default function Home() {
       <nav className={`${s.nav} ${scrolled ? s.navScrolled : ''}`}>
         <div className={s.navInner}>
           <a href="#" className={s.navLogo}>
-            <Image src="/images/shuuty_icon.webp" alt="Shuuty" width={36} height={36} priority />
+            <Image src="/images/shuuty_icon.webp" alt="Shuuty" width={100} height={46} priority />
           </a>
 
           <div className={s.navLinks}>
@@ -464,7 +464,7 @@ export default function Home() {
       <footer className={s.footer}>
         <div className={s.footerInner}>
           <div className={s.footerLeft}>
-            <Image src="/images/shuuty_icon.webp" alt="" width={24} height={24} className={s.footerIcon} />
+            <Image src="/images/shuuty_icon.webp" alt="" width={72} height={34} className={s.footerIcon} />
             <span className={s.footerCopy}>{c.footer}</span>
           </div>
           <nav className={s.footerLinks}>

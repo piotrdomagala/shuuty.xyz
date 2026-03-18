@@ -85,8 +85,8 @@ function VerifyContent() {
           <Image 
             src="/images/shuuty_icon.webp" 
             alt="Shuuty" 
-            width={72}
-            height={72}
+            width={150}
+            height={70}
             className={styles.logo}
             priority
           />
