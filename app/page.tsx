@@ -17,27 +17,27 @@ const t = {
       badge: 'Now on iOS & Android',
       h1_1: 'From idea',
       h1_2: 'to action.',
-      sub: 'Meet people who share your interests. Plan activities, delegate tasks, and make things happen — wherever you are.',
+      sub: 'Meet people nearby. Plan activities, delegate tasks, and turn conversations into real action — all in one app.',
     },
     features: {
       label: 'Features',
-      heading: 'Everything you need\nto connect',
+      heading: 'Everything you need to\nmeet, plan & act',
       items: [
         {
-          title: 'Tasks',
-          desc: 'Create, delegate, and track tasks with timers, checklists, voice input, and image galleries.',
+          title: 'Get things done',
+          desc: 'Delegate tasks, set timers, track progress — by voice, checklist, or photo.',
         },
         {
-          title: 'Meetings',
-          desc: 'Plan activities with the right people. Choose a topic, pick a place, set the time — done.',
+          title: 'Plan together',
+          desc: 'Pick a topic, choose a place, set the time. The right people show up.',
         },
         {
-          title: 'Groups',
-          desc: 'Create your own community. Manage shared tasks, plan meetings, chat, and coordinate — all in one place for your team or hobby circle.',
+          title: 'Build your crew',
+          desc: 'One space for your team or hobby circle — shared tasks, meetings, and chat.',
         },
         {
-          title: 'Map',
-          desc: 'Discover what\'s happening nearby. Find meetings and groups matched to your interests.',
+          title: 'Discover nearby',
+          desc: 'See what\'s happening around you. Find activities and people who share your interests.',
         },
       ],
     },
@@ -45,9 +45,9 @@ const t = {
       label: 'How it works',
       heading: 'Three steps.\nThat\'s it.',
       steps: [
-        { title: 'Pick your interests', desc: 'Choose from 1,000+ interests across sports, music, tech, food, travel, and many more categories.' },
+        { title: 'Pick your interests', desc: 'Choose from 1,000+ interests across sports, music, tech, food, travel, and more.' },
         { title: 'Find your people', desc: 'We match you with nearby activities and people who care about the same things.' },
-        { title: 'Take action', desc: 'Join a meeting, start a group, or delegate a task. Move from planning to doing.' },
+        { title: 'Make it happen', desc: 'Join a meeting, start a group, delegate a task. Ideas become plans. Plans become action.' },
       ],
     },
     showcase: {
@@ -60,7 +60,7 @@ const t = {
     },
     faq: {
       label: 'FAQ',
-      heading: 'You might be wondering',
+      heading: 'Questions, answered',
       items: [
         { q: 'Is Shuuty free?', a: 'Yes. The core experience is free. We offer optional Pro and Teams plans for power users who want more.' },
         { q: 'Who is it for?', a: 'Anyone who wants to organize activities, meet like-minded people, or manage shared tasks — from hobby groups to small teams.' },
@@ -86,27 +86,27 @@ const t = {
       badge: 'Teraz na iOS i Android',
       h1_1: 'Od pomysłu',
       h1_2: 'do działania.',
-      sub: 'Poznaj ludzi o podobnych zainteresowaniach. Planuj aktywności, deleguj zadania i realizuj pomysły — gdziekolwiek jesteś.',
+      sub: 'Poznaj ludzi w okolicy. Planuj aktywności, deleguj zadania i zamieniaj rozmowy w konkretne działanie — w jednej aplikacji.',
     },
     features: {
       label: 'Funkcje',
-      heading: 'Wszystko, czego\npotrzebujesz',
+      heading: 'Wszystko, czego potrzebujesz,\nby spotkać, planować i działać',
       items: [
         {
-          title: 'Zadania',
-          desc: 'Twórz, deleguj i śledź zadania z timerami, checklistami, głosem i galerią zdjęć.',
+          title: 'Realizuj zadania',
+          desc: 'Deleguj, ustawiaj timery, śledź postępy — głosem, checklistą lub zdjęciem.',
         },
         {
-          title: 'Spotkania',
-          desc: 'Planuj aktywności z właściwymi ludźmi. Wybierz temat, miejsce, czas — gotowe.',
+          title: 'Planuj wspólnie',
+          desc: 'Wybierz temat, miejsce i czas. Odpowiedni ludzie się pojawią.',
         },
         {
-          title: 'Grupy',
-          desc: 'Stwórz własną społeczność. Zarządzaj wspólnymi zadaniami, planuj spotkania, czatuj i koordynuj — wszystko w jednym miejscu.',
+          title: 'Zbuduj swoją ekipę',
+          desc: 'Jedno miejsce dla zespołu lub grupy hobby — wspólne zadania, spotkania i czat.',
         },
         {
-          title: 'Mapa',
-          desc: 'Odkryj, co dzieje się w okolicy. Znajdź spotkania dopasowane do Twoich zainteresowań.',
+          title: 'Odkrywaj w okolicy',
+          desc: 'Zobacz, co dzieje się wokół Ciebie. Znajdź aktywności i ludzi o podobnych zainteresowaniach.',
         },
       ],
     },
@@ -114,9 +114,9 @@ const t = {
       label: 'Jak to działa',
       heading: 'Trzy kroki.\nTo wszystko.',
       steps: [
-        { title: 'Wybierz zainteresowania', desc: 'Ponad 1000 zainteresowań w kategoriach: sport, muzyka, technologia, jedzenie, podróże i wiele więcej.' },
+        { title: 'Wybierz zainteresowania', desc: 'Ponad 1000 zainteresowań: sport, muzyka, technologia, jedzenie, podróże i więcej.' },
         { title: 'Znajdź ludzi', desc: 'Dopasujemy Cię do aktywności i osób w okolicy, które interesują się tym samym.' },
-        { title: 'Działaj', desc: 'Dołącz do spotkania, załóż grupę lub deleguj zadanie. Przejdź od planowania do działania.' },
+        { title: 'Zacznij działać', desc: 'Dołącz do spotkania, załóż grupę, deleguj zadanie. Pomysły stają się planami. Plany stają się działaniem.' },
       ],
     },
     showcase: {
@@ -129,7 +129,7 @@ const t = {
     },
     faq: {
       label: 'FAQ',
-      heading: 'Często zadawane pytania',
+      heading: 'Pytania i odpowiedzi',
       items: [
         { q: 'Czy Shuuty jest darmowe?', a: 'Tak. Podstawowe funkcje są darmowe. Oferujemy opcjonalne plany Pro i Teams dla zaawansowanych użytkowników.' },
         { q: 'Dla kogo jest Shuuty?', a: 'Dla każdego, kto chce organizować aktywności, poznawać podobnych ludzi lub zarządzać wspólnymi zadaniami.' },
@@ -328,8 +328,8 @@ export default function Home() {
               <Image
                 src="/images/image1.webp"
                 alt="Shuuty app screenshot"
-                width={300}
-                height={600}
+                width={340}
+                height={680}
                 priority
                 className={s.phoneImg}
               />
@@ -405,8 +405,8 @@ export default function Home() {
                   <Image
                     src={SCREENSHOTS[i]}
                     alt={item.title}
-                    width={260}
-                    height={520}
+                    width={320}
+                    height={640}
                     className={s.phoneImg}
                   />
                 </div>

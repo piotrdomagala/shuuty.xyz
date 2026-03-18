@@ -249,11 +249,11 @@
 }
 .phoneGlow {
   position: absolute;
-  width: 340px;
-  height: 340px;
+  width: 400px;
+  height: 400px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(var(--gold-rgb), 0.1) 0%, transparent 70%);
-  filter: blur(50px);
+  background: radial-gradient(circle, rgba(var(--gold-rgb), 0.12) 0%, transparent 70%);
+  filter: blur(60px);
   z-index: -1;
 }
 .phoneFrame {
@@ -271,7 +271,7 @@
 }
 .phoneImg {
   display: block;
-  width: 280px;
+  width: 320px;
   height: auto;
   border-radius: 20px;
 }
@@ -360,10 +360,11 @@
 .featCard {
   padding: var(--s-xl) var(--s-lg);
   background: var(--bg);
-  transition: background 0.3s;
+  transition: background 0.3s, box-shadow 0.3s;
 }
 .featCard:hover {
   background: var(--bg-raised);
+  box-shadow: inset 0 0 0 1px rgba(var(--gold-rgb), 0.08);
 }
 .featIconWrap {
   width: 36px;
@@ -438,7 +439,7 @@
 .showcaseRow {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--s-3xl);
+  gap: var(--s-2xl);
   align-items: center;
   padding: var(--s-3xl) 0;
 }
@@ -476,18 +477,18 @@
 }
 .showcasePhoneGlow {
   position: absolute;
-  width: 200px;
-  height: 200px;
+  width: 280px;
+  height: 280px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(var(--gold-rgb), 0.07) 0%, transparent 70%);
-  filter: blur(30px);
+  background: radial-gradient(circle, rgba(var(--gold-rgb), 0.08) 0%, transparent 70%);
+  filter: blur(40px);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: -1;
 }
 .showcasePhone .phoneImg {
-  width: 240px;
+  width: 300px;
   box-shadow:
     0 32px 80px -20px rgba(0, 0, 0, 0.5),
     0 0 0 1px rgba(255, 255, 255, 0.05);
@@ -686,9 +687,9 @@
   .stepsRow { grid-template-columns: 1fr; gap: var(--s-2xl); }
 
   .showcaseRow { padding: var(--s-2xl) 0; }
-  .showcasePhone .phoneImg { width: 200px; }
+  .showcasePhone .phoneImg { width: 240px; }
 
-  .phoneImg { width: 220px; }
+  .phoneImg { width: 260px; }
   .phoneFrame { border-radius: 16px; }
   .phoneImg { border-radius: 16px; }
 
