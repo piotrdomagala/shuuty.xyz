@@ -47,9 +47,13 @@ export const metadata: Metadata = {
       'Meet people who share your interests and plan your time like never before.',
   },
   icons: {
-    icon: '/images/shuuty_icon.webp',
-    apple: '/images/shuuty_icon.webp',
+    icon: [
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+    ],
+    apple: '/apple-touch-icon.png',
   },
+  manifest: '/site.webmanifest',
 };
 
 export const viewport: Viewport = {
