@@ -17,7 +17,7 @@ const t = {
       badge: 'Now on iOS & Android',
       h1_1: 'From idea',
       h1_2: 'to action.',
-      sub: 'Meet people nearby. Plan activities, delegate tasks, and turn conversations into real action — all in one app.',
+      sub: 'Meet like-minded people, organize meetings, create groups, and delegate tasks — all in one app.',
     },
     features: {
       label: 'Features',
@@ -86,7 +86,7 @@ const t = {
       badge: 'Teraz na iOS i Android',
       h1_1: 'Od pomysłu',
       h1_2: 'do działania.',
-      sub: 'Poznaj ludzi w okolicy. Planuj aktywności, deleguj zadania i zamieniaj rozmowy w konkretne działanie — w jednej aplikacji.',
+      sub: 'Poznawaj ludzi o podobnych pasjach, organizuj spotkania, twórz grupy i deleguj zadania — wszystko w jednej aplikacji.',
     },
     features: {
       label: 'Funkcje',

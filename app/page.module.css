@@ -236,9 +236,9 @@
 }
 .heroSub {
   font-size: 1.125rem;
-  line-height: 1.7;
+  line-height: 1.8;
   color: var(--text-secondary);
-  max-width: 420px;
+  max-width: 380px;
   margin-bottom: var(--s-xl);
 }
 .heroPhone {
@@ -640,7 +640,7 @@
     grid-template-columns: 1fr;
     text-align: center;
     padding-top: 120px;
-    gap: var(--s-2xl);
+    gap: var(--s-xl);
   }
   .heroContent { align-items: center; }
   .heroBadge { margin: 0 auto var(--s-xl); }
@@ -677,7 +677,15 @@
   .navCta { display: none; }
   .navRight { margin-left: auto; }
 
-  .hero { padding: 100px var(--s-md) var(--s-3xl); }
+  .navBadge { display: none; }
+  .heroBadge { display: none; }
+
+  .hero {
+    padding: 80px var(--s-md) var(--s-xl);
+    gap: var(--s-lg);
+    min-height: 100svh;
+    justify-content: center;
+  }
 
   .section { padding: var(--s-3xl) var(--s-md); }
   .sectionHeader { margin-bottom: var(--s-2xl); }
@@ -687,9 +695,10 @@
   .stepsRow { grid-template-columns: 1fr; gap: var(--s-2xl); }
 
   .showcaseRow { padding: var(--s-2xl) 0; }
-  .showcasePhone .phoneImg { width: 240px; }
+  .showcasePhone .phoneImg { width: 200px; }
 
-  .phoneImg { width: 260px; }
+  .phoneImg { width: 200px; }
+  .heroSub { font-size: 0.9375rem; }
   .phoneFrame { border-radius: 16px; }
   .phoneImg { border-radius: 16px; }
 
@@ -702,9 +711,11 @@
 }
 
 @media (max-width: 480px) {
-  .heroTitle { font-size: 2.5rem; }
-  .heroSub { font-size: 1rem; }
-  .storeBtn img { height: 42px; }
+  .heroTitle { font-size: 2.25rem; }
+  .heroSub { font-size: 0.875rem; }
+  .phoneImg { width: 170px; }
+  .showcasePhone .phoneImg { width: 170px; }
+  .storeBtn { padding: 8px 14px; }
   .sectionHeading { font-size: 1.5rem; }
   .stepN { font-size: 2.5rem; }
 }
