@@ -57,6 +57,8 @@
   display: flex;
   align-items: center;
   gap: var(--s-lg);
+  column-gap: var(--s-lg);
+  row-gap: var(--s-md);
 }
 
 .backButton {
@@ -87,13 +89,19 @@
 .headerInfo {
   display: flex;
   align-items: center;
-  gap: var(--s-md);
+  gap: var(--s-lg);
   min-width: 0;
+  flex: 1;
 }
 
+/* Asset ~86×40 — never force a square or the mark looks squeezed */
 .logo {
-  width: 36px;
-  height: 36px;
+  height: 40px;
+  width: auto;
+  max-width: 92px;
+  object-fit: contain;
+  object-position: left center;
+  flex-shrink: 0;
   border-radius: var(--r-sm);
 }
 
@@ -103,6 +111,8 @@
   font-weight: 700;
   color: var(--text);
   margin: 0;
+  min-width: 0;
+  line-height: 1.35;
 }
 
 .languageSwitcher {
@@ -422,12 +432,28 @@
 /* ── Responsive ── */
 
 @media (max-width: 768px) {
-  .header { padding: var(--s-sm) var(--s-md); }
-  .headerContent { flex-wrap: wrap; gap: var(--s-sm); }
+  .header { padding: var(--s-md) var(--s-md); }
+  .headerContent {
+    flex-wrap: wrap;
+    align-items: center;
+    row-gap: var(--s-md);
+    column-gap: var(--s-md);
+  }
+  .headerInfo {
+    flex: 1;
+    min-width: 0;
+  }
   .main { padding: var(--s-lg) var(--s-md); }
   .contentCard { padding: var(--s-lg); }
   .markdown h1 { font-size: 1.5rem; }
   .markdown h2 { font-size: 1.2rem; }
   .headerTitle { font-size: 1rem; }
-  .languageSwitcher { margin-left: 0; }
+  .languageSwitcher {
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+  .logo {
+    height: 36px;
+    max-width: 82px;
+  }
 }
