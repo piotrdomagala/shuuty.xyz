@@ -73,23 +73,15 @@
 
 .logoContainer {
   text-align: center;
-  margin-bottom: var(--s-lg);
-}
-
-.logo {
-  width: 64px;
-  height: 64px;
-  border-radius: var(--r-lg);
-  margin-bottom: var(--s-sm);
+  margin-bottom: var(--s-md);
 }
 
 .brandName {
   font-family: var(--font-display);
-  font-size: 0.8rem;
+  font-size: 1.1rem;
   font-weight: 700;
   color: var(--gold);
-  letter-spacing: 3px;
-  text-transform: uppercase;
+  letter-spacing: 0;
   margin: 0;
 }
 
@@ -171,6 +163,56 @@
   transform: translateY(0);
 }
 
+.ctaButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  transform: none;
+}
+
+.form {
+  text-align: left;
+}
+
+.fieldLabel {
+  display: block;
+  margin: 0 0 var(--s-xs);
+  color: var(--text-secondary);
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.input {
+  width: 100%;
+  min-height: 52px;
+  margin: 0 0 var(--s-md);
+  padding: 0 var(--s-md);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  font-size: 1rem;
+  outline: none;
+}
+
+.input:focus {
+  border-color: rgba(var(--gold-rgb), 0.55);
+  box-shadow: 0 0 0 3px rgba(var(--gold-rgb), 0.1);
+}
+
+.requirementText {
+  margin: calc(var(--s-xs) * -1) 0 var(--s-md);
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+.errorText {
+  margin: 0 0 var(--s-md);
+  color: #FCA5A5;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
 .storeLink {
   display: block;
   padding: var(--s-md) var(--s-lg);
@@ -202,6 +244,5 @@
 @media (max-width: 480px) {
   .container { padding: var(--s-md); }
   .card { padding: var(--s-xl) var(--s-lg); }
-  .logo { width: 56px; height: 56px; }
   .title { font-size: 1.125rem; }
 }
