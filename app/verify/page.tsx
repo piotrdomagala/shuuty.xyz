@@ -2,7 +2,6 @@
 
 import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import Image from 'next/image';
 import styles from './page.module.css';
 
 const ANDROID_STORE_URL = 'https://play.google.com/store/apps/details?id=com.shuuty&hl=en-US';
@@ -82,14 +81,6 @@ function VerifyContent() {
     <div className={styles.container}>
       <div className={styles.card}>
         <div className={styles.logoContainer}>
-          <Image 
-            src="/images/shuuty_icon.webp" 
-            alt="Shuuty" 
-            width={150}
-            height={70}
-            className={styles.logo}
-            priority
-          />
           <h1 className={styles.brandName}>Shuuty</h1>
         </div>
 
