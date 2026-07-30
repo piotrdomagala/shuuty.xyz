@@ -2,80 +2,102 @@
 
 Ostatnia aktualizacja: 30 lipca 2026 r.
 
-## 1. Informacje ogólne
-Shuuty Prosta Spółka Akcyjna (z siedzibą pod adresem ul. Południowa 13, 32-353 Trzyciąż) (dalej „Shuuty”, „my”, „nasze”, lub „nam”), działająca jako administrator danych, przykłada wiele starań do zapewnienia ochrony i poszanowania prywatności swoich użytkowników. Celem niniejszej informacji („Informacja o polityce prywatności”) jest przekazanie użytkownikom informacji dotyczących praktyk Shuuty w odniesieniu do pozyskiwania, wykorzystania i rozpowszechniania informacji, które użytkownicy mogą przekazać Shuuty za pośrednictwem niniejszej aplikacji mobilnej („Aplikacja”).
+## 1. Administrator i dane kontaktowe
+Administratorem danych osobowych jest **Shuuty Prosta Spółka Akcyjna**, ul. Południowa 13, 32-353 Trzyciąż, Polska, wpisana do Krajowego Rejestru Sądowego pod numerem **KRS 0000947279**, NIP **6372215912**, REGON **52098153800000** (dalej „Shuuty”, „my” lub „Administrator”).
 
-Niniejsza Informacja o polityce prywatności (wspólnie z Regulaminem Shuuty oraz dokumentami, do których się odwołuje) określa zasady, zgodnie z którymi Shuuty zbiera i przetwarza dane osobowe swoich użytkowników. Prosimy o dokładne przeczytanie niniejszej informacji, aby zapoznać się z praktykami Shuuty dotyczącymi danych osobowych użytkowników i ich przetwarzania.
+W sprawach dotyczących prywatności i realizacji praw można skontaktować się z nami pod adresem **support@shuuty.pl**.
 
-## 2. Jakie informacje Shuuty zbiera od użytkowników i jak długo są one przechowywane?
+Niniejsza Polityka opisuje przetwarzanie danych w aplikacji mobilnej Shuuty („Aplikacja”) oraz, w odpowiednim zakresie, na publicznej stronie Shuuty.
 
-### 2.1 Informacje przekazywane nam bezpośrednio przez użytkowników
-Użytkownicy mogą przekazywać Shuuty informacje umożliwiające ich identyfikację („Dane osobowe”) podczas korzystania z Aplikacji, wypełniania formularzy, tworzenia i udostępniania treści, dokonywania zakupu albo kontaktu z pomocą techniczną.
+## 2. Jakie dane przetwarzamy
 
-Informacje, jakie mogą być przekazywane naszej firmie, obejmują:
-- Dane konta i logowania, zależnie od wybranej metody rejestracji: adres e-mail, identyfikator użytkownika, nazwa użytkownika, nazwa wyświetlana, skrót hasła albo identyfikator powiązanego konta Google, Apple lub Meta/Facebook. Shuuty nie przechowuje hasła w postaci jawnej;
-- Opcjonalne dane profilu i ustawień, takie jak data urodzenia, płeć, język, strefa czasowa, narodowość, zainteresowania i zdjęcie profilowe;
-- Treści utworzone lub udostępnione w Aplikacji, w tym zadania, wiadomości, reakcje, spotkania, grupy, terminy, lokalizacje oraz przesłane zdjęcia i inne multimedia;
-- Nagrania głosowe, transkrypcje i tekst przekazany do funkcji głosowych lub funkcji wykorzystujących sztuczną inteligencję, gdy użytkownik dobrowolnie korzysta z takich funkcji;
-- Dane potrzebne do obsługi zgłoszeń i korespondencji z pomocą techniczną;
-- Informacje o zakupionej subskrypcji, takie jak identyfikator produktu, plan, sklep, status uprawnienia, data wygaśnięcia, stan odnowienia i identyfikatory transakcji. Płatność obsługuje App Store albo Google Play; Shuuty nie otrzymuje pełnych danych karty płatniczej ani rachunku bankowego użytkownika;
-- Dane lokalizacyjne, jeżeli użytkownik udzieli odpowiedniego zezwolenia albo sam poda lokalizację dla zadania, spotkania, grupy lub wyszukiwania.
+### 2.1. Dane przekazywane przez użytkownika
+Zależnie od wybranych funkcji możemy przetwarzać:
+- dane konta i logowania: adres e-mail, identyfikator użytkownika, nazwa użytkownika, nazwa wyświetlana, skrót hasła albo identyfikator konta Google, Apple lub Meta/Facebook; Shuuty nie przechowuje hasła w postaci jawnej;
+- dane podawane podczas rejestracji i w profilu, takie jak data urodzenia, płeć, język, strefa czasowa, narodowość, zainteresowania i zdjęcie profilowe;
+- treści tworzone lub udostępniane w Aplikacji, w tym zadania, wiadomości, reakcje, spotkania, grupy, terminy, lokalizacje, zdjęcia i inne multimedia;
+- nagrania głosowe, transkrypcje, zapytania i ograniczony kontekst przekazywany do funkcji głosowych lub wykorzystujących sztuczną inteligencję, gdy użytkownik wybiera taką funkcję;
+- dane lokalizacyjne podane przez użytkownika lub uzyskane za zgodą systemową urządzenia dla zadania, spotkania, grupy, mapy albo wyszukiwania;
+- treść zgłoszeń i korespondencji z pomocą techniczną.
 
-### 2.2 Informacje pozyskiwane przez nas w sposób automatyczny
-Shuuty może automatycznie przetwarzać dane techniczne niezbędne do działania i ochrony Aplikacji, takie jak adres IP, data i czas żądania, wersja Aplikacji, platforma i wersja systemu operacyjnego, rodzaj urządzenia, identyfikator instalacji lub urządzenia, token powiadomień push, informacje o sesji i logowaniu, diagnostyka błędów oraz podstawowe dane o korzystaniu z funkcji. Dane te służą utrzymaniu sesji, dostarczaniu powiadomień, ochronie przed nadużyciami, diagnozowaniu awarii i poprawie niezawodności.
+### 2.2. Dane techniczne i dane o korzystaniu
+Możemy przetwarzać dane konieczne do działania i ochrony Aplikacji, takie jak adres IP, data i czas żądania, platforma, wersja Aplikacji i systemu, typ urządzenia, identyfikator instalacji lub urządzenia, token powiadomień push, informacje o sesji i logowaniu, dzienniki bezpieczeństwa, diagnostyka błędów oraz podstawowe informacje o użyciu funkcji.
 
-### 2.3 Przechowywanie danych
-- Dane konta i treści są przechowywane przez czas korzystania z Aplikacji oraz przez okres niezbędny do realizacji opisanych celów, zabezpieczenia roszczeń, zapewnienia bezpieczeństwa i wykonania obowiązków prawnych. Po usunięciu konta dane są usuwane lub anonimizowane, z wyjątkiem informacji, które muszą być przechowywane dłużej na podstawie prawa, w kopiach bezpieczeństwa lub w celu ochrony przed nadużyciami i dochodzenia roszczeń;
-- Plik nagrania przesłany do funkcji głosowej jest przechowywany na serwerze Shuuty tymczasowo i usuwany po transkrypcji. Powstała transkrypcja oraz utworzone na jej podstawie treści mogą być przechowywane, jeżeli użytkownik zapisze je w Aplikacji. Zewnętrzni dostawcy przetwarzają przekazane im dane przez okres wynikający z ich warunków, zawartych umów i obowiązującego prawa;
-- Dane o zakupach i subskrypcjach mogą być przechowywane przez Shuuty, Apple, Google i RevenueCat przez okres wymagany do obsługi uprawnień, rozliczeń, zapobiegania oszustwom oraz spełnienia obowiązków prawnych.
+### 2.3. Dane o zakupach i subskrypcjach
+Przetwarzamy informacje potrzebne do rozpoznania uprawnień, takie jak identyfikator produktu, plan Free, Pro lub Teams, okres miesięczny albo roczny, sklep, status subskrypcji, data wygaśnięcia, stan odnowienia i identyfikatory transakcji. Płatność obsługuje App Store albo Google Play; Shuuty nie otrzymuje pełnych danych karty płatniczej ani rachunku bankowego użytkownika.
 
-## 3. W jaki sposób Shuuty wykorzystuje informacje pozyskiwane od użytkowników?
-Shuuty może wykorzystywać informacje użytkowników w następujących celach:
-- Tworzenia i obsługi konta, uwierzytelniania użytkownika oraz realizacji usług dostępnych w Aplikacji;
-- Umożliwienia tworzenia zadań, spotkań i grup, komunikacji oraz udostępniania treści wybranym użytkownikom zgodnie z ustawieniami prywatności;
-- Personalizacji profilu, ustawień językowych, strefy czasowej i działania wybranych funkcji;
-- Dostarczania żądanych powiadomień push i wiadomości e-mail związanych z kontem, bezpieczeństwem lub usługą;
-- Realizacji funkcji głosowych i funkcji wykorzystujących sztuczną inteligencję, w tym transkrypcji, porządkowania zadań oraz interpretacji wyszukiwania;
-- Weryfikacji, przywracania i synchronizacji uprawnień do planów Pro i Teams;
-- Zapewnienia wsparcia, bezpieczeństwa, zapobiegania nadużyciom, diagnozowania błędów i poprawy niezawodności Aplikacji;
-- Wykonania obowiązków prawnych i ochrony praw Shuuty oraz użytkowników.
+## 3. Cele i podstawy prawne przetwarzania
+Przetwarzamy dane tylko w zakresie potrzebnym do poniższych celów:
 
-## 4. Kim są odbiorcy informacji pozyskiwanych przez naszą firmę od użytkowników i w jakich celach są one przekazywane tym odbiorcom?
-Shuuty może przekazywać dane użytkowników następującym odbiorcom wyłącznie w zakresie niezbędnym do realizacji danego celu:
-- Innym użytkownikom Shuuty, jeżeli wynika to z funkcji wybranej przez użytkownika i ustawień prywatności, na przykład przy udziale w grupie, spotkaniu, czacie lub przydzielonym zadaniu;
-- Apple i Google w celu logowania oraz obsługi App Store, Google Play, płatności i subskrypcji, a także Meta/Facebook, jeżeli użytkownik wybierze logowanie przez Facebook;
-- RevenueCat w celu obsługi i synchronizacji informacji o zakupach, uprawnieniach oraz przywracaniu subskrypcji;
-- OpenAI, gdy użytkownik korzysta z funkcji głosowych lub funkcji sztucznej inteligencji. W zależności od funkcji do OpenAI mogą trafić nagranie, transkrypcja, treść zapytania oraz ograniczony kontekst słownikowy, na przykład nazwy lub nazwy użytkowników znajomych w Shuuty albo nazwy grup potrzebne do poprawnej transkrypcji;
-- Expo, Apple Push Notification service i Firebase Cloud Messaging w celu dostarczania powiadomień push. Treść powiadomienia i identyfikatory techniczne mogą być przetwarzane przez te usługi;
-- Brevo w celu wysyłki wiadomości transakcyjnych, takich jak weryfikacja adresu e-mail i reset hasła;
-- Geoapify i Google Maps w celu wyszukiwania miejsc, geokodowania i wyświetlania map, gdy użytkownik korzysta z funkcji lokalizacyjnych;
-- Cloudflare R2 i Cloudinary w celu przechowywania, przetwarzania i dostarczania zdjęć oraz innych multimediów;
-- Dostawcom hostingu, bazy danych i infrastruktury technicznej niezbędnej do działania Aplikacji;
-- Organom ścigania, organom rządowym lub publicznym, jeżeli jest to wymagane przez prawo.
+1. **Wykonanie umowy lub działania przed jej zawarciem — art. 6 ust. 1 lit. b RODO:** utworzenie i obsługa konta, logowanie, synchronizacja, wykonywanie funkcji wybranych przez użytkownika, komunikacja, udostępnianie treści zgodnie z ustawieniami, obsługa zgłoszeń, realizacja funkcji lokalizacyjnych, głosowych i AI żądanych przez użytkownika oraz weryfikacja, przywracanie i synchronizacja planów Pro i Teams.
+2. **Obowiązek prawny — art. 6 ust. 1 lit. c RODO:** wykonywanie obowiązków podatkowych, rachunkowych, konsumenckich i związanych z reklamacjami oraz odpowiadanie na prawnie wiążące żądania organów.
+3. **Prawnie uzasadnione interesy Shuuty — art. 6 ust. 1 lit. f RODO:** zabezpieczenie kont i infrastruktury, zapobieganie oszustwom i nadużyciom, diagnozowanie awarii, poprawa niezawodności, prowadzenie podstawowych statystyk działania usługi oraz ustalenie, dochodzenie lub obrona roszczeń. Interesy te realizujemy z uwzględnieniem praw i rozsądnych oczekiwań użytkowników.
+4. **Zgoda — art. 6 ust. 1 lit. a RODO:** gdy wyraźnie prosimy o zgodę i prawo wymaga tej podstawy, na przykład dla określonej opcjonalnej funkcji lub komunikacji. Zgodę można wycofać w dowolnym momencie bez wpływu na zgodność z prawem wcześniejszego przetwarzania.
 
-## 5. Prawa użytkowników
-Każdy użytkownik ma prawo do:
-- Dostępu do swoich danych osobowych;
-- Sprostowania, usunięcia lub ograniczenia przetwarzania danych osobowych;
-- Przenoszenia danych;
-- Wycofania zgody na przetwarzanie danych osobowych w dowolnym momencie;
-- Złożenia skargi do właściwego organu nadzoru ochrony danych lub zwrócenia się o ochronę prawną do sądu, jeżeli uważa, że jego prawa zostały naruszone.
+Uprawnienie systemowe urządzenia, takie jak dostęp do lokalizacji, mikrofonu, aparatu lub zdjęć, można zmienić w ustawieniach urządzenia. Cofnięcie uprawnienia nie wpływa na inne funkcje, które go nie wymagają.
 
-## 6. Dane dzieci i nastolatków
-Nasza Aplikacja jest przeznaczona do użytku wyłącznie przez użytkowników w wieku powyżej 16 lat. Rejestracja dzieci poniżej 16 roku życia w Aplikacji jest zabroniona.
+## 4. Odbiorcy danych i dostawcy
+Dane przekazujemy wyłącznie w zakresie potrzebnym do danego celu:
+- innym użytkownikom Shuuty, jeśli wynika to z funkcji i ustawień wybranych przez użytkownika, na przykład udziału w grupie, spotkaniu, czacie albo przydzielonym zadaniu;
+- Apple, Google i Meta/Facebook w zakresie logowania lub funkcji ich platform, a Apple i Google także w związku z App Store, Google Play, płatnościami i subskrypcjami;
+- **RevenueCat** w celu obsługi informacji o zakupach, uprawnieniach i przywracaniu subskrypcji;
+- **OpenAI**, gdy użytkownik wybiera funkcję głosową lub AI; zależnie od funkcji dostawca może otrzymać nagranie, transkrypcję, treść zapytania i ograniczony kontekst słownikowy potrzebny do wykonania żądania;
+- **Expo**, Apple Push Notification service i Firebase Cloud Messaging w celu dostarczania powiadomień push;
+- **Brevo** w celu wysyłania wiadomości transakcyjnych, takich jak weryfikacja adresu e-mail i reset hasła;
+- **Geoapify** i **Google Maps** w celu wyszukiwania miejsc, geokodowania i wyświetlania map, gdy użytkownik korzysta z funkcji lokalizacyjnych;
+- **Cloudflare R2** i **Cloudinary** w celu przechowywania, przetwarzania i dostarczania zdjęć oraz innych multimediów;
+- dostawcom infrastruktury, w tym **Railway** dla backendu, **Neon** dla bazy danych i **Vercel** dla publicznej strony Shuuty;
+- profesjonalnym doradcom, organom publicznym, sądom lub organom ścigania, gdy jest to niezbędne do ochrony praw albo wymagane przez prawo.
 
-## 7. Pliki cookie i technologie podobnego rodzaju
-Aplikacja mobilna nie korzysta z plików cookie przeglądarki jako podstawowego mechanizmu działania. Publiczna strona Shuuty zapisuje techniczny plik cookie „lang”, aby zapamiętać wybrany język. Zewnętrzne witryny otwierane przez użytkownika, w tym App Store i Google Play, stosują własne zasady dotyczące plików cookie i podobnych technologii.
+Zależnie od usługi i przepisów dostawca może działać jako podmiot przetwarzający dane na zlecenie Shuuty albo jako odrębny administrator zgodnie ze swoją polityką prywatności.
 
-## 8. Poufność hasła użytkownika
-Po wybraniu przez użytkownika hasła umożliwiającego mu dostęp do niektórych części naszej Aplikacji, jest on odpowiedzialny za zachowanie tego hasła w tajemnicy. Shuuty wymaga od użytkownika, aby nie udostępniał tego hasła żadnej innej osobie.
+## 5. Przekazywanie danych poza Europejski Obszar Gospodarczy
+Niektórzy dostawcy mogą przetwarzać dane w państwach spoza Europejskiego Obszaru Gospodarczego („EOG”), w szczególności gdy użytkownik korzysta z usług Apple, Google, Meta, RevenueCat, OpenAI, Expo, dostawców komunikacji, map, hostingu lub mediów.
 
-## 9. Linki do innych witryn internetowych i serwisów społecznościowych
-Na naszej Aplikacji mogą być zamieszczane linki prowadzące do witryn internetowych naszych sieci partnerskich, reklamodawców lub spółek powiązanych. W przypadku korzystania z linków prowadzących do tych witryn, należy pamiętać, że obowiązują na nich zasady polityki prywatności firm będących ich właścicielami, a Shuuty nie ponosi za nie żadnej odpowiedzialności. Należy zapoznać się z postanowieniami tych polityk przed przesłaniem na te witryny jakichkolwiek swoich danych osobowych.
+Jeżeli dane są przekazywane poza EOG, stosujemy mechanizm dopuszczony przez RODO odpowiedni do danego transferu, taki jak decyzja Komisji Europejskiej stwierdzająca odpowiedni stopień ochrony, standardowe klauzule umowne wraz z wymaganymi środkami dodatkowymi albo inna prawidłowa podstawa. Informację o zabezpieczeniu właściwym dla konkretnego dostawcy lub kopię stosownych klauzul można uzyskać, kontaktując się z nami.
 
-## 10. Modyfikacje naszej Informacji o polityce prywatności
-Jakiekolwiek modyfikacje naszej Informacji o polityce prywatności zostaną zamieszczone na tej stronie. W uzasadnionych przypadkach Shuuty może poinformować użytkownika o tych modyfikacjach lub starać się uzyskać jego zgodę. Należy systematycznie sprawdzać wszelkie aktualizacje lub modyfikacje naszej Informacji o polityce prywatności.
+## 6. Okres przechowywania
+Nie stosujemy jednego okresu do wszystkich danych. Ustalamy go na podstawie celu, czasu trwania konta lub funkcji, obowiązków prawnych, terminów przedawnienia roszczeń, potrzeb bezpieczeństwa, cyklu kopii zapasowych i umów z dostawcami:
+- dane konta i treści są przechowywane podczas korzystania z konta. Po jego usunięciu dane są usuwane albo anonimizowane, z wyjątkiem danych potrzebnych do wykonania obowiązków prawnych, ochrony przed nadużyciami lub ustalenia, dochodzenia i obrony roszczeń;
+- ograniczone kopie mogą pozostawać do czasu ich nadpisania w zwykłym cyklu kopii zapasowych; dostęp do nich jest ograniczony, a dane nie są ponownie wykorzystywane do zwykłego świadczenia usługi;
+- plik nagrania przesłany do funkcji głosowej jest przechowywany tymczasowo i usuwany po transkrypcji. Transkrypcja i utworzone z niej treści mogą pozostać, jeżeli użytkownik zapisze je w Aplikacji;
+- informacje o subskrypcjach, transakcjach, reklamacjach i korespondencji są przechowywane przez czas potrzebny do obsługi sprawy, spełnienia obowiązków prawnych i zabezpieczenia roszczeń;
+- dzienniki techniczne i bezpieczeństwa są przechowywane przez okres uzasadniony diagnozą, ochroną usługi i wykrywaniem nadużyć, a następnie usuwane lub anonimizowane;
+- zewnętrzni dostawcy stosują własne okresy zgodne z ich rolą, umowami i obowiązującym prawem.
 
-## 11. Kontakt w sprawach ochrony danych
-Aby skontaktować się z naszą firmą w celu przekazania nam jakichkolwiek sugestii lub zapytań dotyczących naszych praktyk w zakresie zachowania prywatności, użytkownik może to zrobić w następujący sposób:
-- Wysyłając wiadomość e-mail na adres support@shuuty.pl.
+## 7. Prawa użytkownika
+Na warunkach określonych w RODO użytkownik ma prawo do:
+- dostępu do danych i otrzymania ich kopii;
+- sprostowania danych;
+- usunięcia danych lub ograniczenia ich przetwarzania;
+- przenoszenia danych;
+- wniesienia sprzeciwu wobec przetwarzania opartego na art. 6 ust. 1 lit. f RODO, w tym sprzeciwu z przyczyn związanych ze szczególną sytuacją użytkownika;
+- wycofania zgody w dowolnym momencie, gdy przetwarzanie opiera się na zgodzie; wycofanie nie działa wstecz;
+- złożenia skargi do **Prezesa Urzędu Ochrony Danych Osobowych (PUODO)**, ul. Stanisława Moniuszki 1A, 00-014 Warszawa, [uodo.gov.pl](https://uodo.gov.pl), albo do innego właściwego organu nadzorczego w EOG.
+
+Wniosek dotyczący praw można wysłać na **support@shuuty.pl**. Przed realizacją możemy poprosić o informacje potrzebne do potwierdzenia tożsamości i ochrony konta.
+
+## 8. Czy podanie danych jest obowiązkowe
+Dane oznaczone w procesie rejestracji jako wymagane, w szczególności dane potrzebne do uwierzytelnienia, utworzenia konta i potwierdzenia spełnienia wymogu wieku, są konieczne do zawarcia i wykonania umowy. Bez nich utworzenie lub obsługa konta może nie być możliwa.
+
+Dane profilu oznaczone jako opcjonalne, lokalizacja, dostęp do aparatu, mikrofonu lub zdjęć oraz użycie funkcji głosowych i AI są dobrowolne. Ich niepodanie albo cofnięcie uprawnienia może uniemożliwić korzystanie z konkretnej funkcji, ale nie powinno blokować pozostałych funkcji, które tych danych nie potrzebują.
+
+## 9. Zautomatyzowane podejmowanie decyzji
+Shuuty nie podejmuje wobec użytkowników decyzji opartych wyłącznie na zautomatyzowanym przetwarzaniu, w tym profilowaniu, które wywoływałyby skutki prawne lub w podobny sposób istotnie na nich wpływały.
+
+Aplikacja może automatycznie porządkować treści, transkrybować i interpretować polecenia, proponować wyniki wyszukiwania lub egzekwować techniczne limity planu. Takie operacje wspierają wykonanie funkcji wybranej przez użytkownika i nie stanowią decyzji o opisanym wyżej skutku.
+
+## 10. Bezpieczeństwo i poufność
+Stosujemy środki organizacyjne i techniczne odpowiednie do ryzyka, w tym kontrolę dostępu, szyfrowaną transmisję, ochronę danych uwierzytelniających, kopie zapasowe oraz mechanizmy wykrywania nadużyć. Żadna metoda transmisji ani przechowywania nie zapewnia jednak całkowitego bezpieczeństwa. Użytkownik powinien chronić dane logowania i nie przesyłać hasła w zgłoszeniach.
+
+## 11. Dzieci i nastolatkowie
+Aplikacja jest przeznaczona dla osób, które ukończyły 16 lat. Świadomie nie umożliwiamy rejestracji dzieci poniżej tego wieku. W przypadku podejrzenia, że takie konto zostało utworzone, prosimy o kontakt.
+
+## 12. Pliki cookie i linki zewnętrzne
+Aplikacja mobilna nie używa przeglądarkowych plików cookie jako podstawowego mechanizmu działania. Publiczna strona Shuuty zapisuje techniczny plik cookie „lang”, aby zapamiętać wybrany język. Zewnętrzne strony, w tym App Store i Google Play, stosują własne zasady dotyczące plików cookie i prywatności.
+
+## 13. Zmiany Polityki
+Aktualna wersja i data ostatniej aktualizacji są publikowane na tej stronie. O istotnych zmianach możemy również poinformować w Aplikacji lub e-mailem, a jeśli wymaga tego prawo — poprosić o zgodę.
+
+## 14. Kontakt
+Pytania, wnioski i sprzeciwy dotyczące danych osobowych można kierować na **support@shuuty.pl**.
