@@ -1,12 +1,13 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
 import Cookies from 'js-cookie';
+import {
+  DocumentFooter,
+  DocumentHeader,
+  type DocumentLanguage,
+} from '@/components/DocumentChrome';
 import styles from '../documents.module.css';
-
-type Language = 'en' | 'pl';
 
 const SUPPORT_EMAIL = 'support@shuuty.pl';
 
@@ -43,18 +44,13 @@ const translations = {
   },
 };
 
-const languageOptions: { code: Language; label: string }[] = [
-  { code: 'en', label: 'EN' },
-  { code: 'pl', label: 'PL' },
-];
-
 export default function SupportPage() {
-  const [language, setLanguage] = useState<Language>('en');
+  const [language, setLanguage] = useState<DocumentLanguage>('en');
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    const savedLang = Cookies.get('lang') as Language | undefined;
+    const savedLang = Cookies.get('lang') as DocumentLanguage | undefined;
     if (savedLang === 'en' || savedLang === 'pl') {
       setLanguage(savedLang);
       return;
@@ -67,7 +63,7 @@ export default function SupportPage() {
   const t = translations[language];
   const supportMailHref = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(t.emailSubject)}`;
 
-  const handleLanguageChange = (nextLanguage: Language) => {
+  const handleLanguageChange = (nextLanguage: DocumentLanguage) => {
     setLanguage(nextLanguage);
     Cookies.set('lang', nextLanguage, { expires: 365 });
   };
@@ -81,44 +77,13 @@ export default function SupportPage() {
         <div className={`${styles.floatingShape} ${styles.shape2}`} />
       </div>
 
-      <header className={styles.header}>
-        <div className={styles.headerContent}>
-          <Link href="/" className={styles.backButton} title={t.backTitle}>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M19 12H5M12 19l-7-7 7-7" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </Link>
-          <div className={styles.headerInfo}>
-            <Image
-              src="/images/shuuty_icon.webp"
-              alt="Shuuty"
-              width={86}
-              height={40}
-              className={styles.logo}
-            />
-            <h1 className={styles.headerTitle}>{t.pageTitle}</h1>
-          </div>
-          <div
-            className={styles.languageSwitcher}
-            role="group"
-            aria-label={t.languageSwitcher}
-          >
-            {languageOptions.map((option) => (
-              <button
-                key={option.code}
-                type="button"
-                className={`${styles.languageButton} ${
-                  language === option.code ? styles.languageButtonActive : ''
-                }`}
-                onClick={() => handleLanguageChange(option.code)}
-                aria-pressed={language === option.code}
-              >
-                {option.label}
-              </button>
-            ))}
-          </div>
-        </div>
-      </header>
+      <DocumentHeader
+        title={t.pageTitle}
+        backTitle={t.backTitle}
+        languageSwitcherLabel={t.languageSwitcher}
+        language={language}
+        onLanguageChange={handleLanguageChange}
+      />
 
       <main className={styles.main}>
         <div className={styles.contentCard}>
@@ -157,19 +122,12 @@ export default function SupportPage() {
         </div>
       </main>
 
-      <footer className={styles.footer}>
-        <div className={styles.footerContent}>
-          <div className={styles.footerBrand}>
-            <h3>Shuuty</h3>
-            <p>{t.footerTagline}</p>
-          </div>
-          <nav className={styles.footerLinks}>
-            <Link href="/support" className={styles.footerLink}>{t.support}</Link>
-            <Link href="/privacy" className={styles.footerLink}>{t.privacy}</Link>
-            <Link href="/terms" className={styles.footerLink}>{t.terms}</Link>
-          </nav>
-        </div>
-      </footer>
+      <DocumentFooter
+        tagline={t.footerTagline}
+        supportLabel={t.support}
+        privacyLabel={t.privacy}
+        termsLabel={t.terms}
+      />
     </div>
   );
 }
