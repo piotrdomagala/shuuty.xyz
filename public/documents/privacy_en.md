@@ -5,7 +5,7 @@ Last updated: July 30, 2026
 ## 1. Controller and contact details
 The personal data controller is **Shuuty Prosta Spółka Akcyjna**, ul. Południowa 13, 32-353 Trzyciąż, Poland, entered in the National Court Register under **KRS 0000947279**, tax identification number (NIP) **6372215912**, and statistical number (REGON) **52098153800000** (hereinafter “Shuuty,” “we,” or the “Controller”).
 
-For privacy matters and the exercise of data protection rights, contact us at **support@shuuty.pl**.
+For privacy matters and the exercise of data protection rights, contact us at **shuuty.app@gmail.com**.
 
 This Policy describes processing in the Shuuty mobile application (the “Application”) and, where relevant, on the public Shuuty website.
 
@@ -25,6 +25,9 @@ We may process data required to operate and protect the Application, such as the
 
 ### 2.3. Purchase and subscription data
 We process information needed to recognize entitlements, such as the product identifier, Free, Pro, or Teams plan, monthly or annual period, store, subscription status, expiration date, renewal state, and transaction identifiers. Payment is processed by the App Store or Google Play; Shuuty does not receive the user's full payment card or bank account details.
+
+### 2.4. Access to the device calendar
+When a user selects the feature for adding a specific meeting to the device calendar, the Application presents the system event-creation dialog and, depending on the operating system, requests permission to read and write the calendar. Granting this permission is voluntary. The Application accesses the calendar only at the user's express request to prepare the selected meeting and save it after confirmation in the system dialog. Refusing or withdrawing permission disables this feature but does not block other Application features. The contents of the device calendar are not sent to Shuuty's servers.
 
 ## 3. Purposes and legal bases
 We process data only to the extent required for the following purposes:
@@ -76,7 +79,7 @@ Subject to the conditions set out in the GDPR, the user has the right to:
 - withdraw consent at any time where processing is based on consent; withdrawal is not retroactive;
 - lodge a complaint with the **President of the Personal Data Protection Office in Poland (PUODO)**, ul. Stanisława Moniuszki 1A, 00-014 Warsaw, [uodo.gov.pl](https://uodo.gov.pl), or another competent supervisory authority in the EEA.
 
-A rights request may be sent to **support@shuuty.pl**. Before fulfilling it, we may request information necessary to confirm identity and protect the account.
+A rights request may be sent to **shuuty.app@gmail.com**. Before fulfilling it, we may request information necessary to confirm identity and protect the account.
 
 ## 8. Whether providing data is mandatory
 Data marked as required during registration, in particular data needed to authenticate the user, create the account, and confirm that the age requirement is met, is necessary to enter into and perform the agreement. Without it, creating or operating an account may not be possible.
@@ -101,4 +104,4 @@ The mobile Application does not use browser cookies as its primary operating mec
 The current version and last-updated date are published on this page. We may also communicate material changes in the Application or by email and, where required by law, request consent.
 
 ## 14. Contact
-Questions, requests, and objections concerning personal data may be sent to **support@shuuty.pl**.
+Questions, requests, and objections concerning personal data may be sent to **shuuty.app@gmail.com**.

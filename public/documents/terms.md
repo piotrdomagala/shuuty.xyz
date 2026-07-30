@@ -3,7 +3,7 @@
 Ostatnia aktualizacja: 30 lipca 2026 r.
 
 ## §1. Usługodawca, zakres usług i zawarcie umowy
-1. Usługodawcą i właścicielem Aplikacji Shuuty jest **Shuuty Prosta Spółka Akcyjna**, ul. Południowa 13, 32-353 Trzyciąż, Polska, wpisana do Krajowego Rejestru Sądowego pod numerem **KRS 0000947279**, NIP **6372215912**, REGON **52098153800000** (dalej „Shuuty” lub „Usługodawca”). Kontakt: **support@shuuty.pl**.
+1. Usługodawcą i właścicielem Aplikacji Shuuty jest **Shuuty Prosta Spółka Akcyjna**, ul. Południowa 13, 32-353 Trzyciąż, Polska, wpisana do Krajowego Rejestru Sądowego pod numerem **KRS 0000947279**, NIP **6372215912**, REGON **52098153800000** (dalej „Shuuty” lub „Usługodawca”). Kontakt: **shuuty.app@gmail.com**.
 2. Shuuty umożliwia między innymi tworzenie i organizowanie zadań, spotkań oraz grup, komunikację z innymi użytkownikami i korzystanie z funkcji wspierających planowanie.
 3. Podstawowy plan **Free** jest dostępny bez opłaty. Dodatkowe funkcje są dostępne w płatnych planach **Pro** i **Teams** na zasadach określonych w §8.
 4. Utworzenie konta wymaga zaakceptowania Regulaminu i zapoznania się z Polityką prywatności. Rejestrując konto, użytkownik zawiera z Usługodawcą umowę o świadczenie usług drogą elektroniczną.
@@ -12,7 +12,7 @@ Ostatnia aktualizacja: 30 lipca 2026 r.
 
 ## §2. Wymagania techniczne i uprawnienia urządzenia
 1. Aplikacja jest przeznaczona dla obsługiwanych urządzeń z systemem iOS albo Android. Do pobrania, logowania, synchronizacji i większości funkcji potrzebne jest połączenie z Internetem. Koszty transmisji danych użytkownik ponosi zgodnie z umową ze swoim operatorem.
-2. Niektóre funkcje mogą wymagać dostępu do aparatu, mikrofonu, zdjęć lub multimediów, powiadomień albo lokalizacji. Użytkownik decyduje o udzieleniu uprawnienia w ustawieniach urządzenia; jego odmowa lub cofnięcie może wyłączyć wyłącznie funkcję, która tego dostępu wymaga.
+2. Niektóre funkcje mogą wymagać dostępu do aparatu, mikrofonu, zdjęć lub multimediów, powiadomień, lokalizacji albo kalendarza urządzenia. Użytkownik decyduje o udzieleniu uprawnienia w systemowym dialogu lub ustawieniach urządzenia; jego odmowa lub cofnięcie może wyłączyć wyłącznie funkcję, która tego dostępu wymaga. Dostęp do kalendarza jest używany na żądanie użytkownika do przygotowania i zapisania wybranego spotkania po jego potwierdzeniu.
 3. Użytkownik powinien korzystać z aktualnej, wspieranej wersji Aplikacji i systemu operacyjnego.
 
 ## §3. Konto i zasady korzystania z Aplikacji
@@ -50,7 +50,7 @@ Ostatnia aktualizacja: 30 lipca 2026 r.
 9. Jeżeli sklep oferuje okres próbny, promocję lub ofertę wprowadzającą, jej czas, cena i warunki są wyświetlane przed zakupem. Po jej zakończeniu subskrypcja odnawia się na warunkach wskazanych przez sklep, chyba że użytkownik wcześniej wyłączy odnowienie.
 
 ## §9. Reklamacje i pomoc techniczna
-1. Reklamacje i pytania dotyczące Aplikacji można wysyłać na **support@shuuty.pl**.
+1. Reklamacje i pytania dotyczące Aplikacji można wysyłać na **shuuty.app@gmail.com**.
 2. Zgłoszenie powinno zawierać informacje potrzebne do jego rozpoznania, na przykład opis problemu, wersję Aplikacji i systemu, model urządzenia oraz adres e-mail konta. Nie należy przesyłać hasła ani pełnych danych płatniczych.
 3. Shuuty odpowiada na reklamację w terminie 14 dni od jej otrzymania, chyba że bezwzględnie obowiązujący przepis wymaga innego terminu.
 4. Reklamacje i wnioski dotyczące samego rozliczenia, anulowania lub zwrotu zakupu mogą wymagać kontaktu z App Store albo Google Play, które obsługują transakcję.
@@ -62,7 +62,7 @@ Ostatnia aktualizacja: 30 lipca 2026 r.
 
 ## §11. Komunikacja
 1. Shuuty może przekazywać informacje związane z usługą w Aplikacji, przez powiadomienia lub na adres e-mail przypisany do konta. Użytkownik powinien utrzymywać aktualne dane kontaktowe.
-2. Użytkownik może kontaktować się z Usługodawcą przez **support@shuuty.pl**.
+2. Użytkownik może kontaktować się z Usługodawcą przez **shuuty.app@gmail.com**.
 
 ## §12. Ograniczenie dostępu i rozwiązanie umowy
 1. Shuuty może ograniczyć funkcję, usunąć bezprawną treść, zawiesić lub usunąć konto, gdy jest to konieczne z powodu naruszenia prawa lub Regulaminu, zagrożenia bezpieczeństwa, oszustwa albo ochrony praw innych osób. W miarę możliwości użytkownik zostanie poinformowany o przyczynie i dostępnych środkach odwoławczych.

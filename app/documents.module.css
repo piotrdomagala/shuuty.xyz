@@ -332,10 +332,12 @@
   text-align: center;
 }
 
-.supportEmailLink {
+.supportEmailButton {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: var(--s-sm);
+  flex-wrap: wrap;
   width: 100%;
   min-height: 46px;
   box-sizing: border-box;
@@ -346,15 +348,31 @@
   border-radius: var(--r-md);
   font-size: 1rem;
   font-weight: 600;
+  font-family: var(--font-body);
   overflow-wrap: anywhere;
   text-align: center;
-  text-decoration: none;
+  cursor: pointer;
   transition: background 0.25s, border-color 0.25s, transform 0.25s;
 }
 
-.supportEmailLink:hover {
+.supportEmailButton:hover {
   background: rgba(var(--gold-rgb), 0.06);
   border-color: rgba(var(--gold-rgb), 0.5);
+}
+
+.copyAction {
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.copyStatus {
+  min-height: 1.5em;
+  margin: var(--s-sm) 0 0;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  text-align: center;
 }
 
 /* ── Footer ── */

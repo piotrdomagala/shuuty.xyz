@@ -1,10 +1,10 @@
 'use client';
 
+import type { ReactNode } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import type { DocumentLanguage } from '@/components/documentLocale';
 import styles from '@/app/documents.module.css';
-
-export type DocumentLanguage = 'en' | 'pl';
 
 const languageOptions: { code: DocumentLanguage; label: string }[] = [
   { code: 'en', label: 'EN' },
@@ -29,8 +29,20 @@ export function DocumentHeader({
   return (
     <header className={styles.header}>
       <div className={styles.headerContent}>
-        <Link href="/" className={styles.backButton} title={backTitle}>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <Link
+          href="/"
+          className={styles.backButton}
+          title={backTitle}
+          aria-label={backTitle}
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            aria-hidden="true"
+            focusable="false"
+          >
             <path
               d="M19 12H5M12 19l-7-7 7-7"
               strokeLinecap="round"
@@ -105,5 +117,59 @@ export function DocumentFooter({
         </nav>
       </div>
     </footer>
+  );
+}
+
+interface DocumentShellProps {
+  title: string;
+  backTitle: string;
+  languageSwitcherLabel: string;
+  language: DocumentLanguage;
+  onLanguageChange: (language: DocumentLanguage) => void;
+  tagline: string;
+  supportLabel: string;
+  privacyLabel: string;
+  termsLabel: string;
+  children: ReactNode;
+}
+
+export function DocumentShell({
+  title,
+  backTitle,
+  languageSwitcherLabel,
+  language,
+  onLanguageChange,
+  tagline,
+  supportLabel,
+  privacyLabel,
+  termsLabel,
+  children,
+}: DocumentShellProps) {
+  return (
+    <div className={styles.pageWrapper}>
+      <div className={styles.backgroundDecor} aria-hidden="true">
+        <div className={`${styles.floatingShape} ${styles.shape1}`} />
+        <div className={`${styles.floatingShape} ${styles.shape2}`} />
+      </div>
+
+      <DocumentHeader
+        title={title}
+        backTitle={backTitle}
+        languageSwitcherLabel={languageSwitcherLabel}
+        language={language}
+        onLanguageChange={onLanguageChange}
+      />
+
+      <main className={styles.main}>
+        <div className={styles.contentCard}>{children}</div>
+      </main>
+
+      <DocumentFooter
+        tagline={tagline}
+        supportLabel={supportLabel}
+        privacyLabel={privacyLabel}
+        termsLabel={termsLabel}
+      />
+    </div>
   );
 }

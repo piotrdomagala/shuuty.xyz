@@ -7,9 +7,11 @@
     "dev": "next dev",
     "prebuild": "node scripts/validate-legal-documents.mjs",
     "build": "next build",
+    "postbuild": "node scripts/validate-static-export.mjs",
     "start": "next start",
     "lint": "next lint",
-    "validate:legal": "node scripts/validate-legal-documents.mjs"
+    "validate:legal": "node scripts/validate-legal-documents.mjs",
+    "validate:static": "node scripts/validate-static-export.mjs"
   },
   "dependencies": {
     "js-cookie": "^3.0.5",

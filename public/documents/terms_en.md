@@ -3,7 +3,7 @@
 Last updated: July 30, 2026
 
 ## §1. Service Provider, scope of services, and agreement
-1. The Service Provider and owner of the Shuuty Application is **Shuuty Prosta Spółka Akcyjna**, ul. Południowa 13, 32-353 Trzyciąż, Poland, entered in the National Court Register under **KRS 0000947279**, tax identification number (NIP) **6372215912**, and statistical number (REGON) **52098153800000** (hereinafter “Shuuty” or the “Service Provider”). Contact: **support@shuuty.pl**.
+1. The Service Provider and owner of the Shuuty Application is **Shuuty Prosta Spółka Akcyjna**, ul. Południowa 13, 32-353 Trzyciąż, Poland, entered in the National Court Register under **KRS 0000947279**, tax identification number (NIP) **6372215912**, and statistical number (REGON) **52098153800000** (hereinafter “Shuuty” or the “Service Provider”). Contact: **shuuty.app@gmail.com**.
 2. Shuuty enables users, among other things, to create and organize tasks, meetings, and groups, communicate with other users, and use planning support features.
 3. The basic **Free** plan is available without charge. Additional features are available through the paid **Pro** and **Teams** plans under §8.
 4. Creating an account requires acceptance of these Terms and acknowledgment of the Privacy Policy. By registering an account, the user enters into an electronic services agreement with the Service Provider.
@@ -12,7 +12,7 @@ Last updated: July 30, 2026
 
 ## §2. Technical requirements and device permissions
 1. The Application is intended for supported iOS and Android devices. An Internet connection is required to download the Application, sign in, synchronize data, and use most features. The user bears data transmission costs under their agreement with their provider.
-2. Certain features may require access to the camera, microphone, photos or media, notifications, or location. The user decides whether to grant permission in the device settings; refusing or withdrawing permission may disable only the feature that requires it.
+2. Certain features may require access to the camera, microphone, photos or media, notifications, location, or the device calendar. The user decides whether to grant permission in the system dialog or device settings; refusing or withdrawing permission may disable only the feature that requires it. Calendar access is used at the user's request to prepare and save a selected meeting after the user confirms it.
 3. The user should use a current, supported version of the Application and operating system.
 
 ## §3. Account and rules for using the Application
@@ -50,7 +50,7 @@ Last updated: July 30, 2026
 9. If the store offers a trial, promotion, or introductory offer, its duration, price, and conditions are displayed before purchase. After the offer ends, the subscription renews under the conditions shown by the store unless the user turns off auto-renewal first.
 
 ## §9. Complaints and technical support
-1. Complaints and questions about the Application may be sent to **support@shuuty.pl**.
+1. Complaints and questions about the Application may be sent to **shuuty.app@gmail.com**.
 2. A report should contain information needed to investigate it, such as a description of the problem, the Application and operating-system versions, device model, and account email address. Users should not send a password or full payment details.
 3. Shuuty responds to a complaint within 14 days of receipt unless mandatory law requires a different period.
 4. Complaints and requests concerning the billing, cancellation, or refund of a purchase may require contact with the App Store or Google Play, which processes the transaction.
@@ -62,7 +62,7 @@ Last updated: July 30, 2026
 
 ## §11. Communications
 1. Shuuty may provide service-related information in the Application, through notifications, or to the email address associated with the account. The user should keep contact details current.
-2. Users may contact the Service Provider at **support@shuuty.pl**.
+2. Users may contact the Service Provider at **shuuty.app@gmail.com**.
 
 ## §12. Restriction of access and termination
 1. Shuuty may restrict a feature, remove unlawful content, suspend, or delete an account where necessary because of a breach of law or these Terms, a security threat, fraud, or the protection of another person's rights. Where possible, the user will be informed of the reason and available appeal measures.

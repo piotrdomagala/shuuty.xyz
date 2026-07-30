@@ -5,7 +5,7 @@ Ostatnia aktualizacja: 30 lipca 2026 r.
 ## 1. Administrator i dane kontaktowe
 Administratorem danych osobowych jest **Shuuty Prosta Spółka Akcyjna**, ul. Południowa 13, 32-353 Trzyciąż, Polska, wpisana do Krajowego Rejestru Sądowego pod numerem **KRS 0000947279**, NIP **6372215912**, REGON **52098153800000** (dalej „Shuuty”, „my” lub „Administrator”).
 
-W sprawach dotyczących prywatności i realizacji praw można skontaktować się z nami pod adresem **support@shuuty.pl**.
+W sprawach dotyczących prywatności i realizacji praw można skontaktować się z nami pod adresem **shuuty.app@gmail.com**.
 
 Niniejsza Polityka opisuje przetwarzanie danych w aplikacji mobilnej Shuuty („Aplikacja”) oraz, w odpowiednim zakresie, na publicznej stronie Shuuty.
 
@@ -25,6 +25,9 @@ Możemy przetwarzać dane konieczne do działania i ochrony Aplikacji, takie jak
 
 ### 2.3. Dane o zakupach i subskrypcjach
 Przetwarzamy informacje potrzebne do rozpoznania uprawnień, takie jak identyfikator produktu, plan Free, Pro lub Teams, okres miesięczny albo roczny, sklep, status subskrypcji, data wygaśnięcia, stan odnowienia i identyfikatory transakcji. Płatność obsługuje App Store albo Google Play; Shuuty nie otrzymuje pełnych danych karty płatniczej ani rachunku bankowego użytkownika.
+
+### 2.4. Dostęp do kalendarza urządzenia
+Gdy użytkownik wybierze w Aplikacji funkcję dodania konkretnego spotkania do kalendarza urządzenia, Aplikacja wyświetla systemowy dialog utworzenia wydarzenia i — zależnie od systemu — prosi o uprawnienie do odczytu i zapisu kalendarza. Udzielenie tego uprawnienia jest dobrowolne. Aplikacja korzysta z dostępu do kalendarza wyłącznie na wyraźne żądanie użytkownika, aby przygotować wybrane spotkanie i zapisać je po potwierdzeniu w systemowym dialogu. Odmowa lub cofnięcie uprawnienia wyłącza tę funkcję, ale nie blokuje pozostałych funkcji Aplikacji. Treść kalendarza urządzenia nie jest wysyłana na serwery Shuuty.
 
 ## 3. Cele i podstawy prawne przetwarzania
 Przetwarzamy dane tylko w zakresie potrzebnym do poniższych celów:
@@ -76,7 +79,7 @@ Na warunkach określonych w RODO użytkownik ma prawo do:
 - wycofania zgody w dowolnym momencie, gdy przetwarzanie opiera się na zgodzie; wycofanie nie działa wstecz;
 - złożenia skargi do **Prezesa Urzędu Ochrony Danych Osobowych (PUODO)**, ul. Stanisława Moniuszki 1A, 00-014 Warszawa, [uodo.gov.pl](https://uodo.gov.pl), albo do innego właściwego organu nadzorczego w EOG.
 
-Wniosek dotyczący praw można wysłać na **support@shuuty.pl**. Przed realizacją możemy poprosić o informacje potrzebne do potwierdzenia tożsamości i ochrony konta.
+Wniosek dotyczący praw można wysłać na **shuuty.app@gmail.com**. Przed realizacją możemy poprosić o informacje potrzebne do potwierdzenia tożsamości i ochrony konta.
 
 ## 8. Czy podanie danych jest obowiązkowe
 Dane oznaczone w procesie rejestracji jako wymagane, w szczególności dane potrzebne do uwierzytelnienia, utworzenia konta i potwierdzenia spełnienia wymogu wieku, są konieczne do zawarcia i wykonania umowy. Bez nich utworzenie lub obsługa konta może nie być możliwa.
@@ -101,4 +104,4 @@ Aplikacja mobilna nie używa przeglądarkowych plików cookie jako podstawowego 
 Aktualna wersja i data ostatniej aktualizacji są publikowane na tej stronie. O istotnych zmianach możemy również poinformować w Aplikacji lub e-mailem, a jeśli wymaga tego prawo — poprosić o zgodę.
 
 ## 14. Kontakt
-Pytania, wnioski i sprzeciwy dotyczące danych osobowych można kierować na **support@shuuty.pl**.
+Pytania, wnioski i sprzeciwy dotyczące danych osobowych można kierować na **shuuty.app@gmail.com**.
