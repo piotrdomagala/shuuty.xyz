@@ -3,12 +3,13 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import Cookies from 'js-cookie';
+import type { DocumentLanguage } from '@/components/documentLocale';
+import { useSiteLanguage } from '@/components/useSiteLanguage';
 import s from './page.module.css';
 
 /* ═══ i18n ═══ */
 
-type Lang = 'en' | 'pl';
+type Lang = DocumentLanguage;
 
 const t = {
   en: {
@@ -209,17 +210,14 @@ const StoreButton = ({ platform, label, prefix, href }: { platform: 'apple' | 'g
 /* ═══ Component ═══ */
 
 export default function Home() {
-  const [lang, setLang] = useState<Lang>('en');
-  const [ready, setReady] = useState(false);
+  const {
+    language: lang,
+    changeLanguage: switchLang,
+    isReady: ready,
+  } = useSiteLanguage();
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const [showMobileNav, setShowMobileNav] = useState(false);
-
-  useEffect(() => {
-    setReady(true);
-    const saved = Cookies.get('lang') as Lang | undefined;
-    if (saved === 'en' || saved === 'pl') setLang(saved);
-  }, []);
 
   useEffect(() => {
     const handler = () => {
@@ -229,11 +227,6 @@ export default function Home() {
     };
     window.addEventListener('scroll', handler, { passive: true });
     return () => window.removeEventListener('scroll', handler);
-  }, []);
-
-  const switchLang = useCallback((next: Lang) => {
-    setLang(next);
-    Cookies.set('lang', next, { expires: 365 });
   }, []);
 
   const toggleFaq = useCallback((i: number) => {

@@ -1,4 +1,11 @@
+import type { Metadata } from 'next';
 import DocumentPage from '@/components/DocumentPage';
+
+export const metadata: Metadata = {
+  title: 'Privacy Policy | Shuuty',
+  description:
+    'How Shuuty processes and protects personal data in the mobile application and public website.',
+};
 
 export default function PrivacyPage() {
   return (
