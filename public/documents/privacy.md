@@ -21,7 +21,7 @@ Zależnie od wybranych funkcji możemy przetwarzać:
 - treść zgłoszeń i korespondencji z pomocą techniczną.
 
 ### 2.2. Dane techniczne i dane o korzystaniu
-Możemy przetwarzać dane konieczne do działania i ochrony Aplikacji, takie jak adres IP, data i czas żądania, platforma, wersja Aplikacji i systemu, typ urządzenia, identyfikator instalacji lub urządzenia, token powiadomień push, informacje o sesji i logowaniu, dzienniki bezpieczeństwa, diagnostyka błędów oraz podstawowe informacje o użyciu funkcji.
+Możemy przetwarzać dane konieczne do działania i ochrony Aplikacji, takie jak adres IP, data i czas żądania, platforma, wersja Aplikacji i systemu, typ urządzenia, identyfikator instalacji lub urządzenia, token powiadomień push, informacje o sesji i logowaniu, dzienniki bezpieczeństwa, diagnostyka błędów oraz podstawowe informacje o użyciu funkcji. Po aktywacji monitoringu produkcyjnego ograniczony zakres technicznych danych diagnostycznych może być przekazywany do Sentry zgodnie z pkt 4.
 
 ### 2.3. Dane o zakupach i subskrypcjach
 Przetwarzamy informacje potrzebne do rozpoznania uprawnień, takie jak identyfikator produktu, plan Free, Pro lub Teams, okres miesięczny albo roczny, sklep, status subskrypcji, data wygaśnięcia, stan odnowienia i identyfikatory transakcji. Płatność obsługuje App Store albo Google Play; Shuuty nie otrzymuje pełnych danych karty płatniczej ani rachunku bankowego użytkownika.
@@ -42,6 +42,7 @@ Dane przekazujemy wyłącznie w zakresie potrzebnym do danego celu:
 - Apple, Google i Meta/Facebook w zakresie logowania lub funkcji ich platform, a Apple i Google także w związku z App Store, Google Play, płatnościami i subskrypcjami;
 - **RevenueCat** w celu obsługi informacji o zakupach, uprawnieniach i przywracaniu subskrypcji;
 - **OpenAI**, gdy użytkownik wybiera funkcję głosową lub AI; zależnie od funkcji dostawca może otrzymać nagranie, transkrypcję, treść zapytania i ograniczony kontekst słownikowy potrzebny do wykonania żądania;
+- **Sentry** w celu wykrywania i diagnozowania awarii oraz problemów z wydajnością, na podstawie prawnie uzasadnionego interesu Shuuty w zapewnieniu bezpieczeństwa i niezawodności Aplikacji (art. 6 ust. 1 lit. f RODO). Zakres może obejmować wersję Aplikacji i systemu, typ urządzenia, czas zdarzenia, rodzaj błędu i stos wywołań, ślady wydajności oraz pseudonimowy identyfikator techniczny. Konfiguracja Shuuty wyłącza wysyłanie domyślnych danych identyfikujących, zrzutów ekranu i hierarchii widoku; treści zadań, wiadomości, zdjęć i nagrań nie są celowo dołączane do zgłoszeń diagnostycznych;
 - **Expo**, Apple Push Notification service i Firebase Cloud Messaging w celu dostarczania powiadomień push;
 - **Brevo** w celu wysyłania wiadomości transakcyjnych, takich jak weryfikacja adresu e-mail i reset hasła;
 - **Geoapify** i **Google Maps** w celu wyszukiwania miejsc, geokodowania i wyświetlania map, gdy użytkownik korzysta z funkcji lokalizacyjnych;
@@ -52,7 +53,7 @@ Dane przekazujemy wyłącznie w zakresie potrzebnym do danego celu:
 Zależnie od usługi i przepisów dostawca może działać jako podmiot przetwarzający dane na zlecenie Shuuty albo jako odrębny administrator zgodnie ze swoją polityką prywatności.
 
 ## 5. Przekazywanie danych poza Europejski Obszar Gospodarczy
-Niektórzy dostawcy mogą przetwarzać dane w państwach spoza Europejskiego Obszaru Gospodarczego („EOG”), w szczególności gdy użytkownik korzysta z usług Apple, Google, Meta, RevenueCat, OpenAI, Expo, dostawców komunikacji, map, hostingu lub mediów.
+Niektórzy dostawcy mogą przetwarzać dane w państwach spoza Europejskiego Obszaru Gospodarczego („EOG”), w szczególności gdy użytkownik korzysta z usług Apple, Google, Meta, RevenueCat, OpenAI, Expo, Sentry, dostawców komunikacji, map, hostingu lub mediów.
 
 Jeżeli dane są przekazywane poza EOG, stosujemy mechanizm dopuszczony przez RODO odpowiedni do danego transferu, taki jak decyzja Komisji Europejskiej stwierdzająca odpowiedni stopień ochrony, standardowe klauzule umowne wraz z wymaganymi środkami dodatkowymi albo inna prawidłowa podstawa. Informację o zabezpieczeniu właściwym dla konkretnego dostawcy lub kopię stosownych klauzul można uzyskać, kontaktując się z nami.
 

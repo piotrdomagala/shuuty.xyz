@@ -21,7 +21,7 @@ Depending on the features selected, we may process:
 - the content of support requests and correspondence.
 
 ### 2.2. Technical and usage data
-We may process data required to operate and protect the Application, such as the IP address, request date and time, platform, Application and operating-system versions, device type, installation or device identifier, push-notification token, session and sign-in information, security logs, error diagnostics, and basic feature-usage information.
+We may process data required to operate and protect the Application, such as the IP address, request date and time, platform, Application and operating-system versions, device type, installation or device identifier, push-notification token, session and sign-in information, security logs, error diagnostics, and basic feature-usage information. Once production monitoring is enabled, a limited set of technical diagnostic data may be sent to Sentry as described in section 4.
 
 ### 2.3. Purchase and subscription data
 We process information needed to recognize entitlements, such as the product identifier, Free, Pro, or Teams plan, monthly or annual period, store, subscription status, expiration date, renewal state, and transaction identifiers. Payment is processed by the App Store or Google Play; Shuuty does not receive the user's full payment card or bank account details.
@@ -42,6 +42,7 @@ We disclose data only to the extent required for the relevant purpose:
 - Apple, Google, and Meta/Facebook for sign-in or their platform functions, and Apple and Google also in connection with the App Store, Google Play, payments, and subscriptions;
 - **RevenueCat** to operate purchase information, entitlements, and subscription restoration;
 - **OpenAI** when the user selects a voice or AI feature; depending on the feature, the provider may receive a recording, transcript, query, and limited vocabulary context required to perform the request;
+- **Sentry** to detect and diagnose crashes and performance issues, based on Shuuty's legitimate interest in maintaining the security and reliability of the Application (Article 6(1)(f) GDPR). The data may include the Application and operating-system versions, device type, event time, error type and stack trace, performance traces, and a pseudonymous technical identifier. Shuuty's configuration disables default personally identifiable information, screenshots, and view hierarchy; the contents of tasks, messages, photos, and recordings are not intentionally attached to diagnostic reports;
 - **Expo**, Apple Push Notification service, and Firebase Cloud Messaging to deliver push notifications;
 - **Brevo** to send transactional messages such as email verification and password resets;
 - **Geoapify** and **Google Maps** for place search, geocoding, and map display when the user uses location features;
@@ -52,7 +53,7 @@ We disclose data only to the extent required for the relevant purpose:
 Depending on the service and applicable law, a provider may act as a processor on Shuuty's behalf or as a separate controller under its own privacy notice.
 
 ## 5. Transfers outside the European Economic Area
-Some providers may process data in countries outside the European Economic Area (the “EEA”), particularly when the user uses services provided by Apple, Google, Meta, RevenueCat, OpenAI, Expo, or communication, map, hosting, and media providers.
+Some providers may process data in countries outside the European Economic Area (the “EEA”), particularly when the user uses services provided by Apple, Google, Meta, RevenueCat, OpenAI, Expo, Sentry, or communication, map, hosting, and media providers.
 
 Where data is transferred outside the EEA, we use a GDPR-permitted mechanism appropriate to the transfer, such as a European Commission adequacy decision, Standard Contractual Clauses together with required supplementary measures, or another valid basis. Information about the safeguard used for a particular provider or a copy of the relevant clauses may be requested from us.
 

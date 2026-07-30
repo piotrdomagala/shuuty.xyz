@@ -80,6 +80,7 @@ requireText('termsEn', [
 const providers = [
   'RevenueCat',
   'OpenAI',
+  'Sentry',
   'Brevo',
   'Geoapify',
   'Google Maps',
@@ -99,6 +100,10 @@ requireText('privacyPl', [
   'wycofania zgody',
   'Czy podanie danych jest obowiązkowe',
   'wyłącznie na zautomatyzowanym przetwarzaniu',
+  'Sentry** w celu wykrywania i diagnozowania awarii oraz problemów z wydajnością, na podstawie prawnie uzasadnionego interesu',
+  'wyłącza wysyłanie domyślnych danych identyfikujących, zrzutów ekranu i hierarchii widoku',
+  'treści zadań, wiadomości, zdjęć i nagrań nie są celowo dołączane',
+  'OpenAI, Expo, Sentry',
 ]);
 requireText('privacyEn', [
   ...providers,
@@ -110,15 +115,11 @@ requireText('privacyEn', [
   'withdraw consent',
   'Whether providing data is mandatory',
   'based solely on automated processing',
+  "Sentry** to detect and diagnose crashes and performance issues, based on Shuuty's legitimate interest",
+  'disables default personally identifiable information, screenshots, and view hierarchy',
+  'tasks, messages, photos, and recordings are not intentionally attached',
+  'OpenAI, Expo, Sentry',
 ]);
-
-for (const key of ['privacyPl', 'privacyEn']) {
-  if (documents[key].includes('Sentry')) {
-    failures.push(
-      `${files[key]} names Sentry although production monitoring is not enabled`,
-    );
-  }
-}
 
 const termsSections = Array.from({length: 14}, (_, index) => index + 1);
 const privacySections = Array.from({length: 14}, (_, index) => index + 1);
