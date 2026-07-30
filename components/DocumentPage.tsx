@@ -54,7 +54,12 @@ export default function DocumentPage({ titleEn, titlePl, fileEn, filePl }: Docum
     const savedLang = Cookies.get('lang') as Language | undefined;
     if (savedLang === 'en' || savedLang === 'pl') {
       setLanguage(savedLang);
+      return;
     }
+
+    const preferredLanguage =
+      navigator.languages?.[0] ?? navigator.language;
+    setLanguage(preferredLanguage?.toLowerCase().startsWith('pl') ? 'pl' : 'en');
   }, []);
 
   const fetchContent = useCallback(async () => {

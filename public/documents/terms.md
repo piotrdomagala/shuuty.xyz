@@ -1,10 +1,12 @@
 # Regulamin aplikacji mobilnej Shuuty
 
+Ostatnia aktualizacja: 30 lipca 2026 r.
+
 ## §1. Postanowienia ogólne
 1. **Nazwa aplikacji**: Shuuty
-2. **Szczegółowy opis usług**: Aplikacja ma na celu zbieranie nowych użytkowników, którzy będą tworzyć spotkania i grupy, w których będą mogli zapraszać siebie nawzajem. Aplikacja jest darmowa. Warunki płatnych usług dotyczą dodatkowych funkcjonalności, które mogą się przydać.
-3. **Warunki płatnych usług**: Aby korzystać z płatnych usług, należy wykupić subskrypcję, której miesięczna opłata wynosi 1,29 USD.
-4. **Akceptacja regulaminu**: Warunkiem korzystania z aplikacji jest akceptacja niniejszego regulaminu. Użytkownik akceptuje regulamin przy pierwszym uruchomieniu aplikacji, co jest równoznaczne z zawarciem umowy o świadczenie usług drogą elektroniczną pomiędzy użytkownikiem a Shuuty Prosta Spółka Akcyjna.
+2. **Szczegółowy opis usług**: Aplikacja umożliwia między innymi tworzenie i organizowanie zadań, spotkań oraz grup, komunikację z innymi użytkownikami i korzystanie z funkcji wspierających planowanie. Podstawowy plan Free jest dostępny bez opłaty.
+3. **Warunki płatnych usług**: Dodatkowe funkcje są dostępne w planach Pro i Teams oferowanych w miesięcznych lub rocznych, automatycznie odnawialnych okresach subskrypcyjnych. Obowiązująca cena, waluta, okres rozliczeniowy i ewentualne podatki są prezentowane użytkownikowi w App Store albo Google Play bezpośrednio przed potwierdzeniem zakupu.
+4. **Akceptacja regulaminu**: Warunkiem utworzenia konta jest akceptacja niniejszego regulaminu. Informacja o akceptacji wraz z odnośnikami do Regulaminu i Polityki prywatności jest wyświetlana w procesie rejestracji. Rejestrując konto, użytkownik zawiera z Shuuty Prostą Spółką Akcyjną umowę o świadczenie usług drogą elektroniczną.
 5. **Wiek użytkownika**: Z aplikacji mogą korzystać osoby, które ukończyły 16 lat.
 
 ## §2. Własność intelektualna
@@ -33,23 +35,28 @@
 
 ## §8. Zakończenie korzystania z aplikacji
 - Użytkownik może zakończyć korzystanie z aplikacji poprzez usunięcie konta w ustawieniach aplikacji.
-- W przypadku rezygnacji z subskrypcji, użytkownik powinien anulować subskrypcję w zakładce "Subskrybuj".
+- Usunięcie aplikacji lub konta Shuuty nie anuluje automatycznie subskrypcji zakupionej w App Store albo Google Play. Automatyczne odnawianie należy wyłączyć w ustawieniach subskrypcji odpowiedniego sklepu.
 
 ## §9. Reklamacje
 - Wszelkie reklamacje związane z funkcjonowaniem aplikacji oraz ze świadczeniem za jej pośrednictwem usług, a także pytania dotyczące korzystania z aplikacji, należy kierować do Usługodawcy na adres poczty elektronicznej support@shuuty.pl.
 - Reklamacja powinna zawierać w swej treści: nazwę i model urządzenia mobilnego, aktualną wersję systemu teleinformatycznego zainstalowanego na urządzeniu, dokładny opis i powód reklamacji, oraz adres e-mail użytkownika. Odpowiedź na reklamację zostanie skierowana na adres mailowy, z którego została otrzymana.
 
 ## §10. Zmiana i dostęp do regulaminu
-- W przypadku zmiany regulaminu, Usługodawca informuje użytkowników o zmianie regulaminu przy starcie aplikacji, wyświetlając treść zmienionego regulaminu i prosząc użytkowników o złożenie oświadczenia, że zapoznali się z nowym regulaminem i akceptują jego postanowienia.
-- W przypadku niezaakceptowania zmian w regulaminie, użytkownik ma prawo do wypowiedzenia umowy o świadczenie usług drogą elektroniczną. Umowa ulega rozwiązaniu z momentem uzyskania przez Usługodawcę informacji o wypowiedzeniu umowy przez użytkownika. Po otrzymaniu wypowiedzenia Usługodawca niezwłocznie usunie konto użytkownika.
+- Aktualna wersja Regulaminu wraz z datą ostatniej aktualizacji jest dostępna na stronie internetowej Usługodawcy. Zmiany Regulaminu są publikowane na tej stronie, a informacja o zmianach istotnych może być przekazana także przez Aplikację lub pocztą elektroniczną.
+- Jeżeli obowiązujące prawo wymaga odrębnej, aktywnej zgody użytkownika na zmianę, samo dalsze korzystanie z Aplikacji nie zastępuje takiej zgody. Użytkownik, który nie akceptuje zmian, może zaprzestać korzystania z Aplikacji i usunąć konto w jej ustawieniach.
 
 ## §11. Dostępność usług
 - Usługodawca dołoży wszelkich starań, aby aplikacja była dostępna przez 24 godziny na dobę, 7 dni w tygodniu. Nie jest jednak zobowiązany do zapewnienia nieprzerwanej dostępności usług. Usługodawca zastrzega sobie prawo do czasowego zawieszenia dostępności aplikacji ze względu na konserwację, modernizację lub inne prace techniczne, bez konieczności wcześniejszego powiadamiania użytkowników.
 
 ## §12. Warunki płatności
-- Subskrypcja płatnych usług w aplikacji Shuuty jest odnawiana automatycznie co miesiąc, chyba że użytkownik zrezygnuje z subskrypcji przed zakończeniem bieżącego okresu subskrypcyjnego.
-- Płatność za subskrypcję jest pobierana z konta użytkownika w sklepie z aplikacjami w momencie potwierdzenia zakupu.
-- Użytkownik może zarządzać subskrypcjami i wyłączyć automatyczne odnawianie subskrypcji w ustawieniach konta w sklepie z aplikacjami.
+1. Shuuty oferuje płatne plany Pro i Teams w miesięcznych oraz rocznych okresach subskrypcyjnych. Plan Free nie wymaga opłaty.
+2. Ceną wiążącą jest lokalna cena wraz z walutą, okresem rozliczeniowym i informacją o automatycznym odnowieniu wyświetlona przez App Store albo Google Play bezpośrednio przed zakupem. Cena może zależeć od kraju, waluty, podatków oraz zasad danego sklepu.
+3. Płatność jest pobierana z konta Apple ID albo Google Play użytkownika po potwierdzeniu zakupu. Shuuty nie otrzymuje pełnych danych karty płatniczej ani rachunku bankowego użytkownika.
+4. Subskrypcja odnawia się automatycznie na kolejny wybrany okres, dopóki użytkownik nie wyłączy automatycznego odnawiania zgodnie z terminem i zasadami właściwego sklepu.
+5. Subskrypcją można zarządzać, zmienić ją lub anulować w ustawieniach subskrypcji App Store albo Google Play. Po wyłączeniu odnowienia plan Pro lub Teams pozostaje aktywny do końca opłaconego okresu, a następnie konto przechodzi na plan Free, chyba że sklep zastosuje odmienny skutek wymagany prawem lub zaakceptowany przez użytkownika.
+6. Termin i sposób wejścia w życie zmiany między planami Pro i Teams albo między okresem miesięcznym i rocznym są prezentowane przez sklep przed potwierdzeniem zmiany i podlegają zasadom tego sklepu.
+7. Funkcja „Przywróć zakupy” służy do ponownego odczytania aktywnej subskrypcji powiązanej z tym samym kontem sklepu, na przykład po ponownej instalacji aplikacji lub zmianie urządzenia. Przywrócenie nie inicjuje nowej płatności.
+8. Anulowanie nie oznacza automatycznie zwrotu opłaty za rozpoczęty okres. Zasady i obsługę zwrotów określają App Store albo Google Play oraz bezwzględnie obowiązujące przepisy prawa.
 
 ## §13. Bezpieczeństwo
 - Użytkownik zobowiązany jest do zachowania poufności swoich danych logowania do aplikacji i nieudostępniania ich osobom trzecim.
@@ -79,11 +86,11 @@
 ## §18. Reklamacje i pomoc techniczna
 1. Użytkownik ma prawo do składania reklamacji związanych z działaniem aplikacji. Reklamacje należy zgłaszać na adres poczty elektronicznej: support@shuuty.pl.
 2. Usługodawca zobowiązuje się do rozpatrzenia reklamacji w terminie 14 dni roboczych od jej otrzymania.
-3. Wszelkie pytania dotyczące korzystania z aplikacji oraz problemy techniczne można zgłaszać za pośrednictwem formularza kontaktowego dostępnego w aplikacji lub na stronie internetowej Usługodawcy.
+3. Wszelkie pytania dotyczące korzystania z aplikacji oraz problemy techniczne można zgłaszać na adres support@shuuty.pl.
 
 ## §19. Postanowienia końcowe
-1. Regulamin może ulec zmianie, a wszelkie zmiany będą publikowane w aplikacji oraz na stronie internetowej Usługodawcy. Zmiany regulaminu wchodzą w życie w terminie wskazanym przez Usługodawcę, nie krótszym niż 7 dni od dnia ich publikacji.
-2. Korzystanie z aplikacji po wprowadzeniu zmian regulaminu jest równoznaczne z ich akceptacją.
+1. Regulamin może ulec zmianie, a wszelkie zmiany będą publikowane na stronie internetowej Usługodawcy. Zmiany wchodzą w życie w terminie wskazanym przez Usługodawcę, nie krótszym niż 7 dni od dnia ich publikacji, chyba że prawo wymaga innego terminu.
+2. Skutek dalszego korzystania z aplikacji po wejściu zmian w życie ocenia się zgodnie z obowiązującym prawem. Jeżeli prawo wymaga aktywnej zgody użytkownika, Usługodawca zwróci się o jej udzielenie odrębnie.
 3. W przypadku niezaakceptowania zmian regulaminu, użytkownik ma prawo do usunięcia konta i zaprzestania korzystania z aplikacji.
 
 Dziękujemy za korzystanie z aplikacji Shuuty!

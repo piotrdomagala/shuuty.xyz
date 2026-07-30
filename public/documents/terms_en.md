@@ -1,10 +1,12 @@
 # Shuuty Mobile Application Terms and Conditions
 
+Last updated: July 30, 2026
+
 ## §1. General Provisions
 1. **Application Name**: Shuuty
-2. **Detailed Service Description**: The application aims to gather new users who will create meetings and groups where they can invite each other.
-3. **Paid Services Conditions**: To use paid services, a subscription must be purchased, costing $1.29 USD per month. These paid services provide additional functionalities that may be useful.
-4. **Acceptance of Terms**: The use of the application is conditional upon acceptance of these terms and conditions. By launching the application for the first time, the user accepts these terms, which is equivalent to entering into an electronic service agreement with Shuuty Prosta Spółka Akcyjna.
+2. **Detailed Service Description**: The Application allows users to create and organize tasks, meetings, and groups, communicate with other users, and use planning support features. The basic Free plan is available without charge.
+3. **Paid Services Conditions**: Additional features are available through the Pro and Teams plans offered as monthly or annual auto-renewable subscriptions. The applicable price, currency, billing period, and any taxes are displayed in the App Store or Google Play immediately before the user confirms a purchase.
+4. **Acceptance of Terms**: Creating an account is conditional upon acceptance of these Terms. The registration flow displays an acceptance notice together with links to the Terms and Privacy Policy. By registering an account, the user enters into an electronic services agreement with Shuuty Prosta Spółka Akcyjna.
 5. **Free Application**: The basic version of the application is free to use.
 
 ## §2. Intellectual Property
@@ -31,15 +33,25 @@
 
 ## §8. Termination of Application Use
 - Users can terminate the use of the application by deleting their account in the application settings.
-- To cancel a subscription, users should cancel it in the "Subscribe" tab.
+- Deleting the Application or a Shuuty account does not automatically cancel a subscription purchased through the App Store or Google Play. Auto-renewal must be turned off in the subscription settings of the relevant store.
+
+## §8a. Paid Subscription Terms
+1. Shuuty offers the paid Pro and Teams plans with monthly and annual subscription periods. The Free plan does not require payment.
+2. The binding price is the localized price, currency, billing period, and auto-renewal information displayed by the App Store or Google Play immediately before purchase. Prices may vary by country, currency, taxes, and store rules.
+3. Payment is charged to the user's Apple ID or Google Play account when the purchase is confirmed. Shuuty does not receive the user's full payment card or bank account details.
+4. A subscription renews automatically for the selected period until the user turns off auto-renewal within the time and under the rules specified by the relevant store.
+5. Users can manage, change, or cancel a subscription in the App Store or Google Play subscription settings. After auto-renewal is turned off, the Pro or Teams plan remains active until the end of the paid period and the account then moves to Free, unless the store applies a different outcome required by law or accepted by the user.
+6. The effective date and billing treatment of a change between Pro and Teams, or between monthly and annual billing, are shown by the store before confirmation and are governed by that store's rules.
+7. “Restore Purchases” retrieves an active subscription associated with the same store account, for example after reinstalling the Application or changing devices. Restoring does not initiate a new charge.
+8. Cancellation does not automatically result in a refund for a billing period that has already started. Refund eligibility and processing are governed by the App Store or Google Play rules and mandatory applicable law.
 
 ## §9. Complaints
 - Any complaints related to the application's operation and the services provided through it, as well as questions about using the application, should be directed to the Service Provider via email at support@shuuty.pl.
 - Complaints should include: the name and model of the mobile device, the current version of the installed operating system, a detailed description and reason for the complaint, and the user's email address. The response to the complaint will be sent to the email address from which it was received.
 
 ## §10. Changes and Access to the Terms and Conditions
-- In case of changes to the terms and conditions, the Service Provider informs users about the change by displaying the new terms at the start of the application, requesting users to acknowledge and accept the new terms.
-- If users do not accept the changes, they have the right to terminate the electronic service agreement. The agreement is terminated upon the Service Provider receiving the termination notice. After receiving the termination notice, the Service Provider will promptly delete the user's account.
+- The current version of the Terms, including its last-updated date, is available on the Service Provider's website. Changes are published on that page, and material changes may also be communicated through the Application or by email.
+- Where applicable law requires separate, affirmative consent to a change, continued use of the Application alone does not replace that consent. A user who does not accept a change may stop using the Application and delete their account in its settings.
 
 ## §11. Age Restrictions
 - Users must be at least 16 years old to use the application.
@@ -72,11 +84,11 @@
 ## §18. Complaints and Technical Support
 1. Users have the right to file complaints related to the application’s operation. Complaints should be sent to support@shuuty.pl.
 2. The Service Provider commits to responding to complaints within 14 business days of receipt.
-3. Any questions regarding the use of the application and technical issues can be reported via the contact form available in the application or on the Service Provider's website.
+3. Questions about the Application and technical issues can be reported to support@shuuty.pl.
 
 ## §19. Final Provisions
-1. The terms and conditions may be amended, and any changes will be published in the application and on the Service Provider's website. Changes to the terms come into effect on the date specified by the Service Provider, no less than 7 days from the date of publication.
-2. Continued use of the application after changes to the terms signifies acceptance of the changes.
+1. The Terms may be amended, and all changes will be published on the Service Provider's website. Changes enter into force on the date specified by the Service Provider, no sooner than 7 days after publication unless applicable law requires a different period.
+2. The effect of continued use after changes enter into force is determined under applicable law. Where affirmative user consent is required, the Service Provider will request it separately.
 3. If users do not accept the changes to the terms, they have the right to delete their account and stop using the application.
 
 Thank you for using the Shuuty application!

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, FormEvent } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Cookies from 'js-cookie';
@@ -8,22 +8,19 @@ import styles from '../documents.module.css';
 
 type Language = 'en' | 'pl';
 
+const SUPPORT_EMAIL = 'support@shuuty.pl';
+
 const translations = {
   en: {
     pageTitle: 'Contact Support',
-    pageSubtitle: "We're here to help! Reach out to our support team and we'll get back to you within 24 hours.",
-    formTitle: 'Get in Touch',
-    formSubtitle: "Describe your issue or question and we'll provide you with the best assistance possible.",
-    nameLabel: 'Your Name',
-    namePlaceholder: 'Enter your full name',
-    emailLabel: 'Email Address',
-    emailPlaceholder: 'your.email@example.com',
-    messageLabel: 'Message',
-    messagePlaceholder: 'Tell us how we can help you...',
-    submitButton: 'Send Message',
-    sending: 'Sending...',
-    successTitle: 'Thank you!',
-    successMessage: "We've received your message and will get back to you within 24 hours.",
+    backTitle: 'Back to home',
+    languageSwitcher: 'Language',
+    contactTitle: 'How can we help?',
+    contactDescription:
+      'Email us about your account, the app, or your subscription. When relevant, include your device model, system version, and app version to help us investigate.',
+    emailAction: 'Open email app',
+    emailHint: "If the button doesn't open your email app, copy this address:",
+    emailSubject: 'Shuuty support',
     support: 'Support',
     privacy: 'Privacy',
     terms: 'Terms',
@@ -31,19 +28,14 @@ const translations = {
   },
   pl: {
     pageTitle: 'Kontakt z pomocą',
-    pageSubtitle: 'Jesteśmy tu, aby pomóc! Skontaktuj się z naszym zespołem wsparcia, a odpowiemy w ciągu 24 godzin.',
-    formTitle: 'Skontaktuj się',
-    formSubtitle: 'Opisz swój problem lub pytanie, a zapewnimy Ci najlepszą możliwą pomoc.',
-    nameLabel: 'Twoje imię',
-    namePlaceholder: 'Wpisz swoje imię i nazwisko',
-    emailLabel: 'Adres e-mail',
-    emailPlaceholder: 'twoj.email@example.com',
-    messageLabel: 'Wiadomość',
-    messagePlaceholder: 'Powiedz nam, jak możemy Ci pomóc...',
-    submitButton: 'Wyślij wiadomość',
-    sending: 'Wysyłanie...',
-    successTitle: 'Dziękujemy!',
-    successMessage: 'Otrzymaliśmy Twoją wiadomość i odpowiemy w ciągu 24 godzin.',
+    backTitle: 'Powrót do strony głównej',
+    languageSwitcher: 'Język',
+    contactTitle: 'Jak możemy pomóc?',
+    contactDescription:
+      'Napisz do nas w sprawie konta, aplikacji lub subskrypcji. Jeśli pomoże to w diagnozie, podaj model urządzenia, wersję systemu i wersję aplikacji.',
+    emailAction: 'Otwórz pocztę',
+    emailHint: 'Jeśli przycisk nie otworzy aplikacji pocztowej, skopiuj adres:',
+    emailSubject: 'Pomoc Shuuty',
     support: 'Wsparcie',
     privacy: 'Prywatność',
     terms: 'Regulamin',
@@ -51,37 +43,33 @@ const translations = {
   },
 };
 
+const languageOptions: { code: Language; label: string }[] = [
+  { code: 'en', label: 'EN' },
+  { code: 'pl', label: 'PL' },
+];
+
 export default function SupportPage() {
   const [language, setLanguage] = useState<Language>('en');
   const [mounted, setMounted] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: '',
-  });
 
   useEffect(() => {
     setMounted(true);
     const savedLang = Cookies.get('lang') as Language | undefined;
-    if (savedLang && (savedLang === 'en' || savedLang === 'pl')) {
+    if (savedLang === 'en' || savedLang === 'pl') {
       setLanguage(savedLang);
+      return;
     }
+
+    const preferredLanguage = navigator.languages?.[0] ?? navigator.language;
+    setLanguage(preferredLanguage?.toLowerCase().startsWith('pl') ? 'pl' : 'en');
   }, []);
 
   const t = translations[language];
+  const supportMailHref = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(t.emailSubject)}`;
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-
-    setIsSubmitting(false);
-    setIsSuccess(true);
-    setFormData({ name: '', email: '', message: '' });
+  const handleLanguageChange = (nextLanguage: Language) => {
+    setLanguage(nextLanguage);
+    Cookies.set('lang', nextLanguage, { expires: 365 });
   };
 
   if (!mounted) return null;
@@ -95,7 +83,7 @@ export default function SupportPage() {
 
       <header className={styles.header}>
         <div className={styles.headerContent}>
-          <Link href="/" className={styles.backButton} title="Back to home">
+          <Link href="/" className={styles.backButton} title={t.backTitle}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M19 12H5M12 19l-7-7 7-7" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
@@ -110,71 +98,62 @@ export default function SupportPage() {
             />
             <h1 className={styles.headerTitle}>{t.pageTitle}</h1>
           </div>
+          <div
+            className={styles.languageSwitcher}
+            role="group"
+            aria-label={t.languageSwitcher}
+          >
+            {languageOptions.map((option) => (
+              <button
+                key={option.code}
+                type="button"
+                className={`${styles.languageButton} ${
+                  language === option.code ? styles.languageButtonActive : ''
+                }`}
+                onClick={() => handleLanguageChange(option.code)}
+                aria-pressed={language === option.code}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
         </div>
       </header>
 
       <main className={styles.main}>
         <div className={styles.contentCard}>
-          {isSuccess ? (
-            <div className={styles.successMessage}>
-              <div className={styles.successIcon}>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" strokeLinecap="round" strokeLinejoin="round" />
-                  <polyline points="22,4 12,14.01 9,11.01" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </div>
-              <h3>{t.successTitle}</h3>
-              <p>{t.successMessage}</p>
+          <div className={styles.formContainer}>
+            <div className={styles.supportIcon} aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                <path d="M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="m3 7 9 6 9-6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </div>
-          ) : (
-            <div className={styles.formContainer}>
-              <div className={styles.formIntro}>
-                <h2>{t.formTitle}</h2>
-                <p>{t.formSubtitle}</p>
-              </div>
 
-              <form className={styles.form} onSubmit={handleSubmit}>
-                <div className={styles.formGroup}>
-                  <label htmlFor="name">{t.nameLabel}</label>
-                  <input
-                    type="text"
-                    id="name"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    placeholder={t.namePlaceholder}
-                    required
-                  />
-                </div>
-
-                <div className={styles.formGroup}>
-                  <label htmlFor="email">{t.emailLabel}</label>
-                  <input
-                    type="email"
-                    id="email"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    placeholder={t.emailPlaceholder}
-                    required
-                  />
-                </div>
-
-                <div className={styles.formGroup}>
-                  <label htmlFor="message">{t.messageLabel}</label>
-                  <textarea
-                    id="message"
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    placeholder={t.messagePlaceholder}
-                    required
-                  />
-                </div>
-
-                <button type="submit" className={styles.submitButton} disabled={isSubmitting}>
-                  {isSubmitting ? t.sending : t.submitButton}
-                </button>
-              </form>
+            <div className={styles.formIntro}>
+              <h2>{t.contactTitle}</h2>
+              <p>{t.contactDescription}</p>
             </div>
-          )}
+
+            <a href={supportMailHref} className={styles.supportMailButton}>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                aria-hidden="true"
+              >
+                <path d="M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="m3 7 9 6 9-6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              <span>{t.emailAction}</span>
+            </a>
+
+            <p className={styles.supportHint}>{t.emailHint}</p>
+            <a href={`mailto:${SUPPORT_EMAIL}`} className={styles.supportEmailLink}>
+              {SUPPORT_EMAIL}
+            </a>
+          </div>
         </div>
       </main>
 

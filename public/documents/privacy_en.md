@@ -1,57 +1,57 @@
 # Privacy Policy of the Shuuty Mobile Application
 
+Last updated: July 30, 2026
+
 ## 1. General Information
 Shuuty Prosta Spółka Akcyjna (with its registered office at ul. Południowa 13, 32-353 Trzyciąż) (hereinafter "Shuuty", "we", "our", or "us"), acting as the data controller, takes great care to ensure the protection and respect of the privacy of its users. The purpose of this information ("Privacy Policy Information") is to inform users about Shuuty's practices regarding the collection, use, and distribution of information that users may provide to Shuuty through this mobile application ("Application").
 
-This Privacy Policy Information (together with Shuuty's Terms and Conditions, any other documents referred to therein, and our Cookie Policy) sets out the terms under which Shuuty collects and processes the personal data of its users. Please read this information carefully to understand Shuuty's policies and practices regarding users' personal data and its processing.
+This Privacy Policy Information (together with Shuuty's Terms and Conditions and the documents referred to in them) sets out the rules under which Shuuty collects and processes users' personal data. Please read this information carefully to understand Shuuty's practices regarding users' personal data and its processing.
 
 ## 2. What information does Shuuty collect from users and how long is it stored?
 
 ### 2.1 Information provided directly by users
-Users may provide Shuuty with information that identifies them ("Personal Data") when using our Application, filling out forms available in the Application (e.g., for registration purposes), participating in contests, promotions, or surveys organized by us, as well as through any exchange of information with our company by phone, email, or any other means, and when reporting problems related to the use of our Application.
+Users may provide Shuuty with information that identifies them ("Personal Data") when using the Application, completing forms, creating or sharing content, making a purchase, or contacting support.
 
 The information that may be provided to our company includes:
-- Mandatory information required for registration to use services available in our Application or to gain access to other Shuuty services, including the user's name, email address, date of birth, and password. All these fields are mandatory to create an account in our Application.
-- Photo;
-- Postal address;
-- Phone number;
-- Short biography and gender of the user, if you consent to provide this information;
-- Records of any correspondence between the user and Shuuty;
-- Records of all bookings or meeting applications posted in our Application;
-- Information related to accounting or financial transactions, including those conducted through our Application. This may include information regarding the user's payment card or bank account details, as well as details of meetings booked or offered through our Application;
-- Detailed information about visits to our Application and the resources accessed by the user;
-- Where applicable, responses to any surveys or questionnaires;
-- Information that Shuuty may require from users when reporting any problems related to the use of our Application or services, as well as support requests;
-- Location information, if the user consents to the collection and processing of such data.
+- Account and sign-in data, depending on the selected registration method: email address, user identifier, username, display name, password hash, or the identifier of a linked Google, Apple, or Meta/Facebook account. Shuuty does not store a password in plain text;
+- Optional profile and settings data, such as date of birth, gender, language, time zone, nationality, interests, and profile photo;
+- Content created or shared in the Application, including tasks, messages, reactions, meetings, groups, dates, locations, and uploaded photos or other media;
+- Voice recordings, transcripts, and text submitted to voice or artificial intelligence features when the user voluntarily uses those features;
+- Information required to handle support requests and correspondence;
+- Subscription information, such as product identifier, plan, store, entitlement status, expiration date, renewal status, and transaction identifiers. Payment is processed by the App Store or Google Play; Shuuty does not receive the user's full payment card or bank account details;
+- Location data if the user grants the relevant permission or provides a location for a task, meeting, group, or search.
 
 ### 2.2 Information collected automatically
-Shuuty may collect certain information automatically when the user uses the Application, such as the IP address, login data, type and version of the web browser, types and versions of browser plug-ins, operating system and platform, device advertising identifier, visit history to different pages of our Application, search terms used, download errors, time spent on specific pages, interactions with other pages, and phone numbers used to contact us. Shuuty collects this information through various technologies, including cookies (detailed information is provided in the Cookie Policy documentation).
+Shuuty may automatically process technical data required to operate and protect the Application, such as the IP address, request date and time, Application version, platform and operating system version, device type, installation or device identifier, push notification token, session and login information, error diagnostics, and basic feature usage data. This information is used to maintain sessions, deliver notifications, prevent abuse, diagnose failures, and improve reliability.
 
 ### 2.3 Data storage
-- Users' personal data is stored for a period of 5 years from the user's last visit to our Application if the user has not closed their account;
-- In case of account closure by the user, the data is stored for 30 days, unless the user has received a negative rating or review – in such cases, the data is stored for 2 years from the date of account closure.
+- Account data and content are kept while the user uses the Application and for as long as necessary to fulfill the purposes described here, secure claims, maintain safety, and meet legal obligations. After account deletion, data is deleted or anonymized, except for information that must be retained longer under law, in backups, to prevent abuse, or to establish, exercise, or defend legal claims;
+- A recording uploaded to a voice feature is stored temporarily on the Shuuty server and deleted after transcription. The resulting transcript and content created from it may be retained if the user saves them in the Application. External providers process data sent to them for periods resulting from their terms, applicable agreements, and law;
+- Purchase and subscription data may be retained by Shuuty, Apple, Google, and RevenueCat for the period required to operate entitlements, handle billing, prevent fraud, and comply with legal obligations.
 
 ## 3. How does Shuuty use the information collected from users?
 Shuuty may use user information for the following purposes:
-- Fulfilling obligations arising from any agreements entered into between the user and Shuuty;
-- Sending the user information regarding services by email or text messages;
-- Collecting payments from the user or transferring payments to the user;
-- Allowing the user to personalize their profile in our Application;
-- Allowing the user to exchange information with other users about our services or meetings;
-- Providing the user with access to our support services;
-- Improving our services and training customer service agents by recording phone conversations;
-- Ensuring compliance with applicable laws;
-- Sending the user marketing materials, as well as suggestions and recommendations regarding other goods or services related to our services;
-- Sending the user information about modifications to our services;
-- Verifying data contained in the user's documents;
-- Managing our Application and for internal purposes, including troubleshooting, data analysis, testing, and research.
+- Creating and operating an account, authenticating the user, and providing services available in the Application;
+- Enabling tasks, meetings, groups, communication, and sharing content with selected users under the applicable privacy settings;
+- Personalizing the profile, language, time zone, and behavior of selected features;
+- Delivering requested push notifications and transactional emails related to the account, security, or service;
+- Providing voice and artificial intelligence features, including transcription, task organization, and search intent interpretation;
+- Verifying, restoring, and synchronizing entitlements to the Pro and Teams plans;
+- Providing support, maintaining security, preventing abuse, diagnosing errors, and improving Application reliability;
+- Complying with legal obligations and protecting the rights of Shuuty and its users.
 
 ## 4. Who are the recipients of the information collected by our company from users and for what purposes is it shared?
-Shuuty may share user data with the following recipients:
-- Members of the Shuuty community and other users to facilitate the organization of meetings;
-- External entities to fulfill agreements entered into with the user;
-- Shuuty's business partners;
-- Law enforcement agencies, government or public authorities if required by law.
+Shuuty may share user data with the following recipients only to the extent necessary for the relevant purpose:
+- Other Shuuty users when this results from a feature selected by the user and the applicable privacy settings, for example participation in a group, meeting, chat, or assigned task;
+- Apple and Google for sign-in and operation of the App Store, Google Play, payments, and subscriptions, and Meta/Facebook if the user chooses Facebook sign-in;
+- RevenueCat to operate and synchronize purchase information, entitlements, and subscription restoration;
+- OpenAI when the user uses voice or artificial intelligence features. Depending on the feature, OpenAI may receive a recording, transcript, query content, and limited vocabulary context, such as the names or usernames of Shuuty friends or group names required for accurate transcription;
+- Expo, Apple Push Notification service, and Firebase Cloud Messaging to deliver push notifications. Notification content and technical identifiers may be processed by these services;
+- Brevo to send transactional emails such as email verification and password reset messages;
+- Geoapify and Google Maps for place search, geocoding, and map display when the user uses location features;
+- Cloudflare R2 and Cloudinary to store, process, and deliver photos and other media;
+- Hosting, database, and technical infrastructure providers required to operate the Application;
+- Law enforcement agencies, government bodies, or public authorities where required by law.
 
 ## 5. Users' rights
 Each user has the right to:
@@ -65,7 +65,7 @@ Each user has the right to:
 Our Application is intended for use only by users aged 16 and over. Registration of children under the age of 16 in the Application is prohibited.
 
 ## 7. Cookies and similar technologies
-Detailed information regarding the use of cookies and similar technologies is provided in our Cookie Policy.
+The mobile Application does not use browser cookies as its primary operating mechanism. The public Shuuty website stores a technical “lang” cookie to remember the selected language. External websites opened by the user, including the App Store and Google Play, apply their own cookie and similar-technology policies.
 
 ## 8. Confidentiality of the user's password
 After choosing a password that allows the user to access certain parts of our Application, the user is responsible for keeping this password confidential. Shuuty requires the user not to share this password with any other person.
@@ -76,6 +76,6 @@ Our Application may contain links to websites of our partner networks, advertise
 ## 10. Modifications to our Privacy Policy Information
 Any modifications to our Privacy Policy Information will be posted on this page. In justified cases, Shuuty may inform the user of these modifications or seek their consent. Please regularly check for any updates or modifications to our Privacy Policy Information.
 
-## 11. Contact and Data Protection Officer
+## 11. Data protection contact
 To contact our company with any suggestions or inquiries regarding our privacy practices, the user can do so in the following way:
-- By sending an email to our Data Protection Officer at support@shuuty.pl.
+- By sending an email to support@shuuty.pl.

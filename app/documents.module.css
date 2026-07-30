@@ -248,11 +248,29 @@
 
 .markdown a:hover { opacity: 0.8; text-decoration: underline; }
 
-/* ── Support form ── */
+/* ── Support contact ── */
 
 .formContainer {
   max-width: 500px;
   margin: 0 auto;
+}
+
+.supportIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto var(--s-lg);
+  border: 1px solid rgba(var(--gold-rgb), 0.3);
+  border-radius: var(--r-lg);
+  background: rgba(var(--gold-rgb), 0.1);
+  color: var(--gold);
+}
+
+.supportIcon svg {
+  width: 30px;
+  height: 30px;
 }
 
 .formIntro {
@@ -271,105 +289,72 @@
 .formIntro p {
   color: var(--text-secondary);
   margin: 0;
+  line-height: 1.7;
 }
 
-.form {
+.supportMailButton {
   display: flex;
-  flex-direction: column;
-  gap: var(--s-lg);
-}
-
-.formGroup {
-  display: flex;
-  flex-direction: column;
-  gap: var(--s-xs);
-}
-
-.formGroup label {
-  font-weight: 500;
-  font-size: 0.9rem;
-  color: var(--text);
-}
-
-.formGroup input,
-.formGroup textarea {
-  padding: var(--s-md);
-  border: 1px solid var(--border);
-  border-radius: var(--r-md);
-  font-size: 1rem;
-  font-family: var(--font-body);
-  background: var(--bg);
-  color: var(--text);
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.formGroup input:focus,
-.formGroup textarea:focus {
-  outline: none;
-  border-color: var(--gold);
-  box-shadow: 0 0 0 3px rgba(var(--gold-rgb), 0.15);
-}
-
-.formGroup input::placeholder,
-.formGroup textarea::placeholder {
-  color: var(--text-muted);
-}
-
-.formGroup textarea {
-  resize: vertical;
-  min-height: 150px;
-}
-
-.submitButton {
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-sm);
+  width: 100%;
+  min-height: 52px;
+  box-sizing: border-box;
   padding: var(--s-md) var(--s-xl);
-  background: rgba(var(--gold-rgb), 0.12);
-  color: var(--gold);
-  border: 1px solid rgba(var(--gold-rgb), 0.3);
+  border: 1px solid var(--gold);
   border-radius: var(--r-full);
+  background: var(--gold);
+  color: var(--bg);
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 700;
   font-family: var(--font-body);
-  cursor: pointer;
+  text-decoration: none;
   transition: background 0.25s, border-color 0.25s, transform 0.25s;
 }
 
-.submitButton:hover {
-  background: rgba(var(--gold-rgb), 0.18);
-  border-color: rgba(var(--gold-rgb), 0.5);
+.supportMailButton:hover {
+  background: var(--gold-dim);
+  border-color: var(--gold-dim);
   transform: translateY(-2px);
 }
 
-.submitButton:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  transform: none;
+.supportMailButton svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
 }
 
-/* ── Success ── */
-
-.successMessage {
+.supportHint {
+  margin: var(--s-lg) 0 var(--s-sm);
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  line-height: 1.55;
   text-align: center;
-  padding: var(--s-2xl);
 }
 
-.successIcon {
-  width: 64px;
-  height: 64px;
-  margin: 0 auto var(--s-lg);
-  color: #34D399;
+.supportEmailLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 46px;
+  box-sizing: border-box;
+  padding: var(--s-sm) var(--s-md);
+  background: var(--bg);
+  color: var(--gold);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  font-size: 1rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+  text-align: center;
+  text-decoration: none;
+  transition: background 0.25s, border-color 0.25s, transform 0.25s;
 }
 
-.successMessage h3 {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin: 0 0 var(--s-sm);
-  color: var(--text);
-}
-
-.successMessage p {
-  color: var(--text-secondary);
-  margin: 0;
+.supportEmailLink:hover {
+  background: rgba(var(--gold-rgb), 0.06);
+  border-color: rgba(var(--gold-rgb), 0.5);
 }
 
 /* ── Footer ── */
