@@ -7,7 +7,7 @@ export const documentTranslations = {
     support: 'Support',
     privacy: 'Privacy',
     terms: 'Terms',
-    footerTagline: 'Connecting people through meaningful activities',
+    footerTagline: 'From idea to action.',
   },
   pl: {
     backTitle: 'Powrót do strony głównej',
@@ -15,6 +15,6 @@ export const documentTranslations = {
     support: 'Wsparcie',
     privacy: 'Prywatność',
     terms: 'Regulamin',
-    footerTagline: 'Łączymy ludzi poprzez wspólne aktywności',
+    footerTagline: 'Od pomysłu do działania.',
   },
 } as const;

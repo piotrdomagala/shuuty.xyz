@@ -1,4 +1,4 @@
-/* ═══ Document Pages – Dark Theme ═══ */
+/* ═══ Document Pages - Dark Theme ═══ */
 
 .pageWrapper {
   min-height: 100vh;
@@ -44,7 +44,7 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(13, 17, 23, 0.85);
+  background: var(--nav-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--glass-border);
@@ -94,7 +94,7 @@
   flex: 1;
 }
 
-/* Asset ~86×40 — never force a square or the mark looks squeezed */
+/* Asset ~86×40 - never force a square or the mark looks squeezed */
 .logo {
   height: 40px;
   width: auto;

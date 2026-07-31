@@ -1,5 +1,7 @@
 # Analiza strony Shuuty i plan rozbudowy single-page website
 
+> **Status:** dokument historyczny. Opisana niżej przebudowa dark-only została zastąpiona w lipcu 2026 landing page’em z jasnym i ciemnym motywem, trzema filarami produktu oraz aktualnymi tokenami z aplikacji. Źródłem prawdy dla bieżącego UI są `app/page.tsx`, `app/page.module.css` i `app/globals.css`.
+
 **Data:** 2025-03-17 (rev. 2)  
 **Zakres:** Głęboka analiza obecnej strony vs. aplikacja mobilna + plan rozbudowy  
 **Motyw kolorystyczny:** CZARNY + ŻÓŁTY/GOLD (#FFE5A0)
@@ -12,33 +14,33 @@
 - **Framework:** Next.js 14 (App Router)
 - **Styling:** CSS Modules + CSS Custom Properties
 - **Fonty:** Outfit (display), Plus Jakarta Sans (body)
-- **Eksport:** Static export (`output: 'export'`) – GitHub Pages / Netlify / Vercel
+- **Eksport:** Static export (`output: 'export'`) - GitHub Pages / Netlify / Vercel
 - **Języki:** EN/PL (js-cookie)
 
 ### 1.2 Struktura stron
 | Ścieżka | Opis |
 |---------|------|
-| `/` | Landing – hero z 2 screenshots (desktop) / carousel (mobile), store buttons |
+| `/` | Landing - hero z 2 screenshots (desktop) / carousel (mobile), store buttons |
 | `/verify` | Deep link email verification (`shuuty://auth/verify?token=...`) |
 | `/auth/verify` | Alternatywna weryfikacja |
-| `/support` | Formularz kontaktowy (SYMULOWANY – brak backendu!) |
+| `/support` | Formularz kontaktowy (SYMULOWANY - brak backendu!) |
 | `/privacy` | Polityka prywatności (markdown z pliku) |
 | `/terms` | Regulamin (markdown z pliku) |
 
 ### 1.3 Co jest na landing page (obecny stan)
 Jedna sekcja hero:
 - Tytuł: „Find Those You Seek"
-- Opis 1–2 zdania
+- Opis 1-2 zdania
 - 2 screenshots (desktop) / carousel 5 screenshots (mobile)
 - Przyciski Google Play + App Store
 - Footer: copyright + Support / Privacy / Terms
 
 **To jest za mało.** Użytkownik nie dowiaduje się czym jest Shuuty, co robi, dla kogo.
 
-### 1.4 Obecny design system (ZŁY – nie pasuje do aplikacji)
+### 1.4 Obecny design system (ZŁY - nie pasuje do aplikacji)
 - Strona: fiolet (#667eea), złoto (#ffe5a0), niebieski (#7dd3fc), białe tło
 - Aplikacja dark: czerń (#0D1117), cream gold (#FFE5A0), niebieski (#7DD3FC)
-- **Rozbieżność jest duża** – użytkownik nie rozpozna aplikacji po stronie
+- **Rozbieżność jest duża** - użytkownik nie rozpozna aplikacji po stronie
 
 ---
 
@@ -48,8 +50,8 @@ Jedna sekcja hero:
 | Moduł | Opis |
 |-------|------|
 | **Tasks** | Zadania z delegowaniem, timerem, głosowym tworzeniem, checklistami, galerią, lokalizacją |
-| **Meetings** | Spotkania – aktywność, miejsce, czas, uczestnicy, cover, zaproszenia |
-| **Groups** | Grupy tematyczne – członkowie, chat, zadania grupowe |
+| **Meetings** | Spotkania - aktywność, miejsce, czas, uczestnicy, cover, zaproszenia |
+| **Groups** | Grupy tematyczne - członkowie, chat, zadania grupowe |
 | **Map** | Mapa spotkań i grup w okolicy |
 | **Friends** | Znajomi, zaproszenia, wysłane |
 | **Profile** | Profil, subskrypcje (Free/Pro/Teams) |
@@ -57,13 +59,13 @@ Jedna sekcja hero:
 | **Chat** | Wiadomości w spotkaniach/grupach |
 
 ### 2.2 Bottom Tabs
-1. Home (dashboard – zadania, spotkania, powiadomienia)
+1. Home (dashboard - zadania, spotkania, powiadomienia)
 2. Map (mapa w okolicy)
-3. + (centralne CTA – tworzenie spotkania)
+3. + (centralne CTA - tworzenie spotkania)
 4. Your Manager (Twoje spotkania i grupy)
 5. Profile
 
-### 2.3 Branding aplikacji – Dark Theme (DOCELOWY STYL STRONY)
+### 2.3 Branding aplikacji - Dark Theme (DOCELOWY STYL STRONY)
 
 ```
 Tło:              #0D1117  (głęboka czerń)
@@ -86,19 +88,19 @@ Blue glow:        rgba(125, 211, 252, 0.25)
 
 ### 2.4 Kluczowe elementy UI z kodu
 
-**`BorderButton.tsx`** – gradient border (focused state):
+**`BorderButton.tsx`** - gradient border (focused state):
 ```
 colors: ['#FFE5A0', '#7DD3FC']  ← TE OBRAMÓWKI!
 borderWidth: 2, borderRadius: 99
 ```
 
-**`GlassButton.tsx`** – glass morphism + gradient:
+**`GlassButton.tsx`** - glass morphism + gradient:
 ```
 variant: 'glass' | 'gradient' | 'outline'
 blur(12), rgba(22,27,34,0.75) bg, rgba(255,255,255,0.15) border
 ```
 
-**`StartScreen.tsx`** – ambient atmosphere:
+**`StartScreen.tsx`** - ambient atmosphere:
 ```
 Breathing gold glow layers: rgba(255, 229, 160, ...)
 CTA shimmer: rgba(255, 229, 160, 0.12)
@@ -147,7 +149,7 @@ Gradient accent line: [buttonGradientStartColor, buttonGradientEndColor]
 
 ### 3.2 Styl wizualny
 - **Tło:** #0D1117 (NIE czysty #000000)
-- **Karty:** glass morphism – `backdrop-filter: blur(12px)`, border rgba white 10%
+- **Karty:** glass morphism - `backdrop-filter: blur(12px)`, border rgba white 10%
 - **CTA buttons:** gradient border gold→blue (jak BorderButton focused)
 - **Hover:** box-shadow z gold glow
 - **Gradient text:** `background-clip: text` (gold→blue) na tytułach
@@ -168,7 +170,7 @@ Gradient accent line: [buttonGradientStartColor, buttonGradientEndColor]
 │ 1. HERO  (black bg + ambient gold/blue glow)                      │
 │                                                                    │
 │    „From idea to action"  ← gradient text (gold → blue)            │
-│    Opis: 2–3 zdania                                               │
+│    Opis: 2-3 zdania                                               │
 │    [App Store]  [Google Play]  ← gradient border buttons          │
 │    📱 Mockup telefonu z glow                                      │
 └──────────────────────────────────────────────────────────────────┘
@@ -211,7 +213,7 @@ Gradient accent line: [buttonGradientStartColor, buttonGradientEndColor]
 |--------|--------------|
 | **Kolory** | Czerń #0D1117 + gold #FFE5A0 + blue #7DD3FC |
 | **Glass** | `backdrop-filter: blur(12px)` + border rgba(255,255,255,0.1) |
-| **Scroll animations** | Intersection Observer – fade-in-up sekcji |
+| **Scroll animations** | Intersection Observer - fade-in-up sekcji |
 | **Ambient glow** | CSS radial-gradient pulsujący (keyframes) |
 | **Gradient text** | `background-clip: text` na tytułach |
 | **Gradient borders** | Pseudo-element + gradient (jak BorderButton) |
@@ -224,9 +226,9 @@ Gradient accent line: [buttonGradientStartColor, buttonGradientEndColor]
 ## 6. Priorytety wdrożenia
 
 ### Faza 1 (pełna przebudowa)
-1. Design system globals.css – czarny + gold + glass
-2. Layout.tsx – metadata, opcjonalnie DM Sans
-3. Hero – gradient text, ambient glow, mockup, store buttons
+1. Design system globals.css - czarny + gold + glass
+2. Layout.tsx - metadata, opcjonalnie DM Sans
+3. Hero - gradient text, ambient glow, mockup, store buttons
 4. Features (4 glass cards)
 5. How it works (3 kroki)
 6. Screenshot showcase (z opisami)
@@ -239,7 +241,7 @@ Gradient accent line: [buttonGradientStartColor, buttonGradientEndColor]
 11. Navbar z anchor links
 12. Ambient glow animations
 13. Gradient border hover effects
-14. Support – Formspree/mailto
+14. Support - Formspree/mailto
 
 ### Faza 3 (opcjonalnie)
 15. Pricing (Free/Pro/Teams)
@@ -253,9 +255,9 @@ Gradient accent line: [buttonGradientStartColor, buttonGradientEndColor]
 
 | Plik | Zmiany |
 |------|--------|
-| `app/globals.css` | PEŁNA ZMIANA – czarny + gold design system |
-| `app/page.tsx` | PEŁNA PRZEBUDOWA – 6+ sekcji zamiast 1 |
-| `app/page.module.css` | PEŁNA PRZEBUDOWA – style nowych sekcji |
+| `app/globals.css` | PEŁNA ZMIANA - czarny + gold design system |
+| `app/page.tsx` | PEŁNA PRZEBUDOWA - 6+ sekcji zamiast 1 |
+| `app/page.module.css` | PEŁNA PRZEBUDOWA - style nowych sekcji |
 | `app/layout.tsx` | Metadata, opcjonalnie DM Sans |
 | `components/` | Nowe: FeatureCard, HowItWorks, FAQ, ScreenshotShowcase, Navbar |
 | `app/support/page.tsx` | Dostosowanie kolorów + realna integracja |
@@ -268,18 +270,18 @@ Gradient accent line: [buttonGradientStartColor, buttonGradientEndColor]
 
 ## 8. Podsumowanie
 
-**Problem:** Obecna strona to minimalistyczny biały landing z fioletowymi akcentami – kompletnie nie pasuje do aplikacji.
+**Problem:** Obecna strona to minimalistyczny biały landing z fioletowymi akcentami - kompletnie nie pasuje do aplikacji.
 
 **Rozwiązanie:** Pełna przebudowa na dark single-page website:
 - Tło: **#0D1117** (czerń z aplikacji)
-- Akcent: **#FFE5A0** (cream gold / żółty – jak obramówki przycisków w dark mode)
-- Drugi akcent: **#7DD3FC** (niebieski – gradient endpoint)
+- Akcent: **#FFE5A0** (cream gold / żółty - jak obramówki przycisków w dark mode)
+- Drugi akcent: **#7DD3FC** (niebieski - gradient endpoint)
 - Glass morphism na kartach
 - Gradient borders gold→blue
 - 6+ sekcji: Hero, Features, How it works, Screenshots, FAQ, CTA
 - Ambient glow (jak AmbientAtmosphere w StartScreen)
 
-**Technologia:** Next.js 14, CSS Modules, static export – bez zmian stacka.
+**Technologia:** Next.js 14, CSS Modules, static export - bez zmian stacka.
 
 ---
 

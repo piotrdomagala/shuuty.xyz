@@ -4,8 +4,8 @@ import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import styles from './page.module.css';
 
-const ANDROID_STORE_URL = 'https://play.google.com/store/apps/details?id=com.shuuty&hl=en-US';
-const IOS_STORE_URL = 'https://apps.apple.com/no/app/shuuty/id6670202422';
+const ANDROID_STORE_URL = 'https://play.google.com/store/apps/details?id=com.shuuty.app';
+const IOS_STORE_URL = 'https://apps.apple.com/app/shuuty/id6670202422';
 
 function VerifyContent() {
   const searchParams = useSearchParams();
