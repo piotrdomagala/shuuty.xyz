@@ -32,10 +32,10 @@ When a user selects the feature for adding a specific meeting to the device cale
 ## 3. Purposes and legal bases
 We process data only to the extent required for the following purposes:
 
-1. **Performance of a contract or steps before entering into it — Article 6(1)(b) GDPR:** creating and operating the account, sign-in, synchronization, performing features selected by the user, communication, sharing content according to settings, handling support requests, providing location, voice, and AI functions requested by the user, and verifying, restoring, and synchronizing Pro and Teams plans.
-2. **Compliance with a legal obligation — Article 6(1)(c) GDPR:** meeting tax, accounting, consumer, and complaint-handling obligations and responding to legally binding requests from authorities.
-3. **Shuuty's legitimate interests — Article 6(1)(f) GDPR:** protecting accounts and infrastructure, preventing fraud and abuse, diagnosing failures, improving reliability, compiling basic service-operation statistics, and establishing, exercising, or defending legal claims. We pursue these interests with due regard for users' rights and reasonable expectations.
-4. **Consent — Article 6(1)(a) GDPR:** where we expressly request consent and the law requires this basis, for example for a specific optional feature or communication. Consent may be withdrawn at any time without affecting the lawfulness of processing carried out before withdrawal.
+1. **Performance of a contract or steps before entering into it - Article 6(1)(b) GDPR:** creating and operating the account, sign-in, synchronization, performing features selected by the user, communication, sharing content according to settings, handling support requests, providing location, voice, and AI functions requested by the user, and verifying, restoring, and synchronizing Pro and Teams plans.
+2. **Compliance with a legal obligation - Article 6(1)(c) GDPR:** meeting tax, accounting, consumer, and complaint-handling obligations and responding to legally binding requests from authorities.
+3. **Shuuty's legitimate interests - Article 6(1)(f) GDPR:** protecting accounts and infrastructure, preventing fraud and abuse, diagnosing failures, improving reliability, compiling basic service-operation statistics, and establishing, exercising, or defending legal claims. We pursue these interests with due regard for users' rights and reasonable expectations.
+4. **Consent - Article 6(1)(a) GDPR:** where we expressly request consent and the law requires this basis, for example for a specific optional feature or communication. Consent may be withdrawn at any time without affecting the lawfulness of processing carried out before withdrawal.
 
 A device-level permission, such as access to location, microphone, camera, or photos, may be changed in device settings. Withdrawing a permission does not affect other features that do not require it.
 

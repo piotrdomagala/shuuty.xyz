@@ -24,7 +24,7 @@ const supportTranslations = {
   },
   pl: {
     ...documentTranslations.pl,
-    pageTitle: 'Kontakt z pomocą',
+    pageTitle: 'Pomoc i kontakt',
     contactTitle: 'Jak możemy pomóc?',
     contactDescription:
       'Napisz do nas w sprawie konta, aplikacji lub subskrypcji. Jeśli pomoże to w diagnozie, podaj model urządzenia, wersję systemu i wersję aplikacji.',

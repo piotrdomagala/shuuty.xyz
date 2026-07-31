@@ -58,7 +58,7 @@ Last updated: July 30, 2026
 ## §10. Changes to the Terms
 1. The current version of the Terms, including the last-updated date, is available on the Shuuty website. Material changes may also be communicated in the Application or by email.
 2. Changes take effect on the date communicated to users, with notice appropriate to the nature of the change and no shorter than required by law. Where affirmative consent is required, continued use alone does not replace that consent.
-3. A user who does not accept a change may stop using the Application and delete the account before the change takes effect, subject to the subscription-cancellation rules in §§7–8.
+3. A user who does not accept a change may stop using the Application and delete the account before the change takes effect, subject to the subscription-cancellation rules in §§7-8.
 
 ## §11. Communications
 1. Shuuty may provide service-related information in the Application, through notifications, or to the email address associated with the account. The user should keep contact details current.

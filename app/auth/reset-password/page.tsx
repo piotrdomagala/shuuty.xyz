@@ -6,8 +6,8 @@ import { useSearchParams } from 'next/navigation';
 import styles from '../../verify/page.module.css';
 
 const BACKEND_API_URL = 'https://api.shuuty.xyz';
-const ANDROID_STORE_URL = 'https://play.google.com/store/apps/details?id=com.shuuty&hl=en-US';
-const IOS_STORE_URL = 'https://apps.apple.com/no/app/shuuty/id6670202422';
+const ANDROID_STORE_URL = 'https://play.google.com/store/apps/details?id=com.shuuty.app';
+const IOS_STORE_URL = 'https://apps.apple.com/app/shuuty/id6670202422';
 const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+=-]{8,}$/;
 
 function PasswordResetContent() {

@@ -27,15 +27,15 @@ Możemy przetwarzać dane konieczne do działania i ochrony Aplikacji, takie jak
 Przetwarzamy informacje potrzebne do rozpoznania uprawnień, takie jak identyfikator produktu, plan Free, Pro lub Teams, okres miesięczny albo roczny, sklep, status subskrypcji, data wygaśnięcia, stan odnowienia i identyfikatory transakcji. Płatność obsługuje App Store albo Google Play; Shuuty nie otrzymuje pełnych danych karty płatniczej ani rachunku bankowego użytkownika.
 
 ### 2.4. Dostęp do kalendarza urządzenia
-Gdy użytkownik wybierze w Aplikacji funkcję dodania konkretnego spotkania do kalendarza urządzenia, Aplikacja wyświetla systemowy dialog utworzenia wydarzenia i — zależnie od systemu — prosi o uprawnienie do odczytu i zapisu kalendarza. Udzielenie tego uprawnienia jest dobrowolne. Aplikacja korzysta z dostępu do kalendarza wyłącznie na wyraźne żądanie użytkownika, aby przygotować wybrane spotkanie i zapisać je po potwierdzeniu w systemowym dialogu. Odmowa lub cofnięcie uprawnienia wyłącza tę funkcję, ale nie blokuje pozostałych funkcji Aplikacji. Treść kalendarza urządzenia nie jest wysyłana na serwery Shuuty.
+Gdy użytkownik wybierze w Aplikacji funkcję dodania konkretnego spotkania do kalendarza urządzenia, Aplikacja wyświetla systemowy dialog utworzenia wydarzenia i - zależnie od systemu - prosi o uprawnienie do odczytu i zapisu kalendarza. Udzielenie tego uprawnienia jest dobrowolne. Aplikacja korzysta z dostępu do kalendarza wyłącznie na wyraźne żądanie użytkownika, aby przygotować wybrane spotkanie i zapisać je po potwierdzeniu w systemowym dialogu. Odmowa lub cofnięcie uprawnienia wyłącza tę funkcję, ale nie blokuje pozostałych funkcji Aplikacji. Treść kalendarza urządzenia nie jest wysyłana na serwery Shuuty.
 
 ## 3. Cele i podstawy prawne przetwarzania
 Przetwarzamy dane tylko w zakresie potrzebnym do poniższych celów:
 
-1. **Wykonanie umowy lub działania przed jej zawarciem — art. 6 ust. 1 lit. b RODO:** utworzenie i obsługa konta, logowanie, synchronizacja, wykonywanie funkcji wybranych przez użytkownika, komunikacja, udostępnianie treści zgodnie z ustawieniami, obsługa zgłoszeń, realizacja funkcji lokalizacyjnych, głosowych i AI żądanych przez użytkownika oraz weryfikacja, przywracanie i synchronizacja planów Pro i Teams.
-2. **Obowiązek prawny — art. 6 ust. 1 lit. c RODO:** wykonywanie obowiązków podatkowych, rachunkowych, konsumenckich i związanych z reklamacjami oraz odpowiadanie na prawnie wiążące żądania organów.
-3. **Prawnie uzasadnione interesy Shuuty — art. 6 ust. 1 lit. f RODO:** zabezpieczenie kont i infrastruktury, zapobieganie oszustwom i nadużyciom, diagnozowanie awarii, poprawa niezawodności, prowadzenie podstawowych statystyk działania usługi oraz ustalenie, dochodzenie lub obrona roszczeń. Interesy te realizujemy z uwzględnieniem praw i rozsądnych oczekiwań użytkowników.
-4. **Zgoda — art. 6 ust. 1 lit. a RODO:** gdy wyraźnie prosimy o zgodę i prawo wymaga tej podstawy, na przykład dla określonej opcjonalnej funkcji lub komunikacji. Zgodę można wycofać w dowolnym momencie bez wpływu na zgodność z prawem wcześniejszego przetwarzania.
+1. **Wykonanie umowy lub działania przed jej zawarciem - art. 6 ust. 1 lit. b RODO:** utworzenie i obsługa konta, logowanie, synchronizacja, wykonywanie funkcji wybranych przez użytkownika, komunikacja, udostępnianie treści zgodnie z ustawieniami, obsługa zgłoszeń, realizacja funkcji lokalizacyjnych, głosowych i AI żądanych przez użytkownika oraz weryfikacja, przywracanie i synchronizacja planów Pro i Teams.
+2. **Obowiązek prawny - art. 6 ust. 1 lit. c RODO:** wykonywanie obowiązków podatkowych, rachunkowych, konsumenckich i związanych z reklamacjami oraz odpowiadanie na prawnie wiążące żądania organów.
+3. **Prawnie uzasadnione interesy Shuuty - art. 6 ust. 1 lit. f RODO:** zabezpieczenie kont i infrastruktury, zapobieganie oszustwom i nadużyciom, diagnozowanie awarii, poprawa niezawodności, prowadzenie podstawowych statystyk działania usługi oraz ustalenie, dochodzenie lub obrona roszczeń. Interesy te realizujemy z uwzględnieniem praw i rozsądnych oczekiwań użytkowników.
+4. **Zgoda - art. 6 ust. 1 lit. a RODO:** gdy wyraźnie prosimy o zgodę i prawo wymaga tej podstawy, na przykład dla określonej opcjonalnej funkcji lub komunikacji. Zgodę można wycofać w dowolnym momencie bez wpływu na zgodność z prawem wcześniejszego przetwarzania.
 
 Uprawnienie systemowe urządzenia, takie jak dostęp do lokalizacji, mikrofonu, aparatu lub zdjęć, można zmienić w ustawieniach urządzenia. Cofnięcie uprawnienia nie wpływa na inne funkcje, które go nie wymagają.
 
@@ -101,7 +101,7 @@ Aplikacja jest przeznaczona dla osób, które ukończyły 16 lat. Świadomie nie
 Aplikacja mobilna nie używa przeglądarkowych plików cookie jako podstawowego mechanizmu działania. Publiczna strona Shuuty zapisuje techniczny plik cookie „lang”, aby zapamiętać wybrany język. Zewnętrzne strony, w tym App Store i Google Play, stosują własne zasady dotyczące plików cookie i prywatności.
 
 ## 13. Zmiany Polityki
-Aktualna wersja i data ostatniej aktualizacji są publikowane na tej stronie. O istotnych zmianach możemy również poinformować w Aplikacji lub e-mailem, a jeśli wymaga tego prawo — poprosić o zgodę.
+Aktualna wersja i data ostatniej aktualizacji są publikowane na tej stronie. O istotnych zmianach możemy również poinformować w Aplikacji lub e-mailem, a jeśli wymaga tego prawo - poprosić o zgodę.
 
 ## 14. Kontakt
 Pytania, wnioski i sprzeciwy dotyczące danych osobowych można kierować na **shuuty.app@gmail.com**.
