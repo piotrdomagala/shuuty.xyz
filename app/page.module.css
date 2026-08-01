@@ -1811,6 +1811,7 @@
   .heroVisual {
     width: min(440px, 100%);
     height: 480px;
+    overflow: clip;
   }
 
   .phoneMain {
