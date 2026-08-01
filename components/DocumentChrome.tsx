@@ -11,6 +11,9 @@ const languageOptions: { code: DocumentLanguage; label: string }[] = [
   { code: 'pl', label: 'PL' },
 ];
 
+const localizedPath = (language: DocumentLanguage, path: string) =>
+  language === 'pl' ? `/pl${path}` : path;
+
 type Theme = 'light' | 'dark';
 
 const themeColor: Record<Theme, string> = {
@@ -88,7 +91,7 @@ export function DocumentHeader({
     <header className={styles.header}>
       <div className={styles.headerContent}>
         <Link
-          href="/"
+          href={localizedPath(language, '/')}
           className={styles.backButton}
           title={backTitle}
           aria-label={backTitle}
@@ -159,6 +162,7 @@ interface DocumentFooterProps {
   supportLabel: string;
   privacyLabel: string;
   termsLabel: string;
+  language: DocumentLanguage;
 }
 
 export function DocumentFooter({
@@ -166,6 +170,7 @@ export function DocumentFooter({
   supportLabel,
   privacyLabel,
   termsLabel,
+  language,
 }: DocumentFooterProps) {
   return (
     <footer className={styles.footer}>
@@ -175,13 +180,13 @@ export function DocumentFooter({
           <p>{tagline}</p>
         </div>
         <nav className={styles.footerLinks}>
-          <Link href="/support/" className={styles.footerLink}>
+          <Link href={localizedPath(language, '/support/')} className={styles.footerLink}>
             {supportLabel}
           </Link>
-          <Link href="/privacy/" className={styles.footerLink}>
+          <Link href={localizedPath(language, '/privacy/')} className={styles.footerLink}>
             {privacyLabel}
           </Link>
-          <Link href="/terms/" className={styles.footerLink}>
+          <Link href={localizedPath(language, '/terms/')} className={styles.footerLink}>
             {termsLabel}
           </Link>
         </nav>
@@ -230,7 +235,7 @@ export function DocumentShell({
         onLanguageChange={onLanguageChange}
       />
 
-      <main className={styles.main}>
+      <main className={styles.main} lang={language}>
         <div className={styles.contentCard}>{children}</div>
       </main>
 
@@ -239,6 +244,7 @@ export function DocumentShell({
         supportLabel={supportLabel}
         privacyLabel={privacyLabel}
         termsLabel={termsLabel}
+        language={language}
       />
     </div>
   );

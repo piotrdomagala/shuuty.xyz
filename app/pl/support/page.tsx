@@ -2,17 +2,17 @@ import SupportPageClient from '@/components/SupportPageClient';
 import { createPublicPageMetadata } from '@/lib/site';
 
 const description =
-  'Contact Shuuty support about your account, the mobile app, or a subscription.';
+  'Skontaktuj się ze wsparciem Shuuty w sprawie konta, aplikacji mobilnej lub subskrypcji.';
 
 export const metadata = createPublicPageMetadata({
-  title: 'Support',
+  title: 'Wsparcie',
   description,
-  path: '/support/',
+  path: '/pl/support/',
+  language: 'pl',
   englishPath: '/support/',
   polishPath: '/pl/support/',
 });
 
-export default function SupportPage() {
-  return <SupportPageClient />;
+export default function PolishSupportPage() {
+  return <SupportPageClient initialLanguage="pl" />;
 }
-

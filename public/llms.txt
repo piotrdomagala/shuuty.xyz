@@ -1,0 +1,25 @@
+# Shuuty
+
+> Shuuty is a mobile application for turning ideas into action through voice-created tasks, immediate delegation, flexible groups, meetings, and nearby discovery.
+
+Shuuty brings tasks, conversations, calendars, people, and places into one connected context. The public website is available in English and Polish. Shuuty is available for iOS and Android.
+
+## Official pages
+
+- [Shuuty — English](https://shuuty.com/): Product overview in English.
+- [Shuuty — Polski](https://shuuty.com/pl/): Opis produktu w języku polskim.
+- [Support](https://shuuty.com/support/): English support page.
+- [Pomoc](https://shuuty.com/pl/support/): Polska strona pomocy.
+- [Privacy Policy](https://shuuty.com/privacy/): Privacy information in English.
+- [Polityka prywatności](https://shuuty.com/pl/privacy/): Informacje o prywatności po polsku.
+- [Terms & Conditions](https://shuuty.com/terms/): Terms in English.
+- [Regulamin](https://shuuty.com/pl/terms/): Regulamin w języku polskim.
+
+## Official downloads
+
+- [Shuuty on the App Store](https://apps.apple.com/app/shuuty/id6670202422)
+- [Shuuty on Google Play](https://play.google.com/store/apps/details?id=com.shuuty.app)
+
+## Product reference
+
+- [Detailed Shuuty reference](https://shuuty.com/llms-full.txt): A fuller bilingual description of the product and its publicly documented capabilities.

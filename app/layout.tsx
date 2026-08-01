@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Outfit, Plus_Jakarta_Sans } from 'next/font/google';
-import { SITE_URL, SOCIAL_IMAGE } from '@/lib/site';
+import { createLanguageAlternates, SITE_URL, SOCIAL_IMAGE } from '@/lib/site';
 import './globals.css';
 
 const outfit = Outfit({
@@ -20,6 +20,8 @@ const jakarta = Plus_Jakarta_Sans({
 const themeScript = `
   (function () {
     var theme = 'dark';
+    var path = window.location.pathname;
+    document.documentElement.lang = path === '/pl' || path.indexOf('/pl/') === 0 ? 'pl' : 'en';
     try {
       var stored = window.localStorage.getItem('shuuty-theme');
       if (stored === 'light' || stored === 'dark') {
@@ -72,6 +74,7 @@ export const metadata: Metadata = {
   publisher: 'Shuuty',
   alternates: {
     canonical: '/',
+    languages: createLanguageAlternates('/', '/pl/'),
   },
   robots: {
     index: true,
@@ -118,6 +121,9 @@ export const metadata: Metadata = {
   },
   formatDetection: {
     telephone: false,
+  },
+  other: {
+    'mobile-web-app-capable': 'yes',
   },
 };
 

@@ -1,0 +1,128 @@
+# Shuuty: product reference
+
+> Shuuty is a mobile application that connects voice-created tasks, delegation, flexible groups, meetings, conversations, calendars, and nearby discovery.
+
+This document summarizes the capabilities described on the official Shuuty website. It does not describe private APIs or unpublished features. The canonical website is https://shuuty.com/ and the product is available for iOS and Android.
+
+## English product overview
+
+Shuuty is designed around one flow from an idea to action. Tasks, conversations, calendars, people, and places can remain connected instead of being split across separate tools.
+
+### Tasks and voice input
+
+- A task can be created by voice or manually.
+- Voice input can be structured into a title and description.
+- Shuuty can detect a date and time, a reminder, an assignee, and a location from a voice task.
+- Several thoughts can be split into separate tasks for review.
+- Tasks can be private, received, delegated, or connected with a group.
+- When a person is assigned during task creation, the task is delivered immediately after creation. If that person's settings require approval, an approval request is delivered instead.
+- A due time describes when the task should be done. A reminder describes when the recipient should be notified; it does not delay delivery.
+- Shared or delegated tasks can keep their discussion, replies, and activity in the task context.
+- Subtasks, priority, reminders, and time tracking support the work around a task.
+
+### Groups
+
+A Shuuty group can be adapted to different purposes. Publicly described examples include:
+
+- a private circle for a couple, family, or close friends;
+- an open community around people, interests, or recurring activities;
+- a team or client space with tasks, decisions, and per-person time logs;
+- a reservation space with availability, fixed times, or flexible booking ranges;
+- a listing, offer, catalogue, service, product showcase, or information-only space.
+
+The creator chooses who can see a group and which modules it needs. Depending on its purpose, a group can use chat, threads, tasks, calendars, bookings, and time logs. A public group can include a location so people can discover the group and what it presents on the map.
+
+### Meetings and map discovery
+
+- Meetings can be private plans with friends or open meetings for new people.
+- A meeting keeps its place, time, participants, and conversation together.
+- Chat can be used to agree details before and after a meeting.
+- The map can surface nearby meetings, public groups, communities, offers, services, products, and useful information.
+- Discovery can use location, needs, and interests before opening the full context of a result.
+
+### Product flow
+
+The public website describes this sequence:
+
+1. Capture a thought by speaking or creating it manually.
+2. Choose the next step: a private, delegated, or group task, or a separate meeting.
+3. Keep the task, reminder, conversation, calendar, and place in context as the plan moves forward.
+
+### Availability and plans
+
+- Shuuty is available on iOS and Android.
+- Users can start on the Free plan.
+- Optional Pro and Teams plans increase limits and unlock additional features.
+- This document does not state prices, ratings, download counts, or user counts.
+
+## Polski opis produktu
+
+Shuuty łączy zadania, rozmowy, kalendarze, ludzi i miejsca w jeden proces od pomysłu do działania. Aplikacja jest dostępna na iOS i Androidzie.
+
+### Zadania i obsługa głosu
+
+- Zadanie można utworzyć głosem albo ręcznie.
+- Shuuty może uporządkować wypowiedź w tytuł i opis zadania.
+- Z zadania głosowego może rozpoznać datę i godzinę, przypomnienie, odbiorcę oraz miejsce.
+- Kilka myśli może zostać rozdzielonych na osobne zadania do sprawdzenia.
+- Zadania mogą być prywatne, otrzymane, delegowane lub powiązane z grupą.
+- Osoba przypisana podczas tworzenia otrzymuje zadanie od razu po jego utworzeniu. Jeżeli jej ustawienia wymagają akceptacji, otrzymuje od razu prośbę o przyjęcie zadania.
+- Termin wskazuje czas wykonania, a przypomnienie czas powiadomienia. Przypomnienie nie opóźnia dostarczenia zadania.
+- Dyskusja, odpowiedzi i aktywność mogą pozostać przy zadaniu.
+- Podzadania, priorytet, przypomnienia i pomiar czasu wspierają realizację zadania.
+
+### Grupy
+
+Grupa w Shuuty może służyć różnym celom. Publiczny opis produktu wymienia między innymi:
+
+- prywatny krąg dla pary, rodziny albo bliskich znajomych;
+- otwartą społeczność wokół ludzi, zainteresowań i powtarzalnych aktywności;
+- przestrzeń dla zespołu lub klientów z zadaniami, decyzjami i ewidencją czasu;
+- rezerwacje oparte na dostępności, stałych terminach lub elastycznych przedziałach;
+- ogłoszenie, ofertę, katalog, prezentację usług lub produktów albo przestrzeń wyłącznie informacyjną.
+
+Twórca grupy wybiera jej widoczność i potrzebne moduły. Zależnie od celu grupa może korzystać z czatu, wątków, zadań, kalendarza, rezerwacji i ewidencji czasu. Publiczna grupa może mieć lokalizację, dzięki której użytkownicy znajdą ją i prezentowaną przez nią ofertę na mapie.
+
+### Spotkania i odkrywanie na mapie
+
+- Spotkanie może być prywatnym planem ze znajomymi albo otwartym spotkaniem dla nowych osób.
+- Miejsce, czas, uczestnicy i rozmowa pozostają w jednym kontekście.
+- Czat pomaga ustalić szczegóły przed spotkaniem i po nim.
+- Mapa może pokazywać pobliskie spotkania, publiczne grupy, społeczności, oferty, usługi, produkty i przydatne informacje.
+- Wyszukiwanie może uwzględniać miejsce, potrzeby i zainteresowania.
+
+### Przebieg działania
+
+Publiczna strona opisuje następujący proces:
+
+1. Zapisz myśl głosem albo ręcznie.
+2. Utwórz zadanie prywatne, delegowane lub grupowe albo zaplanuj osobne spotkanie.
+3. Zachowaj zadanie, przypomnienie, rozmowę, kalendarz i miejsce w jednym kontekście.
+
+### Dostępność i plany
+
+- Shuuty jest dostępne na iOS i Androidzie.
+- Można zacząć od planu Free.
+- Opcjonalne plany Pro i Teams zwiększają limity i odblokowują dodatkowe funkcje.
+- Ten dokument nie podaje cen, ocen, liczby pobrań ani liczby użytkowników.
+
+## Canonical pages
+
+- [English product page](https://shuuty.com/)
+- [Polska strona produktu](https://shuuty.com/pl/)
+- [English support](https://shuuty.com/support/)
+- [Pomoc po polsku](https://shuuty.com/pl/support/)
+- [Privacy Policy](https://shuuty.com/privacy/)
+- [Polityka prywatności](https://shuuty.com/pl/privacy/)
+- [Terms & Conditions](https://shuuty.com/terms/)
+- [Regulamin](https://shuuty.com/pl/terms/)
+
+## Official app listings
+
+- [App Store](https://apps.apple.com/app/shuuty/id6670202422)
+- [Google Play](https://play.google.com/store/apps/details?id=com.shuuty.app)
+
+## Support
+
+- [Support page](https://shuuty.com/support/)
+- Contact email published by the website: shuuty.app@gmail.com

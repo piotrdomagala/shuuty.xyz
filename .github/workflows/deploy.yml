@@ -57,3 +57,23 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
+  notify-indexnow:
+    name: Notify IndexNow (best effort)
+    if: github.event_name != 'pull_request'
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    needs: deploy
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Submit canonical URLs to IndexNow
+        continue-on-error: true
+        run: npm run submit:indexnow
+

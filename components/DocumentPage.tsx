@@ -2,12 +2,14 @@ import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { parseMarkdown } from '@/lib/markdown';
 import DocumentPageClient from '@/components/DocumentPageClient';
+import type { DocumentLanguage } from '@/components/documentLocale';
 
 interface DocumentPageProps {
   titleEn: string;
   titlePl: string;
   fileEn: string;
   filePl: string;
+  initialLanguage?: DocumentLanguage;
 }
 
 const readPublicDocument = async (file: string) => {
@@ -24,6 +26,7 @@ export default async function DocumentPage({
   titlePl,
   fileEn,
   filePl,
+  initialLanguage = 'en',
 }: DocumentPageProps) {
   const [markdownEn, markdownPl] = await Promise.all([
     readPublicDocument(fileEn),
@@ -36,6 +39,7 @@ export default async function DocumentPage({
       titlePl={titlePl}
       contentEn={parseMarkdown(markdownEn)}
       contentPl={parseMarkdown(markdownPl)}
+      initialLanguage={initialLanguage}
     />
   );
 }

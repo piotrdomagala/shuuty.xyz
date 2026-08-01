@@ -78,6 +78,7 @@
 
 .nav {
   width: min(1240px, 100%);
+  max-width: 100%;
   min-height: 68px;
   margin: 0 auto;
   padding: 8px 10px 8px 18px;
@@ -277,6 +278,8 @@
 .heroCopy {
   position: relative;
   z-index: 6;
+  width: 100%;
+  min-width: 0;
   max-width: 610px;
 }
 
@@ -310,6 +313,7 @@
 }
 
 .heroTitle {
+  max-width: 100%;
   margin-top: 28px;
   color: var(--text);
   font-family: var(--font-display);
@@ -330,7 +334,7 @@
 }
 
 .heroLead {
-  max-width: 590px;
+  max-width: min(590px, 100%);
   margin-top: 25px;
   color: var(--text-secondary);
   font-size: clamp(1rem, 1.35vw, 1.12rem);
@@ -442,9 +446,11 @@
 
 .heroVisual {
   position: relative;
+  --hero-phone-offset: clamp(96px, 15vw, 180px);
   min-width: 0;
   height: 650px;
   isolation: isolate;
+  touch-action: pan-y pinch-zoom;
 }
 
 .heroVisual::before {
@@ -474,59 +480,139 @@
 }
 
 .phone {
-  position: relative;
+  padding: 0;
   overflow: hidden;
   border: 1px solid var(--phone-border);
   border-radius: 30px;
+  color: inherit;
   background: #fffbf5;
   box-shadow: var(--shadow-strong);
+}
+
+.heroVisual > .phone {
+  position: absolute;
+  right: auto;
+  left: 50%;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  transform-origin: 50% 92%;
+  will-change: top, width, transform, opacity, filter;
+  transition:
+    top 0.62s var(--ease-out),
+    width 0.62s var(--ease-out),
+    opacity 0.42s ease,
+    filter 0.42s ease,
+    transform 0.62s var(--ease-out),
+    box-shadow 0.42s ease;
 }
 
 .phone img {
   width: 100%;
   height: auto;
+  pointer-events: none;
+  user-select: none;
 }
 
 .phoneMain {
-  position: absolute;
   top: 12px;
-  left: 50%;
   z-index: 4;
   width: 286px;
+  opacity: 1;
+  filter: none;
   transform: translateX(-50%) rotate(0.5deg);
-  animation: phoneFloat 7s ease-in-out infinite;
 }
 
 .phoneBackLeft,
 .phoneBackRight {
-  position: absolute;
   top: 118px;
   z-index: 2;
   width: 192px;
-  opacity: 0.8;
-  filter: saturate(0.86);
+  opacity: 0.76;
+  filter: saturate(0.82) brightness(0.92);
 }
 
 .phoneBackLeft {
-  left: 1%;
-  transform: rotate(-8deg);
+  transform: translateX(calc(-50% - var(--hero-phone-offset))) rotate(-8deg);
 }
 
 .phoneBackRight {
-  right: 0;
-  transform: rotate(8deg);
+  transform: translateX(calc(-50% + var(--hero-phone-offset))) rotate(8deg);
 }
 
-@keyframes phoneFloat {
-  0%,
-  100% { transform: translateX(-50%) translateY(0) rotate(0.5deg); }
-  50% { transform: translateX(-50%) translateY(-9px) rotate(0deg); }
+@media (hover: hover) and (pointer: fine) {
+  .phoneBackLeft:hover {
+    opacity: 0.92;
+    filter: saturate(0.96) brightness(0.98);
+    transform: translateX(calc(-50% - var(--hero-phone-offset))) translateY(-7px) rotate(-6deg);
+  }
+
+  .phoneBackRight:hover {
+    opacity: 0.92;
+    filter: saturate(0.96) brightness(0.98);
+    transform: translateX(calc(-50% + var(--hero-phone-offset))) translateY(-7px) rotate(6deg);
+  }
+}
+
+.heroVisual > .phone:focus-visible {
+  outline: 3px solid var(--accent-text);
+  outline-offset: 5px;
+}
+
+.carouselDots {
+  position: absolute;
+  bottom: -28px;
+  left: 50%;
+  z-index: 7;
+  padding: 2px 4px;
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r-full);
+  background: var(--glass-bg-strong);
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(14px);
+  transform: translateX(-50%);
+}
+
+.carouselDot {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--r-full);
+  background: transparent;
+  cursor: pointer;
+}
+
+.carouselDot::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--r-full);
+  background: var(--text-faint);
+  transform: translate(-50%, -50%);
+  transition: width 0.3s var(--ease-out), background-color 0.3s ease;
+}
+
+.carouselDotActive::before {
+  width: 22px;
+  background: var(--accent-text);
+}
+
+.carouselDot:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: -4px;
 }
 
 .phoneHighlight {
   position: absolute;
   top: 73%;
-  right: -52px;
+  right: 12px;
   z-index: 6;
   padding: 9px 13px;
   display: inline-flex;
@@ -1440,6 +1526,11 @@
   background: transparent;
   text-align: left;
   cursor: pointer;
+  list-style: none;
+}
+
+.faqQuestion::-webkit-details-marker {
+  display: none;
 }
 
 .faqQuestion > span {
@@ -1466,14 +1557,18 @@
   transition: color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 }
 
+.faqQuestion i::before {
+  content: '+';
+}
+
 .faqQuestion:hover i,
-.faqOpen .faqQuestion i {
+.faqItem[open] .faqQuestion i {
   color: var(--accent-text);
   border-color: rgba(var(--gold-rgb), 0.36);
 }
 
-.faqOpen .faqQuestion i {
-  transform: rotate(180deg);
+.faqItem[open] .faqQuestion i::before {
+  content: '−';
 }
 
 .faqAnswer {
@@ -1491,12 +1586,12 @@
   line-height: 1.75;
 }
 
-.faqOpen .faqAnswer {
+.faqItem[open] .faqAnswer {
   grid-template-rows: 1fr;
   visibility: visible;
 }
 
-.faqOpen .faqAnswer p {
+.faqItem[open] .faqAnswer p {
   padding: 0 58px 25px 0;
 }
 
@@ -1742,6 +1837,7 @@
   .nav {
     min-height: 60px;
     padding: 6px 7px 6px 12px;
+    gap: 10px;
     border-radius: 18px;
   }
 
@@ -1809,28 +1905,30 @@
   }
 
   .heroVisual {
-    width: min(440px, 100%);
-    height: 480px;
-    overflow: clip;
+    --hero-phone-offset: clamp(60px, 13vw, 104px);
+    width: min(520px, 100%);
+    height: 510px;
+    overflow: visible;
   }
 
   .phoneMain {
-    width: min(218px, 55vw);
+    width: min(206px, 53vw);
   }
 
   .phoneBackLeft,
   .phoneBackRight {
     top: 88px;
-    width: min(142px, 36vw);
+    width: min(136px, 35vw);
     border-radius: 22px;
+    box-shadow: 0 16px 26px rgba(0, 0, 0, 0.2);
   }
 
-  .phoneBackLeft { left: 0; }
-  .phoneBackRight { right: 0; }
+  .carouselDots {
+    bottom: 4px;
+  }
 
   .phoneHighlight {
-    right: -38px;
-    padding: 7px 10px;
+    display: none;
   }
 
   .orbitBadge {
@@ -1989,7 +2087,7 @@
     font-size: 0.94rem;
   }
 
-  .faqOpen .faqAnswer p {
+  .faqItem[open] .faqAnswer p {
     padding-right: 0;
   }
 
@@ -2062,14 +2160,38 @@
   }
 }
 
-@media (max-width: 420px) {
+@media (max-width: 556px) {
   .heroVisual {
-    height: 480px;
+    width: calc(100% + 36px);
+    max-width: 100vw;
+    margin-right: -18px;
+    margin-left: -18px;
+  }
+}
+
+@media (max-width: 420px) {
+  .header {
+    padding-right: 8px;
+    padding-left: 8px;
   }
 
-  .phoneHighlight {
-    right: -28px;
-    font-size: 0.64rem;
+  .nav {
+    padding-left: 10px;
+  }
+
+  .langBtn {
+    min-width: 40px;
+    padding-right: 6px;
+    padding-left: 6px;
+  }
+
+  .heroTitle,
+  .heroLead {
+    overflow-wrap: anywhere;
+  }
+
+  .heroVisual {
+    height: 500px;
   }
 
   .signalList li {

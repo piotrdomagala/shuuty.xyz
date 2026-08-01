@@ -30,25 +30,49 @@ interface PageMetadataOptions {
   title: string;
   description: string;
   path: `/${string}`;
+  language?: 'en' | 'pl';
+  englishPath?: `/${string}`;
+  polishPath?: `/${string}`;
+}
+
+export function createLanguageAlternates(
+  englishPath: `/${string}`,
+  polishPath: `/${string}`,
+) {
+  return {
+    en: englishPath,
+    pl: polishPath,
+    'x-default': englishPath,
+  } as const;
 }
 
 export function createPublicPageMetadata({
   title,
   description,
   path,
+  language = 'en',
+  englishPath = path,
+  polishPath,
 }: PageMetadataOptions): Metadata {
   const socialTitle = `${title} | Shuuty`;
+  const languageAlternates = polishPath
+    ? createLanguageAlternates(englishPath, polishPath)
+    : undefined;
 
   return {
     title,
     description,
-    alternates: { canonical: path },
+    alternates: {
+      canonical: path,
+      ...(languageAlternates ? { languages: languageAlternates } : {}),
+    },
     openGraph: {
       title: socialTitle,
       description,
       url: path,
       type: 'website',
-      locale: 'en_US',
+      locale: language === 'pl' ? 'pl_PL' : 'en_US',
+      alternateLocale: [language === 'pl' ? 'en_US' : 'pl_PL'],
       siteName: 'Shuuty',
       images: [SOCIAL_IMAGE],
     },
