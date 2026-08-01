@@ -140,7 +140,6 @@
   display: block;
   width: 100%;
   padding: var(--s-md) var(--s-xl);
-  border: none;
   border-radius: var(--r-full);
   background: rgba(var(--gold-rgb), 0.12);
   border: 1px solid rgba(var(--gold-rgb), 0.3);
