@@ -1,19 +1,14 @@
-import type { Metadata } from 'next';
 import DocumentPage from '@/components/DocumentPage';
+import { createPublicPageMetadata } from '@/lib/site';
 
 const description =
   'Terms and conditions for the Shuuty mobile application, including Free, Pro, and Teams plans.';
 
-export const metadata: Metadata = {
+export const metadata = createPublicPageMetadata({
   title: 'Terms & Conditions',
   description,
-  alternates: { canonical: '/terms/' },
-  openGraph: {
-    title: 'Terms & Conditions | Shuuty',
-    description,
-    url: '/terms/',
-  },
-};
+  path: '/terms/',
+});
 
 export default function TermsPage() {
   return (

@@ -1081,9 +1081,7 @@
   inset: 9% 0 6%;
   border: 1px solid var(--border);
   border-radius: var(--r-2xl);
-  background:
-    radial-gradient(circle at 18% 20%, color-mix(in srgb, var(--group-accent) 15%, transparent), transparent 42%),
-    var(--bg-soft);
+  background: var(--bg-soft);
   box-shadow: var(--shadow-soft);
 }
 
@@ -1122,9 +1120,9 @@
   grid-template-columns: 40px 1fr;
   gap: 12px;
   align-items: center;
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-strong);
   border-radius: 17px;
-  background: var(--glass-bg-strong);
+  background: var(--bg-raised);
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
   backdrop-filter: blur(18px);
 }
@@ -1834,13 +1832,8 @@
     padding: 7px 10px;
   }
 
-  .orbitTask,
-  .orbitGroup {
-    top: 35px;
-  }
-
-  .orbitMap {
-    bottom: 54px;
+  .orbitBadge {
+    display: none;
   }
 
   .section,
@@ -1920,9 +1913,21 @@
     width: auto;
   }
 
+  .modesLabel {
+    justify-self: start;
+    width: fit-content;
+    margin: 0 0 7px 7px;
+    padding: 6px 9px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    color: var(--text);
+    background: var(--glass-bg-strong);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
+    backdrop-filter: blur(14px);
+  }
+
   .groupModeCard {
     min-height: 84px;
-    background: var(--glass-bg-strong);
   }
 
   .mapStory {
@@ -2061,10 +2066,6 @@
     height: 480px;
   }
 
-  .orbitBadge {
-    display: none;
-  }
-
   .phoneHighlight {
     right: -28px;
     font-size: 0.64rem;
@@ -2081,4 +2082,5 @@
   .groupsVisual {
     min-height: 810px;
   }
+
 }

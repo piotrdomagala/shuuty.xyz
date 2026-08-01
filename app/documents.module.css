@@ -1,7 +1,9 @@
-/* ═══ Document Pages - Dark Theme ═══ */
+/* ═══ Document Pages ═══ */
 
 .pageWrapper {
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   background: var(--bg);
   position: relative;
   overflow-x: hidden;
@@ -54,11 +56,10 @@
 .headerContent {
   max-width: 900px;
   margin: 0 auto;
-  display: flex;
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) auto;
   align-items: center;
   gap: var(--s-lg);
-  column-gap: var(--s-lg);
-  row-gap: var(--s-md);
 }
 
 .backButton {
@@ -77,7 +78,7 @@
 }
 
 .backButton:hover {
-  color: var(--gold);
+  color: var(--accent-text);
   border-color: rgba(var(--gold-rgb), 0.3);
 }
 
@@ -89,20 +90,17 @@
 .headerInfo {
   display: flex;
   align-items: center;
-  gap: var(--s-lg);
+  gap: var(--s-md);
   min-width: 0;
-  flex: 1;
 }
 
-/* Asset ~86×40 - never force a square or the mark looks squeezed */
 .logo {
+  width: 40px;
   height: 40px;
-  width: auto;
-  max-width: 92px;
-  object-fit: contain;
-  object-position: left center;
+  object-fit: cover;
   flex-shrink: 0;
-  border-radius: var(--r-sm);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
 }
 
 .headerTitle {
@@ -113,15 +111,52 @@
   margin: 0;
   min-width: 0;
   line-height: 1.35;
+  overflow-wrap: break-word;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: var(--s-sm);
+}
+
+.themeButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--bg-raised);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s, transform 0.2s;
+}
+
+.themeButton:hover {
+  color: var(--accent-text);
+  border-color: rgba(var(--gold-rgb), 0.4);
+  transform: translateY(-1px);
+}
+
+.themeButton svg {
+  width: 19px;
+  height: 19px;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .languageSwitcher {
-  margin-left: auto;
   display: inline-flex;
-  border-radius: var(--r-full);
+  min-height: 40px;
+  border-radius: var(--r-md);
   border: 1px solid var(--border);
   overflow: hidden;
   flex-shrink: 0;
+  background: var(--bg-raised);
 }
 
 .languageButton {
@@ -132,7 +167,9 @@
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.04em;
-  padding: 6px 12px;
+  min-width: 40px;
+  min-height: 38px;
+  padding: 0 var(--s-sm);
   cursor: pointer;
   transition: color 0.2s, background 0.2s;
 }
@@ -143,7 +180,7 @@
 
 .languageButtonActive {
   background: var(--gold);
-  color: var(--bg);
+  color: var(--accent-ink);
 }
 
 /* ── Main content ── */
@@ -151,6 +188,7 @@
 .main {
   position: relative;
   z-index: 1;
+  flex: 1;
   max-width: 900px;
   margin: 0 auto;
   padding: var(--s-2xl) var(--s-xl);
@@ -164,25 +202,8 @@
   border: 1px solid var(--border);
   padding: var(--s-2xl);
   position: relative;
-  overflow: hidden;
   max-width: 100%;
-}
-
-.contentCard::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--gold), var(--blue), var(--gold));
-  background-size: 200% auto;
-  animation: gradientShift 4s linear infinite;
-}
-
-@keyframes gradientShift {
-  0% { background-position: 0% center; }
-  100% { background-position: 200% center; }
+  box-shadow: var(--shadow-soft);
 }
 
 /* ── Markdown content ── */
@@ -200,10 +221,7 @@
   font-weight: 800;
   margin: 0 0 var(--s-xl);
   text-align: center;
-  background: linear-gradient(135deg, var(--gold), var(--blue));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--text);
 }
 
 .markdown h2 {
@@ -221,7 +239,7 @@
   font-size: 1.15rem;
   font-weight: 600;
   margin: var(--s-xl) 0 var(--s-sm);
-  color: var(--gold);
+  color: var(--accent-text);
 }
 
 .markdown p {
@@ -241,7 +259,7 @@
 .markdown strong { color: var(--text); font-weight: 600; }
 
 .markdown a {
-  color: var(--gold);
+  color: var(--accent-text);
   text-decoration: none;
   transition: opacity 0.2s;
 }
@@ -265,7 +283,7 @@
   border: 1px solid rgba(var(--gold-rgb), 0.3);
   border-radius: var(--r-lg);
   background: rgba(var(--gold-rgb), 0.1);
-  color: var(--gold);
+  color: var(--accent-text);
 }
 
 .supportIcon svg {
@@ -278,7 +296,7 @@
   margin-bottom: var(--s-xl);
 }
 
-.formIntro h2 {
+.formIntro h1 {
   font-family: var(--font-display);
   font-size: 1.5rem;
   font-weight: 700;
@@ -304,7 +322,7 @@
   border: 1px solid var(--gold);
   border-radius: var(--r-full);
   background: var(--gold);
-  color: var(--bg);
+  color: var(--accent-ink);
   font-size: 1rem;
   font-weight: 700;
   font-family: var(--font-body);
@@ -343,7 +361,7 @@
   box-sizing: border-box;
   padding: var(--s-sm) var(--s-md);
   background: var(--bg);
-  color: var(--gold);
+  color: var(--accent-text);
   border: 1px solid var(--border);
   border-radius: var(--r-md);
   font-size: 1rem;
@@ -402,7 +420,7 @@
   font-size: 1rem;
   font-weight: 700;
   margin: 0 0 var(--s-xs);
-  color: var(--gold);
+  color: var(--accent-text);
 }
 
 .footerBrand p {
@@ -429,34 +447,47 @@
 }
 
 .footerLink:hover {
-  color: var(--gold);
+  color: var(--accent-text);
 }
 
 /* ── Responsive ── */
 
 @media (max-width: 768px) {
-  .header { padding: var(--s-md) var(--s-md); }
+  .header { padding: var(--s-sm) var(--s-md); }
   .headerContent {
-    flex-wrap: wrap;
-    align-items: center;
-    row-gap: var(--s-md);
-    column-gap: var(--s-md);
+    grid-template-columns: 40px minmax(0, 1fr) auto;
+    gap: var(--s-sm);
   }
   .headerInfo {
-    flex: 1;
-    min-width: 0;
+    gap: var(--s-sm);
   }
   .main { padding: var(--s-lg) var(--s-md); }
   .contentCard { padding: var(--s-lg); }
   .markdown h1 { font-size: 1.5rem; }
   .markdown h2 { font-size: 1.2rem; }
-  .headerTitle { font-size: 1rem; }
-  .languageSwitcher {
-    margin-left: auto;
-    flex-shrink: 0;
+  .headerTitle {
+    font-size: 0.875rem;
+    line-height: 1.25;
   }
   .logo {
     height: 36px;
-    max-width: 82px;
+    width: 36px;
+    border-radius: 10px;
+  }
+  .headerActions {
+    gap: 6px;
+  }
+  .themeButton {
+    width: 36px;
+    height: 36px;
+    flex-basis: 36px;
+  }
+  .languageSwitcher {
+    min-height: 36px;
+  }
+  .languageButton {
+    min-width: 34px;
+    min-height: 34px;
+    padding: 0 6px;
   }
 }

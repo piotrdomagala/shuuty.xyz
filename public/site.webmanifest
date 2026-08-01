@@ -1,11 +1,17 @@
 {
   "name": "Shuuty",
   "short_name": "Shuuty",
+  "description": "Voice tasks, flexible groups, meetings and nearby discovery in one mobile app.",
+  "lang": "en",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
   "icons": [
-    { "src": "/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png" }
+    { "src": "/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
   ],
   "theme_color": "#0D1117",
   "background_color": "#0D1117",
-  "display": "standalone"
+  "display": "standalone",
+  "categories": ["productivity", "social", "lifestyle"]
 }

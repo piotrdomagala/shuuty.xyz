@@ -1,19 +1,14 @@
-import type { Metadata } from 'next';
 import DocumentPage from '@/components/DocumentPage';
+import { createPublicPageMetadata } from '@/lib/site';
 
 const description =
   'How Shuuty processes and protects personal data in the mobile application and public website.';
 
-export const metadata: Metadata = {
+export const metadata = createPublicPageMetadata({
   title: 'Privacy Policy',
   description,
-  alternates: { canonical: '/privacy/' },
-  openGraph: {
-    title: 'Privacy Policy | Shuuty',
-    description,
-    url: '/privacy/',
-  },
-};
+  path: '/privacy/',
+});
 
 export default function PrivacyPage() {
   return (

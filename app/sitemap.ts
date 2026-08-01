@@ -1,26 +1,25 @@
 import type { MetadataRoute } from 'next';
-
-const BASE_URL = 'https://shuuty.xyz';
+import { SITE_URL } from '@/lib/site';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: BASE_URL,
+      url: `${SITE_URL}/`,
       changeFrequency: 'weekly',
       priority: 1,
     },
     {
-      url: `${BASE_URL}/support/`,
+      url: `${SITE_URL}/support/`,
       changeFrequency: 'monthly',
       priority: 0.6,
     },
     {
-      url: `${BASE_URL}/privacy/`,
+      url: `${SITE_URL}/privacy/`,
       changeFrequency: 'monthly',
       priority: 0.4,
     },
     {
-      url: `${BASE_URL}/terms/`,
+      url: `${SITE_URL}/terms/`,
       changeFrequency: 'monthly',
       priority: 0.4,
     },
