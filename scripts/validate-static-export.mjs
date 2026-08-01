@@ -27,6 +27,7 @@ const pages = {
       'SoftwareApplication',
       'WebSite',
       'Organization',
+      'FAQPage',
       'shuuty-theme',
       'summary_large_image',
       'android-chrome-192x192.png',
@@ -42,12 +43,40 @@ const pages = {
     requiredPatterns: [
       /<h1[^>]*>/,
       /<script type="application\/ld\+json">/,
+      /<details[^>]*open=""/,
       /<title>Shuuty — Voice Tasks, Groups &amp; Nearby Discovery<\/title>/,
       openGraphImagePattern,
       twitterImagePattern,
     ],
     forbiddenPatterns: [/\/images\/image[1-5]\.webp/],
     routeMetadata: false,
+    language: 'en',
+    alternateRoute: '/pl/',
+  },
+  homePl: {
+    path: 'out/pl/index.html',
+    route: '/pl/',
+    required: [
+      'Od pomysłu',
+      'Powiedz. Deleguj od razu. Przypomnij na czas.',
+      'Ola otrzymuje zadanie teraz.',
+      'Jedna grupa. Dowolny cel.',
+      'FAQPage',
+      'Co Shuuty rozumie z zadania głosowego?',
+      '/pl/support/',
+      '/pl/privacy/',
+      '/pl/terms/',
+    ],
+    requiredPatterns: [
+      /<h1[^>]*>/,
+      /<script type="application\/ld\+json">/,
+      /<details[^>]*open=""/,
+      /<title>Zadania głosowe, grupy i spotkania \| Shuuty<\/title>/,
+      openGraphImagePattern,
+      twitterImagePattern,
+    ],
+    language: 'pl',
+    alternateRoute: '/',
   },
   support: {
     path: 'out/support/index.html',
@@ -57,16 +86,47 @@ const pages = {
       /<button[^>]+aria-label="Copy email address: shuuty\.app@gmail\.com"/,
       /aria-live="polite"/,
     ],
+    language: 'en',
+    alternateRoute: '/pl/support/',
+  },
+  supportPl: {
+    path: 'out/pl/support/index.html',
+    route: '/pl/support/',
+    required: ['Pomoc i kontakt', supportEmail, 'Kopiuj adres e-mail'],
+    requiredPatterns: [
+      /<button[^>]+aria-label="Kopiuj adres e-mail: shuuty\.app@gmail\.com"/,
+      /aria-live="polite"/,
+    ],
+    language: 'pl',
+    alternateRoute: '/support/',
   },
   privacy: {
     path: 'out/privacy/index.html',
     route: '/privacy/',
     required: ['Privacy Policy of the Shuuty Mobile Application', supportEmail],
+    language: 'en',
+    alternateRoute: '/pl/privacy/',
+  },
+  privacyPl: {
+    path: 'out/pl/privacy/index.html',
+    route: '/pl/privacy/',
+    required: ['Polityka prywatności aplikacji mobilnej Shuuty', supportEmail],
+    language: 'pl',
+    alternateRoute: '/privacy/',
   },
   terms: {
     path: 'out/terms/index.html',
     route: '/terms/',
     required: ['Shuuty Mobile Application Terms and Conditions', supportEmail],
+    language: 'en',
+    alternateRoute: '/pl/terms/',
+  },
+  termsPl: {
+    path: 'out/pl/terms/index.html',
+    route: '/pl/terms/',
+    required: ['Regulamin aplikacji mobilnej Shuuty', supportEmail],
+    language: 'pl',
+    alternateRoute: '/terms/',
   },
 };
 
@@ -74,6 +134,14 @@ const failures = [];
 
 for (const [name, page] of Object.entries(pages)) {
   const html = await readFile(new URL(page.path, root), 'utf8');
+
+  const htmlLanguagePattern = new RegExp(`<html[^>]+lang="${page.language}"`, 'i');
+  if (!htmlLanguagePattern.test(html)) {
+    failures.push(`${name} static HTML should use lang="${page.language}" on the html element`);
+  }
+  if (html.includes('=/^/pl')) {
+    failures.push(`${name} static HTML contains a malformed language bootstrap expression`);
+  }
 
   for (const expectedText of page.required) {
     if (!html.includes(expectedText)) {
@@ -96,6 +164,29 @@ for (const [name, page] of Object.entries(pages)) {
   const canonicalUrl = `${siteUrl}${page.route}`;
   if (!html.includes(`<link rel="canonical" href="${canonicalUrl}"`)) {
     failures.push(`${name} static HTML is missing canonical URL: ${canonicalUrl}`);
+  }
+
+  if (page.alternateRoute) {
+    const englishRoute = page.language === 'pl' ? page.alternateRoute : page.route;
+    const polishRoute = page.language === 'pl' ? page.route : page.alternateRoute;
+    const expectedAlternates = {
+      en: `${siteUrl}${englishRoute}`,
+      pl: `${siteUrl}${polishRoute}`,
+      'x-default': `${siteUrl}${englishRoute}`,
+    };
+
+    for (const [language, url] of Object.entries(expectedAlternates)) {
+      const alternatePattern = new RegExp(
+        `<link rel="alternate" hrefLang="${language}" href="${url.replace(
+          /[.*+?^${}()|[\]\\]/g,
+          '\\$&',
+        )}"`,
+        'i',
+      );
+      if (!alternatePattern.test(html)) {
+        failures.push(`${name} static HTML is missing ${language} alternate: ${url}`);
+      }
+    }
   }
 
   const h1Count = (html.match(/<h1(?:\s|>)/g) ?? []).length;
@@ -165,12 +256,65 @@ if (!robots.includes(`Sitemap: ${siteUrl}/sitemap.xml`)) {
 if (/Disallow:\s*\/(?:verify|auth\/)/.test(robots)) {
   failures.push('robots.txt blocks a noindex hand-off route from being crawled');
 }
+for (const expectedDirective of [
+  'Content-Signal: search=yes, ai-input=yes, ai-train=no',
+  'User-agent: OAI-SearchBot',
+  'User-agent: Claude-SearchBot',
+  'User-agent: PerplexityBot',
+  'User-agent: GPTBot\nDisallow: /',
+  'User-agent: ClaudeBot\nDisallow: /',
+  'User-agent: Google-Extended\nDisallow: /',
+]) {
+  if (!robots.includes(expectedDirective)) {
+    failures.push(`robots.txt is missing: ${expectedDirective}`);
+  }
+}
 
 const sitemap = await readFile(new URL('out/sitemap.xml', root), 'utf8');
-for (const route of ['/', '/support/', '/privacy/', '/terms/']) {
+for (const route of [
+  '/',
+  '/pl/',
+  '/support/',
+  '/pl/support/',
+  '/privacy/',
+  '/pl/privacy/',
+  '/terms/',
+  '/pl/terms/',
+]) {
   if (!sitemap.includes(`<loc>${siteUrl}${route}</loc>`)) {
     failures.push(`sitemap.xml is missing: ${siteUrl}${route}`);
   }
+}
+for (const [language, route] of Object.entries({ en: '/', pl: '/pl/', 'x-default': '/' })) {
+  if (!sitemap.includes(`hreflang="${language}" href="${siteUrl}${route}"`)) {
+    failures.push(`sitemap.xml is missing ${language} language alternate`);
+  }
+}
+
+const llms = await readFile(new URL('out/llms.txt', root), 'utf8');
+for (const expectedText of [
+  '# Shuuty',
+  `${siteUrl}/pl/`,
+  `${siteUrl}/llms-full.txt`,
+  'Shuuty on the App Store',
+  'Shuuty on Google Play',
+]) {
+  if (!llms.includes(expectedText)) {
+    failures.push(`llms.txt is missing: ${expectedText}`);
+  }
+}
+
+const llmsFull = await readFile(new URL('out/llms-full.txt', root), 'utf8');
+for (const expectedText of ['Tasks and voice input', 'Zadania i obsługa głosu', supportEmail]) {
+  if (!llmsFull.includes(expectedText)) {
+    failures.push(`llms-full.txt is missing: ${expectedText}`);
+  }
+}
+
+const indexNowKey = '82c89256cd2a7441fe790b5d949d58fedac21a8a5c3a0faf';
+const indexNowKeyFile = await readFile(new URL(`out/${indexNowKey}.txt`, root), 'utf8');
+if (indexNowKeyFile.trim() !== indexNowKey) {
+  failures.push('IndexNow key file does not contain the expected public key');
 }
 
 const manifest = JSON.parse(await readFile(new URL('out/site.webmanifest', root), 'utf8'));

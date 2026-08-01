@@ -8,6 +8,8 @@ export const metadata = createPublicPageMetadata({
   title: 'Privacy Policy',
   description,
   path: '/privacy/',
+  englishPath: '/privacy/',
+  polishPath: '/pl/privacy/',
 });
 
 export default function PrivacyPage() {

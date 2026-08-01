@@ -3,6 +3,7 @@
 import { DocumentShell } from '@/components/DocumentChrome';
 import { documentTranslations } from '@/components/documentLocale';
 import { useSiteLanguage } from '@/components/useSiteLanguage';
+import type { DocumentLanguage } from '@/components/documentLocale';
 import styles from '@/app/documents.module.css';
 
 interface DocumentPageClientProps {
@@ -10,6 +11,7 @@ interface DocumentPageClientProps {
   titlePl: string;
   contentEn: string;
   contentPl: string;
+  initialLanguage?: DocumentLanguage;
 }
 
 export default function DocumentPageClient({
@@ -17,8 +19,9 @@ export default function DocumentPageClient({
   titlePl,
   contentEn,
   contentPl,
+  initialLanguage = 'en',
 }: DocumentPageClientProps) {
-  const { language, changeLanguage } = useSiteLanguage();
+  const { language, changeLanguage } = useSiteLanguage(initialLanguage);
   const translations = documentTranslations[language];
   const pageTitle = language === 'pl' ? titlePl : titleEn;
   const content = language === 'pl' ? contentPl : contentEn;
@@ -37,6 +40,7 @@ export default function DocumentPageClient({
     >
       <article
         className={styles.markdown}
+        lang={language}
         dangerouslySetInnerHTML={{ __html: content }}
       />
     </DocumentShell>

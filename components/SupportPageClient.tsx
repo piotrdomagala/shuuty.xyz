@@ -5,6 +5,7 @@ import { DocumentShell } from '@/components/DocumentChrome';
 import { documentTranslations } from '@/components/documentLocale';
 import { useSiteLanguage } from '@/components/useSiteLanguage';
 import styles from '@/app/documents.module.css';
+import type { DocumentLanguage } from '@/components/documentLocale';
 
 const SUPPORT_EMAIL = 'shuuty.app@gmail.com';
 
@@ -60,8 +61,12 @@ const MailIcon = ({ strokeWidth }: { strokeWidth: string }) => (
   </svg>
 );
 
-export default function SupportPageClient() {
-  const { language, changeLanguage } = useSiteLanguage();
+interface SupportPageClientProps {
+  initialLanguage?: DocumentLanguage;
+}
+
+export default function SupportPageClient({ initialLanguage = 'en' }: SupportPageClientProps) {
+  const { language, changeLanguage } = useSiteLanguage(initialLanguage);
   const [copyStatus, setCopyStatus] = useState<CopyStatus>('idle');
   const translations = supportTranslations[language];
   const supportMailHref = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(
@@ -104,7 +109,7 @@ export default function SupportPageClient() {
       privacyLabel={translations.privacy}
       termsLabel={translations.terms}
     >
-      <div className={styles.formContainer}>
+      <div className={styles.formContainer} lang={language}>
         <div className={styles.supportIcon} aria-hidden="true">
           <MailIcon strokeWidth="1.8" />
         </div>

@@ -8,6 +8,8 @@ export const metadata = createPublicPageMetadata({
   title: 'Terms & Conditions',
   description,
   path: '/terms/',
+  englishPath: '/terms/',
+  polishPath: '/pl/terms/',
 });
 
 export default function TermsPage() {

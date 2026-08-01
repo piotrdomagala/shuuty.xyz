@@ -4,39 +4,34 @@ import { useCallback, useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 import type { DocumentLanguage } from '@/components/documentLocale';
 
-const isDocumentLanguage = (value: unknown): value is DocumentLanguage =>
-  value === 'en' || value === 'pl';
-
 const persistLanguage = (language: DocumentLanguage) => {
   Cookies.set('lang', language, { expires: 365, sameSite: 'lax' });
   document.documentElement.lang = language;
 };
 
-export function useSiteLanguage() {
-  const [language, setLanguage] = useState<DocumentLanguage>('en');
-  const [isReady, setIsReady] = useState(false);
+const getLocalizedPath = (pathname: string, language: DocumentLanguage) => {
+  const englishPath = pathname.replace(/^\/pl(?=\/|$)/, '') || '/';
+
+  if (language === 'en') return englishPath;
+  return englishPath === '/' ? '/pl/' : `/pl${englishPath}`;
+};
+
+export function useSiteLanguage(initialLanguage: DocumentLanguage = 'en') {
+  const [language, setLanguage] = useState<DocumentLanguage>(initialLanguage);
 
   useEffect(() => {
-    const savedLanguage = Cookies.get('lang');
-    const preferredLanguage = navigator.languages?.[0] ?? navigator.language;
-    const detectedLanguage: DocumentLanguage = preferredLanguage
-      ?.toLowerCase()
-      .startsWith('pl')
-      ? 'pl'
-      : 'en';
-    const initialLanguage = isDocumentLanguage(savedLanguage)
-      ? savedLanguage
-      : detectedLanguage;
-
-    setLanguage(initialLanguage);
     persistLanguage(initialLanguage);
-    setIsReady(true);
-  }, []);
+  }, [initialLanguage]);
 
   const changeLanguage = useCallback((nextLanguage: DocumentLanguage) => {
     setLanguage(nextLanguage);
     persistLanguage(nextLanguage);
+
+    const targetPath = getLocalizedPath(window.location.pathname, nextLanguage);
+    if (targetPath !== window.location.pathname) {
+      window.location.assign(`${targetPath}${window.location.search}${window.location.hash}`);
+    }
   }, []);
 
-  return { language, changeLanguage, isReady };
+  return { language, changeLanguage };
 }
