@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import type { DocumentLanguage } from '@/components/documentLocale';
 import { useSiteLanguage } from '@/components/useSiteLanguage';
+import { SITE_URL, SOCIAL_IMAGE } from '@/lib/site';
 import s from './page.module.css';
 import t from './homeContent.json';
 
@@ -42,21 +43,57 @@ const LANGS: { code: Lang; label: string }[] = [
 
 const TASK_META_ICONS = ['clock', 'people', 'reminder'] as const;
 
-const SOFTWARE_SCHEMA = {
+const SITE_SCHEMA = {
   '@context': 'https://schema.org',
-  '@type': 'SoftwareApplication',
-  name: 'Shuuty',
-  applicationCategory: 'LifestyleApplication',
-  operatingSystem: 'iOS, Android',
-  url: 'https://shuuty.xyz',
-  downloadUrl: [STORE.ios, STORE.android],
-  description:
-    'Shuuty connects voice-created tasks, immediate delegation, flexible groups, meetings and nearby discovery in one mobile app.',
-  offers: {
-    '@type': 'Offer',
-    price: '0',
-    priceCurrency: 'USD',
-  },
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE_URL}/#website`,
+      url: `${SITE_URL}/`,
+      name: 'Shuuty',
+      alternateName: 'Shuuty App',
+      inLanguage: ['en', 'pl'],
+      publisher: { '@id': `${SITE_URL}/#organization` },
+    },
+    {
+      '@type': 'Organization',
+      '@id': `${SITE_URL}/#organization`,
+      name: 'Shuuty',
+      legalName: 'Shuuty Prosta Spółka Akcyjna',
+      url: `${SITE_URL}/`,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${SITE_URL}/android-chrome-512x512.png`,
+        width: 512,
+        height: 512,
+      },
+      email: 'shuuty.app@gmail.com',
+    },
+    {
+      '@type': ['SoftwareApplication', 'MobileApplication'],
+      '@id': `${SITE_URL}/#mobile-app`,
+      name: 'Shuuty',
+      applicationCategory: 'LifestyleApplication',
+      operatingSystem: 'iOS, Android',
+      url: `${SITE_URL}/`,
+      image: SOCIAL_IMAGE.url,
+      downloadUrl: [STORE.ios, STORE.android],
+      sameAs: [STORE.ios, STORE.android],
+      screenshot: [
+        `${SITE_URL}/images/app/create-menu.png`,
+        `${SITE_URL}/images/app/discover-groups.png`,
+        `${SITE_URL}/images/app/discover-meetings.png`,
+      ],
+      description:
+        'Shuuty connects voice-created tasks, immediate delegation, flexible groups, meetings and nearby discovery in one mobile app.',
+      publisher: { '@id': `${SITE_URL}/#organization` },
+      offers: {
+        '@type': 'Offer',
+        price: 0,
+        priceCurrency: 'USD',
+      },
+    },
+  ],
 };
 
 function Icon({ name }: Readonly<{ name: IconName }>) {
@@ -225,7 +262,7 @@ export default function Home() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(SOFTWARE_SCHEMA) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(SITE_SCHEMA) }}
       />
       <a href="#main" className={s.skipLink}>{c.a11y.skip}</a>
       <div className={s.noiseOverlay} aria-hidden />
@@ -512,9 +549,9 @@ export default function Home() {
           </div>
           <span className={s.footerCopy}>{c.footer.copyright}</span>
           <nav className={s.footerLinks} aria-label={c.a11y.footerNav}>
-            <Link href="/support">{c.footer.support}</Link>
-            <Link href="/privacy">{c.footer.privacy}</Link>
-            <Link href="/terms">{c.footer.terms}</Link>
+            <Link href="/support/">{c.footer.support}</Link>
+            <Link href="/privacy/">{c.footer.privacy}</Link>
+            <Link href="/terms/">{c.footer.terms}</Link>
           </nav>
         </div>
       </footer>

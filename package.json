@@ -1,7 +1,7 @@
 {
   "name": "shuuty-app",
   "version": "2.0.0",
-  "description": "Shuuty - Find Those You Seek",
+  "description": "Shuuty — voice tasks, flexible groups, meetings and nearby discovery.",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -11,10 +11,11 @@
     "start": "next start",
     "lint": "next lint",
     "validate:legal": "node scripts/validate-legal-documents.mjs",
-    "validate:static": "node scripts/validate-static-export.mjs"
+    "validate:static": "node scripts/validate-static-export.mjs",
+    "generate:favicon": "node scripts/generate-favicon.mjs"
   },
   "dependencies": {
-    "js-cookie": "^3.0.5",
+    "js-cookie": "^3.0.8",
     "next": "^14.2.28",
     "react": "^18",
     "react-dom": "^18"

@@ -110,7 +110,7 @@ export default function SupportPageClient() {
         </div>
 
         <div className={styles.formIntro}>
-          <h2>{translations.contactTitle}</h2>
+          <h1>{translations.contactTitle}</h1>
           <p>{translations.contactDescription}</p>
         </div>
 

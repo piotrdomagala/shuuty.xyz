@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Outfit, Plus_Jakarta_Sans } from 'next/font/google';
+import { SITE_URL, SOCIAL_IMAGE } from '@/lib/site';
 import './globals.css';
 
 const outfit = Outfit({
@@ -44,13 +45,13 @@ const themeScript = `
 `;
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://shuuty.xyz'),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: 'Shuuty - Voice Tasks, Flexible Groups & Discovery',
+    default: 'Shuuty — Voice Tasks, Groups & Nearby Discovery',
     template: '%s | Shuuty',
   },
   description:
-    'Turn voice into delegated tasks, shape groups for collaboration, bookings, listings or offers, and discover meetings and groups nearby.',
+    'Turn ideas into action with Shuuty: create and delegate tasks by voice, build flexible groups, organise meetings, and discover what matters nearby.',
   applicationName: 'Shuuty',
   category: 'Lifestyle',
   keywords: [
@@ -72,30 +73,52 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/',
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
+  },
   openGraph: {
-    title: 'Shuuty - From Idea to Action',
+    title: 'Shuuty — From Idea to Action',
     description:
       'Voice tasks delivered immediately, groups for any purpose, meetings and nearby discovery in one connected app.',
     url: '/',
     type: 'website',
     locale: 'en_US',
-    alternateLocale: ['pl_PL'],
     siteName: 'Shuuty',
+    images: [SOCIAL_IMAGE],
   },
   twitter: {
-    card: 'summary',
-    title: 'Shuuty - From Idea to Action',
+    card: 'summary_large_image',
+    title: 'Shuuty — From Idea to Action',
     description:
       'Create by voice, delegate immediately, shape groups freely and discover what matters nearby.',
+    images: [SOCIAL_IMAGE.url],
   },
   icons: {
     icon: [
+      { url: '/android-chrome-192x192.png', sizes: '192x192', type: 'image/png' },
       { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
       { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
     ],
+    shortcut: '/favicon.ico',
     apple: '/apple-touch-icon.png',
   },
   manifest: '/site.webmanifest',
+  appleWebApp: {
+    capable: true,
+    title: 'Shuuty',
+    statusBarStyle: 'black-translucent',
+  },
+  formatDetection: {
+    telephone: false,
+  },
 };
 
 export const viewport: Viewport = {
