@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-const DEFAULT_SITE_URL = 'https://shuuty.xyz';
+const DEFAULT_SITE_URL = 'https://shuuty.com';
 
 function resolveSiteUrl(value: string | undefined): string {
   if (!value) return DEFAULT_SITE_URL;
