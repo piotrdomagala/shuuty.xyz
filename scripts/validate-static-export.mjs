@@ -2,7 +2,7 @@ import { readFile } from 'node:fs/promises';
 
 const root = new URL('../', import.meta.url);
 const supportEmail = 'shuuty.app@gmail.com';
-const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || 'https://shuuty.xyz').replace(
+const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || 'https://shuuty.com').replace(
   /\/+$/,
   '',
 );
