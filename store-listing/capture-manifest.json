@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "campaign": "official-2026",
+  "locales": ["pl-PL", "en-US"],
+  "deviceSets": {
+    "appStoreIphone69": {
+      "source": "iPhone 16 Pro Max or accepted 6.9-inch equivalent",
+      "width": 1320,
+      "height": 2868,
+      "orientation": "portrait",
+      "requiredCaptures": 8
+    },
+    "appStoreIpad13": {
+      "source": "iPad Pro 13-inch",
+      "width": 2064,
+      "height": 2752,
+      "orientation": "portrait",
+      "requiredCaptures": 4
+    },
+    "googlePlayPhone": {
+      "source": "current Pixel emulator or production Android phone",
+      "width": 1080,
+      "height": 1920,
+      "orientation": "portrait",
+      "requiredCaptures": 8
+    },
+    "googlePlayTablet": {
+      "source": "10-inch Android tablet emulator or device",
+      "width": 1920,
+      "height": 1080,
+      "orientation": "landscape",
+      "requiredCaptures": 4
+    }
+  },
+  "demoSeed": {
+    "account": "Dedicated non-production store-demo account",
+    "people": ["Mia", "Alex", "Noah"],
+    "group": {
+      "pl": "Studio Północ",
+      "en": "North Studio"
+    },
+    "voiceInstruction": {
+      "pl": "Mia ma jutro o 9 wysłać ofertę. Przypomnij jej pół godziny wcześniej.",
+      "en": "Mia should send the proposal tomorrow at 9. Remind her 30 minutes earlier."
+    },
+    "taskTitle": {
+      "pl": "Wyślij ofertę",
+      "en": "Send the proposal"
+    },
+    "meeting": {
+      "pl": "Omówienie projektu",
+      "en": "Project review"
+    },
+    "location": "Public city-centre location, never a home or live user position",
+    "avatarPolicy": "Initials or approved fictional artwork only"
+  },
+  "screenshots": [
+    {
+      "id": "01-voice-input",
+      "headline": {
+        "pl-PL": "Powiedz, co trzeba zrobić",
+        "en-US": "Say what needs doing"
+      },
+      "capture": "Voice task panel while the clean demo instruction is visible",
+      "priority": "hero"
+    },
+    {
+      "id": "02-voice-result",
+      "headline": {
+        "pl-PL": "Gotowe: osoba, termin, przypomnienie",
+        "en-US": "Ready: person, due date, reminder"
+      },
+      "capture": "Processed task preview with Mia, tomorrow 09:00, and 08:30 reminder visible",
+      "priority": "hero"
+    },
+    {
+      "id": "03-delegated",
+      "headline": {
+        "pl-PL": "Deleguj od razu",
+        "en-US": "Delegate it right away"
+      },
+      "capture": "Delegated task view with recipient and a clear delivery or acceptance state",
+      "priority": "hero"
+    },
+    {
+      "id": "04-planner",
+      "headline": {
+        "pl-PL": "Widzisz, co wymaga uwagi",
+        "en-US": "See what needs attention"
+      },
+      "capture": "Populated Home or Planner day with a realistic, uncluttered task mix",
+      "priority": "core"
+    },
+    {
+      "id": "05-task-context",
+      "headline": {
+        "pl-PL": "Rozmowa zostaje przy zadaniu",
+        "en-US": "Keep the conversation with the task"
+      },
+      "capture": "Task detail with a short checklist and safe fictional discussion or activity",
+      "priority": "core"
+    },
+    {
+      "id": "06-group",
+      "headline": {
+        "pl-PL": "Jedna grupa. Dowolny cel.",
+        "en-US": "One group. Any purpose."
+      },
+      "capture": "North Studio group showing useful chat, task, and calendar context",
+      "priority": "ecosystem"
+    },
+    {
+      "id": "07-meeting",
+      "headline": {
+        "pl-PL": "Miejsce, czas i ludzie — razem",
+        "en-US": "Place, time and people — together"
+      },
+      "capture": "Project review meeting summary with date, public venue, and fictional participants",
+      "priority": "ecosystem"
+    },
+    {
+      "id": "08-discover",
+      "headline": {
+        "pl-PL": "Odkrywaj to, co dzieje się blisko",
+        "en-US": "Discover what’s happening nearby"
+      },
+      "capture": "Discover map with several safe public pins and one selected meeting or group card",
+      "priority": "ecosystem"
+    }
+  ],
+  "captureRules": [
+    "Use the final release candidate, not a debug or development menu state.",
+    "Capture raw PNG files without frames, marketing copy, cropping, or rescaling.",
+    "Use the same seed and state for Polish and English.",
+    "Use default text size and a clean, consistent status bar.",
+    "Dismiss keyboards, loaders, toasts, permission dialogs, and notification panels unless they are the explicit subject.",
+    "Do not capture real messages, email addresses, profile photos, precise private locations, or production notifications."
+  ]
+}

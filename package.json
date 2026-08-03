@@ -11,6 +11,7 @@
     "start": "next start",
     "lint": "next lint",
     "validate:legal": "node scripts/validate-legal-documents.mjs",
+    "validate:store-listing": "node scripts/validate-store-listing.mjs",
     "validate:static": "node scripts/validate-static-export.mjs",
     "generate:favicon": "node scripts/generate-favicon.mjs",
     "submit:indexnow": "node scripts/submit-indexnow.mjs"

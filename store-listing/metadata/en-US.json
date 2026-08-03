@@ -1,0 +1,21 @@
+{
+  "locale": "en-US",
+  "appStore": {
+    "name": "Shuuty",
+    "subtitle": "Voice tasks & delegation",
+    "promotionalText": "Say a task naturally. Shuuty recognizes the person, due time, and reminder, so you can delegate it instantly and keep every update in context.",
+    "keywords": "voice tasks,delegation,planner,groups,calendar,meetings,reminders,team,productivity",
+    "description": "From idea to action.\n\nShuuty turns everyday agreements into clear next steps without moving context between notes, messengers, and calendars.\n\nSAY WHAT NEEDS DOING\nRecord a task in your own words. Shuuty prepares the title and description, recognizes the due time, reminder, person, and place, and can split several thoughts into separate tasks for review.\n\nDELEGATE IT RIGHT AWAY\nAssign a task to a friend or group member. They receive it when you create it, while you can see what is waiting for acceptance, in progress, or complete.\n\nKEEP THE FULL CONTEXT\nPrivate, Received, and Delegated tasks have clear, separate views. Add subtasks, priorities, due times, reminders, and locations. Conversation and activity stay with the task.\n\nONE GROUP, ANY PURPOSE\nCreate a private circle, team, community, client space, calendar, booking flow, or public offer. Enable only what you need: chat, threads, tasks, calendars, bookings, and time logs.\n\nMEETINGS AND DISCOVERY\nPlan the place, time, and participants. Explore nearby meetings, public groups, and local offers on the map.\n\nStart with Free. Optional Pro and Teams plans raise limits and unlock additional capabilities.\n\nTerms: https://shuuty.com/terms/\nPrivacy Policy: https://shuuty.com/privacy/",
+    "whatsNew": "Shuuty is ready for action. Create and delegate voice tasks with a due time, reminder, and location. Use refined Private, Received, and Delegated views, clearer groups, meetings, calendars, and notifications, plus better Pro and Teams plan management. This version also brings the new black-and-gold icon, more reliable syncing, and smoother recovery from temporary errors.",
+    "marketingUrl": "https://shuuty.com/",
+    "supportUrl": "https://shuuty.com/support/",
+    "privacyPolicyUrl": "https://shuuty.com/privacy/",
+    "termsOfUseUrl": "https://shuuty.com/terms/"
+  },
+  "googlePlay": {
+    "appName": "Shuuty",
+    "shortDescription": "Turn speech into tasks, delegate instantly, and keep every detail in context.",
+    "fullDescription": "From idea to action.\n\nShuuty turns everyday agreements into clear next steps without moving context between notes, messengers, and calendars.\n\nSAY WHAT NEEDS DOING\nRecord a task in your own words. Shuuty prepares the title and description, recognizes the due time, reminder, person, and place, and can split several thoughts into separate tasks for review.\n\nDELEGATE IT RIGHT AWAY\nAssign a task to a friend or group member. They receive it when you create it, while you can see what is waiting for acceptance, in progress, or complete.\n\nKEEP THE FULL CONTEXT\nPrivate, Received, and Delegated tasks have clear, separate views. Add subtasks, priorities, due times, reminders, and locations. Conversation and activity stay with the task.\n\nONE GROUP, ANY PURPOSE\nCreate a private circle, team, community, client space, calendar, booking flow, or public offer. Enable only what you need: chat, threads, tasks, calendars, bookings, and time logs.\n\nMEETINGS AND DISCOVERY\nPlan the place, time, and participants. Explore nearby meetings, public groups, and local offers on the map.\n\nStart with Free. Optional Pro and Teams plans raise limits and unlock additional capabilities.\n\nTerms: https://shuuty.com/terms/\nPrivacy Policy: https://shuuty.com/privacy/",
+    "releaseNotes": "Create and delegate voice tasks with a due time, reminder, and location. We refined Private, Received, and Delegated views, groups, meetings, calendars, notifications, and Pro and Teams plan management. This version also adds the new black-and-gold icon, more reliable syncing, and smoother recovery from temporary errors."
+  }
+}

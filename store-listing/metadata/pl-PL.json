@@ -1,0 +1,21 @@
+{
+  "locale": "pl-PL",
+  "appStore": {
+    "name": "Shuuty",
+    "subtitle": "Zadania głosowe i delegowanie",
+    "promotionalText": "Powiedz zadanie własnymi słowami. Shuuty rozpozna osobę, termin i przypomnienie, a Ty delegujesz je od razu i zachowujesz cały kontekst w jednym miejscu.",
+    "keywords": "zadania,głos,delegowanie,planner,grupy,kalendarz,spotkania,przypomnienia,organizacja",
+    "description": "Od pomysłu do działania.\n\nShuuty pomaga zamieniać codzienne ustalenia w konkretne działania — bez przenoszenia kontekstu między notatkami, komunikatorami i kalendarzami.\n\nPOWIEDZ, CO TRZEBA ZROBIĆ\nNagraj zadanie własnymi słowami. Shuuty przygotuje tytuł i opis, rozpozna termin, przypomnienie, osobę i miejsce, a kilka myśli rozdzieli na osobne zadania do sprawdzenia.\n\nDELEGUJ OD RAZU\nPrzypisz zadanie znajomemu lub osobie z grupy. Odbiorca dostaje je po utworzeniu, a Ty widzisz, co czeka na przyjęcie, co jest w toku i co zostało wykonane.\n\nZACHOWAJ PEŁNY KONTEKST\nPrywatne, Otrzymane i Delegowane mają czytelne, osobne widoki. Dodawaj podzadania, priorytety, terminy, przypomnienia i lokalizacje. Rozmowa oraz aktywność zostają przy zadaniu.\n\nGRUPY DO DOWOLNEGO CELU\nStwórz prywatny krąg, zespół, społeczność, przestrzeń dla klientów, kalendarz, rezerwacje albo publiczną ofertę. Włącz tylko te moduły, których potrzebujesz: czat, wątki, zadania, kalendarz, rezerwacje i ewidencję czasu.\n\nSPOTKANIA I ODKRYWANIE\nZaplanuj miejsce, czas i uczestników. Odkrywaj na mapie pobliskie spotkania, publiczne grupy i lokalne oferty.\n\nZacznij bezpłatnie. Opcjonalne plany Pro i Teams zwiększają limity i odblokowują dodatkowe możliwości.\n\nRegulamin: https://shuuty.com/terms/\nPolityka prywatności: https://shuuty.com/privacy/",
+    "whatsNew": "Shuuty jest gotowe do działania. Twórz i deleguj zadania głosem wraz z terminem, przypomnieniem i lokalizacją. Korzystaj z dopracowanych widoków Prywatne, Otrzymane i Delegowane, czytelniejszych grup, spotkań, kalendarzy i powiadomień oraz lepszego zarządzania planami Pro i Teams. Ta wersja przynosi też nową czarno-złotą ikonę, stabilniejszą synchronizację i sprawniejsze odzyskiwanie po błędach.",
+    "marketingUrl": "https://shuuty.com/",
+    "supportUrl": "https://shuuty.com/support/",
+    "privacyPolicyUrl": "https://shuuty.com/privacy/",
+    "termsOfUseUrl": "https://shuuty.com/terms/"
+  },
+  "googlePlay": {
+    "appName": "Shuuty",
+    "shortDescription": "Zamieniaj głos w zadania, deleguj od razu i zachowuj cały kontekst.",
+    "fullDescription": "Od pomysłu do działania.\n\nShuuty pomaga zamieniać codzienne ustalenia w konkretne działania — bez przenoszenia kontekstu między notatkami, komunikatorami i kalendarzami.\n\nPOWIEDZ, CO TRZEBA ZROBIĆ\nNagraj zadanie własnymi słowami. Shuuty przygotuje tytuł i opis, rozpozna termin, przypomnienie, osobę i miejsce, a kilka myśli rozdzieli na osobne zadania do sprawdzenia.\n\nDELEGUJ OD RAZU\nPrzypisz zadanie znajomemu lub osobie z grupy. Odbiorca dostaje je po utworzeniu, a Ty widzisz, co czeka na przyjęcie, co jest w toku i co zostało wykonane.\n\nZACHOWAJ PEŁNY KONTEKST\nPrywatne, Otrzymane i Delegowane mają czytelne, osobne widoki. Dodawaj podzadania, priorytety, terminy, przypomnienia i lokalizacje. Rozmowa oraz aktywność zostają przy zadaniu.\n\nGRUPY DO DOWOLNEGO CELU\nStwórz prywatny krąg, zespół, społeczność, przestrzeń dla klientów, kalendarz, rezerwacje albo publiczną ofertę. Włącz tylko te moduły, których potrzebujesz: czat, wątki, zadania, kalendarz, rezerwacje i ewidencję czasu.\n\nSPOTKANIA I ODKRYWANIE\nZaplanuj miejsce, czas i uczestników. Odkrywaj na mapie pobliskie spotkania, publiczne grupy i lokalne oferty.\n\nZacznij bezpłatnie. Opcjonalne plany Pro i Teams zwiększają limity i odblokowują dodatkowe możliwości.\n\nRegulamin: https://shuuty.com/terms/\nPolityka prywatności: https://shuuty.com/privacy/",
+    "releaseNotes": "Twórz i deleguj zadania głosem wraz z terminem, przypomnieniem i lokalizacją. Dopracowaliśmy widoki Prywatne, Otrzymane i Delegowane, grupy, spotkania, kalendarze, powiadomienia oraz zarządzanie planami Pro i Teams. Ta wersja dodaje też nową czarno-złotą ikonę, stabilniejszą synchronizację i sprawniejsze odzyskiwanie po błędach."
+  }
+}
