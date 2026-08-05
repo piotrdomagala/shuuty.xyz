@@ -1,0 +1,384 @@
+{
+  "schemaVersion": 1,
+  "recordId": "shuuty-store-demo-media-2026-08-05",
+  "status": "owner-attested",
+  "statementDate": "2026-08-05",
+  "attestation": {
+    "recordId": "shuuty-media-owner-attestation-2026-08-05",
+    "document": "store-listing/provenance/owner-attestation.md",
+    "assertedBy": "Shuuty product owner",
+    "assertedRightsHolder": "Shuuty / Shuuty product owner",
+    "source": "Direct product-owner statement in the project conversation",
+    "copyrightStatus": "owner-attested",
+    "underlyingAcquisitionDocumentation": "not-recorded",
+    "authorizedScopes": [
+      "apple-app-store",
+      "google-play",
+      "shuuty.xyz",
+      "shuuty.com",
+      "shuuty-promotional-materials"
+    ],
+    "authorizedTransformations": [
+      "reproduction",
+      "resizing",
+      "cropping",
+      "localization",
+      "compositing-in-product-screenshots",
+      "compositing-in-feature-graphics",
+      "promotional-layouts"
+    ],
+    "territory": "not-recorded",
+    "duration": "not-recorded"
+  },
+  "source": {
+    "repository": "S-",
+    "root": "backend/scripts/assets/store-demo",
+    "fixture": "backend/scripts/store-demo-data.ts",
+    "assetCount": 15,
+    "identityMethod": "sha256-and-byte-length",
+    "derivation": "Original media is loaded by the isolated store-demo fixture, displayed in localized Shuuty UI, and embedded in captured store-listing screenshots."
+  },
+  "likenessStatusDefinitions": {
+    "to-be-confirmed": "A person is visible and the applicable likeness or model-release basis has not been recorded in this register.",
+    "not-applicable": "No person is visible in the asset."
+  },
+  "assets": [
+    {
+      "id": "store-demo-avatar-alex",
+      "fileName": "avatar-alex.webp",
+      "relativePath": "backend/scripts/assets/store-demo/avatar-alex.webp",
+      "mediaRole": "demo-user-avatar",
+      "fixtureUsage": "English collaborator and voice-task assignee Alex",
+      "locales": [
+        "en-US"
+      ],
+      "format": "webp",
+      "width": 512,
+      "height": 512,
+      "bytes": 27650,
+      "sha256": "7654b18905382c3a04375a666b2d486e40f8a83552fd4dd420c02e5ceb41e907",
+      "rightsRecordId": "shuuty-media-owner-attestation-2026-08-05",
+      "copyrightStatus": "owner-attested",
+      "likeness": {
+        "personPresence": "visible",
+        "recognizableFace": true,
+        "releaseStatus": "to-be-confirmed"
+      }
+    },
+    {
+      "id": "store-demo-avatar-maja",
+      "fileName": "avatar-maja.webp",
+      "relativePath": "backend/scripts/assets/store-demo/avatar-maja.webp",
+      "mediaRole": "demo-user-avatar",
+      "fixtureUsage": "Polish primary demo user Maja",
+      "locales": [
+        "pl-PL"
+      ],
+      "format": "webp",
+      "width": 512,
+      "height": 512,
+      "bytes": 20416,
+      "sha256": "2529cf39b740ec4acb844495782bd9dce601134f41b9c9e2692977c169f11f8e",
+      "rightsRecordId": "shuuty-media-owner-attestation-2026-08-05",
+      "copyrightStatus": "owner-attested",
+      "likeness": {
+        "personPresence": "visible",
+        "recognizableFace": true,
+        "releaseStatus": "to-be-confirmed"
+      }
+    },
+    {
+      "id": "store-demo-avatar-mia",
+      "fileName": "avatar-mia.webp",
+      "relativePath": "backend/scripts/assets/store-demo/avatar-mia.webp",
+      "mediaRole": "demo-user-avatar",
+      "fixtureUsage": "English primary demo user Mia",
+      "locales": [
+        "en-US"
+      ],
+      "format": "webp",
+      "width": 512,
+      "height": 512,
+      "bytes": 16600,
+      "sha256": "2b6db28b98619962aba611a62dbaca1650b2cdb25bdfc46020799b1e7c85e127",
+      "rightsRecordId": "shuuty-media-owner-attestation-2026-08-05",
+      "copyrightStatus": "owner-attested",
+      "likeness": {
+        "personPresence": "visible",
+        "recognizableFace": true,
+        "releaseStatus": "to-be-confirmed"
+      }
+    },
+    {
+      "id": "store-demo-avatar-nina",
+      "fileName": "avatar-nina.webp",
+      "relativePath": "backend/scripts/assets/store-demo/avatar-nina.webp",
+      "mediaRole": "demo-user-avatar",
+      "fixtureUsage": "Polish collaborator Nina",
+      "locales": [
+        "pl-PL"
+      ],
+      "format": "webp",
+      "width": 512,
+      "height": 512,
+      "bytes": 40792,
+      "sha256": "7c142532211466719e9704512cdb45e260ef555ab8e5c3d8ef266e01188d191c",
+      "rightsRecordId": "shuuty-media-owner-attestation-2026-08-05",
+      "copyrightStatus": "owner-attested",
+      "likeness": {
+        "personPresence": "visible",
+        "recognizableFace": true,
+        "releaseStatus": "to-be-confirmed"
+      }
+    },
+    {
+      "id": "store-demo-avatar-noah",
+      "fileName": "avatar-noah.webp",
+      "relativePath": "backend/scripts/assets/store-demo/avatar-noah.webp",
+      "mediaRole": "demo-user-avatar",
+      "fixtureUsage": "English collaborator Noah",
+      "locales": [
+        "en-US"
+      ],
+      "format": "webp",
+      "width": 512,
+      "height": 512,
+      "bytes": 24886,
+      "sha256": "469f30a3e5a0e4a57c71ce28bbd35d433ae7615cd44c91d014eb319afdcc9f19",
+      "rightsRecordId": "shuuty-media-owner-attestation-2026-08-05",
+      "copyrightStatus": "owner-attested",
+      "likeness": {
+        "personPresence": "visible",
+        "recognizableFace": true,
+        "releaseStatus": "to-be-confirmed"
+      }
+    },
+    {
+      "id": "store-demo-avatar-olek",
+      "fileName": "avatar-olek.webp",
+      "relativePath": "backend/scripts/assets/store-demo/avatar-olek.webp",
+      "mediaRole": "demo-user-avatar",
+      "fixtureUsage": "Polish collaborator and voice-task assignee Olek",
+      "locales": [
+        "pl-PL"
+      ],
+      "format": "webp",
+      "width": 512,
+      "height": 512,
+      "bytes": 22544,
+      "sha256": "39129c6ca579d35b4468ad2301c8addd0c1c4cf297d2047a1431450f600a63aa",
+      "rightsRecordId": "shuuty-media-owner-attestation-2026-08-05",
+      "copyrightStatus": "owner-attested",
+      "likeness": {
+        "personPresence": "visible",
+        "recognizableFace": true,
+        "releaseStatus": "to-be-confirmed"
+      }
+    },
+    {
+      "id": "store-demo-cover-brand-portraits",
+      "fileName": "cover-brand-portraits.webp",
+      "relativePath": "backend/scripts/assets/store-demo/cover-brand-portraits.webp",
+      "mediaRole": "group-cover",
+      "fixtureUsage": "Polish and English brand portrait service group",
+      "locales": [
+        "pl-PL",
+        "en-US"
+      ],
+      "format": "webp",
+      "width": 1600,
+      "height": 900,
+      "bytes": 102746,
+      "sha256": "ff8f715e84b6d07fed91aea02d573d1830312c62efc301d7e37e2633bed3b95c",
+      "rightsRecordId": "shuuty-media-owner-attestation-2026-08-05",
+      "copyrightStatus": "owner-attested",
+      "likeness": {
+        "personPresence": "visible",
+        "recognizableFace": true,
+        "releaseStatus": "to-be-confirmed"
+      }
+    },
+    {
+      "id": "store-demo-cover-ceramics",
+      "fileName": "cover-ceramics.webp",
+      "relativePath": "backend/scripts/assets/store-demo/cover-ceramics.webp",
+      "mediaRole": "group-and-meeting-cover",
+      "fixtureUsage": "Polish and English ceramics sales group and makers market",
+      "locales": [
+        "pl-PL",
+        "en-US"
+      ],
+      "format": "webp",
+      "width": 1600,
+      "height": 900,
+      "bytes": 140368,
+      "sha256": "785262463799157ea5ff83ca36be12a65382f4dc050cee9012656e48f7820614",
+      "rightsRecordId": "shuuty-media-owner-attestation-2026-08-05",
+      "copyrightStatus": "owner-attested",
+      "likeness": {
+        "personPresence": "visible",
+        "recognizableFace": true,
+        "releaseStatus": "to-be-confirmed"
+      }
+    },
+    {
+      "id": "store-demo-cover-studio",
+      "fileName": "cover-studio.webp",
+      "relativePath": "backend/scripts/assets/store-demo/cover-studio.webp",
+      "mediaRole": "group-cover",
+      "fixtureUsage": "Polish and English team workspace group",
+      "locales": [
+        "pl-PL",
+        "en-US"
+      ],
+      "format": "webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 328702,
+      "sha256": "dff80b43e378ba686839cc777d18cd28dddaa07fbf0e79e97c047de19868f634",
+      "rightsRecordId": "shuuty-media-owner-attestation-2026-08-05",
+      "copyrightStatus": "owner-attested",
+      "likeness": {
+        "personPresence": "none",
+        "recognizableFace": false,
+        "releaseStatus": "not-applicable"
+      }
+    },
+    {
+      "id": "store-demo-cover-walk",
+      "fileName": "cover-walk.webp",
+      "relativePath": "backend/scripts/assets/store-demo/cover-walk.webp",
+      "mediaRole": "meeting-cover",
+      "fixtureUsage": "Polish Warsaw morning-walk meeting",
+      "locales": [
+        "pl-PL"
+      ],
+      "format": "webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 260310,
+      "sha256": "c77a9a1d496007cd8c240f04cbd999e758ac5c3ce579acea304be13c3fa333f8",
+      "rightsRecordId": "shuuty-media-owner-attestation-2026-08-05",
+      "copyrightStatus": "owner-attested",
+      "likeness": {
+        "personPresence": "visible",
+        "recognizableFace": false,
+        "releaseStatus": "to-be-confirmed"
+      }
+    },
+    {
+      "id": "store-demo-cover-walk-london",
+      "fileName": "cover-walk-london.webp",
+      "relativePath": "backend/scripts/assets/store-demo/cover-walk-london.webp",
+      "mediaRole": "meeting-cover",
+      "fixtureUsage": "English London morning-walk meeting",
+      "locales": [
+        "en-US"
+      ],
+      "format": "webp",
+      "width": 1600,
+      "height": 900,
+      "bytes": 192452,
+      "sha256": "acf0815af973dc134c88eda938afc683d5671ca1b8422186abe8f8eb68f53a99",
+      "rightsRecordId": "shuuty-media-owner-attestation-2026-08-05",
+      "copyrightStatus": "owner-attested",
+      "likeness": {
+        "personPresence": "visible",
+        "recognizableFace": false,
+        "releaseStatus": "to-be-confirmed"
+      }
+    },
+    {
+      "id": "store-demo-gallery-brand-portrait",
+      "fileName": "gallery-brand-portrait.webp",
+      "relativePath": "backend/scripts/assets/store-demo/gallery-brand-portrait.webp",
+      "mediaRole": "group-gallery",
+      "fixtureUsage": "Polish and English brand portrait service gallery",
+      "locales": [
+        "pl-PL",
+        "en-US"
+      ],
+      "format": "webp",
+      "width": 1600,
+      "height": 1200,
+      "bytes": 100804,
+      "sha256": "c45c7c415cd2630ddc32dd4c03be87e740560f7f58f5c6e2dea9f85654baa823",
+      "rightsRecordId": "shuuty-media-owner-attestation-2026-08-05",
+      "copyrightStatus": "owner-attested",
+      "likeness": {
+        "personPresence": "visible",
+        "recognizableFace": true,
+        "releaseStatus": "to-be-confirmed"
+      }
+    },
+    {
+      "id": "store-demo-gallery-brand-studio",
+      "fileName": "gallery-brand-studio.webp",
+      "relativePath": "backend/scripts/assets/store-demo/gallery-brand-studio.webp",
+      "mediaRole": "group-gallery",
+      "fixtureUsage": "Polish and English brand portrait service gallery",
+      "locales": [
+        "pl-PL",
+        "en-US"
+      ],
+      "format": "webp",
+      "width": 1600,
+      "height": 1200,
+      "bytes": 122546,
+      "sha256": "871db7cd87fc1997df7f18a0e7a090fc2d052f1432da7c44baf220b6a56c5892",
+      "rightsRecordId": "shuuty-media-owner-attestation-2026-08-05",
+      "copyrightStatus": "owner-attested",
+      "likeness": {
+        "personPresence": "visible",
+        "recognizableFace": true,
+        "releaseStatus": "to-be-confirmed"
+      }
+    },
+    {
+      "id": "store-demo-gallery-ceramics-collection",
+      "fileName": "gallery-ceramics-collection.webp",
+      "relativePath": "backend/scripts/assets/store-demo/gallery-ceramics-collection.webp",
+      "mediaRole": "group-gallery",
+      "fixtureUsage": "Polish and English ceramics sales gallery",
+      "locales": [
+        "pl-PL",
+        "en-US"
+      ],
+      "format": "webp",
+      "width": 1600,
+      "height": 1200,
+      "bytes": 200170,
+      "sha256": "e04d150a89a954908c292adeb4017b89433d5ab0e3e325291fa1fd614ef5e1d8",
+      "rightsRecordId": "shuuty-media-owner-attestation-2026-08-05",
+      "copyrightStatus": "owner-attested",
+      "likeness": {
+        "personPresence": "none",
+        "recognizableFace": false,
+        "releaseStatus": "not-applicable"
+      }
+    },
+    {
+      "id": "store-demo-gallery-ceramics-glazing",
+      "fileName": "gallery-ceramics-glazing.webp",
+      "relativePath": "backend/scripts/assets/store-demo/gallery-ceramics-glazing.webp",
+      "mediaRole": "group-gallery",
+      "fixtureUsage": "Polish and English ceramics sales gallery",
+      "locales": [
+        "pl-PL",
+        "en-US"
+      ],
+      "format": "webp",
+      "width": 1600,
+      "height": 1200,
+      "bytes": 147846,
+      "sha256": "34937d4d3834bbf208d2e6a305f860e4369f6eedb3cf54ae2d56faeb9add4ea9",
+      "rightsRecordId": "shuuty-media-owner-attestation-2026-08-05",
+      "copyrightStatus": "owner-attested",
+      "likeness": {
+        "personPresence": "visible",
+        "recognizableFace": false,
+        "releaseStatus": "to-be-confirmed"
+      }
+    }
+  ]
+}

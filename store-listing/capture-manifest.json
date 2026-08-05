@@ -1,137 +1,886 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 3,
   "campaign": "official-2026",
-  "locales": ["pl-PL", "en-US"],
+  "locales": [
+    "pl-PL",
+    "en-US"
+  ],
+  "status": {
+    "demoData": "available-qa-passed",
+    "sourceCapture": "canonical-phone-matrix-validated",
+    "conceptSelection": "golden-relay-selected",
+    "finalExports": "google-play-ready-app-store-native-ios-parity-pending"
+  },
+  "campaignHeadline": {
+    "pl-PL": "Powiedz. Deleguj. Działajcie.",
+    "en-US": "Say it. Delegate it. Get it done."
+  },
   "deviceSets": {
     "appStoreIphone69": {
-      "source": "iPhone 16 Pro Max or accepted 6.9-inch equivalent",
+      "storeSlot": "App Store 6.9-inch iPhone screenshots",
+      "source": "Current cross-platform release UI; native iOS parity required before upload",
       "width": 1320,
       "height": 2868,
       "orientation": "portrait",
-      "requiredCaptures": 8
-    },
-    "appStoreIpad13": {
-      "source": "iPad Pro 13-inch",
-      "width": 2064,
-      "height": 2752,
-      "orientation": "portrait",
-      "requiredCaptures": 4
+      "requiredCaptures": 8,
+      "locales": [
+        "pl-PL",
+        "en-US"
+      ]
     },
     "googlePlayPhone": {
-      "source": "current Pixel emulator or production Android phone",
+      "storeSlot": "Google Play phone screenshots",
+      "source": "Dedicated current Pixel emulator capture build",
       "width": 1080,
       "height": 1920,
       "orientation": "portrait",
-      "requiredCaptures": 8
-    },
-    "googlePlayTablet": {
-      "source": "10-inch Android tablet emulator or device",
-      "width": 1920,
-      "height": 1080,
-      "orientation": "landscape",
-      "requiredCaptures": 4
+      "requiredCaptures": 8,
+      "locales": [
+        "pl-PL",
+        "en-US"
+      ]
     }
+  },
+  "storeAssets": {
+    "appStoreIcon": {
+      "source": "store-listing/assets/store/app-store/app-icon-1024.png",
+      "width": 1024,
+      "height": 1024,
+      "format": "PNG",
+      "alpha": false,
+      "status": "final-ready"
+    },
+    "googlePlayIcon": {
+      "source": "store-listing/assets/store/google-play/app-icon-512.png",
+      "width": 512,
+      "height": 512,
+      "format": "PNG",
+      "maxBytes": 1048576,
+      "alpha": false,
+      "status": "final-ready"
+    },
+    "googlePlayFeatureGraphic": {
+      "width": 1024,
+      "height": 500,
+      "format": "PNG",
+      "alpha": false,
+      "localization": "per-locale",
+      "safeArea": "Keep essential motif and contrast in the central area to tolerate store-surface crops.",
+      "altText": {
+        "pl-PL": "Shuuty pokazuje prawdziwy przepływ: nagraj głosówkę, wybierz Olka i pracuj nad delegowanym zadaniem.",
+        "en-US": "Shuuty shows the real flow: record a voice task, choose Alex, and work together on the delegated task."
+      },
+      "steps": {
+        "pl-PL": [
+          "Powiedz.",
+          "Deleguj.",
+          "Działajcie."
+        ],
+        "en-US": [
+          "Say it.",
+          "Delegate it.",
+          "Get it done."
+        ]
+      },
+      "status": "final-ready",
+      "composition": "Localized Golden Relay product proof built from three current app captures.",
+      "outputs": {
+        "pl-PL": "store-listing/exports/final/google-play/pl-PL/feature/product-proof.png",
+        "en-US": "store-listing/exports/final/google-play/en-US/feature/product-proof.png"
+      },
+      "previousReference": "store-listing/assets/store/google-play/feature-graphic-1024x500.png"
+    }
+  },
+  "conceptDirections": [
+    {
+      "id": "golden-relay",
+      "name": {
+        "pl-PL": "Złoty impuls",
+        "en-US": "Golden Relay"
+      },
+      "status": "selected"
+    },
+    {
+      "id": "product-proof",
+      "name": {
+        "pl-PL": "Redakcyjny dowód",
+        "en-US": "Product Proof"
+      },
+      "status": "not-selected"
+    },
+    {
+      "id": "context-lens",
+      "name": {
+        "pl-PL": "Soczewka kontekstu",
+        "en-US": "Context Lens"
+      },
+      "status": "not-selected"
+    }
+  ],
+  "selectedDirection": {
+    "id": "golden-relay",
+    "name": {
+      "pl-PL": "Złoty impuls",
+      "en-US": "Golden Relay"
+    },
+    "status": "final-candidates-produced",
+    "openingSequence": [
+      {
+        "order": 1,
+        "headline": {
+          "pl-PL": "Powiedz.",
+          "en-US": "Say it."
+        },
+        "productState": "voice-input"
+      },
+      {
+        "order": 2,
+        "headline": {
+          "pl-PL": "Deleguj.",
+          "en-US": "Delegate it."
+        },
+        "productState": "task-context-selection"
+      },
+      {
+        "order": 3,
+        "headline": {
+          "pl-PL": "Działajcie.",
+          "en-US": "Get it done."
+        },
+        "productState": "delegated-task-state"
+      }
+    ],
+    "correction": "The gold relay expresses voice to task context to a delegated task. It must never visually imply that a voice instruction creates a booking or calendar entry.",
+    "laterCapabilities": [
+      "group-calendar",
+      "bookings",
+      "plans",
+      "projects",
+      "time-tracking"
+    ],
+    "themePlan": {
+      "opening": "Use one coherent Dark sequence for frames 01-03 in both locales.",
+      "breadth": "Use Dark for frames 04-05 and Light for frames 06-08 in both locales."
+    }
+  },
+  "sourceCaptureInventory": {
+    "status": "canonical-16-validated",
+    "sourceWorkspace": "S-/tmp/store-capture/official-raw",
+    "accepted": {
+      "en-US": [
+        {
+          "file": "voice-input-dark-en.png",
+          "theme": "dark",
+          "state": "voice-input"
+        },
+        {
+          "file": "voice-assignee-alex-dark-en.png",
+          "theme": "dark",
+          "state": "named-assignee"
+        },
+        {
+          "file": "delegated-task-detail-dark-en.png",
+          "theme": "dark",
+          "state": "delegated-task-detail"
+        },
+        {
+          "file": "groups-list-dark-en.png",
+          "theme": "dark",
+          "state": "group-and-meeting-list"
+        },
+        {
+          "file": "product-group-gallery-dark-en.png",
+          "theme": "dark",
+          "state": "product-offer-description-gallery-location-interests"
+        },
+        {
+          "file": "group-settings-modules-light-en.png",
+          "theme": "light",
+          "state": "group-settings-and-modules"
+        },
+        {
+          "file": "booking-calendar-populated-light-en.png",
+          "theme": "light",
+          "state": "booking-calendar-populated"
+        },
+        {
+          "file": "discover-map-light-en.png",
+          "theme": "light",
+          "state": "nearby-discovery"
+        }
+      ],
+      "pl-PL": [
+        {
+          "file": "voice-input-dark-pl.png",
+          "theme": "dark",
+          "state": "voice-input"
+        },
+        {
+          "file": "voice-assignee-olek-dark-pl.png",
+          "theme": "dark",
+          "state": "named-assignee"
+        },
+        {
+          "file": "delegated-task-detail-dark-pl.png",
+          "theme": "dark",
+          "state": "delegated-task-detail"
+        },
+        {
+          "file": "groups-list-dark-pl.png",
+          "theme": "dark",
+          "state": "group-and-meeting-list"
+        },
+        {
+          "file": "product-group-gallery-dark-pl.png",
+          "theme": "dark",
+          "state": "product-offer-description-gallery-location-interests"
+        },
+        {
+          "file": "group-settings-modules-light-pl.png",
+          "theme": "light",
+          "state": "group-settings-and-modules"
+        },
+        {
+          "file": "booking-calendar-populated-light-pl.png",
+          "theme": "light",
+          "state": "booking-calendar-populated"
+        },
+        {
+          "file": "discover-map-light-pl.png",
+          "theme": "light",
+          "state": "nearby-discovery"
+        }
+      ]
+    },
+    "archiveOnly": [
+      {
+        "files": [
+          "60-voice-new-dark-en.png",
+          "80-voice-new-dark-pl.png"
+        ],
+        "reason": "Earlier voice-composer captures superseded by the canonical localized voice-input pair."
+      },
+      {
+        "files": [
+          "61-voice-context-dark-en.png",
+          "82-voice-context-dark-pl.png"
+        ],
+        "reason": "Intermediate context state without the named assignee required by the selected narrative."
+      },
+      {
+        "files": [
+          "62-voice-context-selected-dark-en.png",
+          "83-voice-context-selected-dark-pl.png"
+        ],
+        "reason": "Earlier selected-context captures superseded by the canonical Alex and Olek assignee pair."
+      },
+      {
+        "files": [
+          "89-task-detail-dark-pl.png",
+          "96-task-detail-dark-en.png"
+        ],
+        "reason": "Earlier task-detail captures retained only for QA history; final compositions use the canonical localized pair."
+      },
+      {
+        "files": [
+          "65-chat-dark-pl.png",
+          "97-chat-dark-en.png"
+        ],
+        "reason": "Standalone task discussion views retained for future website storytelling, not eligible for store exports."
+      },
+      {
+        "files": [
+          "63-sales-group-dark-en.png"
+        ],
+        "reason": "Alternate sales-group exploration superseded by the localized product-offer gallery pair."
+      }
+    ],
+    "rejected": [
+      {
+        "file": "29-delegated-list-en.png",
+        "reason": "Superseded task state; it is not eligible for the selected opening sequence."
+      },
+      {
+        "file": "49-calendar-summary-expanded-en.png",
+        "reason": "Rejected for an en-US to pl-PL localization leak."
+      },
+      {
+        "file": "58-group-settings-dark-en.png",
+        "reason": "Rejected for an en-US to pl-PL localization leak."
+      },
+      {
+        "files": [
+          "16-profile-pl.png",
+          "22-profile-fixed-pl.png",
+          "33-profile.png",
+          "55-profile-dark-en.png",
+          "profile-bottom.png"
+        ],
+        "reason": "Profile captures exposing an email address are forbidden in store compositions."
+      }
+    ],
+    "remainingCaptureGaps": [
+      "Native iOS parity check against the final iPhone release candidate."
+    ]
   },
   "demoSeed": {
     "account": "Dedicated non-production store-demo account",
-    "people": ["Mia", "Alex", "Noah"],
-    "group": {
-      "pl": "Studio Północ",
-      "en": "North Studio"
+    "locales": {
+      "pl-PL": {
+        "people": [
+          "Maja",
+          "Olek",
+          "Nina"
+        ],
+        "voiceInstruction": "Olek ma jutro o 9:00 wysłać ofertę. Przypomnij mu pół godziny wcześniej.",
+        "taskTitle": "Wyślij ofertę",
+        "timezone": "Europe/Warsaw",
+        "interests": [
+          "Fotografia",
+          "Ceramika",
+          "Spacery miejskie"
+        ],
+        "groups": [
+          {
+            "role": "work-and-client-coordination",
+            "name": "Studio Północ",
+            "description": "Przestrzeń zespołu do planowania pracy i koordynacji projektu z klientem.",
+            "location": "Mokotów",
+            "interests": [
+              "Style pracy",
+              "Produktywność"
+            ],
+            "modules": [
+              "czat",
+              "zadania",
+              "kalendarz",
+              "plany",
+              "projekty",
+              "ewidencja czasu",
+              "ustawienia grupy"
+            ]
+          },
+          {
+            "role": "service-offer",
+            "name": "Sesje wizerunkowe dla marek",
+            "description": "Rozbudowana oferta usługowa z terminami, ustaleniami i materiałami dla klientów.",
+            "location": "Śródmieście",
+            "interests": [
+              "Fotografia kreatywna",
+              "Fotografia portretowa"
+            ],
+            "modules": [
+              "galeria",
+              "kalendarz",
+              "rezerwacje",
+              "czat"
+            ],
+            "gallery": [
+              "Portret marki",
+              "Kulisy sesji"
+            ]
+          },
+          {
+            "role": "product-sales-offer",
+            "name": "Ceramika Runo - kolekcja letnia",
+            "description": "Rozbudowana oferta produktów z informacjami o kolekcji, zapytaniach i odbiorze.",
+            "location": "Praga-Północ",
+            "interests": [
+              "Ceramika",
+              "Rękodzieło"
+            ],
+            "modules": [
+              "galeria",
+              "czat",
+              "lokalizacja"
+            ],
+            "gallery": [
+              "Letnia kolekcja",
+              "Ręczne szkliwienie"
+            ]
+          }
+        ],
+        "meeting": "Poranny spacer nad Wisłą",
+        "location": "Bulwary Wiślane, Warszawa",
+        "calendarExamples": {
+          "project": "Kampania jesienna",
+          "plan": "Sesja produktowa",
+          "timeTracking": "Trzy wpisy czasu pracy z bieżącego dnia",
+          "reservation": "Konsultacja przed sesją"
+        }
+      },
+      "en-US": {
+        "people": [
+          "Mia",
+          "Alex",
+          "Noah"
+        ],
+        "voiceInstruction": "Alex should send the proposal tomorrow at 9:00. Remind him 30 minutes earlier.",
+        "taskTitle": "Send the proposal",
+        "timezone": "Europe/London",
+        "interests": [
+          "Photography",
+          "Ceramics",
+          "City walks"
+        ],
+        "groups": [
+          {
+            "role": "work-and-client-coordination",
+            "name": "North Studio",
+            "description": "A team workspace for planning work and coordinating a client project.",
+            "location": "London",
+            "interests": [
+              "Photography",
+              "Creative work"
+            ],
+            "modules": [
+              "chat",
+              "tasks",
+              "calendar",
+              "plans",
+              "projects",
+              "time tracking",
+              "group settings"
+            ]
+          },
+          {
+            "role": "service-offer",
+            "name": "Brand portrait sessions",
+            "description": "A detailed service offer with availability, client details, and shared materials.",
+            "location": "Soho",
+            "interests": [
+              "Photography",
+              "Personal branding"
+            ],
+            "modules": [
+              "gallery",
+              "calendar",
+              "bookings",
+              "chat"
+            ],
+            "gallery": [
+              "Brand portrait",
+              "Studio session"
+            ]
+          },
+          {
+            "role": "product-sales-offer",
+            "name": "Runo Ceramics - summer collection",
+            "description": "A detailed product offer with collection details, inquiries, and pickup information.",
+            "location": "Hackney",
+            "interests": [
+              "Crafts",
+              "Ceramics"
+            ],
+            "modules": [
+              "gallery",
+              "chat",
+              "location"
+            ],
+            "gallery": [
+              "Summer collection",
+              "Hand glazing"
+            ]
+          }
+        ],
+        "meeting": "Morning walk by the river",
+        "location": "South Bank, London",
+        "calendarExamples": {
+          "project": "Autumn campaign",
+          "plan": "Product shoot",
+          "timeTracking": "Three time entries from the current day",
+          "reservation": "Pre-session consultation"
+        }
+      }
     },
-    "voiceInstruction": {
-      "pl": "Mia ma jutro o 9 wysłać ofertę. Przypomnij jej pół godziny wcześniej.",
-      "en": "Mia should send the proposal tomorrow at 9. Remind her 30 minutes earlier."
-    },
-    "taskTitle": {
-      "pl": "Wyślij ofertę",
-      "en": "Send the proposal"
-    },
-    "meeting": {
-      "pl": "Omówienie projektu",
-      "en": "Project review"
-    },
-    "location": "Public city-centre location, never a home or live user position",
+    "locationPolicy": "Use a public city-center location, never a home or live user position.",
     "avatarPolicy": "Initials or approved fictional artwork only"
   },
   "screenshots": [
     {
       "id": "01-voice-input",
       "headline": {
-        "pl-PL": "Powiedz, co trzeba zrobić",
-        "en-US": "Say what needs doing"
+        "pl-PL": "Powiedz.",
+        "en-US": "Say it."
       },
-      "capture": "Voice task panel while the clean demo instruction is visible",
+      "capture": {
+        "pl-PL": "Panel zadania głosowego z polską instrukcją dla Olka i widocznym wyborem kontekstu zadania.",
+        "en-US": "Voice task panel before recording, with the task context control visible."
+      },
+      "altText": {
+        "pl-PL": "Panel głosowy Shuuty z instrukcją utworzenia zadania dla Olka.",
+        "en-US": "Shuuty's voice task panel ready to record, with task context controls visible."
+      },
+      "sourceCandidates": {
+        "pl-PL": [
+          "voice-input-dark-pl.png"
+        ],
+        "en-US": [
+          "voice-input-dark-en.png"
+        ]
+      },
+      "sourceStatus": {
+        "pl-PL": "validated-canonical-source",
+        "en-US": "validated-canonical-source"
+      },
       "priority": "hero"
     },
     {
-      "id": "02-voice-result",
+      "id": "02-assignee",
       "headline": {
-        "pl-PL": "Gotowe: osoba, termin, przypomnienie",
-        "en-US": "Ready: person, due date, reminder"
+        "pl-PL": "Deleguj.",
+        "en-US": "Delegate it."
       },
-      "capture": "Processed task preview with Mia, tomorrow 09:00, and 08:30 reminder visible",
+      "capture": {
+        "pl-PL": "Panel zadania głosowego z wybranym Olkiem jako odbiorcą instrukcji.",
+        "en-US": "The voice-task composer with Alex selected as the assignee."
+      },
+      "altText": {
+        "pl-PL": "Zadanie głosowe delegowane bezpośrednio Olkowi.",
+        "en-US": "A voice task being delegated directly to Alex."
+      },
+      "sourceCandidates": {
+        "pl-PL": [
+          "voice-assignee-olek-dark-pl.png"
+        ],
+        "en-US": [
+          "voice-assignee-alex-dark-en.png"
+        ]
+      },
+      "sourceStatus": {
+        "pl-PL": "validated-canonical-source",
+        "en-US": "validated-canonical-source"
+      },
       "priority": "hero"
     },
     {
       "id": "03-delegated",
       "headline": {
-        "pl-PL": "Deleguj od razu",
-        "en-US": "Delegate it right away"
+        "pl-PL": "Działajcie.",
+        "en-US": "Get it done."
       },
-      "capture": "Delegated task view with recipient and a clear delivery or acceptance state",
+      "capture": {
+        "pl-PL": "Aktualny polski widok zadania delegowanego Olkowi, ze stanem dostarczenia lub akceptacji i kontekstem zadania.",
+        "en-US": "Current English delegated task view for Alex with its delivery or acceptance state and task context visible."
+      },
+      "altText": {
+        "pl-PL": "Delegowane zadanie dla Olka z widocznym stanem realizacji.",
+        "en-US": "A delegated task for Alex with its progress state visible."
+      },
+      "sourceCandidates": {
+        "pl-PL": [
+          "delegated-task-detail-dark-pl.png"
+        ],
+        "en-US": [
+          "delegated-task-detail-dark-en.png"
+        ]
+      },
+      "sourceStatus": {
+        "pl-PL": "validated-canonical-source",
+        "en-US": "validated-canonical-source"
+      },
       "priority": "hero"
     },
     {
-      "id": "04-planner",
+      "id": "04-groups",
       "headline": {
-        "pl-PL": "Widzisz, co wymaga uwagi",
-        "en-US": "See what needs attention"
+        "pl-PL": "Grupa do pracy, usług i sprzedaży",
+        "en-US": "One group for work, services and sales"
       },
-      "capture": "Populated Home or Planner day with a realistic, uncluttered task mix",
-      "priority": "core"
-    },
-    {
-      "id": "05-task-context",
-      "headline": {
-        "pl-PL": "Rozmowa zostaje przy zadaniu",
-        "en-US": "Keep the conversation with the task"
+      "capture": {
+        "pl-PL": "Lista polskich przestrzeni pokazująca spotkanie, ofertę produktu, ofertę usługi i miejsce pracy.",
+        "en-US": "An English list showing a meeting, product offer, service offer, and team workspace."
       },
-      "capture": "Task detail with a short checklist and safe fictional discussion or activity",
-      "priority": "core"
-    },
-    {
-      "id": "06-group",
-      "headline": {
-        "pl-PL": "Jedna grupa. Dowolny cel.",
-        "en-US": "One group. Any purpose."
+      "altText": {
+        "pl-PL": "Przestrzenie Shuuty do spotkań, sprzedaży, usług i pracy zespołowej.",
+        "en-US": "Shuuty spaces for meetings, product offers, services, and teamwork."
       },
-      "capture": "North Studio group showing useful chat, task, and calendar context",
+      "sourceCandidates": {
+        "pl-PL": [
+          "groups-list-dark-pl.png"
+        ],
+        "en-US": [
+          "groups-list-dark-en.png"
+        ]
+      },
+      "sourceStatus": {
+        "pl-PL": "validated-canonical-source",
+        "en-US": "validated-canonical-source"
+      },
       "priority": "ecosystem"
     },
     {
-      "id": "07-meeting",
+      "id": "05-product-group",
       "headline": {
-        "pl-PL": "Miejsce, czas i ludzie — razem",
-        "en-US": "Place, time and people — together"
+        "pl-PL": "Oferta z opisem, galerią i miejscem",
+        "en-US": "Details, gallery and location"
       },
-      "capture": "Project review meeting summary with date, public venue, and fictional participants",
+      "capture": {
+        "pl-PL": "Polska grupa produktowa „Ceramika Runo - kolekcja letnia” z rozbudowanym opisem, galerią, lokalizacją i zainteresowaniami.",
+        "en-US": "The “Runo Ceramics - summer collection” product group with a rich description, gallery, location, and interests."
+      },
+      "altText": {
+        "pl-PL": "Oferta ceramiki z opisem, galerią, publiczną lokalizacją i zainteresowaniami.",
+        "en-US": "A ceramics offer with a rich description, gallery, public location, and interests."
+      },
+      "sourceCandidates": {
+        "pl-PL": [
+          "product-group-gallery-dark-pl.png"
+        ],
+        "en-US": [
+          "product-group-gallery-dark-en.png"
+        ]
+      },
+      "sourceStatus": {
+        "pl-PL": "validated-canonical-source",
+        "en-US": "validated-canonical-source"
+      },
+      "priority": "ecosystem"
+    },
+    {
+      "id": "06-group-settings",
+      "headline": {
+        "pl-PL": "Włącz projekty, plany i ewidencję czasu",
+        "en-US": "Turn on projects, plans and time tracking"
+      },
+      "capture": {
+        "pl-PL": "Jasny panel opcji lub ustawień grupy „Studio Północ” z modułami zadań, kalendarza, planów, projektów i ewidencji czasu.",
+        "en-US": "Light-theme North Studio options or settings with tasks, calendar, plans, projects, and time-tracking modules."
+      },
+      "altText": {
+        "pl-PL": "Ustawienia modułów i sposobu pracy grupy Studio Północ.",
+        "en-US": "North Studio settings for group modules and ways of working."
+      },
+      "sourceCandidates": {
+        "pl-PL": [
+          "group-settings-modules-light-pl.png"
+        ],
+        "en-US": [
+          "group-settings-modules-light-en.png"
+        ]
+      },
+      "sourceStatus": {
+        "pl-PL": "validated-canonical-source",
+        "en-US": "validated-canonical-source"
+      },
+      "priority": "ecosystem"
+    },
+    {
+      "id": "07-booking-calendar",
+      "headline": {
+        "pl-PL": "Rezerwacje i dostępność - jeden kalendarz",
+        "en-US": "Bookings and availability - one calendar"
+      },
+      "capture": {
+        "pl-PL": "Wypełniony polski kalendarz rezerwacji grupy usługowej z konsultacją przed sesją i czytelną dostępnością.",
+        "en-US": "A populated English service booking calendar with a pre-session consultation and clear availability."
+      },
+      "altText": {
+        "pl-PL": "Kalendarz dostępnych terminów i zarezerwowana konsultacja przed sesją.",
+        "en-US": "An availability calendar with a booked pre-session consultation."
+      },
+      "sourceCandidates": {
+        "pl-PL": [
+          "booking-calendar-populated-light-pl.png"
+        ],
+        "en-US": [
+          "booking-calendar-populated-light-en.png"
+        ]
+      },
+      "sourceStatus": {
+        "pl-PL": "validated-canonical-source",
+        "en-US": "validated-canonical-source"
+      },
       "priority": "ecosystem"
     },
     {
       "id": "08-discover",
       "headline": {
-        "pl-PL": "Odkrywaj to, co dzieje się blisko",
-        "en-US": "Discover what’s happening nearby"
+        "pl-PL": "Szukaj po miejscu i zainteresowaniach",
+        "en-US": "Search by location and interests"
       },
-      "capture": "Discover map with several safe public pins and one selected meeting or group card",
+      "capture": {
+        "pl-PL": "Polska mapa Odkrywaj z bezpiecznymi publicznymi punktami w Warszawie i wyłącznie polskimi kartami.",
+        "en-US": "English Discover map with safe public pins in London and English-only meeting or group cards."
+      },
+      "altText": {
+        "pl-PL": "Mapa Odkrywaj z publicznymi spotkaniami i grupami w Warszawie.",
+        "en-US": "The Discover map with public meetings and groups in London."
+      },
+      "sourceCandidates": {
+        "pl-PL": [
+          "discover-map-light-pl.png"
+        ],
+        "en-US": [
+          "discover-map-light-en.png"
+        ]
+      },
+      "sourceStatus": {
+        "pl-PL": "validated-canonical-source",
+        "en-US": "validated-canonical-source"
+      },
       "priority": "ecosystem"
     }
   ],
+  "supplementalCaptures": [
+    {
+      "id": "09-rich-group-gallery",
+      "purpose": "Prove that a group can present a service or product through a detailed description, approved gallery, and a clear join or inquiry path.",
+      "capture": {
+        "pl-PL": "Szczegóły grupy „Sesje wizerunkowe dla marek” z rozbudowanym opisem, galerią „Portret marki” i „Kulisy sesji”, lokalizacją i zainteresowaniami.",
+        "en-US": "The “Brand portrait sessions” group with a detailed description, “Brand portrait” and “Studio session” gallery, location, and interests."
+      },
+      "altText": {
+        "pl-PL": "Oferta sesji wizerunkowych z opisem, zdjęciami, lokalizacją i zainteresowaniami.",
+        "en-US": "A brand portrait offer with details, photos, location, and interests."
+      },
+      "recommendedFor": [
+        "website-reuse"
+      ]
+    },
+    {
+      "id": "10-service-booking",
+      "purpose": "Show the real booking flow without suggesting checkout or payment processing.",
+      "capture": {
+        "pl-PL": "Kalendarz rezerwacji grupy usługowej z pozycją „Konsultacja przed sesją” i czytelną dostępnością.",
+        "en-US": "The service group's booking calendar with “Pre-session consultation” and clear availability."
+      },
+      "altText": {
+        "pl-PL": "Kalendarz dostępnych terminów i rezerwacja konsultacji przed sesją.",
+        "en-US": "An availability calendar and a booked pre-session consultation."
+      },
+      "recommendedFor": [
+        "website-reuse"
+      ]
+    },
+    {
+      "id": "11-work-calendar",
+      "purpose": "Demonstrate a shared group calendar as an operational workspace.",
+      "capture": {
+        "pl-PL": "Kalendarz „Studia Północ” z projektem „Kampania jesienna” i planem „Sesja produktowa”.",
+        "en-US": "The North Studio calendar with the “Autumn campaign” project and “Product shoot” plan."
+      },
+      "altText": {
+        "pl-PL": "Kalendarz zespołu z projektem i zaplanowaną sesją produktową.",
+        "en-US": "A team calendar with a project and a planned product shoot."
+      },
+      "recommendedFor": [
+        "website-reuse"
+      ]
+    },
+    {
+      "id": "12-project-plan-time",
+      "purpose": "Show the relationship between plans, projects, and time tracking without cramming unrelated modules into one frame.",
+      "capture": {
+        "pl-PL": "Widok projektu lub planu „Studia Północ” z trzema realistycznymi wpisami ewidencji czasu.",
+        "en-US": "A North Studio project or plan with three realistic time-tracking entries."
+      },
+      "altText": {
+        "pl-PL": "Projekt zespołu z planem pracy i trzema wpisami czasu.",
+        "en-US": "A team project with its work plan and three time entries."
+      },
+      "recommendedFor": [
+        "website-reuse"
+      ]
+    },
+    {
+      "id": "13-group-settings",
+      "purpose": "Prove that group owners can configure modules, access, calendar mode, and team responsibilities.",
+      "capture": {
+        "pl-PL": "Panel ustawień grupy „Studio Północ” z modułami, uprawnieniami i trybem kalendarza, bez danych wrażliwych.",
+        "en-US": "North Studio group settings with modules, permissions, and calendar mode, without sensitive data."
+      },
+      "altText": {
+        "pl-PL": "Ustawienia modułów, uprawnień i kalendarza grupy.",
+        "en-US": "Group module, permission, and calendar settings."
+      },
+      "recommendedFor": [
+        "website-reuse"
+      ]
+    },
+    {
+      "id": "14-location-interests",
+      "purpose": "Make relevance visible through public location and interests, never a private address or live user position.",
+      "capture": {
+        "pl-PL": "Widok Odkrywaj lub grup z publiczną lokalizacją w Warszawie oraz polskimi zainteresowaniami.",
+        "en-US": "Discover or groups view with a public London location and English interests."
+      },
+      "altText": {
+        "pl-PL": "Publiczna lokalizacja i zainteresowania pomagające znaleźć pasujące grupy i spotkania.",
+        "en-US": "A public location and interests used to find relevant groups and meetings."
+      },
+      "recommendedFor": [
+        "website-reuse"
+      ]
+    }
+  ],
+  "coveragePlan": {
+    "primaryPhoneNarrative": [
+      "01-voice-input",
+      "02-assignee",
+      "03-delegated",
+      "04-groups",
+      "05-product-group",
+      "06-group-settings",
+      "07-booking-calendar",
+      "08-discover"
+    ],
+    "openingSequenceRule": "Frames 01-03 are exclusively voice input to task context to delegated task. Calendar, booking, plan, project, and time-tracking proof begins only after the task story is complete.",
+    "themeProof": {
+      "requiredThemes": [
+        "light",
+        "dark"
+      ],
+      "darkSlots": [
+        "01-voice-input",
+        "02-assignee",
+        "03-delegated",
+        "04-groups",
+        "05-product-group"
+      ],
+      "lightSlots": [
+        "06-group-settings",
+        "07-booking-calendar",
+        "08-discover"
+      ],
+      "rule": "Keep the coherent voice-to-task opening and group proof in Dark. Use Light for group modules, populated bookings, and discovery, with equivalent seeded PL and EN worlds."
+    },
+    "websiteReusePool": [
+      "09-rich-group-gallery",
+      "10-service-booking",
+      "11-work-calendar",
+      "12-project-plan-time",
+      "13-group-settings",
+      "14-location-interests"
+    ]
+  },
+  "assetValidation": {
+    "status": "phone-export-qa-passed-native-ios-parity-pending",
+    "requiredBeforePublication": [
+      "Every final file matches its declared pixel dimensions and orientation.",
+      "Store screenshots and feature graphic export as RGB PNG or JPEG without unintended alpha channels or indexed color.",
+      "The Google Play icon is 512×512 PNG and no larger than 1 MB; the feature graphic is exactly 1024×500.",
+      "Every final screenshot has non-empty pl-PL and en-US alt text in the delivery ledger, even if a destination store does not expose an alt-text field.",
+      "Polish and English assets pass locale-purity review for UI, demo content, names, taxonomy, dates, locations, and messages.",
+      "All copy and key UI remain readable at store-thumbnail size and are inside platform-safe crop areas.",
+      "No file exposes real email addresses, private messages, home addresses, precise live locations, production notifications, or unapproved faces.",
+      "Light and Dark captures use equivalent seeded states and preserve accessible contrast.",
+      "No screenshot claims checkout, payments, stock control, or another capability not present in the submitted build.",
+      "Final filenames, locale, device slot, theme, dimensions, and SHA-256 checksum are recorded before upload."
+    ]
+  },
   "captureRules": [
     "Use the final release candidate, not a debug or development menu state.",
     "Capture raw PNG files without frames, marketing copy, cropping, or rescaling.",
-    "Use the same seed and state for Polish and English.",
+    "Use equivalent scenarios and states for Polish and English, but separate locale-specific people and content.",
+    "Polish captures must contain only Polish interface copy, demo data, taxonomy, dates, and messages; English captures must contain only English equivalents.",
+    "Never reuse a captured screen from one locale under a marketing headline from the other locale.",
+    "Capture the advanced voice flow as a continuous voice-to-context-to-delegated-task story; keep recipient, due time, reminder, and task status readable in the completed task state.",
+    "Never use a calendar, booking composer, reservation, plan, project, or time entry as frame 03 or imply that it is the direct output of the voice instruction.",
+    "Use real rich group descriptions and approved gallery media for work, community, service, and product contexts; show join, inquiry, or coordination actions only when supported by the build.",
+    "Show public location and interests where they improve relevance, but never expose a home address or live user position.",
+    "Use dedicated source states for calendar, booking, plan, project, time tracking, and group settings; do not assemble a fake feature collage.",
+    "Capture both Light and Dark theme candidates from the same seeded state and verify contrast before composition.",
     "Use default text size and a clean, consistent status bar.",
     "Dismiss keyboards, loaders, toasts, permission dialogs, and notification panels unless they are the explicit subject.",
     "Do not capture real messages, email addresses, profile photos, precise private locations, or production notifications."
