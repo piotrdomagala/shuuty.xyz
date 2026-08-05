@@ -273,6 +273,7 @@ async function createFixture() {
     campaign: renderManifest.campaign,
     generatedAt: "2030-01-01T00:00:00.000Z",
     latestRenderMode: "final",
+    status: "final-candidates-require-publication-approval",
     manifest: "store-listing/studio/render-manifest.json",
     assets: assets.map((asset) => ({
       id: asset.id,
@@ -588,6 +589,40 @@ test("ledger hash mismatches and stale render inputs are rejected", async () => 
     const future = new Date("2040-01-01T00:00:00.000Z");
     await utimes(path.join(rootDir, ...source.path.split("/")), future, future);
     await assert.rejects(() => collectPackageInputs({ rootDir }), /Stale final asset/);
+  });
+});
+
+test("delivery ledger rejects mixed or non-final state before packaging", async () => {
+  await withFixture(async ({ rootDir }) => {
+    const ledgerPath = "store-listing/delivery-ledger.json";
+    const ledger = JSON.parse(
+      await readFile(path.join(rootDir, ...ledgerPath.split("/")), "utf8"),
+    );
+    ledger.status = "mixed-draft-and-final-candidates";
+    await writeJson(rootDir, ledgerPath, ledger);
+
+    await assert.rejects(
+      () => collectPackageInputs({ rootDir, checkFreshness: false }),
+      /Delivery ledger status must contain final candidates only/,
+    );
+  });
+
+  await withFixture(async ({ rootDir }) => {
+    const ledgerPath = "store-listing/delivery-ledger.json";
+    const ledger = JSON.parse(
+      await readFile(path.join(rootDir, ...ledgerPath.split("/")), "utf8"),
+    );
+    ledger.assets.push({
+      id: ledger.assets[0].id,
+      renderMode: "draft",
+      status: "technical-draft",
+    });
+    await writeJson(rootDir, ledgerPath, ledger);
+
+    await assert.rejects(
+      () => collectPackageInputs({ rootDir, checkFreshness: false }),
+      /Delivery ledger contains non-final entries/,
+    );
   });
 });
 

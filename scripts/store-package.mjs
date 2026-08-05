@@ -511,6 +511,20 @@ function validateLedgerHeader(ledger, renderManifest) {
   if (!Array.isArray(ledger.assets)) {
     fail("Delivery ledger must contain an assets array.");
   }
+  if (ledger.status !== "final-candidates-require-publication-approval") {
+    fail("Delivery ledger status must contain final candidates only.");
+  }
+
+  const nonFinalEntries = ledger.assets.filter(
+    (entry) => entry.renderMode !== "final" || entry.status !== "final-candidate",
+  );
+  if (nonFinalEntries.length > 0) {
+    fail(
+      `Delivery ledger contains non-final entries: ${nonFinalEntries
+        .map((entry) => `${String(entry.id)} (${String(entry.renderMode ?? "draft")})`)
+        .join(", ")}.`,
+    );
+  }
 }
 
 async function validateLedgerAsset(rootDir, asset, finalEntries, outputByPath) {
