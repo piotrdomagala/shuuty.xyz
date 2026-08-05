@@ -59,6 +59,7 @@ const phoneAsset = {
   status: "technical-draft",
   platform: "google-play",
   locale: "en-US",
+  deviceSlot: "phone",
   screenshotId: "voice",
   stage: { index: 1, total: 3 },
   source: { path: "source.png", locale: "en-US" },
@@ -66,8 +67,8 @@ const phoneAsset = {
   width: 1080,
   height: 1920,
   captureRect: { x: 27, y: 219, width: 1024, height: 1688 },
-  output: "store-listing/exports/drafts/google-play/en-US/phone-DRAFT.png",
-  finalOutput: "store-listing/exports/final/google-play/en-US/phone.png",
+  output: "store-listing/exports/drafts/google-play/en-US/phone/phone-DRAFT.png",
+  finalOutput: "store-listing/exports/final/google-play/en-US/phone/phone.png",
 };
 
 const templateContext = {
@@ -236,6 +237,60 @@ test("final outputs cannot point at draft directories or filenames", () => {
         "final",
       ),
     /draft path or filename/,
+  );
+});
+
+test("draft and final output paths bind platform, locale, and device slot", () => {
+  const invalidPaths = [
+    ["draft", "output", "store-listing/exports/drafts/app-store/en-US/phone/phone-DRAFT.png"],
+    ["draft", "output", "store-listing/exports/drafts/google-play/pl-PL/phone/phone-DRAFT.png"],
+    ["draft", "output", "store-listing/exports/drafts/google-play/en-US/tablet/phone-DRAFT.png"],
+    ["final", "finalOutput", "store-listing/exports/final/app-store/en-US/phone/phone.png"],
+    ["final", "finalOutput", "store-listing/exports/final/google-play/pl-PL/phone/phone.png"],
+    ["final", "finalOutput", "store-listing/exports/final/google-play/en-US/tablet/phone.png"],
+  ];
+
+  for (const [renderMode, outputKey, outputPath] of invalidPaths) {
+    assert.throws(
+      () => validateOutputPath({ ...phoneAsset, [outputKey]: outputPath }, renderMode),
+      /must be inside store-listing\/exports\/(?:drafts|final)\/google-play\/en-US\/phone/,
+    );
+  }
+});
+
+test("feature output paths bind their kind directory in both modes", () => {
+  const featureAsset = {
+    ...phoneAsset,
+    id: "feature",
+    kind: "feature",
+    deviceSlot: "feature-graphic",
+    output: "store-listing/exports/drafts/google-play/en-US/feature/feature-DRAFT.png",
+    finalOutput: "store-listing/exports/final/google-play/en-US/feature/feature.png",
+  };
+
+  assert.doesNotThrow(() => validateOutputPath(featureAsset, "draft"));
+  assert.doesNotThrow(() => validateOutputPath(featureAsset, "final"));
+  assert.throws(
+    () =>
+      validateOutputPath(
+        {
+          ...featureAsset,
+          output: "store-listing/exports/drafts/google-play/en-US/feature-graphic/feature-DRAFT.png",
+        },
+        "draft",
+      ),
+    /must be inside store-listing\/exports\/drafts\/google-play\/en-US\/feature/,
+  );
+  assert.throws(
+    () =>
+      validateOutputPath(
+        {
+          ...featureAsset,
+          finalOutput: "store-listing/exports/final/google-play/en-US/phone/feature.png",
+        },
+        "final",
+      ),
+    /must be inside store-listing\/exports\/final\/google-play\/en-US\/feature/,
   );
 });
 

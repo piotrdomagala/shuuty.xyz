@@ -87,6 +87,15 @@ function assertValidStoreMetadata(entries) {
   }
 }
 
+function assertMetadataLocale(metadata, expectedLocale, label) {
+  const declaredLocale = metadata?.locale;
+  if (declaredLocale !== expectedLocale) {
+    fail(
+      `${label} declares locale ${typeof declaredLocale === "string" ? declaredLocale : "<missing>"}; expected ${expectedLocale}.`,
+    );
+  }
+}
+
 function slash(value) {
   return value.replaceAll("\\", "/");
 }
@@ -720,6 +729,7 @@ export async function collectPackageInputs({
   for (const locale of REQUIRED_LOCALES) {
     const repoPath = `${WORKSPACE_PATHS.metadataRoot}/${locale}.json`;
     const metadata = await readRequiredJson(absoluteRoot, repoPath, `${locale} metadata`);
+    assertMetadataLocale(metadata.value, locale, `${locale} metadata`);
     metadataEntries.push(metadata.value);
     payloads.push({
       archivePath: `metadata/${locale}.json`,
@@ -1032,11 +1042,14 @@ function validateEmbeddedStoreMetadata(byPath) {
   const metadataEntries = [];
   for (const locale of REQUIRED_LOCALES) {
     const entryPath = `metadata/${locale}.json`;
+    let metadata;
     try {
-      metadataEntries.push(JSON.parse(byPath.get(entryPath).data.toString("utf8")));
+      metadata = JSON.parse(byPath.get(entryPath).data.toString("utf8"));
     } catch (error) {
       fail(`Invalid embedded ${locale} metadata: ${error.message}`);
     }
+    assertMetadataLocale(metadata, locale, `Embedded ${entryPath}`);
+    metadataEntries.push(metadata);
   }
   assertValidStoreMetadata(metadataEntries);
 }

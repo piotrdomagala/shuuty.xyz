@@ -364,6 +364,38 @@ async function rewriteArchiveMetadata(archivePath, locale, mutate) {
   await writeFile(archivePath, createDeterministicZip(entries));
 }
 
+async function swapArchiveMetadataPayloads(archivePath) {
+  const entries = readDeterministicZip(await readFile(archivePath));
+  const metadataPaths = LOCALES.map((locale) => `metadata/${locale}.json`);
+  const metadataEntries = metadataPaths.map((metadataPath) =>
+    entries.find((entry) => entry.path === metadataPath),
+  );
+  const packageManifestEntry = entries.find(
+    (entry) => entry.path === "PACKAGE-MANIFEST.json",
+  );
+  assert.ok(metadataEntries.every(Boolean));
+  assert.ok(packageManifestEntry);
+
+  [metadataEntries[0].data, metadataEntries[1].data] = [
+    metadataEntries[1].data,
+    metadataEntries[0].data,
+  ];
+
+  const packageManifest = JSON.parse(packageManifestEntry.data.toString("utf8"));
+  for (const metadataEntry of metadataEntries) {
+    const metadataFile = packageManifest.files.find((file) => file.path === metadataEntry.path);
+    assert.ok(metadataFile);
+    metadataFile.bytes = metadataEntry.data.length;
+    metadataFile.sha256 = digest(metadataEntry.data);
+  }
+  packageManifestEntry.data = Buffer.from(
+    `${JSON.stringify(packageManifest, null, 2)}\n`,
+    "utf8",
+  );
+
+  await writeFile(archivePath, createDeterministicZip(entries));
+}
+
 test("store package is deterministic and verifies against the workspace", async () => {
   await withFixture(async ({ rootDir }) => {
     const firstPath = path.join(rootDir, "first.zip");
@@ -456,6 +488,45 @@ test("package and archive-only verification reject a missing required URL", asyn
           checkFreshness: false,
         }),
       expectedFailure,
+    );
+  });
+});
+
+test("package collection binds metadata locale to its workspace filename", async () => {
+  await withFixture(async ({ rootDir }) => {
+    const englishPath = path.join(rootDir, "store-listing/metadata/en-US.json");
+    const polishPath = path.join(rootDir, "store-listing/metadata/pl-PL.json");
+    const [englishMetadata, polishMetadata] = await Promise.all([
+      readFile(englishPath),
+      readFile(polishPath),
+    ]);
+    await Promise.all([
+      writeFile(englishPath, polishMetadata),
+      writeFile(polishPath, englishMetadata),
+    ]);
+
+    await assert.rejects(
+      () => collectPackageInputs({ rootDir, checkFreshness: false }),
+      /en-US metadata declares locale pl-PL; expected en-US/,
+    );
+  });
+});
+
+test("archive-only verification rejects swapped metadata with forged manifest hashes", async () => {
+  await withFixture(async ({ rootDir }) => {
+    const archivePath = path.join(rootDir, "forged-swapped-locales.zip");
+    await writeStorePackage({ rootDir, archivePath });
+    await swapArchiveMetadataPayloads(archivePath);
+
+    await assert.rejects(
+      () =>
+        verifyStorePackage({
+          rootDir,
+          archivePath,
+          againstWorkspace: false,
+          checkFreshness: false,
+        }),
+      /Embedded metadata\/en-US\.json declares locale pl-PL; expected en-US/,
     );
   });
 });

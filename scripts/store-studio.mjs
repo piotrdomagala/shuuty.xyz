@@ -74,6 +74,16 @@ export const assetOutputForMode = (asset, renderMode) => {
   return output;
 };
 
+const assetOutputSlot = (asset) => {
+  if (asset.kind === "feature") {
+    return "feature";
+  }
+  if (asset.kind === "phone" && typeof asset.deviceSlot === "string" && asset.deviceSlot !== "") {
+    return asset.deviceSlot;
+  }
+  throw new Error(`Asset ${asset.id} has no output slot for kind ${String(asset.kind)}.`);
+};
+
 export const validateCaptureRect = (asset) => {
   const rect = asset.captureRect;
   const values = rect ? [rect.x, rect.y, rect.width, rect.height] : [];
@@ -424,6 +434,7 @@ export const validateOutputPath = (asset, renderMode) => {
   const relativePath = assetOutputForMode(asset, renderMode);
   const output = resolveRepoPath(relativePath);
   assertInside(exportsRoot, output);
+  const modeRoot = renderMode === "draft" ? draftsRoot : finalRoot;
   if (renderMode === "draft") {
     assertInside(draftsRoot, output);
   } else {
@@ -432,6 +443,14 @@ export const validateOutputPath = (asset, renderMode) => {
     if (normalized.toLowerCase().includes("/drafts/") || /draft/i.test(path.basename(normalized))) {
       throw new Error(`Final output for ${asset.id} cannot use a draft path or filename: ${relativePath}`);
     }
+  }
+  const slot = assetOutputSlot(asset);
+  const expectedDirectory = path.join(modeRoot, asset.platform, asset.locale, slot);
+  if (path.dirname(output) !== expectedDirectory) {
+    const expectedRelativeDirectory = path.relative(repoRoot, expectedDirectory).replaceAll("\\", "/");
+    throw new Error(
+      `${renderMode} output for ${asset.id} must be inside ${expectedRelativeDirectory}: ${relativePath}`,
+    );
   }
   return output;
 };
