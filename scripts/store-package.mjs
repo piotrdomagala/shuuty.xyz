@@ -101,7 +101,9 @@ function slash(value) {
 }
 
 function compareText(left, right) {
-  return left < right ? -1 : left > right ? 1 : 0;
+  if (left < right) return -1;
+  if (left > right) return 1;
+  return 0;
 }
 
 function assertSafeRelativePath(value, label = "path") {
@@ -274,6 +276,125 @@ function expectedAssetSources(asset) {
   fail(`Final asset ${asset.id} has no declared source.`);
 }
 
+function validateFinalAsset(asset, ids, outputs) {
+  if (!asset.id || ids.has(asset.id)) {
+    fail(`Final render asset id is missing or duplicated: ${asset.id ?? "missing"}.`);
+  }
+  ids.add(asset.id);
+  if (!["phone", "feature"].includes(asset.kind)) {
+    fail(`Final asset ${asset.id} has unsupported kind ${asset.kind ?? "missing"}.`);
+  }
+  if (!["app-store", "google-play"].includes(asset.platform)) {
+    fail(`Final asset ${asset.id} has unsupported platform ${asset.platform ?? "missing"}.`);
+  }
+  if (!REQUIRED_LOCALES.includes(asset.locale)) {
+    fail(`Final asset ${asset.id} has unsupported locale ${asset.locale ?? "missing"}.`);
+  }
+  if (!asset.finalOutput) {
+    fail(`Final asset ${asset.id} has no finalOutput.`);
+  }
+  const output = assertSafeRelativePath(asset.finalOutput, `${asset.id} finalOutput`);
+  if (
+    !output.startsWith(`${WORKSPACE_PATHS.finalRoot}/`) ||
+    !output.toLowerCase().endsWith(".png") ||
+    /draft/i.test(output)
+  ) {
+    fail(`Final asset ${asset.id} has an unsafe final output: ${output}`);
+  }
+  if (outputs.has(output)) {
+    fail(`Final output is duplicated in the render manifest: ${output}`);
+  }
+  outputs.add(output);
+  if (!Number.isInteger(asset.width) || !Number.isInteger(asset.height)) {
+    fail(`Final asset ${asset.id} must declare integer width and height.`);
+  }
+  expectedAssetSources(asset);
+}
+
+function validatePhoneNarrativeAsset(asset, index, narrative, requiredCaptures) {
+  const expectedIndex = index + 1;
+  if (
+    asset.stage?.index !== expectedIndex ||
+    asset.stage?.total !== requiredCaptures ||
+    asset.screenshotId !== narrative[index]
+  ) {
+    fail(
+      `${asset.id} does not match narrative slot ${expectedIndex} (${narrative[index]}).`,
+    );
+  }
+}
+
+function validateLocalizedPhoneSet(finalAssets, phoneSet, locale, device, narrative) {
+  const assets = finalAssets
+    .filter(
+      (asset) =>
+        asset.kind === "phone" &&
+        asset.platform === phoneSet.platform &&
+        asset.deviceSlot === phoneSet.deviceSlot &&
+        asset.locale === locale,
+    )
+    .sort((left, right) => left.stage?.index - right.stage?.index);
+  if (assets.length !== device.requiredCaptures) {
+    fail(
+      `${phoneSet.platform}/${locale}/${phoneSet.deviceSlot} requires ${device.requiredCaptures} final screenshots; found ${assets.length}.`,
+    );
+  }
+  assets.forEach((asset, index) => {
+    validatePhoneNarrativeAsset(asset, index, narrative, device.requiredCaptures);
+  });
+}
+
+function validateRequiredPhoneSet(captureManifest, finalAssets, narrative, phoneSet) {
+  const device = captureManifest.deviceSets?.[phoneSet.captureKey];
+  if (!device || !Number.isInteger(device.requiredCaptures)) {
+    fail(`Capture manifest is missing device set ${phoneSet.captureKey}.`);
+  }
+  if (device.requiredCaptures !== narrative.length) {
+    fail(
+      `${phoneSet.captureKey} requires ${device.requiredCaptures} captures, but the narrative has ${narrative.length}.`,
+    );
+  }
+  assertExactLocales(device.locales, `${phoneSet.captureKey} locales`);
+  for (const locale of REQUIRED_LOCALES) {
+    validateLocalizedPhoneSet(finalAssets, phoneSet, locale, device, narrative);
+  }
+}
+
+function validateLocalizedFeature(features, locale, featureOutputs, featureContract) {
+  const matches = features.filter((asset) => asset.locale === locale);
+  if (matches.length !== 1) {
+    fail(`Google Play requires exactly one ${locale} final feature graphic.`);
+  }
+  if (matches[0].finalOutput !== featureOutputs[locale]) {
+    fail(
+      `Google Play ${locale} feature output disagrees between capture and render manifests.`,
+    );
+  }
+  if (
+    matches[0].width !== featureContract.width ||
+    matches[0].height !== featureContract.height
+  ) {
+    fail(`Google Play ${locale} feature geometry disagrees with the capture manifest.`);
+  }
+}
+
+function validateFeatureAssets(captureManifest, finalAssets) {
+  const features = finalAssets.filter(
+    (asset) => asset.kind === "feature" && asset.platform === "google-play",
+  );
+  if (features.length !== REQUIRED_LOCALES.length) {
+    fail(`Google Play requires two localized final feature graphics; found ${features.length}.`);
+  }
+  const featureContract = captureManifest.storeAssets?.googlePlayFeatureGraphic;
+  const featureOutputs = featureContract?.outputs;
+  if (featureContract?.localization !== "per-locale" || !featureOutputs) {
+    fail("Google Play feature graphic must be configured as per-locale.");
+  }
+  for (const locale of REQUIRED_LOCALES) {
+    validateLocalizedFeature(features, locale, featureOutputs, featureContract);
+  }
+}
+
 function validateRenderAssets(captureManifest, renderManifest) {
   if (!Array.isArray(renderManifest.assets)) {
     fail("Render manifest must contain an assets array.");
@@ -286,38 +407,7 @@ function validateRenderAssets(captureManifest, renderManifest) {
   const ids = new Set();
   const outputs = new Set();
   for (const asset of finalAssets) {
-    if (!asset.id || ids.has(asset.id)) {
-      fail(`Final render asset id is missing or duplicated: ${asset.id ?? "missing"}.`);
-    }
-    ids.add(asset.id);
-    if (!["phone", "feature"].includes(asset.kind)) {
-      fail(`Final asset ${asset.id} has unsupported kind ${asset.kind ?? "missing"}.`);
-    }
-    if (!["app-store", "google-play"].includes(asset.platform)) {
-      fail(`Final asset ${asset.id} has unsupported platform ${asset.platform ?? "missing"}.`);
-    }
-    if (!REQUIRED_LOCALES.includes(asset.locale)) {
-      fail(`Final asset ${asset.id} has unsupported locale ${asset.locale ?? "missing"}.`);
-    }
-    if (!asset.finalOutput) {
-      fail(`Final asset ${asset.id} has no finalOutput.`);
-    }
-    const output = assertSafeRelativePath(asset.finalOutput, `${asset.id} finalOutput`);
-    if (
-      !output.startsWith(`${WORKSPACE_PATHS.finalRoot}/`) ||
-      !output.toLowerCase().endsWith(".png") ||
-      /draft/i.test(output)
-    ) {
-      fail(`Final asset ${asset.id} has an unsafe final output: ${output}`);
-    }
-    if (outputs.has(output)) {
-      fail(`Final output is duplicated in the render manifest: ${output}`);
-    }
-    outputs.add(output);
-    if (!Number.isInteger(asset.width) || !Number.isInteger(asset.height)) {
-      fail(`Final asset ${asset.id} must declare integer width and height.`);
-    }
-    expectedAssetSources(asset);
+    validateFinalAsset(asset, ids, outputs);
   }
 
   const narrative = captureManifest.coveragePlan?.primaryPhoneNarrative;
@@ -325,78 +415,9 @@ function validateRenderAssets(captureManifest, renderManifest) {
     fail("Capture manifest is missing the primary phone narrative.");
   }
   for (const phoneSet of REQUIRED_PHONE_SETS) {
-    const device = captureManifest.deviceSets?.[phoneSet.captureKey];
-    if (!device || !Number.isInteger(device.requiredCaptures)) {
-      fail(`Capture manifest is missing device set ${phoneSet.captureKey}.`);
-    }
-    if (device.requiredCaptures !== narrative.length) {
-      fail(
-        `${phoneSet.captureKey} requires ${device.requiredCaptures} captures, but the narrative has ${narrative.length}.`,
-      );
-    }
-    assertExactLocales(device.locales, `${phoneSet.captureKey} locales`);
-    for (const locale of REQUIRED_LOCALES) {
-      const assets = finalAssets
-        .filter(
-          (asset) =>
-            asset.kind === "phone" &&
-            asset.platform === phoneSet.platform &&
-            asset.deviceSlot === phoneSet.deviceSlot &&
-            asset.locale === locale,
-        )
-        .sort((left, right) => left.stage?.index - right.stage?.index);
-      if (assets.length !== device.requiredCaptures) {
-        fail(
-          `${phoneSet.platform}/${locale}/${phoneSet.deviceSlot} requires ${device.requiredCaptures} final screenshots; found ${assets.length}.`,
-        );
-      }
-      assets.forEach((asset, index) => {
-        const expectedIndex = index + 1;
-        if (
-          asset.stage?.index !== expectedIndex ||
-          asset.stage?.total !== device.requiredCaptures ||
-          asset.screenshotId !== narrative[index]
-        ) {
-          fail(
-            `${asset.id} does not match narrative slot ${expectedIndex} (${narrative[index]}).`,
-          );
-        }
-      });
-    }
+    validateRequiredPhoneSet(captureManifest, finalAssets, narrative, phoneSet);
   }
-
-  const features = finalAssets.filter(
-    (asset) => asset.kind === "feature" && asset.platform === "google-play",
-  );
-  if (features.length !== REQUIRED_LOCALES.length) {
-    fail(`Google Play requires two localized final feature graphics; found ${features.length}.`);
-  }
-  const featureOutputs = captureManifest.storeAssets?.googlePlayFeatureGraphic?.outputs;
-  const featureContract = captureManifest.storeAssets?.googlePlayFeatureGraphic;
-  if (
-    featureContract?.localization !== "per-locale" ||
-    !featureOutputs
-  ) {
-    fail("Google Play feature graphic must be configured as per-locale.");
-  }
-  for (const locale of REQUIRED_LOCALES) {
-    const matches = features.filter((asset) => asset.locale === locale);
-    if (matches.length !== 1) {
-      fail(`Google Play requires exactly one ${locale} final feature graphic.`);
-    }
-    if (matches[0].finalOutput !== featureOutputs[locale]) {
-      fail(
-        `Google Play ${locale} feature output disagrees between capture and render manifests.`,
-      );
-    }
-    if (
-      matches[0].width !== featureContract.width ||
-      matches[0].height !== featureContract.height
-    ) {
-      fail(`Google Play ${locale} feature geometry disagrees with the capture manifest.`);
-    }
-  }
-
+  validateFeatureAssets(captureManifest, finalAssets);
   return finalAssets;
 }
 
@@ -477,13 +498,7 @@ function compareSets(actualValues, expectedValues, label) {
   }
 }
 
-async function validateLedger(rootDir, renderManifest, finalAssets, outputFiles) {
-  const ledgerFile = await readRequiredJson(
-    rootDir,
-    WORKSPACE_PATHS.deliveryLedger,
-    "delivery ledger",
-  );
-  const ledger = ledgerFile.value;
+function validateLedgerHeader(ledger, renderManifest) {
   if (ledger.latestRenderMode !== "final") {
     fail("Delivery ledger latestRenderMode must be final.");
   }
@@ -496,10 +511,60 @@ async function validateLedger(rootDir, renderManifest, finalAssets, outputFiles)
   if (!Array.isArray(ledger.assets)) {
     fail("Delivery ledger must contain an assets array.");
   }
+}
 
-  const manifestIds = renderManifest.assets.map((asset) => asset.id);
+async function validateLedgerAsset(rootDir, asset, finalEntries, outputByPath) {
+  const entry = finalEntries.find((candidate) => candidate.id === asset.id);
+  const output = outputByPath.get(asset.finalOutput);
+  if (!entry || !output) {
+    fail(`Delivery ledger is incomplete for ${asset.id}.`);
+  }
+  if (entry.pngColorType !== 2 || entry.alpha !== false) {
+    fail(
+      `Delivery ledger PNG contract mismatch for ${asset.id}; expected pngColorType 2 and alpha false.`,
+    );
+  }
+  if (
+    entry.status !== "final-candidate" ||
+    entry.sourceGap ||
+    entry.output !== asset.finalOutput ||
+    entry.sha256 !== sha256(output.data) ||
+    entry.bytes !== output.data.length ||
+    entry.width !== asset.width ||
+    entry.height !== asset.height
+  ) {
+    fail(`Delivery ledger hash or metadata mismatch for ${asset.id}.`);
+  }
+
+  const expectedSources = expectedAssetSources(asset);
+  const ledgerSources = Array.isArray(entry.sources) ? entry.sources : [];
+  compareSets(
+    ledgerSources.map((source) => source.path),
+    expectedSources.map((source) => source.path),
+    `${asset.id} ledger sources`,
+  );
+  for (const source of expectedSources) {
+    const sourceFile = await readRequiredFile(rootDir, source.path, `${asset.id} source`);
+    assertPngGeometry(sourceFile.data, source, `${asset.id} source`);
+    const ledgerSource = ledgerSources.find((candidate) => candidate.path === source.path);
+    if (ledgerSource?.sha256 !== sha256(sourceFile.data)) {
+      fail(`Delivery ledger source hash mismatch for ${asset.id}: ${source.path}.`);
+    }
+  }
+}
+
+async function validateLedger(rootDir, renderManifest, finalAssets, outputFiles) {
+  const ledgerFile = await readRequiredJson(
+    rootDir,
+    WORKSPACE_PATHS.deliveryLedger,
+    "delivery ledger",
+  );
+  const ledger = ledgerFile.value;
+  validateLedgerHeader(ledger, renderManifest);
+
+  const manifestIds = new Set(renderManifest.assets.map((asset) => asset.id));
   const unknownLedgerIds = [...new Set(ledger.assets.map((entry) => entry.id))].filter(
-    (id) => !manifestIds.includes(id),
+    (id) => !manifestIds.has(id),
   );
   if (unknownLedgerIds.length > 0) {
     fail(`Delivery ledger contains unexpected asset ids: ${unknownLedgerIds.join(", ")}.`);
@@ -517,43 +582,7 @@ async function validateLedger(rootDir, renderManifest, finalAssets, outputFiles)
 
   const outputByPath = new Map(outputFiles.map((file) => [file.path, file]));
   for (const asset of finalAssets) {
-    const entry = finalEntries.find((candidate) => candidate.id === asset.id);
-    const output = outputByPath.get(asset.finalOutput);
-    if (!entry || !output) {
-      fail(`Delivery ledger is incomplete for ${asset.id}.`);
-    }
-    if (entry.pngColorType !== 2 || entry.alpha !== false) {
-      fail(
-        `Delivery ledger PNG contract mismatch for ${asset.id}; expected pngColorType 2 and alpha false.`,
-      );
-    }
-    if (
-      entry.status !== "final-candidate" ||
-      entry.sourceGap ||
-      entry.output !== asset.finalOutput ||
-      entry.sha256 !== sha256(output.data) ||
-      entry.bytes !== output.data.length ||
-      entry.width !== asset.width ||
-      entry.height !== asset.height
-    ) {
-      fail(`Delivery ledger hash or metadata mismatch for ${asset.id}.`);
-    }
-
-    const expectedSources = expectedAssetSources(asset);
-    const ledgerSources = Array.isArray(entry.sources) ? entry.sources : [];
-    compareSets(
-      ledgerSources.map((source) => source.path),
-      expectedSources.map((source) => source.path),
-      `${asset.id} ledger sources`,
-    );
-    for (const source of expectedSources) {
-      const sourceFile = await readRequiredFile(rootDir, source.path, `${asset.id} source`);
-      assertPngGeometry(sourceFile.data, source, `${asset.id} source`);
-      const ledgerSource = ledgerSources.find((candidate) => candidate.path === source.path);
-      if (ledgerSource?.sha256 !== sha256(sourceFile.data)) {
-        fail(`Delivery ledger source hash mismatch for ${asset.id}: ${source.path}.`);
-      }
-    }
+    await validateLedgerAsset(rootDir, asset, finalEntries, outputByPath);
   }
 
   return ledgerFile;
@@ -581,7 +610,7 @@ async function validateFreshness(rootDir, captureFile, renderFile, ledgerFile, f
       asset.relayArtwork?.path,
     ].filter(Boolean);
     let newestInput = { path: null, mtimeMs: 0 };
-    for (const inputPath of [...new Set(inputPaths)]) {
+    for (const inputPath of new Set(inputPaths)) {
       const input = await readRequiredFile(rootDir, inputPath, `${asset.id} render input`);
       if (input.info.mtimeMs > newestInput.mtimeMs) {
         newestInput = { path: inputPath, mtimeMs: input.info.mtimeMs };
@@ -921,8 +950,7 @@ function findEndOfCentralDirectory(archive) {
   fail("ZIP end-of-central-directory record is missing.");
 }
 
-export function readDeterministicZip(archive) {
-  const data = Buffer.isBuffer(archive) ? archive : Buffer.from(archive);
+function readZipLayout(data) {
   if (data.length < 22) fail("ZIP archive is truncated.");
   const endOffset = findEndOfCentralDirectory(data);
   const diskNumber = data.readUInt16LE(endOffset + 4);
@@ -942,88 +970,113 @@ export function readDeterministicZip(archive) {
   ) {
     fail("ZIP archive does not use the deterministic single-disk layout.");
   }
+  return { centralOffset, endOffset, entryCount };
+}
 
-  const entries = [];
-  let centralCursor = centralOffset;
-  let expectedLocalOffset = 0;
-  for (let index = 0; index < entryCount; index += 1) {
-    if (centralCursor + 46 > endOffset || data.readUInt32LE(centralCursor) !== 0x02014b50) {
-      fail("ZIP central directory is corrupt.");
-    }
-    const flags = data.readUInt16LE(centralCursor + 8);
-    const method = data.readUInt16LE(centralCursor + 10);
-    const time = data.readUInt16LE(centralCursor + 12);
-    const date = data.readUInt16LE(centralCursor + 14);
-    const checksum = data.readUInt32LE(centralCursor + 16);
-    const compressedSize = data.readUInt32LE(centralCursor + 20);
-    const uncompressedSize = data.readUInt32LE(centralCursor + 24);
-    const nameLength = data.readUInt16LE(centralCursor + 28);
-    const extraLength = data.readUInt16LE(centralCursor + 30);
-    const fileCommentLength = data.readUInt16LE(centralCursor + 32);
-    const localOffset = data.readUInt32LE(centralCursor + 42);
-    const nameStart = centralCursor + 46;
-    const nameEnd = nameStart + nameLength;
-    if (nameEnd + extraLength + fileCommentLength > endOffset) {
-      fail("ZIP central directory entry is truncated.");
-    }
-    const entryPath = assertSafeRelativePath(
-      data.subarray(nameStart, nameEnd).toString("utf8"),
-      "ZIP entry path",
-    );
-    if (
-      flags !== ZIP_UTF8_FLAG ||
-      method !== ZIP_STORE_METHOD ||
-      time !== FIXED_DOS_TIME ||
-      date !== FIXED_DOS_DATE ||
-      compressedSize !== uncompressedSize ||
-      extraLength !== 0 ||
-      fileCommentLength !== 0 ||
-      localOffset !== expectedLocalOffset
-    ) {
-      fail(`ZIP entry ${entryPath} is not encoded deterministically.`);
-    }
-    if (data.readUInt32LE(localOffset) !== 0x04034b50) {
-      fail(`ZIP local header is missing for ${entryPath}.`);
-    }
-    const localFlags = data.readUInt16LE(localOffset + 6);
-    const localMethod = data.readUInt16LE(localOffset + 8);
-    const localTime = data.readUInt16LE(localOffset + 10);
-    const localDate = data.readUInt16LE(localOffset + 12);
-    const localChecksum = data.readUInt32LE(localOffset + 14);
-    const localCompressedSize = data.readUInt32LE(localOffset + 18);
-    const localUncompressedSize = data.readUInt32LE(localOffset + 22);
-    const localNameLength = data.readUInt16LE(localOffset + 26);
-    const localExtraLength = data.readUInt16LE(localOffset + 28);
-    const localNameStart = localOffset + 30;
-    const localNameEnd = localNameStart + localNameLength;
-    const localName = data.subarray(localNameStart, localNameEnd).toString("utf8");
-    const payloadStart = localNameEnd + localExtraLength;
-    const payloadEnd = payloadStart + compressedSize;
-    if (
-      localFlags !== flags ||
-      localMethod !== method ||
-      localTime !== time ||
-      localDate !== date ||
-      localChecksum !== checksum ||
-      localCompressedSize !== compressedSize ||
-      localUncompressedSize !== uncompressedSize ||
-      localExtraLength !== 0 ||
-      localName !== entryPath ||
-      payloadEnd > centralOffset
-    ) {
-      fail(`ZIP local entry is corrupt for ${entryPath}.`);
-    }
-    const payload = data.subarray(payloadStart, payloadEnd);
-    if (crc32(payload) !== checksum) {
-      fail(`ZIP CRC mismatch for ${entryPath}.`);
-    }
-    entries.push({ path: entryPath, data: Buffer.from(payload) });
-    expectedLocalOffset = payloadEnd;
-    centralCursor = nameEnd + extraLength + fileCommentLength;
+function readCentralDirectoryEntry(data, centralCursor, endOffset, expectedLocalOffset) {
+  if (centralCursor + 46 > endOffset || data.readUInt32LE(centralCursor) !== 0x02014b50) {
+    fail("ZIP central directory is corrupt.");
   }
-  if (centralCursor !== endOffset || expectedLocalOffset !== centralOffset) {
-    fail("ZIP archive contains unindexed data or a malformed central directory.");
+  const flags = data.readUInt16LE(centralCursor + 8);
+  const method = data.readUInt16LE(centralCursor + 10);
+  const time = data.readUInt16LE(centralCursor + 12);
+  const date = data.readUInt16LE(centralCursor + 14);
+  const checksum = data.readUInt32LE(centralCursor + 16);
+  const compressedSize = data.readUInt32LE(centralCursor + 20);
+  const uncompressedSize = data.readUInt32LE(centralCursor + 24);
+  const nameLength = data.readUInt16LE(centralCursor + 28);
+  const extraLength = data.readUInt16LE(centralCursor + 30);
+  const fileCommentLength = data.readUInt16LE(centralCursor + 32);
+  const localOffset = data.readUInt32LE(centralCursor + 42);
+  const nameStart = centralCursor + 46;
+  const nameEnd = nameStart + nameLength;
+  if (nameEnd + extraLength + fileCommentLength > endOffset) {
+    fail("ZIP central directory entry is truncated.");
   }
+  const entryPath = assertSafeRelativePath(
+    data.subarray(nameStart, nameEnd).toString("utf8"),
+    "ZIP entry path",
+  );
+  if (
+    flags !== ZIP_UTF8_FLAG ||
+    method !== ZIP_STORE_METHOD ||
+    time !== FIXED_DOS_TIME ||
+    date !== FIXED_DOS_DATE ||
+    compressedSize !== uncompressedSize ||
+    extraLength !== 0 ||
+    fileCommentLength !== 0 ||
+    localOffset !== expectedLocalOffset
+  ) {
+    fail(`ZIP entry ${entryPath} is not encoded deterministically.`);
+  }
+  return {
+    checksum,
+    compressedSize,
+    date,
+    entryPath,
+    flags,
+    localOffset,
+    method,
+    nextCentralCursor: nameEnd + extraLength + fileCommentLength,
+    time,
+    uncompressedSize,
+  };
+}
+
+function readLocalZipEntry(data, centralEntry, centralOffset) {
+  const {
+    checksum,
+    compressedSize,
+    date,
+    entryPath,
+    flags,
+    localOffset,
+    method,
+    time,
+    uncompressedSize,
+  } = centralEntry;
+  if (data.readUInt32LE(localOffset) !== 0x04034b50) {
+    fail(`ZIP local header is missing for ${entryPath}.`);
+  }
+  const localFlags = data.readUInt16LE(localOffset + 6);
+  const localMethod = data.readUInt16LE(localOffset + 8);
+  const localTime = data.readUInt16LE(localOffset + 10);
+  const localDate = data.readUInt16LE(localOffset + 12);
+  const localChecksum = data.readUInt32LE(localOffset + 14);
+  const localCompressedSize = data.readUInt32LE(localOffset + 18);
+  const localUncompressedSize = data.readUInt32LE(localOffset + 22);
+  const localNameLength = data.readUInt16LE(localOffset + 26);
+  const localExtraLength = data.readUInt16LE(localOffset + 28);
+  const localNameStart = localOffset + 30;
+  const localNameEnd = localNameStart + localNameLength;
+  const localName = data.subarray(localNameStart, localNameEnd).toString("utf8");
+  const payloadStart = localNameEnd + localExtraLength;
+  const payloadEnd = payloadStart + compressedSize;
+  if (
+    localFlags !== flags ||
+    localMethod !== method ||
+    localTime !== time ||
+    localDate !== date ||
+    localChecksum !== checksum ||
+    localCompressedSize !== compressedSize ||
+    localUncompressedSize !== uncompressedSize ||
+    localExtraLength !== 0 ||
+    localName !== entryPath ||
+    payloadEnd > centralOffset
+  ) {
+    fail(`ZIP local entry is corrupt for ${entryPath}.`);
+  }
+  const payload = data.subarray(payloadStart, payloadEnd);
+  if (crc32(payload) !== checksum) {
+    fail(`ZIP CRC mismatch for ${entryPath}.`);
+  }
+  return {
+    entry: { path: entryPath, data: Buffer.from(payload) },
+    nextLocalOffset: payloadEnd,
+  };
+}
+
+function validateZipEntryOrder(entries) {
   const paths = entries.map((entry) => entry.path);
   if (
     new Set(paths).size !== paths.length ||
@@ -1031,6 +1084,30 @@ export function readDeterministicZip(archive) {
   ) {
     fail("ZIP entries must be unique and sorted.");
   }
+}
+
+export function readDeterministicZip(archive) {
+  const data = Buffer.isBuffer(archive) ? archive : Buffer.from(archive);
+  const { centralOffset, endOffset, entryCount } = readZipLayout(data);
+  const entries = [];
+  let centralCursor = centralOffset;
+  let expectedLocalOffset = 0;
+  for (let index = 0; index < entryCount; index += 1) {
+    const centralEntry = readCentralDirectoryEntry(
+      data,
+      centralCursor,
+      endOffset,
+      expectedLocalOffset,
+    );
+    const localEntry = readLocalZipEntry(data, centralEntry, centralOffset);
+    entries.push(localEntry.entry);
+    expectedLocalOffset = localEntry.nextLocalOffset;
+    centralCursor = centralEntry.nextCentralCursor;
+  }
+  if (centralCursor !== endOffset || expectedLocalOffset !== centralOffset) {
+    fail("ZIP archive contains unindexed data or a malformed central directory.");
+  }
+  validateZipEntryOrder(entries);
   return entries;
 }
 
@@ -1209,8 +1286,10 @@ async function main() {
 
 const invokedPath = process.argv[1] ? pathToFileURL(path.resolve(process.argv[1])).href : null;
 if (invokedPath === import.meta.url) {
-  main().catch((error) => {
+  try {
+    await main();
+  } catch (error) {
     console.error(`Store package failed: ${error.message}`);
     process.exitCode = 1;
-  });
+  }
 }

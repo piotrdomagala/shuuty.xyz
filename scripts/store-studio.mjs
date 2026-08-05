@@ -149,54 +149,74 @@ export const validateFeatureCopyContract = (asset, campaign) => {
   };
 };
 
-export const validateFeatureSourceContract = (asset) => {
-  if (asset.source) {
-    if (Array.isArray(asset.sources) && asset.sources.length > 0) {
-      throw new Error(
-        `Feature ${asset.id} cannot mix a complete raster source with panel sources.`,
-      );
-    }
-    if (
-      asset.locale !== "localization-independent" ||
-      asset.source.locale !== "localization-independent"
-    ) {
-      throw new Error(
-        `Complete feature raster ${asset.id} must be localization-independent.`,
-      );
-    }
-    if (asset.width !== 1024 || asset.height !== 500) {
-      throw new Error(`Complete feature raster ${asset.id} must use a 1024×500 canvas.`);
-    }
-    if (
-      asset.source.expectedWidth !== asset.width ||
-      asset.source.expectedHeight !== asset.height
-    ) {
-      throw new Error(
-        `Complete feature raster ${asset.id} source dimensions must match its canvas.`,
-      );
-    }
-    if (typeof asset.source.path !== "string" || asset.source.path.trim() === "") {
-      throw new Error(`Complete feature raster ${asset.id} must reference a real PNG source.`);
-    }
-    if (asset.status !== "final-ready") {
-      throw new Error(`Complete feature raster ${asset.id} must be marked final-ready.`);
-    }
-    if (asset.sourceGap?.trim()) {
-      throw new Error(`Complete feature raster ${asset.id} cannot declare a source gap.`);
-    }
-    if (asset.requiresRelayArtwork !== false) {
-      throw new Error(
-        `Complete feature raster ${asset.id} must set requiresRelayArtwork to false.`,
-      );
-    }
-    if (asset.relayArtwork) {
-      throw new Error(
-        `Complete feature raster ${asset.id} cannot add separate relay artwork.`,
-      );
-    }
-    return { mode: "complete-raster", sources: [asset.source] };
+const validateCompleteFeatureSourceContract = (asset) => {
+  if (Array.isArray(asset.sources) && asset.sources.length > 0) {
+    throw new Error(
+      `Feature ${asset.id} cannot mix a complete raster source with panel sources.`,
+    );
   }
+  if (
+    asset.locale !== "localization-independent" ||
+    asset.source.locale !== "localization-independent"
+  ) {
+    throw new Error(
+      `Complete feature raster ${asset.id} must be localization-independent.`,
+    );
+  }
+  if (asset.width !== 1024 || asset.height !== 500) {
+    throw new Error(`Complete feature raster ${asset.id} must use a 1024×500 canvas.`);
+  }
+  if (
+    asset.source.expectedWidth !== asset.width ||
+    asset.source.expectedHeight !== asset.height
+  ) {
+    throw new Error(
+      `Complete feature raster ${asset.id} source dimensions must match its canvas.`,
+    );
+  }
+  if (typeof asset.source.path !== "string" || asset.source.path.trim() === "") {
+    throw new Error(`Complete feature raster ${asset.id} must reference a real PNG source.`);
+  }
+  if (asset.status !== "final-ready") {
+    throw new Error(`Complete feature raster ${asset.id} must be marked final-ready.`);
+  }
+  if (asset.sourceGap?.trim()) {
+    throw new Error(`Complete feature raster ${asset.id} cannot declare a source gap.`);
+  }
+  if (asset.requiresRelayArtwork !== false) {
+    throw new Error(
+      `Complete feature raster ${asset.id} must set requiresRelayArtwork to false.`,
+    );
+  }
+  if (asset.relayArtwork) {
+    throw new Error(
+      `Complete feature raster ${asset.id} cannot add separate relay artwork.`,
+    );
+  }
+  return { mode: "complete-raster", sources: [asset.source] };
+};
 
+const validateProductProofPanel = (asset, source, index, expectedRole) => {
+  if (source.role !== expectedRole) {
+    throw new Error(
+      `Product-proof feature ${asset.id} source ${index + 1} must use role ${expectedRole}.`,
+    );
+  }
+  if (
+    typeof source.path !== "string" ||
+    source.path.trim() === "" ||
+    !Number.isInteger(source.expectedWidth) ||
+    !Number.isInteger(source.expectedHeight) ||
+    typeof source.objectPosition !== "string" ||
+    source.objectPosition.trim() === ""
+  ) {
+    throw new Error(
+      `Product-proof feature ${asset.id} source ${source.role} needs a real PNG contract and crop position.`,
+    );
+  }
+};
+
+const validateProductProofSourceContract = (asset) => {
   if (asset.composition !== "product-proof") {
     throw new Error(
       `Feature ${asset.id} must use one complete raster or the product-proof composition.`,
@@ -224,25 +244,22 @@ export const validateFeatureSourceContract = (asset) => {
   }
   const expectedRoles = ["voice", "assignee", "task"];
   for (const [index, source] of asset.sources.entries()) {
-    if (source.role !== expectedRoles[index]) {
-      throw new Error(
-        `Product-proof feature ${asset.id} source ${index + 1} must use role ${expectedRoles[index]}.`,
-      );
-    }
-    if (
-      typeof source.path !== "string" ||
-      source.path.trim() === "" ||
-      !Number.isInteger(source.expectedWidth) ||
-      !Number.isInteger(source.expectedHeight) ||
-      typeof source.objectPosition !== "string" ||
-      source.objectPosition.trim() === ""
-    ) {
-      throw new Error(
-        `Product-proof feature ${asset.id} source ${source.role} needs a real PNG contract and crop position.`,
-      );
-    }
+    validateProductProofPanel(asset, source, index, expectedRoles[index]);
   }
   return { mode: "product-proof", sources: asset.sources };
+};
+
+export const validateFeatureSourceContract = (asset) => {
+  if (asset.source) {
+    return validateCompleteFeatureSourceContract(asset);
+  }
+  return validateProductProofSourceContract(asset);
+};
+
+const phoneThemeForScreenshot = (screenshotId, darkSlots, lightSlots) => {
+  if (darkSlots.has(screenshotId)) return "dark";
+  if (lightSlots.has(screenshotId)) return "light";
+  return null;
 };
 
 export const validatePhoneMatrix = (assets, campaign) => {
@@ -311,11 +328,11 @@ export const validatePhoneMatrix = (assets, campaign) => {
         }
         seen.add(key);
 
-        const expectedTheme = darkSlots.has(asset.screenshotId)
-          ? "dark"
-          : lightSlots.has(asset.screenshotId)
-            ? "light"
-            : null;
+        const expectedTheme = phoneThemeForScreenshot(
+          asset.screenshotId,
+          darkSlots,
+          lightSlots,
+        );
         if (!expectedTheme || asset.theme !== expectedTheme) {
           throw new Error(
             `Phone asset ${asset.id} must use the declared matrix theme for ${asset.screenshotId}.`,
@@ -546,6 +563,26 @@ export const windowsPowerShellPath = (systemRoot) => {
   );
 };
 
+export const containsFourPartVersion = (value) => {
+  let completedParts = 0;
+  let digitCount = 0;
+  for (const character of value) {
+    if (character >= "0" && character <= "9") {
+      digitCount += 1;
+      continue;
+    }
+    if (character === "." && digitCount > 0 && completedParts < 3) {
+      completedParts += 1;
+      digitCount = 0;
+      continue;
+    }
+    if (completedParts === 3 && digitCount > 0) return true;
+    completedParts = 0;
+    digitCount = 0;
+  }
+  return completedParts === 3 && digitCount > 0;
+};
+
 const getChromeVersion = (chrome) => {
   if (process.platform === "win32") {
     const escaped = chrome.replaceAll("'", "''");
@@ -569,7 +606,7 @@ const getChromeVersion = (chrome) => {
       windowsHide: true,
     });
     const directVersion = `${direct.stdout ?? ""} ${direct.stderr ?? ""}`.trim();
-    if (directVersion && /\d+\.\d+\.\d+\.\d+/.test(directVersion)) {
+    if (directVersion && containsFourPartVersion(directVersion)) {
       return directVersion;
     }
   }
@@ -610,7 +647,7 @@ const loadContext = async () => {
   return { manifest, campaign, assetDataUrls, studioCss };
 };
 
-const validateContext = async ({ manifest, campaign }) => {
+const validateManifestContract = (manifest, campaign) => {
   if (manifest.schemaVersion !== 1) {
     throw new Error(`Unsupported studio manifest schema: ${manifest.schemaVersion}`);
   }
@@ -618,89 +655,105 @@ const validateContext = async ({ manifest, campaign }) => {
     throw new Error("Studio manifest has no assets.");
   }
   validatePhoneMatrix(manifest.assets, campaign);
+};
 
-  const ids = new Set();
-  for (const asset of manifest.assets) {
-    if (ids.has(asset.id)) {
-      throw new Error(`Duplicate studio asset id: ${asset.id}`);
-    }
-    ids.add(asset.id);
-    if (
-      !Number.isInteger(asset.width) ||
-      !Number.isInteger(asset.height) ||
-      asset.width <= 0 ||
-      asset.height <= 0
-    ) {
-      throw new Error(`Asset ${asset.id} has invalid dimensions.`);
-    }
-    validateOutputPath(asset, "draft");
-    validateOutputPath(asset, "final");
+const validateStudioAssetContract = (asset, ids) => {
+  if (ids.has(asset.id)) {
+    throw new Error(`Duplicate studio asset id: ${asset.id}`);
+  }
+  ids.add(asset.id);
+  if (
+    !Number.isInteger(asset.width) ||
+    !Number.isInteger(asset.height) ||
+    asset.width <= 0 ||
+    asset.height <= 0
+  ) {
+    throw new Error(`Asset ${asset.id} has invalid dimensions.`);
+  }
+  validateOutputPath(asset, "draft");
+  validateOutputPath(asset, "final");
+};
 
-    if (asset.relayArtwork) {
-      validateArtworkRect(asset, asset.relayArtwork);
-      await assertPngDimensions(
-        asset.relayArtwork.path,
-        asset.relayArtwork.expectedWidth,
-        asset.relayArtwork.expectedHeight,
-        `relay artwork for ${asset.id}`,
+const validateRelayArtworkSource = async (asset) => {
+  if (!asset.relayArtwork) return;
+  validateArtworkRect(asset, asset.relayArtwork);
+  await assertPngDimensions(
+    asset.relayArtwork.path,
+    asset.relayArtwork.expectedWidth,
+    asset.relayArtwork.expectedHeight,
+    `relay artwork for ${asset.id}`,
+  );
+};
+
+const validatePhoneAssetContext = async (asset, campaign) => {
+  if (!campaign.locales?.includes(asset.locale) || asset.source?.locale !== asset.locale) {
+    throw new Error(`Phone asset ${asset.id} has inconsistent locale metadata.`);
+  }
+  const screenshot = campaign.screenshots?.find((entry) => entry.id === asset.screenshotId);
+  if (!screenshot?.headline?.[asset.locale] || !screenshot?.altText?.[asset.locale]) {
+    throw new Error(`Asset ${asset.id} is missing ${asset.locale} copy in capture-manifest.json.`);
+  }
+  if (asset.source.path) {
+    await assertPngDimensions(
+      asset.source.path,
+      asset.source.expectedWidth,
+      asset.source.expectedHeight,
+      `source for ${asset.id}`,
+    );
+  } else if (asset.status !== "technical-draft" || !asset.sourceGap?.trim()) {
+    throw new Error(
+      `Phone asset ${asset.id} without a source path must be a technical draft with a source gap.`,
+    );
+  }
+  const coverage = validateCaptureRect(asset);
+  if (coverage < asset.minimumCaptureCoverage) {
+    throw new Error(
+      `Asset ${asset.id} capture coverage ${(coverage * 100).toFixed(2)}% is below ${(asset.minimumCaptureCoverage * 100).toFixed(2)}%.`,
+    );
+  }
+};
+
+const validateFeatureAssetContext = async (asset, campaign) => {
+  const featureSource = validateFeatureSourceContract(asset);
+  validateFeatureCopyContract(asset, campaign);
+  for (const source of featureSource.sources) {
+    const { png } = await assertPngDimensions(
+      source.path,
+      source.expectedWidth,
+      source.expectedHeight,
+      `source for ${asset.id}`,
+    );
+    if (featureSource.mode === "complete-raster" && png.colorType !== 2) {
+      throw new Error(
+        `Complete feature raster ${asset.id} must be an RGB PNG without alpha.`,
       );
     }
-
-    if (asset.kind === "phone") {
-      if (!campaign.locales?.includes(asset.locale) || asset.source?.locale !== asset.locale) {
-        throw new Error(`Phone asset ${asset.id} has inconsistent locale metadata.`);
-      }
-      const screenshot = campaign.screenshots?.find((entry) => entry.id === asset.screenshotId);
-      if (!screenshot?.headline?.[asset.locale] || !screenshot?.altText?.[asset.locale]) {
-        throw new Error(`Asset ${asset.id} is missing ${asset.locale} copy in capture-manifest.json.`);
-      }
-      if (asset.source.path) {
-        await assertPngDimensions(
-          asset.source.path,
-          asset.source.expectedWidth,
-          asset.source.expectedHeight,
-          `source for ${asset.id}`,
-        );
-      } else if (asset.status !== "technical-draft" || !asset.sourceGap?.trim()) {
-        throw new Error(
-          `Phone asset ${asset.id} without a source path must be a technical draft with a source gap.`,
-        );
-      }
-      const coverage = validateCaptureRect(asset);
-      if (coverage < asset.minimumCaptureCoverage) {
-        throw new Error(
-          `Asset ${asset.id} capture coverage ${(coverage * 100).toFixed(2)}% is below ${(asset.minimumCaptureCoverage * 100).toFixed(2)}%.`,
-        );
-      }
-    } else if (asset.kind === "feature") {
-      const featureSource = validateFeatureSourceContract(asset);
-      validateFeatureCopyContract(asset, campaign);
-      for (const source of featureSource.sources) {
-        const { png } = await assertPngDimensions(
-          source.path,
-          source.expectedWidth,
-          source.expectedHeight,
-          `source for ${asset.id}`,
-        );
-        if (featureSource.mode === "complete-raster" && png.colorType !== 2) {
-          throw new Error(
-            `Complete feature raster ${asset.id} must be an RGB PNG without alpha.`,
-          );
-        }
-      }
-      const sourceCoverage = featureSource.mode === "complete-raster"
-        ? 1
-        : ((asset.width - 40) * (asset.height - 40)) / (asset.width * asset.height);
-      if (sourceCoverage < asset.minimumCaptureCoverage) {
-        throw new Error(
-          `Feature ${asset.id} source coverage ${(sourceCoverage * 100).toFixed(2)}% is below ${(asset.minimumCaptureCoverage * 100).toFixed(2)}%.`,
-        );
-      }
-    } else {
-      throw new Error(`Unsupported asset kind: ${asset.kind}`);
-    }
   }
+  const sourceCoverage = featureSource.mode === "complete-raster"
+    ? 1
+    : ((asset.width - 40) * (asset.height - 40)) / (asset.width * asset.height);
+  if (sourceCoverage < asset.minimumCaptureCoverage) {
+    throw new Error(
+      `Feature ${asset.id} source coverage ${(sourceCoverage * 100).toFixed(2)}% is below ${(asset.minimumCaptureCoverage * 100).toFixed(2)}%.`,
+    );
+  }
+};
 
+const validateStudioAsset = async (asset, campaign, ids) => {
+  validateStudioAssetContract(asset, ids);
+  await validateRelayArtworkSource(asset);
+  if (asset.kind === "phone") {
+    await validatePhoneAssetContext(asset, campaign);
+    return;
+  }
+  if (asset.kind === "feature") {
+    await validateFeatureAssetContext(asset, campaign);
+    return;
+  }
+  throw new Error(`Unsupported asset kind: ${asset.kind}`);
+};
+
+const validateStudioSupportFiles = async (manifest) => {
   await assertPngDimensions(
     manifest.reference.path,
     manifest.reference.expectedWidth,
@@ -719,6 +772,15 @@ const validateContext = async ({ manifest, campaign }) => {
   await assertFile("store-listing/assets/fonts/DM-Sans-NOTICE.md", "DM Sans license notice");
   await assertFile("store-listing/assets/fonts/OFL-1.1.txt", "SIL Open Font License text");
   await assertFile("store-listing/studio/studio.css", "studio stylesheet");
+};
+
+const validateContext = async ({ manifest, campaign }) => {
+  validateManifestContract(manifest, campaign);
+  const ids = new Set();
+  for (const asset of manifest.assets) {
+    await validateStudioAsset(asset, campaign, ids);
+  }
+  await validateStudioSupportFiles(manifest);
 };
 
 export const commandRequiresChrome = (command) =>
@@ -869,6 +931,12 @@ const renderWithChrome = async ({ chrome, profileDir, asset, url, output }) => {
   }
 };
 
+const sourceListForAsset = (asset) => {
+  if (asset.kind === "phone") return [asset.source];
+  if (asset.source) return [asset.source];
+  return asset.sources;
+};
+
 const ledgerEntry = async ({ asset, output, campaign, chromeVersion, renderMode }) => {
   const png = await readPng(output);
   if (png.width !== asset.width || png.height !== asset.height) {
@@ -880,11 +948,7 @@ const ledgerEntry = async ({ asset, output, campaign, chromeVersion, renderMode 
     throw new Error(`Rendered ${asset.id} PNG color type is ${png.colorType}; expected RGB color type 2 with no alpha.`);
   }
 
-  const sourceList = asset.kind === "phone"
-    ? [asset.source]
-    : asset.source
-      ? [asset.source]
-      : asset.sources;
+  const sourceList = sourceListForAsset(asset);
   const sources = [];
   for (const source of sourceList) {
     const sourceTarget = resolveRepoPath(source.path);
@@ -1160,8 +1224,10 @@ const main = async () => {
 
 const invokedPath = process.argv[1] ? path.resolve(process.argv[1]) : "";
 if (invokedPath === fileURLToPath(import.meta.url)) {
-  main().catch((error) => {
+  try {
+    await main();
+  } catch (error) {
     console.error(error instanceof Error ? error.message : error);
     process.exitCode = 1;
-  });
+  }
 }

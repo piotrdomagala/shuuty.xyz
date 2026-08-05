@@ -7,6 +7,7 @@ import {
   assertAssetsReadyForMode,
   assetOutputForMode,
   commandRequiresChrome,
+  containsFourPartVersion,
   copyApprovedIconsForRenderMode,
   parseRenderMode,
   reconcileLedgerEntries,
@@ -28,6 +29,13 @@ test("only renderer commands require a local Chrome installation", () => {
   assert.equal(commandRequiresChrome("preview"), false);
   assert.equal(commandRequiresChrome("validate"), true);
   assert.equal(commandRequiresChrome("render"), true);
+});
+
+test("Chrome version detection handles four numeric parts without backtracking", () => {
+  assert.equal(containsFourPartVersion("Google Chrome 151.0.7922.76"), true);
+  assert.equal(containsFourPartVersion("Chromium 151.0.7922.76-beta"), true);
+  assert.equal(containsFourPartVersion("Google Chrome 151.0.7922"), false);
+  assert.equal(containsFourPartVersion(`Chrome 151.0.7922.${"x".repeat(100_000)}`), false);
 });
 
 const campaign = {
