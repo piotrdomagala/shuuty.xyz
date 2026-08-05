@@ -1,7 +1,7 @@
 {
   "name": "shuuty-app",
   "version": "2.0.0",
-  "description": "Shuuty — voice tasks, flexible groups, meetings and nearby discovery.",
+  "description": "Shuuty - voice tasks, flexible groups, meetings and nearby discovery.",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -12,6 +12,11 @@
     "lint": "next lint",
     "validate:legal": "node scripts/validate-legal-documents.mjs",
     "validate:store-listing": "node scripts/validate-store-listing.mjs",
+    "store:preview": "node scripts/store-studio.mjs preview",
+    "store:render": "node scripts/store-studio.mjs render",
+    "store:studio:validate": "node scripts/store-studio.mjs validate",
+    "store:package": "node scripts/store-package.mjs package",
+    "store:verify": "node scripts/store-package.mjs verify",
     "validate:static": "node scripts/validate-static-export.mjs",
     "generate:favicon": "node scripts/generate-favicon.mjs",
     "submit:indexnow": "node scripts/submit-indexnow.mjs"
