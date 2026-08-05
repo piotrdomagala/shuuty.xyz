@@ -10,6 +10,7 @@ import {
   validateFeatureSourceContract,
   validatePhoneMatrix,
   validateOutputPath,
+  windowsPowerShellPath,
 } from "./store-studio.mjs";
 import {
   renderAssetDocument,
@@ -74,6 +75,14 @@ const templateContext = {
   },
   studioCss: ".phone-capture{left:var(--capture-x)}",
 };
+
+test("Windows PowerShell is resolved without searching PATH", () => {
+  assert.equal(
+    windowsPowerShellPath("C:\\Windows"),
+    "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+  );
+  assert.throws(() => windowsPowerShellPath("Windows"), /absolute Windows path/);
+});
 
 test("draft is the safe default and final must be explicit", () => {
   assert.equal(parseRenderMode(undefined), "draft");

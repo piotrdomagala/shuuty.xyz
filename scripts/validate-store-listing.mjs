@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const listingRoot = path.join(root, 'store-listing');
 const requiredLocales = ['pl-PL', 'en-US'];
-const requiredMediaFiles = [
+const requiredMediaFiles = new Set([
   'avatar-alex.webp',
   'avatar-maja.webp',
   'avatar-mia.webp',
@@ -21,7 +21,7 @@ const requiredMediaFiles = [
   'gallery-brand-studio.webp',
   'gallery-ceramics-collection.webp',
   'gallery-ceramics-glazing.webp',
-];
+]);
 const failures = [];
 
 const readJson = async relativePath =>
@@ -245,8 +245,8 @@ for (const asset of mediaAssets) {
 }
 
 requireValue(
-  JSON.stringify([...fileNames].sort()) ===
-    JSON.stringify([...requiredMediaFiles].sort()),
+  fileNames.size === requiredMediaFiles.size &&
+    [...fileNames].every((fileName) => requiredMediaFiles.has(fileName)),
   'Media provenance filenames must match the complete 15-file store-demo set',
 );
 requireValue(

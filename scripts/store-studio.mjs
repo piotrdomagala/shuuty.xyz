@@ -416,11 +416,28 @@ const findChrome = () => {
   return chrome;
 };
 
+export const windowsPowerShellPath = (systemRoot) => {
+  if (typeof systemRoot !== "string" || !path.win32.isAbsolute(systemRoot)) {
+    throw new Error("SystemRoot must be an absolute Windows path.");
+  }
+  return path.win32.join(
+    systemRoot,
+    "System32",
+    "WindowsPowerShell",
+    "v1.0",
+    "powershell.exe",
+  );
+};
+
 const getChromeVersion = (chrome) => {
   if (process.platform === "win32") {
     const escaped = chrome.replaceAll("'", "''");
+    const powershell = windowsPowerShellPath(process.env.SystemRoot);
+    if (!existsSync(powershell)) {
+      throw new Error(`Windows PowerShell was not found at ${powershell}.`);
+    }
     const result = spawnSync(
-      "powershell.exe",
+      powershell,
       ["-NoProfile", "-Command", `(Get-Item -LiteralPath '${escaped}').VersionInfo.ProductVersion`],
       { encoding: "utf8", windowsHide: true },
     );
