@@ -599,7 +599,7 @@ test("full render rebuilds the complete ledger while partial render remains addi
   );
 });
 
-test("phone matrix validates every platform independently with localized ordered slots", () => {
+const createPhoneMatrixFixture = () => {
   const sequence = [
     "01-voice-input",
     "02-assignee",
@@ -644,6 +644,28 @@ test("phone matrix validates every platform independently with localized ordered
       })),
     ),
   );
+
+  return { assets, matrixCampaign };
+};
+
+test("phone matrix requires App Store delivery assets", () => {
+  const { assets, matrixCampaign } = createPhoneMatrixFixture();
+  assert.throws(
+    () => validatePhoneMatrix(assets.filter((asset) => asset.platform !== "app-store"), matrixCampaign),
+    /app-store.*16 total.*found 0/,
+  );
+});
+
+test("phone matrix requires Google Play delivery assets", () => {
+  const { assets, matrixCampaign } = createPhoneMatrixFixture();
+  assert.throws(
+    () => validatePhoneMatrix(assets.filter((asset) => asset.platform !== "google-play"), matrixCampaign),
+    /google-play.*16 total.*found 0/,
+  );
+});
+
+test("phone matrix validates every platform independently with localized ordered slots", () => {
+  const { assets, matrixCampaign } = createPhoneMatrixFixture();
 
   assert.doesNotThrow(() => validatePhoneMatrix(assets, matrixCampaign));
   assert.equal(assets.length, 32);

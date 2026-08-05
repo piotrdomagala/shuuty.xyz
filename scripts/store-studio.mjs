@@ -261,7 +261,9 @@ export const validatePhoneMatrix = (assets, campaign) => {
     throw new Error("Phone matrix must contain at least one platform.");
   }
 
-  const platforms = new Set();
+  const platforms = new Set(
+    [...PHONE_DEVICE_SET_KEYS.keys()].map((slot) => slot.slice(0, slot.indexOf(":"))),
+  );
   for (const asset of phones) {
     if (typeof asset.platform !== "string" || asset.platform.trim() === "") {
       throw new Error(`Phone asset ${asset.id} must declare a platform.`);
