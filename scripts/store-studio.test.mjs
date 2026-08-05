@@ -15,6 +15,8 @@ import {
   validateCaptureRect,
   validateFeatureCopyContract,
   validateFeatureSourceContract,
+  validateMinimumCaptureCoverage,
+  validatePhoneCropContract,
   validatePhoneDeviceSet,
   validatePhoneMatrix,
   validatePhoneObjectPosition,
@@ -73,6 +75,7 @@ const phoneAsset = {
   stage: { index: 1, total: 3 },
   source: { path: "source.png", locale: "en-US" },
   objectPosition: "50% 100%",
+  minimumCaptureCoverage: 0.8,
   width: 1080,
   height: 1920,
   captureRect: { x: 27, y: 219, width: 1024, height: 1688 },
@@ -370,6 +373,29 @@ test("phone crop positions require two bounded percentages", () => {
       /objectPosition must be two percentages between 0% and 100%/,
     );
   }
+});
+
+test("phone crop coverage requires a finite threshold and enforces it", () => {
+  assert.equal(validateMinimumCaptureCoverage(phoneAsset), 0.8);
+  assert.doesNotThrow(() => validatePhoneCropContract(phoneAsset));
+  for (const minimumCaptureCoverage of [undefined, "0.8", Number.NaN, 0, -0.1, 1.01]) {
+    assert.throws(
+      () =>
+        validateMinimumCaptureCoverage({
+          ...phoneAsset,
+          minimumCaptureCoverage,
+        }),
+      /minimumCaptureCoverage must be a finite number greater than 0 and at most 1/,
+    );
+  }
+  assert.throws(
+    () =>
+      validatePhoneCropContract({
+        ...phoneAsset,
+        captureRect: { x: 0, y: 0, width: 200, height: 200 },
+      }),
+    /capture coverage .* is below 80\.00%/,
+  );
 });
 
 test("final document contains no technical-draft burn-in", () => {

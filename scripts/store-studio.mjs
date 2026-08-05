@@ -18,6 +18,14 @@ import {
   renderAssetDocument,
   renderPreviewIndex,
 } from "../store-listing/studio/template.mjs";
+import { validatePhoneCropContract } from "./store-render-validation.mjs";
+
+export {
+  validateCaptureRect,
+  validateMinimumCaptureCoverage,
+  validatePhoneCropContract,
+  validatePhoneObjectPosition,
+} from "./store-render-validation.mjs";
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(scriptDir, "..");
@@ -82,43 +90,6 @@ const assetOutputSlot = (asset) => {
     return asset.deviceSlot;
   }
   throw new Error(`Asset ${asset.id} has no output slot for kind ${String(asset.kind)}.`);
-};
-
-export const validateCaptureRect = (asset) => {
-  const rect = asset.captureRect;
-  const values = rect ? [rect.x, rect.y, rect.width, rect.height] : [];
-  if (
-    values.length !== 4 ||
-    values.some((value) => !Number.isInteger(value)) ||
-    rect.x < 0 ||
-    rect.y < 0 ||
-    rect.width <= 0 ||
-    rect.height <= 0 ||
-    rect.x + rect.width > asset.width ||
-    rect.y + rect.height > asset.height
-  ) {
-    throw new Error(`Asset ${asset.id} captureRect must be an integer rectangle inside its canvas.`);
-  }
-  return (rect.width * rect.height) / (asset.width * asset.height);
-};
-
-export const validatePhoneObjectPosition = (asset) => {
-  const value = asset.objectPosition;
-  const match =
-    typeof value === "string"
-      ? /^(\d+(?:\.\d+)?)% (\d+(?:\.\d+)?)%$/u.exec(value)
-      : null;
-  const coordinates = match ? [Number(match[1]), Number(match[2])] : [];
-  if (
-    coordinates.length !== 2 ||
-    coordinates.some(
-      (coordinate) => !Number.isFinite(coordinate) || coordinate < 0 || coordinate > 100,
-    )
-  ) {
-    throw new Error(
-      `Phone asset ${asset.id} objectPosition must be two percentages between 0% and 100%.`,
-    );
-  }
 };
 
 export const validateFeatureCopyContract = (asset, campaign) => {
@@ -305,7 +276,6 @@ export const validatePhoneMatrix = (assets, campaign) => {
       throw new Error(`Phone asset ${asset.id} must declare a platform.`);
     }
     validatePhoneDeviceSet(asset, campaign);
-    validatePhoneObjectPosition(asset);
     platforms.add(asset.platform);
   }
 
@@ -725,12 +695,7 @@ const validatePhoneAssetContext = async (asset, campaign) => {
       `Phone asset ${asset.id} without a source path must be a technical draft with a source gap.`,
     );
   }
-  const coverage = validateCaptureRect(asset);
-  if (coverage < asset.minimumCaptureCoverage) {
-    throw new Error(
-      `Asset ${asset.id} capture coverage ${(coverage * 100).toFixed(2)}% is below ${(asset.minimumCaptureCoverage * 100).toFixed(2)}%.`,
-    );
-  }
+  validatePhoneCropContract(asset);
 };
 
 const validateFeatureAssetContext = async (asset, campaign) => {

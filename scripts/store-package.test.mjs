@@ -4,6 +4,7 @@ import { mkdtemp, mkdir, readFile, rm, utimes, writeFile } from "node:fs/promise
 import os from "node:os";
 import path from "node:path";
 import test from "node:test";
+import { fileURLToPath } from "node:url";
 import pngjs from "pngjs";
 import {
   collectPackageInputs,
@@ -14,6 +15,10 @@ import {
 } from "./store-package.mjs";
 
 const { PNG } = pngjs;
+const TEST_REPO_ROOT = path.resolve(
+  path.dirname(fileURLToPath(import.meta.url)),
+  "..",
+);
 
 const LOCALES = ["en-US", "pl-PL"];
 const NARRATIVE = [
@@ -131,11 +136,16 @@ async function createFixture() {
     "# Console change set\n",
   );
   await writeRepoFile(rootDir, "store-listing/upload-checklist.md", "# Upload checklist\n");
-  await writeJson(rootDir, "store-listing/provenance/media-assets.json", {
-    schemaVersion: 1,
-    status: "owner-attested",
-    assets: [],
-  });
+  await writeRepoFile(
+    rootDir,
+    "store-listing/provenance/media-assets.json",
+    await readFile(
+      path.join(
+        TEST_REPO_ROOT,
+        "store-listing/provenance/media-assets.json",
+      ),
+    ),
+  );
   await writeRepoFile(
     rootDir,
     "store-listing/provenance/google-play-artifact-evidence.md",
@@ -144,7 +154,12 @@ async function createFixture() {
   await writeRepoFile(
     rootDir,
     "store-listing/provenance/owner-attestation.md",
-    "# Owner attestation\n",
+    await readFile(
+      path.join(
+        TEST_REPO_ROOT,
+        "store-listing/provenance/owner-attestation.md",
+      ),
+    ),
   );
 
   const appIconSource = "store-listing/assets/store/app-store/app-icon-1024.png";
@@ -240,8 +255,10 @@ async function createFixture() {
             expectedHeight: SOURCE_GEOMETRY.height,
           },
           objectPosition: "50% 50%",
+          minimumCaptureCoverage: 0.8,
           width,
           height,
+          captureRect: { x: 0, y: 0, width, height },
           finalOutput: output,
           _outputData: outputData,
         });
@@ -861,24 +878,48 @@ test("phone assets must match their capture-manifest device geometry", async () 
   });
 });
 
-test("packaging rejects invalid phone crop positions", async () => {
-  await withFixture(async ({ rootDir }) => {
-    const renderPath = "store-listing/studio/render-manifest.json";
-    const renderManifest = JSON.parse(
-      await readFile(path.join(rootDir, ...renderPath.split("/")), "utf8"),
-    );
-    const phoneAsset = renderManifest.assets.find(
-      (asset) => asset.kind === "phone",
-    );
-    assert.ok(phoneAsset);
-    phoneAsset.objectPosition = "center";
-    await writeJson(rootDir, renderPath, renderManifest);
+test("packaging rejects invalid phone crop contracts", async () => {
+  const scenarios = [
+    {
+      mutate: (asset) => {
+        asset.objectPosition = "center";
+      },
+      expected: /objectPosition must be two percentages between 0% and 100%/,
+    },
+    {
+      mutate: (asset) => {
+        delete asset.minimumCaptureCoverage;
+      },
+      expected:
+        /minimumCaptureCoverage must be a finite number greater than 0 and at most 1/,
+    },
+    {
+      mutate: (asset) => {
+        asset.captureRect = { x: 0, y: 0, width: 10, height: 10 };
+      },
+      expected: /capture coverage .* is below 80\.00%/,
+    },
+  ];
 
-    await assert.rejects(
-      () => collectPackageInputs({ rootDir, checkFreshness: false }),
-      /objectPosition must be two percentages between 0% and 100%/,
-    );
-  });
+  for (const scenario of scenarios) {
+    await withFixture(async ({ rootDir }) => {
+      const renderPath = "store-listing/studio/render-manifest.json";
+      const renderManifest = JSON.parse(
+        await readFile(path.join(rootDir, ...renderPath.split("/")), "utf8"),
+      );
+      const phoneAsset = renderManifest.assets.find(
+        (asset) => asset.kind === "phone",
+      );
+      assert.ok(phoneAsset);
+      scenario.mutate(phoneAsset);
+      await writeJson(rootDir, renderPath, renderManifest);
+
+      await assert.rejects(
+        () => collectPackageInputs({ rootDir, checkFreshness: false }),
+        scenario.expected,
+      );
+    });
+  }
 });
 
 test("unsupported phone device slots are rejected even with complete output and ledger data", async () => {
@@ -1080,6 +1121,67 @@ test("archive-only verification requires every release support file", async () =
         new RegExp(`Embedded support files.*missing: ${supportPath}`),
       );
     }
+  });
+});
+
+test("package and archive-only verification enforce media provenance", async () => {
+  await withFixture(async ({ rootDir }) => {
+    const mediaPath = "store-listing/provenance/media-assets.json";
+    const media = JSON.parse(
+      await readFile(path.join(rootDir, ...mediaPath.split("/")), "utf8"),
+    );
+    media.assets.pop();
+    media.source.assetCount = media.assets.length;
+    await writeJson(rootDir, mediaPath, media);
+    await assert.rejects(
+      () => collectPackageInputs({ rootDir, checkFreshness: false }),
+      /Media provenance must contain exactly 15 source assets/,
+    );
+  });
+
+  await withFixture(async ({ rootDir }) => {
+    const archivePath = path.join(rootDir, "forged-media-provenance.zip");
+    await writeStorePackage({ rootDir, archivePath });
+    await rewriteArchivePayloadAndFileHash(
+      archivePath,
+      "provenance/media-assets.json",
+      (data) => {
+        const media = JSON.parse(data.toString("utf8"));
+        media.assets.pop();
+        media.source.assetCount = media.assets.length;
+        return Buffer.from(`${JSON.stringify(media, null, 2)}\n`, "utf8");
+      },
+    );
+    await assert.rejects(
+      () =>
+        verifyStorePackage({
+          rootDir,
+          archivePath,
+          againstWorkspace: false,
+          checkFreshness: false,
+        }),
+      /Media provenance must contain exactly 15 source assets/,
+    );
+  });
+
+  await withFixture(async ({ rootDir }) => {
+    const archivePath = path.join(rootDir, "forged-owner-attestation.zip");
+    await writeStorePackage({ rootDir, archivePath });
+    await rewriteArchivePayloadAndFileHash(
+      archivePath,
+      "provenance/owner-attestation.md",
+      () => Buffer.from("# Incomplete owner attestation\n", "utf8"),
+    );
+    await assert.rejects(
+      () =>
+        verifyStorePackage({
+          rootDir,
+          archivePath,
+          againstWorkspace: false,
+          checkFreshness: false,
+        }),
+      /Owner attestation is missing required text/,
+    );
   });
 });
 

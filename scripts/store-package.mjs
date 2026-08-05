@@ -18,6 +18,8 @@ import {
   STORE_METADATA_LOCALES,
   validateStoreMetadataSet,
 } from "./store-metadata-validation.mjs";
+import { validateStoreMediaProvenance } from "./store-media-provenance-validation.mjs";
+import { validatePhoneCropContract } from "./store-render-validation.mjs";
 
 const { PNG } = pngjs;
 
@@ -133,6 +135,19 @@ function assertValidStoreMetadata(entries) {
   const failures = validateStoreMetadataSet(entries);
   if (failures.length > 0) {
     fail(`Store metadata validation failed:\n- ${failures.join("\n- ")}`);
+  }
+}
+
+function assertValidStoreMediaProvenance(
+  mediaProvenance,
+  ownerAttestation,
+) {
+  const failures = validateStoreMediaProvenance(
+    mediaProvenance,
+    ownerAttestation,
+  );
+  if (failures.length > 0) {
+    fail(`Store media provenance validation failed:\n- ${failures.join("\n- ")}`);
   }
 }
 
@@ -362,25 +377,6 @@ function expectedAssetSources(asset) {
   fail(`Final asset ${asset.id} has no declared source.`);
 }
 
-function assertPhoneObjectPosition(asset) {
-  const value = asset.objectPosition;
-  const match =
-    typeof value === "string"
-      ? /^(\d+(?:\.\d+)?)% (\d+(?:\.\d+)?)%$/u.exec(value)
-      : null;
-  const coordinates = match ? [Number(match[1]), Number(match[2])] : [];
-  if (
-    coordinates.length !== 2 ||
-    coordinates.some(
-      (coordinate) => !Number.isFinite(coordinate) || coordinate < 0 || coordinate > 100,
-    )
-  ) {
-    fail(
-      `Final phone asset ${asset.id} objectPosition must be two percentages between 0% and 100%.`,
-    );
-  }
-}
-
 function validateFinalAsset(asset, ids, outputs) {
   if (!asset.id || ids.has(asset.id)) {
     fail(`Final render asset id is missing or duplicated: ${asset.id ?? "missing"}.`);
@@ -404,7 +400,7 @@ function validateFinalAsset(asset, ids, outputs) {
     );
   }
   if (asset.kind === "phone") {
-    assertPhoneObjectPosition(asset);
+    validatePhoneCropContract(asset);
   }
   if (!REQUIRED_LOCALES.includes(asset.locale)) {
     fail(`Final asset ${asset.id} has unsupported locale ${asset.locale ?? "missing"}.`);
@@ -937,6 +933,20 @@ export async function collectPackageInputs({
     });
   }
   assertValidStoreMetadata(metadataEntries);
+  const mediaProvenance = await readRequiredJson(
+    absoluteRoot,
+    WORKSPACE_PATHS.mediaProvenance,
+    "media provenance",
+  );
+  const ownerAttestation = await readRequiredFile(
+    absoluteRoot,
+    WORKSPACE_PATHS.ownerAttestation,
+    "owner attestation",
+  );
+  assertValidStoreMediaProvenance(
+    mediaProvenance.value,
+    ownerAttestation.data.toString("utf8"),
+  );
   for (const supportPayload of REQUIRED_SUPPORT_PAYLOADS) {
     payloads.push(
       await payloadFromRepoFile(
@@ -1277,6 +1287,24 @@ function readEmbeddedJson(byPath, entryPath, label) {
   }
 }
 
+function validateEmbeddedMediaProvenance(byPath) {
+  const mediaProvenance = readEmbeddedJson(
+    byPath,
+    "provenance/media-assets.json",
+    "media provenance",
+  );
+  const ownerAttestation = byPath.get(
+    "provenance/owner-attestation.md",
+  );
+  if (!ownerAttestation) {
+    fail("ZIP archive is missing provenance/owner-attestation.md.");
+  }
+  assertValidStoreMediaProvenance(
+    mediaProvenance,
+    ownerAttestation.data.toString("utf8"),
+  );
+}
+
 function validateEmbeddedRenderInputs(
   manifest,
   byPath,
@@ -1565,6 +1593,7 @@ function validateEmbeddedPackage(entries) {
     }
   }
   validateEmbeddedSupportFiles(manifest, byPath);
+  validateEmbeddedMediaProvenance(byPath);
   const expectedAssetPaths = validateEmbeddedAssetPayloads(manifest, byPath);
   validateEmbeddedStoreMetadata(manifest, byPath);
   compareSets(
