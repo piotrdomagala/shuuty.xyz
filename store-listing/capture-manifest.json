@@ -47,6 +47,7 @@
       "width": 1024,
       "height": 1024,
       "format": "PNG",
+      "bitDepth": 8,
       "alpha": false,
       "status": "final-ready"
     },
@@ -56,7 +57,9 @@
       "height": 512,
       "format": "PNG",
       "maxBytes": 1048576,
+      "bitDepth": 8,
       "alpha": true,
+      "opaque": true,
       "status": "final-ready"
     },
     "googlePlayFeatureGraphic": {

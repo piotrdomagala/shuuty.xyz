@@ -4,12 +4,15 @@ import { mkdtemp, mkdir, readFile, rm, utimes, writeFile } from "node:fs/promise
 import os from "node:os";
 import path from "node:path";
 import test from "node:test";
+import pngjs from "pngjs";
 import {
   collectPackageInputs,
   readDeterministicZip,
   verifyStorePackage,
   writeStorePackage,
 } from "./store-package.mjs";
+
+const { PNG } = pngjs;
 
 const LOCALES = ["en-US", "pl-PL"];
 const NARRATIVE = [
@@ -39,6 +42,24 @@ function png(width, height, marker, colorType = 2) {
   buffer.write(marker, 40, "utf8");
   return buffer;
 }
+
+function validIconPng(width, height, colorType, alpha = 255) {
+  const image = new PNG({ width, height });
+  for (let offset = 0; offset < image.data.length; offset += 4) {
+    image.data[offset] = 8;
+    image.data[offset + 1] = 12;
+    image.data[offset + 2] = 24;
+    image.data[offset + 3] = alpha;
+  }
+  return PNG.sync.write(image, {
+    colorType,
+    inputColorType: 6,
+    inputHasAlpha: true,
+  });
+}
+
+const APP_ICON_PNG = validIconPng(1024, 1024, 2);
+const PLAY_ICON_PNG = validIconPng(512, 512, 6);
 
 async function writeRepoFile(rootDir, relativePath, data) {
   const absolutePath = path.join(rootDir, ...relativePath.split("/"));
@@ -92,8 +113,8 @@ async function createFixture() {
 
   const appIconSource = "store-listing/assets/store/app-store/app-icon-1024.png";
   const playIconSource = "store-listing/assets/store/google-play/app-icon-512.png";
-  const appIcon = png(1024, 1024, "app-icon");
-  const playIcon = png(512, 512, "play-icon", 6);
+  const appIcon = APP_ICON_PNG;
+  const playIcon = PLAY_ICON_PNG;
   await writeRepoFile(rootDir, appIconSource, appIcon);
   await writeRepoFile(rootDir, playIconSource, playIcon);
   await writeRepoFile(
@@ -121,6 +142,7 @@ async function createFixture() {
         status: "final-ready",
         width: 1024,
         height: 1024,
+        bitDepth: 8,
         alpha: false,
       },
       googlePlayIcon: {
@@ -129,7 +151,9 @@ async function createFixture() {
         width: 512,
         height: 512,
         maxBytes: 1_048_576,
+        bitDepth: 8,
         alpha: true,
+        opaque: true,
       },
       googlePlayFeatureGraphic: {
         localization: "per-locale",
@@ -468,6 +492,70 @@ test("icon alpha contracts reject mismatched PNG color types", async () => {
     await assert.rejects(
       () => collectPackageInputs({ rootDir, checkFreshness: false }),
       /appStoreIcon source has PNG color type 6; expected color type 2 for alpha: false/,
+    );
+  });
+});
+
+test("icon contracts reject non-8-bit PNGs before alpha rescaling", async () => {
+  await withFixture(async ({ rootDir }) => {
+    const sixteenBitPlayIcon = Buffer.from(PLAY_ICON_PNG);
+    sixteenBitPlayIcon[24] = 16;
+    await writeRepoFile(
+      rootDir,
+      "store-listing/assets/store/google-play/app-icon-512.png",
+      sixteenBitPlayIcon,
+    );
+    await writeRepoFile(
+      rootDir,
+      "store-listing/exports/final/google-play/icon/app-icon-512.png",
+      sixteenBitPlayIcon,
+    );
+
+    await assert.rejects(
+      () => collectPackageInputs({ rootDir, checkFreshness: false }),
+      /googlePlayIcon source has PNG bit depth 16; expected 8/,
+    );
+  });
+});
+
+test("Google Play icon alpha samples must all be fully opaque", async () => {
+  const translucentIcon = validIconPng(512, 512, 6, 255);
+  const decoded = PNG.sync.read(translucentIcon);
+  decoded.data[3] = 254;
+  const encoded = PNG.sync.write(decoded, {
+    colorType: 6,
+    inputColorType: 6,
+    inputHasAlpha: true,
+  });
+
+  await withFixture(async ({ rootDir }) => {
+    await writeRepoFile(
+      rootDir,
+      "store-listing/assets/store/google-play/app-icon-512.png",
+      encoded,
+    );
+    await writeRepoFile(
+      rootDir,
+      "store-listing/exports/final/google-play/icon/app-icon-512.png",
+      encoded,
+    );
+
+    await assert.rejects(
+      () => collectPackageInputs({ rootDir, checkFreshness: false }),
+      /googlePlayIcon source is not fully opaque at pixel 0,0/,
+    );
+  });
+
+  await withFixture(async ({ rootDir }) => {
+    await writeRepoFile(
+      rootDir,
+      "store-listing/exports/final/google-play/icon/app-icon-512.png",
+      encoded,
+    );
+
+    await assert.rejects(
+      () => collectPackageInputs({ rootDir, checkFreshness: false }),
+      /googlePlayIcon final export is not fully opaque at pixel 0,0/,
     );
   });
 });

@@ -13,6 +13,9 @@ import {
 import path from "node:path";
 import process from "node:process";
 import { pathToFileURL } from "node:url";
+import pngjs from "pngjs";
+
+const { PNG } = pngjs;
 
 const REQUIRED_LOCALES = ["en-US", "pl-PL"];
 const PACKAGE_MANIFEST_ENTRY = "PACKAGE-MANIFEST.json";
@@ -192,6 +195,14 @@ function assertPngGeometry(data, expected, label) {
 
 function assertPngContract(data, expected, label) {
   const png = assertPngGeometry(data, expected, label);
+  if (expected.bitDepth !== 8) {
+    fail(`${label} must declare an 8-bit PNG contract.`);
+  }
+  if (png.bitDepth !== expected.bitDepth) {
+    fail(
+      `${label} has PNG bit depth ${png.bitDepth}; expected ${expected.bitDepth}.`,
+    );
+  }
   if (typeof expected.alpha !== "boolean") {
     fail(`${label} must declare a boolean alpha contract.`);
   }
@@ -200,6 +211,25 @@ function assertPngContract(data, expected, label) {
     fail(
       `${label} has PNG color type ${png.colorType}; expected color type ${expectedColorType} for alpha: ${expected.alpha}.`,
     );
+  }
+  if (expected.alpha === true && expected.opaque !== true) {
+    fail(`${label} with an alpha channel must declare opaque: true.`);
+  }
+  if (expected.opaque === true) {
+    let decoded;
+    try {
+      decoded = PNG.sync.read(data, { checkCRC: true });
+    } catch (error) {
+      fail(`${label} could not be decoded for opacity validation: ${error.message}`);
+    }
+    for (let offset = 3; offset < decoded.data.length; offset += 4) {
+      if (decoded.data[offset] !== 255) {
+        const pixel = (offset - 3) / 4;
+        fail(
+          `${label} is not fully opaque at pixel ${pixel % decoded.width},${Math.floor(pixel / decoded.width)}.`,
+        );
+      }
+    }
   }
   return png;
 }
