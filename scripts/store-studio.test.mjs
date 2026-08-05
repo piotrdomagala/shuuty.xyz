@@ -6,6 +6,7 @@ import test from "node:test";
 import {
   assertAssetsReadyForMode,
   assetOutputForMode,
+  commandRequiresChrome,
   copyApprovedIconsForRenderMode,
   parseRenderMode,
   reconcileLedgerEntries,
@@ -22,6 +23,12 @@ import {
   renderAssetDocument,
   renderPreviewIndex,
 } from "../store-listing/studio/template.mjs";
+
+test("only renderer commands require a local Chrome installation", () => {
+  assert.equal(commandRequiresChrome("preview"), false);
+  assert.equal(commandRequiresChrome("validate"), true);
+  assert.equal(commandRequiresChrome("render"), true);
+});
 
 const campaign = {
   locales: ["pl-PL", "en-US"],

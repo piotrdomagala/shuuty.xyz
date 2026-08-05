@@ -698,10 +698,14 @@ const validateContext = async ({ manifest, campaign }) => {
   await assertFile("store-listing/assets/fonts/DM-Sans-NOTICE.md", "DM Sans license notice");
   await assertFile("store-listing/assets/fonts/OFL-1.1.txt", "SIL Open Font License text");
   await assertFile("store-listing/studio/studio.css", "studio stylesheet");
+};
 
+export const commandRequiresChrome = (command) =>
+  command === "validate" || command === "render";
+
+const resolveChrome = () => {
   const chrome = findChrome();
-  const chromeVersion = getChromeVersion(chrome);
-  return { chrome, chromeVersion };
+  return { chrome, chromeVersion: getChromeVersion(chrome) };
 };
 
 const assetPathFromUrl = (pathname) => {
@@ -1092,8 +1096,15 @@ const main = async () => {
     return;
   }
   const context = await loadContext();
-  const { chrome, chromeVersion } = await validateContext(context);
-  console.log(`validated Golden Relay studio with ${chromeVersion}`);
+  await validateContext(context);
+  const { chrome, chromeVersion } = commandRequiresChrome(command)
+    ? resolveChrome()
+    : { chrome: null, chromeVersion: null };
+  console.log(
+    chromeVersion
+      ? `validated Golden Relay studio with ${chromeVersion}`
+      : "validated Golden Relay studio preview; Chrome is not required",
+  );
 
   if (command === "validate") {
     return;
