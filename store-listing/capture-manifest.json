@@ -56,7 +56,7 @@
       "height": 512,
       "format": "PNG",
       "maxBytes": 1048576,
-      "alpha": false,
+      "alpha": true,
       "status": "final-ready"
     },
     "googlePlayFeatureGraphic": {

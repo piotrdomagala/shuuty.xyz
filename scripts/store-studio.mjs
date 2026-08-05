@@ -32,6 +32,10 @@ const FINAL_ICON_DIRECTORIES = new Map([
   ["appStoreIcon", "store-listing/exports/final/app-store/icon"],
   ["googlePlayIcon", "store-listing/exports/final/google-play/icon"],
 ]);
+const PHONE_DEVICE_SET_KEYS = new Map([
+  ["app-store:iphone-6.9", "appStoreIphone69"],
+  ["google-play:phone", "googlePlayPhone"],
+]);
 
 const MIME_TYPES = new Map([
   [".css", "text/css; charset=utf-8"],
@@ -252,6 +256,7 @@ export const validatePhoneMatrix = (assets, campaign) => {
     if (typeof asset.platform !== "string" || asset.platform.trim() === "") {
       throw new Error(`Phone asset ${asset.id} must declare a platform.`);
     }
+    validatePhoneDeviceSet(asset, campaign);
     platforms.add(asset.platform);
   }
 
@@ -309,12 +314,48 @@ export const validatePhoneMatrix = (assets, campaign) => {
   }
 };
 
+export const validatePhoneDeviceSet = (asset, campaign) => {
+  const slot = `${asset.platform}:${asset.deviceSlot}`;
+  const deviceSetKey = PHONE_DEVICE_SET_KEYS.get(slot);
+  const deviceSet = deviceSetKey ? campaign.deviceSets?.[deviceSetKey] : null;
+  if (!deviceSet) {
+    throw new Error(
+      `Phone asset ${asset.id} has no campaign device set for ${asset.platform}/${String(asset.deviceSlot)}.`,
+    );
+  }
+  if (
+    !Number.isInteger(deviceSet.width) ||
+    !Number.isInteger(deviceSet.height) ||
+    deviceSet.width <= 0 ||
+    deviceSet.height <= 0
+  ) {
+    throw new Error(`Campaign device set ${deviceSetKey} has invalid dimensions.`);
+  }
+  if (asset.width !== deviceSet.width || asset.height !== deviceSet.height) {
+    throw new Error(
+      `Phone asset ${asset.id} canvas is ${asset.width}×${asset.height}; campaign device set ${deviceSetKey} requires ${deviceSet.width}×${deviceSet.height}.`,
+    );
+  }
+  return deviceSet;
+};
+
 export const mergeLedgerEntries = (existingEntries, renderedEntries) => {
   const merged = new Map();
   for (const entry of [...(existingEntries ?? []), ...renderedEntries]) {
     merged.set(`${entry.renderMode ?? "draft"}:${entry.id}`, entry);
   }
   return [...merged.values()];
+};
+
+export const reconcileLedgerEntries = (
+  existingEntries,
+  renderedEntries,
+  { isPartial },
+) => {
+  if (isPartial) {
+    return mergeLedgerEntries(existingEntries, renderedEntries);
+  }
+  return [...renderedEntries];
 };
 
 const readJson = async (target) => JSON.parse(await readFile(target, "utf8"));
@@ -327,6 +368,23 @@ const assertInside = (parent, target) => {
   if (relative.startsWith("..") || path.isAbsolute(relative)) {
     throw new Error(`Refusing path outside ${parent}: ${target}`);
   }
+};
+
+export const resetFinalExportsForFullRender = async ({
+  renderMode,
+  onlyId,
+  rootDir = repoRoot,
+}) => {
+  if (renderMode !== "final" || onlyId !== undefined) {
+    return false;
+  }
+
+  const resolvedRoot = path.resolve(rootDir);
+  const resolvedExportsRoot = path.join(resolvedRoot, "store-listing", "exports");
+  const resolvedFinalRoot = path.join(resolvedExportsRoot, "final");
+  assertInside(resolvedExportsRoot, resolvedFinalRoot);
+  await rm(resolvedFinalRoot, { recursive: true, force: true });
+  return true;
 };
 
 export const copyApprovedIconsForRenderMode = async ({
@@ -898,10 +956,11 @@ const readExistingLedger = async (campaign) => {
 };
 
 const runRender = async ({ context, chrome, chromeVersion, onlyId, renderMode }) => {
-  const assets = onlyId
+  const isPartial = onlyId !== undefined;
+  const assets = isPartial
     ? context.manifest.assets.filter((asset) => asset.id === onlyId)
     : context.manifest.assets;
-  if (onlyId && assets.length === 0) {
+  if (isPartial && assets.length === 0) {
     throw new Error(`Unknown asset id: ${onlyId}`);
   }
   assertAssetsReadyForMode(assets, renderMode);
@@ -918,6 +977,13 @@ const runRender = async ({ context, chrome, chromeVersion, onlyId, renderMode })
   const profileRoot = await mkdtemp(path.join(tmpdir(), "shuuty-store-studio-"));
   const entries = [];
   try {
+    const resetFinalExports = await resetFinalExportsForFullRender({
+      renderMode,
+      onlyId,
+    });
+    if (resetFinalExports) {
+      console.log(`cleared ${path.relative(repoRoot, finalRoot)} before full final render`);
+    }
     for (const asset of assets) {
       const output = validateOutputPath(asset, renderMode);
       await mkdir(path.dirname(output), { recursive: true });
@@ -954,23 +1020,27 @@ const runRender = async ({ context, chrome, chromeVersion, onlyId, renderMode })
     console.log(`copied ${icon.source} -> ${icon.output}`);
   }
 
-  const existingLedger = await readExistingLedger(context.manifest.campaign);
-  const mergedEntries = mergeLedgerEntries(existingLedger?.assets, entries);
+  const existingLedger = isPartial
+    ? await readExistingLedger(context.manifest.campaign)
+    : null;
+  const ledgerEntries = reconcileLedgerEntries(existingLedger?.assets, entries, {
+    isPartial,
+  });
   const ledger = {
     schemaVersion: 2,
     campaign: context.manifest.campaign,
-    status: ledgerStatus(mergedEntries),
+    status: ledgerStatus(ledgerEntries),
     generatedAt: new Date().toISOString(),
     latestRenderMode: renderMode,
     nodeVersion: process.version,
     chromeExecutable: chrome,
     chromeVersion,
     manifest: path.relative(repoRoot, manifestPath).replaceAll("\\", "/"),
-    assets: mergedEntries,
+    assets: ledgerEntries,
   };
   await writeFile(ledgerPath, `${JSON.stringify(ledger, null, 2)}\n`, "utf8");
   console.log(
-    `ledger ${path.relative(repoRoot, ledgerPath)} (${entries.length} updated, ${mergedEntries.length} total assets)`,
+    `ledger ${path.relative(repoRoot, ledgerPath)} (${entries.length} updated, ${ledgerEntries.length} total assets)`,
   );
 };
 
@@ -1041,7 +1111,7 @@ const main = async () => {
   if (command === "render") {
     const renderMode = parseRenderMode(options.get("mode"));
     const onlyId = options.get("id");
-    if (onlyId === true) {
+    if (options.has("id") && (typeof onlyId !== "string" || onlyId.trim() === "")) {
       throw new Error("--id requires an asset id, for example --id=gp-phone-en-01-voice-draft.");
     }
     await runRender({

@@ -190,6 +190,20 @@ function assertPngGeometry(data, expected, label) {
   return png;
 }
 
+function assertPngContract(data, expected, label) {
+  const png = assertPngGeometry(data, expected, label);
+  if (typeof expected.alpha !== "boolean") {
+    fail(`${label} must declare a boolean alpha contract.`);
+  }
+  const expectedColorType = expected.alpha ? 6 : 2;
+  if (png.colorType !== expectedColorType) {
+    fail(
+      `${label} has PNG color type ${png.colorType}; expected color type ${expectedColorType} for alpha: ${expected.alpha}.`,
+    );
+  }
+  return png;
+}
+
 function expectedAssetSources(asset) {
   if (asset.source?.path) {
     return [asset.source];
@@ -371,14 +385,14 @@ async function validateIcons(rootDir, captureManifest) {
       fail(`${key} must declare a final-ready source.`);
     }
     const source = await readRequiredFile(rootDir, icon.source, `${key} source`);
-    assertPngGeometry(source.data, icon, `${key} source`);
+    assertPngContract(source.data, icon, `${key} source`);
     if (icon.maxBytes && source.data.length > icon.maxBytes) {
       fail(`${key} exceeds its ${icon.maxBytes}-byte limit.`);
     }
 
     const output = iconOutputPath(key, icon);
     const exported = await readRequiredFile(rootDir, output, `${key} final export`);
-    assertPngGeometry(exported.data, icon, `${key} final export`);
+    assertPngContract(exported.data, icon, `${key} final export`);
     if (!source.data.equals(exported.data)) {
       fail(`${key} final export does not exactly match its approved source.`);
     }

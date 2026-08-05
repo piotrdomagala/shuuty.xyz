@@ -27,7 +27,7 @@ function digest(data) {
   return createHash("sha256").update(data).digest("hex");
 }
 
-function png(width, height, marker) {
+function png(width, height, marker, colorType = 2) {
   const buffer = Buffer.alloc(40 + Buffer.byteLength(marker));
   Buffer.from("89504e470d0a1a0a", "hex").copy(buffer, 0);
   buffer.writeUInt32BE(13, 8);
@@ -35,7 +35,7 @@ function png(width, height, marker) {
   buffer.writeUInt32BE(width, 16);
   buffer.writeUInt32BE(height, 20);
   buffer[24] = 8;
-  buffer[25] = 2;
+  buffer[25] = colorType;
   buffer.write(marker, 40, "utf8");
   return buffer;
 }
@@ -93,7 +93,7 @@ async function createFixture() {
   const appIconSource = "store-listing/assets/store/app-store/app-icon-1024.png";
   const playIconSource = "store-listing/assets/store/google-play/app-icon-512.png";
   const appIcon = png(1024, 1024, "app-icon");
-  const playIcon = png(512, 512, "play-icon");
+  const playIcon = png(512, 512, "play-icon", 6);
   await writeRepoFile(rootDir, appIconSource, appIcon);
   await writeRepoFile(rootDir, playIconSource, playIcon);
   await writeRepoFile(
@@ -121,6 +121,7 @@ async function createFixture() {
         status: "final-ready",
         width: 1024,
         height: 1024,
+        alpha: false,
       },
       googlePlayIcon: {
         source: playIconSource,
@@ -128,6 +129,7 @@ async function createFixture() {
         width: 512,
         height: 512,
         maxBytes: 1_048_576,
+        alpha: true,
       },
       googlePlayFeatureGraphic: {
         localization: "per-locale",
@@ -386,6 +388,44 @@ test("both localized Google Play feature graphics are mandatory", async () => {
     await assert.rejects(
       () => collectPackageInputs({ rootDir, checkFreshness: false }),
       /unsupported locale localization-independent/,
+    );
+  });
+});
+
+test("icon alpha contracts reject mismatched PNG color types", async () => {
+  await withFixture(async ({ rootDir }) => {
+    const rgbPlayIcon = png(512, 512, "rgb-play-icon");
+    await writeRepoFile(
+      rootDir,
+      "store-listing/assets/store/google-play/app-icon-512.png",
+      rgbPlayIcon,
+    );
+    await writeRepoFile(
+      rootDir,
+      "store-listing/exports/final/google-play/icon/app-icon-512.png",
+      rgbPlayIcon,
+    );
+    await assert.rejects(
+      () => collectPackageInputs({ rootDir, checkFreshness: false }),
+      /googlePlayIcon source has PNG color type 2; expected color type 6 for alpha: true/,
+    );
+  });
+
+  await withFixture(async ({ rootDir }) => {
+    const rgbaAppIcon = png(1024, 1024, "rgba-app-icon", 6);
+    await writeRepoFile(
+      rootDir,
+      "store-listing/assets/store/app-store/app-icon-1024.png",
+      rgbaAppIcon,
+    );
+    await writeRepoFile(
+      rootDir,
+      "store-listing/exports/final/app-store/icon/app-icon-1024.png",
+      rgbaAppIcon,
+    );
+    await assert.rejects(
+      () => collectPackageInputs({ rootDir, checkFreshness: false }),
+      /appStoreIcon source has PNG color type 6; expected color type 2 for alpha: false/,
     );
   });
 });

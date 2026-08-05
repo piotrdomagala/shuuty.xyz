@@ -7,11 +7,13 @@ import {
   assertAssetsReadyForMode,
   assetOutputForMode,
   copyApprovedIconsForRenderMode,
-  mergeLedgerEntries,
   parseRenderMode,
+  reconcileLedgerEntries,
+  resetFinalExportsForFullRender,
   validateCaptureRect,
   validateFeatureCopyContract,
   validateFeatureSourceContract,
+  validatePhoneDeviceSet,
   validatePhoneMatrix,
   validateOutputPath,
   windowsPowerShellPath,
@@ -151,6 +153,44 @@ test("only final rendering copies approved store icons byte-for-byte", async () 
       await readFile(path.join(rootDir, ...copied[1].output.split("/"))),
       googlePlayBytes,
     );
+  } finally {
+    await rm(rootDir, { recursive: true, force: true });
+  }
+});
+
+test("only a full final render clears the final export root", async () => {
+  const rootDir = await mkdtemp(path.join(tmpdir(), "shuuty-store-final-reset-"));
+  const finalAsset = path.join(rootDir, "store-listing", "exports", "final", "stale.png");
+  const draftAsset = path.join(rootDir, "store-listing", "exports", "drafts", "keep.png");
+  const siblingAsset = path.join(rootDir, "store-listing", "exports", "final-backup", "keep.png");
+
+  try {
+    for (const target of [finalAsset, draftAsset, siblingAsset]) {
+      await mkdir(path.dirname(target), { recursive: true });
+      await writeFile(target, "fixture");
+    }
+
+    assert.equal(
+      await resetFinalExportsForFullRender({ renderMode: "final", onlyId: "one", rootDir }),
+      false,
+    );
+    assert.equal(
+      await resetFinalExportsForFullRender({ renderMode: "final", onlyId: "", rootDir }),
+      false,
+    );
+    assert.equal(
+      await resetFinalExportsForFullRender({ renderMode: "draft", rootDir }),
+      false,
+    );
+    assert.equal(await readFile(finalAsset, "utf8"), "fixture");
+
+    assert.equal(
+      await resetFinalExportsForFullRender({ renderMode: "final", rootDir }),
+      true,
+    );
+    await assert.rejects(readFile(finalAsset), { code: "ENOENT" });
+    assert.equal(await readFile(draftAsset, "utf8"), "fixture");
+    assert.equal(await readFile(siblingAsset, "utf8"), "fixture");
   } finally {
     await rm(rootDir, { recursive: true, force: true });
   }
@@ -445,15 +485,17 @@ test("localized product-proof feature is final-ready and rejects unclassified pa
   );
 });
 
-test("partial render ledger merge preserves unrelated entries", () => {
+test("partial render ledger reconciliation preserves unrelated entries", () => {
   const existing = [
     { id: "first", renderMode: "draft", sha256: "old" },
     { id: "second", renderMode: "draft", sha256: "keep" },
     { id: "first", renderMode: "final", sha256: "final-keep" },
   ];
-  const merged = mergeLedgerEntries(existing, [
-    { id: "first", renderMode: "draft", sha256: "new" },
-  ]);
+  const merged = reconcileLedgerEntries(
+    existing,
+    [{ id: "first", renderMode: "draft", sha256: "new" }],
+    { isPartial: true },
+  );
   assert.equal(merged.length, 3);
   assert.equal(
     merged.find((entry) => entry.id === "first" && entry.renderMode === "draft").sha256,
@@ -466,6 +508,32 @@ test("partial render ledger merge preserves unrelated entries", () => {
   assert.equal(
     merged.find((entry) => entry.id === "first" && entry.renderMode === "final").sha256,
     "final-keep",
+  );
+});
+
+test("full render rebuilds the complete ledger while partial render remains additive", () => {
+  const existing = [
+    { id: "legacy-draft", sha256: "legacy" },
+    { id: "stale-draft", renderMode: "draft", sha256: "stale" },
+    { id: "stale-final", renderMode: "final", sha256: "final-stale" },
+  ];
+
+  assert.deepEqual(
+    reconcileLedgerEntries(
+      existing,
+      [{ id: "current-draft", renderMode: "draft", sha256: "current" }],
+      { isPartial: false },
+    ).map(({ id, renderMode }) => [id, renderMode ?? "draft"]),
+    [["current-draft", "draft"]],
+  );
+
+  assert.deepEqual(
+    reconcileLedgerEntries(
+      existing,
+      [{ id: "current-final", renderMode: "final", sha256: "current" }],
+      { isPartial: false },
+    ).map(({ id, renderMode }) => [id, renderMode ?? "draft"]),
+    [["current-final", "final"]],
   );
 });
 
@@ -482,6 +550,10 @@ test("phone matrix validates every platform independently with localized ordered
   ];
   const matrixCampaign = {
     locales: ["pl-PL", "en-US"],
+    deviceSets: {
+      appStoreIphone69: { width: 1320, height: 2868 },
+      googlePlayPhone: { width: 1080, height: 1920 },
+    },
     coveragePlan: {
       primaryPhoneNarrative: sequence,
       themeProof: {
@@ -490,13 +562,19 @@ test("phone matrix validates every platform independently with localized ordered
       },
     },
   };
-  const platforms = ["google-play", "app-store"];
-  const assets = platforms.flatMap((platform) =>
+  const platforms = [
+    { platform: "google-play", deviceSlot: "phone", width: 1080, height: 1920 },
+    { platform: "app-store", deviceSlot: "iphone-6.9", width: 1320, height: 2868 },
+  ];
+  const assets = platforms.flatMap(({ platform, deviceSlot, width, height }) =>
     matrixCampaign.locales.flatMap((locale) =>
       sequence.map((screenshotId, index) => ({
         id: `${platform}-${locale}-${index + 1}`,
         kind: "phone",
         platform,
+        deviceSlot,
+        width,
+        height,
         locale,
         screenshotId,
         theme: index < 5 ? "dark" : "light",
@@ -524,6 +602,17 @@ test("phone matrix validates every platform independently with localized ordered
       matrixCampaign,
     ),
     /must declare a platform/,
+  );
+  assert.throws(
+    () => validatePhoneMatrix(
+      assets.map((asset, index) => index === 0 ? { ...asset, width: 1079 } : asset),
+      matrixCampaign,
+    ),
+    /googlePlayPhone requires 1080×1920/,
+  );
+  assert.throws(
+    () => validatePhoneDeviceSet({ ...assets[0], deviceSlot: "tablet" }, matrixCampaign),
+    /no campaign device set for google-play\/tablet/,
   );
 });
 
