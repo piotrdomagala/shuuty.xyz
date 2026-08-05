@@ -1,8 +1,12 @@
 import assert from "node:assert/strict";
+import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import path from "node:path";
 import test from "node:test";
 import {
   assertAssetsReadyForMode,
   assetOutputForMode,
+  copyApprovedIconsForRenderMode,
   mergeLedgerEntries,
   parseRenderMode,
   validateCaptureRect,
@@ -75,6 +79,82 @@ const templateContext = {
   },
   studioCss: ".phone-capture{left:var(--capture-x)}",
 };
+
+test("only final rendering copies approved store icons byte-for-byte", async () => {
+  const rootDir = await mkdtemp(path.join(tmpdir(), "shuuty-store-icons-"));
+  const iconCampaign = {
+    storeAssets: {
+      appStoreIcon: {
+        source: "approved/app-icon-1024.png",
+        status: "final-ready",
+      },
+      googlePlayIcon: {
+        source: "approved/app-icon-512.png",
+        status: "final-ready",
+      },
+    },
+  };
+  const appStoreBytes = Buffer.from("approved-app-store-icon");
+  const googlePlayBytes = Buffer.from("approved-google-play-icon");
+
+  try {
+    await mkdir(path.join(rootDir, "approved"), { recursive: true });
+    await writeFile(path.join(rootDir, "approved", "app-icon-1024.png"), appStoreBytes);
+    await writeFile(path.join(rootDir, "approved", "app-icon-512.png"), googlePlayBytes);
+
+    assert.deepEqual(
+      await copyApprovedIconsForRenderMode({
+        campaign: iconCampaign,
+        renderMode: "draft",
+        rootDir,
+      }),
+      [],
+    );
+    await assert.rejects(
+      readFile(
+        path.join(
+          rootDir,
+          "store-listing",
+          "exports",
+          "final",
+          "app-store",
+          "icon",
+          "app-icon-1024.png",
+        ),
+      ),
+      { code: "ENOENT" },
+    );
+
+    const copied = await copyApprovedIconsForRenderMode({
+      campaign: iconCampaign,
+      renderMode: "final",
+      rootDir,
+    });
+    assert.deepEqual(
+      copied.map(({ key, output }) => ({ key, output })),
+      [
+        {
+          key: "appStoreIcon",
+          output: "store-listing/exports/final/app-store/icon/app-icon-1024.png",
+        },
+        {
+          key: "googlePlayIcon",
+          output: "store-listing/exports/final/google-play/icon/app-icon-512.png",
+        },
+      ],
+    );
+    assert.deepEqual(
+      await readFile(path.join(rootDir, ...copied[0].output.split("/"))),
+      appStoreBytes,
+    );
+    assert.deepEqual(
+      await readFile(path.join(rootDir, ...copied[1].output.split("/"))),
+      googlePlayBytes,
+    );
+  } finally {
+    await rm(rootDir, { recursive: true, force: true });
+  }
+});
 
 test("Windows PowerShell is resolved without searching PATH", () => {
   assert.equal(

@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 import { existsSync } from "node:fs";
 import {
+  copyFile,
   mkdir,
   mkdtemp,
   readFile,
@@ -27,6 +28,10 @@ const exportsRoot = path.join(storeRoot, "exports");
 const draftsRoot = path.join(exportsRoot, "drafts");
 const finalRoot = path.join(exportsRoot, "final");
 const RENDER_MODES = new Set(["draft", "final"]);
+const FINAL_ICON_DIRECTORIES = new Map([
+  ["appStoreIcon", "store-listing/exports/final/app-store/icon"],
+  ["googlePlayIcon", "store-listing/exports/final/google-play/icon"],
+]);
 
 const MIME_TYPES = new Map([
   [".css", "text/css; charset=utf-8"],
@@ -322,6 +327,39 @@ const assertInside = (parent, target) => {
   if (relative.startsWith("..") || path.isAbsolute(relative)) {
     throw new Error(`Refusing path outside ${parent}: ${target}`);
   }
+};
+
+export const copyApprovedIconsForRenderMode = async ({
+  campaign,
+  renderMode,
+  rootDir = repoRoot,
+}) => {
+  if (renderMode !== "final") {
+    return [];
+  }
+
+  const resolvedRoot = path.resolve(rootDir);
+  const copied = [];
+  for (const [key, relativeDirectory] of FINAL_ICON_DIRECTORIES) {
+    const icon = campaign.storeAssets?.[key];
+    if (icon?.status !== "final-ready" || typeof icon.source !== "string") {
+      throw new Error(`${key} must declare a final-ready approved source.`);
+    }
+
+    const source = path.resolve(resolvedRoot, icon.source);
+    assertInside(resolvedRoot, source);
+    const outputDirectory = path.resolve(resolvedRoot, relativeDirectory);
+    const output = path.join(outputDirectory, path.basename(icon.source));
+    assertInside(path.join(resolvedRoot, "store-listing", "exports", "final"), output);
+    await mkdir(outputDirectory, { recursive: true });
+    await copyFile(source, output);
+    copied.push({
+      key,
+      source: path.relative(resolvedRoot, source).replaceAll("\\", "/"),
+      output: path.relative(resolvedRoot, output).replaceAll("\\", "/"),
+    });
+  }
+  return copied;
 };
 
 export const validateOutputPath = (asset, renderMode) => {
@@ -906,6 +944,14 @@ const runRender = async ({ context, chrome, chromeVersion, onlyId, renderMode })
   } finally {
     await new Promise((resolve) => server.close(resolve));
     await rm(profileRoot, { recursive: true, force: true });
+  }
+
+  const copiedIcons = await copyApprovedIconsForRenderMode({
+    campaign: context.campaign,
+    renderMode,
+  });
+  for (const icon of copiedIcons) {
+    console.log(`copied ${icon.source} -> ${icon.output}`);
   }
 
   const existingLedger = await readExistingLedger(context.manifest.campaign);
