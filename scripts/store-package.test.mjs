@@ -446,6 +446,28 @@ test("store package is deterministic and verifies against the workspace", async 
   });
 });
 
+test("package rejects archive outputs inside the managed final export directory", async () => {
+  await withFixture(async ({ rootDir }) => {
+    const archivePath = path.join(
+      rootDir,
+      "store-listing",
+      "exports",
+      "final",
+      "nested",
+      "store.zip",
+    );
+
+    await assert.rejects(
+      () => writeStorePackage({ rootDir, archivePath }),
+      /must be written outside the managed final export directory/,
+    );
+    await assert.rejects(() => readFile(archivePath), /ENOENT/);
+
+    const inputs = await collectPackageInputs({ rootDir });
+    assert.equal(inputs.payloads.length, 46);
+  });
+});
+
 test("package and archive-only verification reject over-limit metadata", async () => {
   const expectedFailure = /en-US App Store subtitle is 31\/30 characters/;
 

@@ -133,6 +133,19 @@ function resolveRepoPath(rootDir, relativePath, label = "path") {
   return path.join(rootDir, ...safePath.split("/"));
 }
 
+function assertArchiveOutsideManagedFinalRoot(rootDir, archivePath) {
+  const finalRoot = resolveRepoPath(rootDir, WORKSPACE_PATHS.finalRoot, "final export root");
+  const relative = path.relative(finalRoot, path.resolve(archivePath));
+  const isInsideFinalRoot =
+    relative === "" ||
+    (!path.isAbsolute(relative) && relative !== ".." && !relative.startsWith(`..${path.sep}`));
+  if (isInsideFinalRoot) {
+    fail(
+      `Store package archive must be written outside the managed final export directory: ${archivePath}.`,
+    );
+  }
+}
+
 function sha256(data) {
   return createHash("sha256").update(data).digest("hex");
 }
@@ -1255,6 +1268,7 @@ export async function writeStorePackage({
   const absoluteArchive = path.isAbsolute(archivePath)
     ? archivePath
     : resolveRepoPath(inputs.rootDir, archivePath, "archive output");
+  assertArchiveOutsideManagedFinalRoot(inputs.rootDir, absoluteArchive);
   await mkdir(path.dirname(absoluteArchive), { recursive: true });
   const temporaryArchive = `${absoluteArchive}.${process.pid}.tmp`;
   try {
