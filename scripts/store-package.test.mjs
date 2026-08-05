@@ -26,22 +26,29 @@ const NARRATIVE = [
   "07-bookings",
   "08-discover",
 ];
+const SOURCE_GEOMETRY = { width: 108, height: 240 };
+const APP_STORE_GEOMETRY = { width: 132, height: 286 };
+const GOOGLE_PLAY_GEOMETRY = { width: 108, height: 192 };
+const FEATURE_GEOMETRY = { width: 102, height: 50 };
 
 function digest(data) {
   return createHash("sha256").update(data).digest("hex");
 }
 
 function png(width, height, marker, colorType = 2) {
-  const buffer = Buffer.alloc(40 + Buffer.byteLength(marker));
-  Buffer.from("89504e470d0a1a0a", "hex").copy(buffer, 0);
-  buffer.writeUInt32BE(13, 8);
-  buffer.write("IHDR", 12, "ascii");
-  buffer.writeUInt32BE(width, 16);
-  buffer.writeUInt32BE(height, 20);
-  buffer[24] = 8;
-  buffer[25] = colorType;
-  buffer.write(marker, 40, "utf8");
-  return buffer;
+  const image = new PNG({ width, height });
+  const markerBytes = createHash("sha256").update(marker).digest();
+  for (let offset = 0; offset < image.data.length; offset += 4) {
+    image.data[offset] = markerBytes[0];
+    image.data[offset + 1] = markerBytes[1];
+    image.data[offset + 2] = markerBytes[2];
+    image.data[offset + 3] = 255;
+  }
+  return PNG.sync.write(image, {
+    colorType,
+    inputColorType: 6,
+    inputHasAlpha: true,
+  });
 }
 
 function validIconPng(width, height, colorType, alpha = 255) {
@@ -103,7 +110,11 @@ async function createFixture() {
   for (const locale of LOCALES) {
     for (const screenshotId of NARRATIVE) {
       const sourcePath = `store-listing/assets/source/${locale}/${screenshotId}.png`;
-      const data = png(1080, 2400, `${locale}-${screenshotId}-source`);
+      const data = png(
+        SOURCE_GEOMETRY.width,
+        SOURCE_GEOMETRY.height,
+        `${locale}-${screenshotId}-source`,
+      );
       await writeRepoFile(rootDir, sourcePath, data);
       sourcePaths.set(`${locale}:${screenshotId}`, { path: sourcePath, data });
     }
@@ -158,8 +169,16 @@ async function createFixture() {
     campaign: "official-2026",
     locales: ["pl-PL", "en-US"],
     deviceSets: {
-      appStoreIphone69: { requiredCaptures: 8, locales: ["pl-PL", "en-US"] },
-      googlePlayPhone: { requiredCaptures: 8, locales: ["pl-PL", "en-US"] },
+      appStoreIphone69: {
+        ...APP_STORE_GEOMETRY,
+        requiredCaptures: 8,
+        locales: ["pl-PL", "en-US"],
+      },
+      googlePlayPhone: {
+        ...GOOGLE_PLAY_GEOMETRY,
+        requiredCaptures: 8,
+        locales: ["pl-PL", "en-US"],
+      },
     },
     storeAssets: {
       appStoreIcon: {
@@ -182,8 +201,8 @@ async function createFixture() {
       },
       googlePlayFeatureGraphic: {
         localization: "per-locale",
-        width: 1024,
-        height: 500,
+        width: FEATURE_GEOMETRY.width,
+        height: FEATURE_GEOMETRY.height,
         outputs: {
           "en-US": "store-listing/exports/final/google-play/en-US/feature/product-proof.png",
           "pl-PL": "store-listing/exports/final/google-play/pl-PL/feature/product-proof.png",
@@ -199,8 +218,9 @@ async function createFixture() {
       for (const [index, screenshotId] of NARRATIVE.entries()) {
         const source = sourcePaths.get(`${locale}:${screenshotId}`);
         const deviceSlot = platform === "app-store" ? "iphone-6.9" : "phone";
-        const width = platform === "app-store" ? 1320 : 1080;
-        const height = platform === "app-store" ? 2868 : 1920;
+        const geometry =
+          platform === "app-store" ? APP_STORE_GEOMETRY : GOOGLE_PLAY_GEOMETRY;
+        const { width, height } = geometry;
         const output = `store-listing/exports/final/${platform}/${locale}/${deviceSlot}/${String(index + 1).padStart(2, "0")}.png`;
         const outputData = png(width, height, `${platform}-${locale}-${screenshotId}-output`);
         await writeRepoFile(rootDir, output, outputData);
@@ -216,8 +236,8 @@ async function createFixture() {
           source: {
             path: source.path,
             locale,
-            expectedWidth: 1080,
-            expectedHeight: 2400,
+            expectedWidth: SOURCE_GEOMETRY.width,
+            expectedHeight: SOURCE_GEOMETRY.height,
           },
           width,
           height,
@@ -235,12 +255,16 @@ async function createFixture() {
         role: ["voice", "assignee", "task"][index],
         path: source.path,
         locale,
-        expectedWidth: 1080,
-        expectedHeight: 2400,
+        expectedWidth: SOURCE_GEOMETRY.width,
+        expectedHeight: SOURCE_GEOMETRY.height,
       };
     });
     const output = `store-listing/exports/final/google-play/${locale}/feature/product-proof.png`;
-    const outputData = png(1024, 500, `${locale}-feature-output`);
+    const outputData = png(
+      FEATURE_GEOMETRY.width,
+      FEATURE_GEOMETRY.height,
+      `${locale}-feature-output`,
+    );
     await writeRepoFile(rootDir, output, outputData);
     assets.push({
       id: `google-play-${locale}-feature`,
@@ -253,8 +277,8 @@ async function createFixture() {
       storeAssetId: "googlePlayFeatureGraphic",
       sources: featureSources,
       relayArtwork: { path: relayPath },
-      width: 1024,
-      height: 500,
+      width: FEATURE_GEOMETRY.width,
+      height: FEATURE_GEOMETRY.height,
       finalOutput: output,
       _outputData: outputData,
     });
@@ -264,6 +288,7 @@ async function createFixture() {
     schemaVersion: 3,
     campaign: "official-2026-golden-relay",
     status: "final-ready",
+    copySource: "store-listing/capture-manifest.json",
     brandMark: { path: brandPath },
     fonts: [],
     assets: assets.map(({ _outputData, ...asset }) => asset),
@@ -285,6 +310,7 @@ async function createFixture() {
       bytes: asset._outputData.length,
       width: asset.width,
       height: asset.height,
+      bitDepth: 8,
       pngColorType: 2,
       alpha: false,
       sources: (asset.source ? [asset.source] : asset.sources).map((source) => {
@@ -292,8 +318,8 @@ async function createFixture() {
         return {
           path: source.path,
           sha256: digest(sourceData),
-          width: 1080,
-          height: 2400,
+          width: SOURCE_GEOMETRY.width,
+          height: SOURCE_GEOMETRY.height,
         };
       }),
     })),
@@ -468,6 +494,22 @@ test("package rejects archive outputs inside the managed final export directory"
   });
 });
 
+test("package binds render copy to the embedded capture manifest", async () => {
+  await withFixture(async ({ rootDir }) => {
+    const renderPath = "store-listing/studio/render-manifest.json";
+    const renderManifest = JSON.parse(
+      await readFile(path.join(rootDir, ...renderPath.split("/")), "utf8"),
+    );
+    renderManifest.copySource = "store-listing/capture-manifest-alternate.json";
+    await writeJson(rootDir, renderPath, renderManifest);
+
+    await assert.rejects(
+      () => collectPackageInputs({ rootDir, checkFreshness: false }),
+      /Render manifest copySource must be store-listing\/capture-manifest\.json/,
+    );
+  });
+});
+
 test("package and archive-only verification reject over-limit metadata", async () => {
   const expectedFailure = /en-US App Store subtitle is 31\/30 characters/;
 
@@ -586,7 +628,7 @@ test("archive-only verification binds embedded provenance to render-input hashes
       "provenance/capture-manifest.json",
       (data) => {
         const captureManifest = JSON.parse(data.toString("utf8"));
-        captureManifest.campaign = "forged-campaign";
+        captureManifest.provenanceForgery = true;
         return Buffer.from(`${JSON.stringify(captureManifest, null, 2)}\n`, "utf8");
       },
     );
@@ -750,6 +792,47 @@ test("both localized Google Play feature graphics are mandatory", async () => {
     await assert.rejects(
       () => collectPackageInputs({ rootDir, checkFreshness: false }),
       /unsupported locale localization-independent/,
+    );
+  });
+});
+
+test("unsupported App Store feature assets are rejected", async () => {
+  await withFixture(async ({ rootDir }) => {
+    const renderPath = "store-listing/studio/render-manifest.json";
+    const renderManifest = JSON.parse(
+      await readFile(path.join(rootDir, ...renderPath.split("/")), "utf8"),
+    );
+    const feature = renderManifest.assets.find((asset) => asset.kind === "feature");
+    renderManifest.assets.push({
+      ...feature,
+      id: "unsupported-app-store-feature",
+      platform: "app-store",
+      finalOutput: "store-listing/exports/final/app-store/en-US/feature/unsupported.png",
+    });
+    await writeJson(rootDir, renderPath, renderManifest);
+
+    await assert.rejects(
+      () => collectPackageInputs({ rootDir, checkFreshness: false }),
+      /unsupported store surfaces: app-store\/unsupported-app-store-feature/,
+    );
+  });
+});
+
+test("phone assets must match their capture-manifest device geometry", async () => {
+  await withFixture(async ({ rootDir }) => {
+    const renderPath = "store-listing/studio/render-manifest.json";
+    const renderManifest = JSON.parse(
+      await readFile(path.join(rootDir, ...renderPath.split("/")), "utf8"),
+    );
+    const phone = renderManifest.assets.find(
+      (asset) => asset.kind === "phone" && asset.platform === "app-store",
+    );
+    phone.width += 1;
+    await writeJson(rootDir, renderPath, renderManifest);
+
+    await assert.rejects(
+      () => collectPackageInputs({ rootDir, checkFreshness: false }),
+      /canvas is 133x286; appStoreIphone69 requires 132x286/,
     );
   });
 });
@@ -920,4 +1003,74 @@ test("archive verification detects payload tampering", async () => {
       /CRC mismatch/,
     );
   });
+});
+
+test("archive-only verification validates forged assets against embedded manifests", async () => {
+  for (const scenario of [
+    { width: 1, height: 1, colorType: 2, expected: /has 1x1; expected 132x286/ },
+    {
+      width: APP_STORE_GEOMETRY.width,
+      height: APP_STORE_GEOMETRY.height,
+      colorType: 6,
+      expected: /expected RGB color type 2 with no alpha/,
+    },
+    {
+      width: APP_STORE_GEOMETRY.width,
+      height: APP_STORE_GEOMETRY.height,
+      colorType: 2,
+      corruptPayload: true,
+      expected: /could not be decoded as a complete PNG/,
+    },
+  ]) {
+    await withFixture(async ({ rootDir, assets }) => {
+      const archivePath = path.join(rootDir, "forged-asset.zip");
+      await writeStorePackage({ rootDir, archivePath });
+      const asset = assets.find(
+        (candidate) =>
+          candidate.platform === "app-store" &&
+          candidate.locale === "en-US" &&
+          candidate.stage.index === 1,
+      );
+      assert.ok(asset);
+      const assetArchivePath = `assets/${asset.finalOutput.replace(
+        "store-listing/exports/final/",
+        "",
+      )}`;
+      const forged = png(
+        scenario.width,
+        scenario.height,
+        "forged-archive-asset",
+        scenario.colorType,
+      );
+      if (scenario.corruptPayload) forged[45] ^= 0x01;
+      await rewriteArchivePayloadAndFileHash(archivePath, assetArchivePath, () => forged);
+      await rewriteArchivePayloadAndFileHash(
+        archivePath,
+        "provenance/delivery-ledger.json",
+        (ledgerData) => {
+          const ledger = JSON.parse(ledgerData.toString("utf8"));
+          const ledgerEntry = ledger.assets.find((entry) => entry.id === asset.id);
+          assert.ok(ledgerEntry);
+          ledgerEntry.sha256 = digest(forged);
+          ledgerEntry.bytes = forged.length;
+          ledgerEntry.width = scenario.width;
+          ledgerEntry.height = scenario.height;
+          ledgerEntry.pngColorType = scenario.colorType;
+          ledgerEntry.alpha = scenario.colorType === 6;
+          return Buffer.from(`${JSON.stringify(ledger, null, 2)}\n`, "utf8");
+        },
+      );
+
+      await assert.rejects(
+        () =>
+          verifyStorePackage({
+            rootDir,
+            archivePath,
+            againstWorkspace: false,
+            checkFreshness: false,
+          }),
+        scenario.expected,
+      );
+    });
+  }
 });

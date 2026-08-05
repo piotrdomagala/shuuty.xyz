@@ -30,6 +30,7 @@ const FIXED_DOS_DATE = 33; // 1980-01-01 - the earliest date supported by ZIP.
 const ZIP_UTF8_FLAG = 0x0800;
 const ZIP_STORE_METHOD = 0;
 const FRESHNESS_TOLERANCE_MS = 2_000;
+const MAX_STORE_PNG_PIXELS = 10_000_000;
 
 const WORKSPACE_PATHS = {
   captureManifest: "store-listing/capture-manifest.json",
@@ -223,6 +224,9 @@ function assertPngGeometry(data, expected, label) {
   if (
     !Number.isInteger(expectedWidth) ||
     !Number.isInteger(expectedHeight) ||
+    expectedWidth <= 0 ||
+    expectedHeight <= 0 ||
+    expectedWidth * expectedHeight > MAX_STORE_PNG_PIXELS ||
     png.width !== expectedWidth ||
     png.height !== expectedHeight
   ) {
@@ -276,12 +280,33 @@ function assertPngContract(data, expected, label) {
 
 function assertOpaqueRgbPng(data, expected, label) {
   const png = assertPngGeometry(data, expected, label);
+  if (png.bitDepth !== 8) {
+    fail(`${label} has PNG bit depth ${png.bitDepth}; expected 8.`);
+  }
   if (png.colorType !== 2) {
     fail(
       `${label} has PNG color type ${png.colorType}; expected RGB color type 2 with no alpha.`,
     );
   }
   return png;
+}
+
+function assertDecodedPng(data, png, label) {
+  let decoded;
+  try {
+    decoded = PNG.sync.read(data, { checkCRC: true });
+  } catch (error) {
+    fail(`${label} could not be decoded as a complete PNG: ${error.message}`);
+  }
+  if (decoded.width !== png.width || decoded.height !== png.height) {
+    fail(`${label} decoded geometry does not match its PNG header.`);
+  }
+  return png;
+}
+
+function assertDecodedOpaqueRgbPng(data, expected, label) {
+  const png = assertOpaqueRgbPng(data, expected, label);
+  return assertDecodedPng(data, png, label);
 }
 
 function expectedAssetSources(asset) {
@@ -369,6 +394,11 @@ function validateLocalizedPhoneSet(finalAssets, phoneSet, locale, device, narrat
     );
   }
   assets.forEach((asset, index) => {
+    if (asset.width !== device.width || asset.height !== device.height) {
+      fail(
+        `${asset.id} canvas is ${asset.width}x${asset.height}; ${phoneSet.captureKey} requires ${device.width}x${device.height}.`,
+      );
+    }
     validatePhoneNarrativeAsset(asset, index, narrative, device.requiredCaptures);
   });
 }
@@ -377,6 +407,15 @@ function validateRequiredPhoneSet(captureManifest, finalAssets, narrative, phone
   const device = captureManifest.deviceSets?.[phoneSet.captureKey];
   if (!device || !Number.isInteger(device.requiredCaptures)) {
     fail(`Capture manifest is missing device set ${phoneSet.captureKey}.`);
+  }
+  if (
+    !Number.isInteger(device.width) ||
+    !Number.isInteger(device.height) ||
+    device.width <= 0 ||
+    device.height <= 0 ||
+    device.width * device.height > MAX_STORE_PNG_PIXELS
+  ) {
+    fail(`Capture manifest device set ${phoneSet.captureKey} has unsafe dimensions.`);
   }
   if (device.requiredCaptures !== narrative.length) {
     fail(
@@ -408,6 +447,16 @@ function validateLocalizedFeature(features, locale, featureOutputs, featureContr
 }
 
 function validateFeatureAssets(captureManifest, finalAssets) {
+  const unsupportedFeatures = finalAssets.filter(
+    (asset) => asset.kind === "feature" && asset.platform !== "google-play",
+  );
+  if (unsupportedFeatures.length > 0) {
+    fail(
+      `Final feature assets contain unsupported store surfaces: ${unsupportedFeatures
+        .map((asset) => `${asset.platform}/${asset.id}`)
+        .join(", ")}.`,
+    );
+  }
   const features = finalAssets.filter(
     (asset) => asset.kind === "feature" && asset.platform === "google-play",
   );
@@ -430,6 +479,11 @@ function validateRenderAssets(captureManifest, renderManifest) {
   }
   if (renderManifest.status !== "final-ready") {
     fail(`Render manifest status must be final-ready, found ${renderManifest.status ?? "missing"}.`);
+  }
+  if (renderManifest.copySource !== WORKSPACE_PATHS.captureManifest) {
+    fail(
+      `Render manifest copySource must be ${WORKSPACE_PATHS.captureManifest}; found ${renderManifest.copySource ?? "missing"}.`,
+    );
   }
 
   const finalAssets = renderManifest.assets.filter((asset) => asset.status === "final-ready");
@@ -704,19 +758,24 @@ async function payloadFromRepoFile(rootDir, repoPath, archivePath, role) {
   };
 }
 
-async function collectRenderInputHashes(rootDir, renderManifest, finalAssets) {
-  const paths = [
+function collectRenderInputPaths(captureManifest, renderManifest, finalAssets) {
+  return [
     WORKSPACE_PATHS.captureManifest,
     WORKSPACE_PATHS.renderManifest,
     WORKSPACE_PATHS.template,
     WORKSPACE_PATHS.stylesheet,
     renderManifest.brandMark?.path,
     ...(renderManifest.fonts ?? []).map((font) => font.path),
+    ...Object.keys(ICON_TARGETS).map((key) => captureManifest.storeAssets?.[key]?.source),
     ...finalAssets.flatMap((asset) => [
       ...expectedAssetSources(asset).map((source) => source.path),
       asset.relayArtwork?.path,
     ]),
   ].filter(Boolean);
+}
+
+async function collectRenderInputHashes(rootDir, captureManifest, renderManifest, finalAssets) {
+  const paths = collectRenderInputPaths(captureManifest, renderManifest, finalAssets);
   const hashes = [];
   for (const repoPath of [...new Set(paths)].sort(compareText)) {
     const file = await readRequiredFile(rootDir, repoPath, "render input");
@@ -891,7 +950,12 @@ export async function collectPackageInputs({
       sha256: digest,
       bytes,
     })),
-    renderInputs: await collectRenderInputHashes(absoluteRoot, renderManifest, finalAssets),
+    renderInputs: await collectRenderInputHashes(
+      absoluteRoot,
+      captureManifest,
+      renderManifest,
+      finalAssets,
+    ),
   };
   const packageManifestData = Buffer.from(`${JSON.stringify(packageManifest, null, 2)}\n`, "utf8");
 
@@ -1174,7 +1238,23 @@ function validateEmbeddedStoreMetadata(byPath) {
   assertValidStoreMetadata(metadataEntries);
 }
 
-function validateEmbeddedRenderInputs(manifest, byPath) {
+function readEmbeddedJson(byPath, entryPath, label) {
+  const entry = byPath.get(entryPath);
+  if (!entry) fail(`ZIP archive is missing ${entryPath}.`);
+  try {
+    return JSON.parse(entry.data.toString("utf8"));
+  } catch (error) {
+    fail(`Invalid embedded ${label}: ${error.message}`);
+  }
+}
+
+function validateEmbeddedRenderInputs(
+  manifest,
+  byPath,
+  captureManifest,
+  renderManifest,
+  finalAssets,
+) {
   if (!Array.isArray(manifest.renderInputs)) {
     fail("Embedded package manifest must contain a renderInputs array.");
   }
@@ -1193,6 +1273,12 @@ function validateEmbeddedRenderInputs(manifest, byPath) {
     renderInputsByPath.set(inputPath, input);
   }
 
+  compareSets(
+    [...renderInputsByPath.keys()],
+    collectRenderInputPaths(captureManifest, renderManifest, finalAssets),
+    "Embedded render inputs",
+  );
+
   for (const [repoPath, archivePath] of EMBEDDED_RENDER_INPUTS) {
     const input = renderInputsByPath.get(repoPath);
     const entry = byPath.get(archivePath);
@@ -1205,6 +1291,186 @@ function validateEmbeddedRenderInputs(manifest, byPath) {
       fail(`Embedded render input hash or metadata mismatch for ${repoPath}.`);
     }
   }
+  return renderInputsByPath;
+}
+
+function validateEmbeddedLedgerAsset(asset, outputEntry, ledgerEntry, renderInputsByPath) {
+  assertDecodedOpaqueRgbPng(outputEntry.data, asset, `Embedded asset ${asset.id}`);
+  if (
+    !ledgerEntry ||
+    ledgerEntry.status !== "final-candidate" ||
+    ledgerEntry.renderMode !== "final" ||
+    ledgerEntry.sourceGap ||
+    ledgerEntry.output !== asset.finalOutput ||
+    ledgerEntry.sha256 !== sha256(outputEntry.data) ||
+    ledgerEntry.bytes !== outputEntry.data.length ||
+    ledgerEntry.width !== asset.width ||
+    ledgerEntry.height !== asset.height ||
+    ledgerEntry.bitDepth !== 8 ||
+    ledgerEntry.pngColorType !== 2 ||
+    ledgerEntry.alpha !== false
+  ) {
+    fail(`Embedded delivery ledger hash or metadata mismatch for ${asset.id}.`);
+  }
+
+  const expectedSources = expectedAssetSources(asset);
+  const ledgerSources = Array.isArray(ledgerEntry.sources) ? ledgerEntry.sources : [];
+  compareSets(
+    ledgerSources.map((source) => source.path),
+    expectedSources.map((source) => source.path),
+    `${asset.id} embedded ledger sources`,
+  );
+  if (new Set(ledgerSources.map((source) => source.path)).size !== ledgerSources.length) {
+    fail(`Embedded delivery ledger contains duplicate sources for ${asset.id}.`);
+  }
+  for (const source of expectedSources) {
+    const ledgerSource = ledgerSources.find((candidate) => candidate.path === source.path);
+    const renderInput = renderInputsByPath.get(source.path);
+    const expectedWidth = source.expectedWidth ?? source.width;
+    const expectedHeight = source.expectedHeight ?? source.height;
+    if (
+      !ledgerSource ||
+      !renderInput ||
+      ledgerSource.sha256 !== renderInput.sha256 ||
+      ledgerSource.width !== expectedWidth ||
+      ledgerSource.height !== expectedHeight
+    ) {
+      fail(`Embedded delivery ledger source metadata mismatch for ${asset.id}: ${source.path}.`);
+    }
+  }
+}
+
+function validateEmbeddedLedger(renderManifest, ledger, finalAssets) {
+  validateLedgerHeader(ledger, renderManifest);
+  const manifestIds = new Set(renderManifest.assets.map((asset) => asset.id));
+  const unknownLedgerIds = [...new Set(ledger.assets.map((entry) => entry.id))].filter(
+    (id) => !manifestIds.has(id),
+  );
+  if (unknownLedgerIds.length > 0) {
+    fail(`Embedded delivery ledger contains unexpected asset ids: ${unknownLedgerIds.join(", ")}.`);
+  }
+  const finalEntries = ledger.assets.filter((entry) => entry.renderMode === "final");
+  compareSets(
+    finalEntries.map((entry) => entry.id),
+    finalAssets.map((asset) => asset.id),
+    "Embedded final delivery ledger entries",
+  );
+  if (new Set(finalEntries.map((entry) => entry.id)).size !== finalEntries.length) {
+    fail("Embedded delivery ledger contains duplicate final asset entries.");
+  }
+  return finalEntries;
+}
+
+function validateEmbeddedFinalAssets(
+  manifest,
+  byPath,
+  finalAssets,
+  finalEntries,
+  renderInputsByPath,
+) {
+  const filesByPath = new Map(manifest.files.map((file) => [file.path, file]));
+  const archivePaths = [];
+  for (const asset of finalAssets) {
+    const archivePath = archiveAssetPath(asset.finalOutput);
+    const outputEntry = byPath.get(archivePath);
+    const file = filesByPath.get(archivePath);
+    if (!outputEntry || file?.role !== assetRole(asset)) {
+      fail(`Embedded package is missing the declared ${assetRole(asset)} ${asset.id}.`);
+    }
+    archivePaths.push(archivePath);
+    validateEmbeddedLedgerAsset(
+      asset,
+      outputEntry,
+      finalEntries.find((entry) => entry.id === asset.id),
+      renderInputsByPath,
+    );
+  }
+  return archivePaths;
+}
+
+function validateEmbeddedIcons(manifest, byPath, captureManifest, renderInputsByPath) {
+  const filesByPath = new Map(manifest.files.map((file) => [file.path, file]));
+  const archivePaths = [];
+  for (const key of Object.keys(ICON_TARGETS)) {
+    const icon = captureManifest.storeAssets?.[key];
+    if (!icon?.source || icon.status !== "final-ready") {
+      fail(`Embedded ${key} must declare a final-ready source.`);
+    }
+    const archivePath = archiveAssetPath(iconOutputPath(key, icon));
+    const outputEntry = byPath.get(archivePath);
+    const file = filesByPath.get(archivePath);
+    if (!outputEntry || file?.role !== "icon") {
+      fail(`Embedded package is missing the declared ${key}.`);
+    }
+    const png = assertPngContract(outputEntry.data, icon, `Embedded ${key}`);
+    assertDecodedPng(outputEntry.data, png, `Embedded ${key}`);
+    if (icon.maxBytes && outputEntry.data.length > icon.maxBytes) {
+      fail(`Embedded ${key} exceeds its ${icon.maxBytes}-byte limit.`);
+    }
+    const sourceInput = renderInputsByPath.get(icon.source);
+    if (!sourceInput || sourceInput.sha256 !== sha256(outputEntry.data)) {
+      fail(`Embedded ${key} does not match its approved render input.`);
+    }
+    archivePaths.push(archivePath);
+  }
+  return archivePaths;
+}
+
+function validateEmbeddedAssetFileSet(manifest, expectedAssetPaths) {
+  const actualAssetPaths = manifest.files
+    .filter(
+      (file) =>
+        file.path.startsWith("assets/") ||
+        ["screenshot", "feature-graphic", "icon", "store-asset"].includes(file.role),
+    )
+    .map((file) => file.path);
+  compareSets(actualAssetPaths, expectedAssetPaths, "Embedded store assets");
+}
+
+function validateEmbeddedAssetPayloads(manifest, byPath) {
+  const captureManifest = readEmbeddedJson(
+    byPath,
+    EMBEDDED_RENDER_INPUTS.get(WORKSPACE_PATHS.captureManifest),
+    "capture manifest",
+  );
+  const renderManifest = readEmbeddedJson(
+    byPath,
+    EMBEDDED_RENDER_INPUTS.get(WORKSPACE_PATHS.renderManifest),
+    "render manifest",
+  );
+  const ledger = readEmbeddedJson(
+    byPath,
+    "provenance/delivery-ledger.json",
+    "delivery ledger",
+  );
+  assertExactLocales(captureManifest.locales, "Embedded capture manifest locales");
+  if (
+    manifest.campaign !== captureManifest.campaign ||
+    manifest.renderCampaign !== renderManifest.campaign
+  ) {
+    fail("Embedded campaign metadata does not match the capture and render manifests.");
+  }
+
+  const finalAssets = validateRenderAssets(captureManifest, renderManifest);
+  const renderInputsByPath = validateEmbeddedRenderInputs(
+    manifest,
+    byPath,
+    captureManifest,
+    renderManifest,
+    finalAssets,
+  );
+  const finalEntries = validateEmbeddedLedger(renderManifest, ledger, finalAssets);
+  const expectedAssetPaths = [
+    ...validateEmbeddedFinalAssets(
+      manifest,
+      byPath,
+      finalAssets,
+      finalEntries,
+      renderInputsByPath,
+    ),
+    ...validateEmbeddedIcons(manifest, byPath, captureManifest, renderInputsByPath),
+  ];
+  validateEmbeddedAssetFileSet(manifest, expectedAssetPaths);
 }
 
 function validateEmbeddedPackage(entries) {
@@ -1244,7 +1510,7 @@ function validateEmbeddedPackage(entries) {
       fail(`Embedded package hash or metadata mismatch for ${file.path}.`);
     }
   }
-  validateEmbeddedRenderInputs(manifest, byPath);
+  validateEmbeddedAssetPayloads(manifest, byPath);
   validateEmbeddedStoreMetadata(byPath);
   return manifest;
 }
