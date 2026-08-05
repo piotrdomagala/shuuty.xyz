@@ -239,6 +239,7 @@ async function createFixture() {
             expectedWidth: SOURCE_GEOMETRY.width,
             expectedHeight: SOURCE_GEOMETRY.height,
           },
+          objectPosition: "50% 50%",
           width,
           height,
           finalOutput: output,
@@ -444,6 +445,29 @@ async function rewriteArchivePayloadAndFileHash(archivePath, entryPath, mutate) 
   );
 
   await writeFile(archivePath, createDeterministicZip(entries));
+}
+
+async function removeArchivePayloadAndFileDeclaration(archivePath, entryPath) {
+  const entries = readDeterministicZip(await readFile(archivePath));
+  const packageManifestEntry = entries.find(
+    (entry) => entry.path === "PACKAGE-MANIFEST.json",
+  );
+  assert.ok(entries.some((entry) => entry.path === entryPath));
+  assert.ok(packageManifestEntry);
+
+  const packageManifest = JSON.parse(packageManifestEntry.data.toString("utf8"));
+  packageManifest.files = packageManifest.files.filter(
+    (file) => file.path !== entryPath,
+  );
+  packageManifestEntry.data = Buffer.from(
+    `${JSON.stringify(packageManifest, null, 2)}\n`,
+    "utf8",
+  );
+
+  await writeFile(
+    archivePath,
+    createDeterministicZip(entries.filter((entry) => entry.path !== entryPath)),
+  );
 }
 
 test("store package is deterministic and verifies against the workspace", async () => {
@@ -837,6 +861,26 @@ test("phone assets must match their capture-manifest device geometry", async () 
   });
 });
 
+test("packaging rejects invalid phone crop positions", async () => {
+  await withFixture(async ({ rootDir }) => {
+    const renderPath = "store-listing/studio/render-manifest.json";
+    const renderManifest = JSON.parse(
+      await readFile(path.join(rootDir, ...renderPath.split("/")), "utf8"),
+    );
+    const phoneAsset = renderManifest.assets.find(
+      (asset) => asset.kind === "phone",
+    );
+    assert.ok(phoneAsset);
+    phoneAsset.objectPosition = "center";
+    await writeJson(rootDir, renderPath, renderManifest);
+
+    await assert.rejects(
+      () => collectPackageInputs({ rootDir, checkFreshness: false }),
+      /objectPosition must be two percentages between 0% and 100%/,
+    );
+  });
+});
+
 test("unsupported phone device slots are rejected even with complete output and ledger data", async () => {
   await withFixture(async ({ rootDir, assets }) => {
     const sourceAsset = assets.find(
@@ -1002,6 +1046,40 @@ test("archive verification detects payload tampering", async () => {
         }),
       /CRC mismatch/,
     );
+  });
+});
+
+test("archive-only verification requires every release support file", async () => {
+  const requiredSupportPaths = [
+    "release/console-change-set-template.md",
+    "release/upload-checklist.md",
+    "provenance/capture-manifest.json",
+    "provenance/render-manifest.json",
+    "provenance/delivery-ledger.json",
+    "provenance/google-play-artifact-evidence.md",
+    "provenance/media-assets.json",
+    "provenance/owner-attestation.md",
+  ];
+
+  await withFixture(async ({ rootDir }) => {
+    for (const supportPath of requiredSupportPaths) {
+      const archivePath = path.join(
+        rootDir,
+        `missing-${path.basename(supportPath)}.zip`,
+      );
+      await writeStorePackage({ rootDir, archivePath });
+      await removeArchivePayloadAndFileDeclaration(archivePath, supportPath);
+      await assert.rejects(
+        () =>
+          verifyStorePackage({
+            rootDir,
+            archivePath,
+            againstWorkspace: false,
+            checkFreshness: false,
+          }),
+        new RegExp(`Embedded support files.*missing: ${supportPath}`),
+      );
+    }
   });
 });
 

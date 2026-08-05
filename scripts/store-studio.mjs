@@ -102,6 +102,25 @@ export const validateCaptureRect = (asset) => {
   return (rect.width * rect.height) / (asset.width * asset.height);
 };
 
+export const validatePhoneObjectPosition = (asset) => {
+  const value = asset.objectPosition;
+  const match =
+    typeof value === "string"
+      ? /^(\d+(?:\.\d+)?)% (\d+(?:\.\d+)?)%$/u.exec(value)
+      : null;
+  const coordinates = match ? [Number(match[1]), Number(match[2])] : [];
+  if (
+    coordinates.length !== 2 ||
+    coordinates.some(
+      (coordinate) => !Number.isFinite(coordinate) || coordinate < 0 || coordinate > 100,
+    )
+  ) {
+    throw new Error(
+      `Phone asset ${asset.id} objectPosition must be two percentages between 0% and 100%.`,
+    );
+  }
+};
+
 export const validateFeatureCopyContract = (asset, campaign) => {
   const supportedLocales = new Set(campaign.locales ?? []);
   if (asset.locale !== "localization-independent" && !supportedLocales.has(asset.locale)) {
@@ -286,6 +305,7 @@ export const validatePhoneMatrix = (assets, campaign) => {
       throw new Error(`Phone asset ${asset.id} must declare a platform.`);
     }
     validatePhoneDeviceSet(asset, campaign);
+    validatePhoneObjectPosition(asset);
     platforms.add(asset.platform);
   }
 

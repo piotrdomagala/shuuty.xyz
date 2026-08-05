@@ -57,6 +57,49 @@ const EMBEDDED_RENDER_INPUTS = new Map([
   [WORKSPACE_PATHS.renderManifest, "provenance/render-manifest.json"],
 ]);
 
+const REQUIRED_SUPPORT_PAYLOADS = [
+  {
+    repoPath: WORKSPACE_PATHS.consoleChangeSetTemplate,
+    archivePath: "release/console-change-set-template.md",
+    role: "console-change-set-template",
+  },
+  {
+    repoPath: WORKSPACE_PATHS.uploadChecklist,
+    archivePath: "release/upload-checklist.md",
+    role: "upload-checklist",
+  },
+  {
+    repoPath: WORKSPACE_PATHS.captureManifest,
+    archivePath: "provenance/capture-manifest.json",
+    role: "capture-manifest",
+  },
+  {
+    repoPath: WORKSPACE_PATHS.renderManifest,
+    archivePath: "provenance/render-manifest.json",
+    role: "render-manifest",
+  },
+  {
+    repoPath: WORKSPACE_PATHS.deliveryLedger,
+    archivePath: "provenance/delivery-ledger.json",
+    role: "delivery-ledger",
+  },
+  {
+    repoPath: WORKSPACE_PATHS.googlePlayArtifactEvidence,
+    archivePath: "provenance/google-play-artifact-evidence.md",
+    role: "google-play-artifact-evidence",
+  },
+  {
+    repoPath: WORKSPACE_PATHS.mediaProvenance,
+    archivePath: "provenance/media-assets.json",
+    role: "media-provenance",
+  },
+  {
+    repoPath: WORKSPACE_PATHS.ownerAttestation,
+    archivePath: "provenance/owner-attestation.md",
+    role: "owner-attestation",
+  },
+];
+
 const REQUIRED_PHONE_SETS = [
   {
     captureKey: "appStoreIphone69",
@@ -319,6 +362,25 @@ function expectedAssetSources(asset) {
   fail(`Final asset ${asset.id} has no declared source.`);
 }
 
+function assertPhoneObjectPosition(asset) {
+  const value = asset.objectPosition;
+  const match =
+    typeof value === "string"
+      ? /^(\d+(?:\.\d+)?)% (\d+(?:\.\d+)?)%$/u.exec(value)
+      : null;
+  const coordinates = match ? [Number(match[1]), Number(match[2])] : [];
+  if (
+    coordinates.length !== 2 ||
+    coordinates.some(
+      (coordinate) => !Number.isFinite(coordinate) || coordinate < 0 || coordinate > 100,
+    )
+  ) {
+    fail(
+      `Final phone asset ${asset.id} objectPosition must be two percentages between 0% and 100%.`,
+    );
+  }
+}
+
 function validateFinalAsset(asset, ids, outputs) {
   if (!asset.id || ids.has(asset.id)) {
     fail(`Final render asset id is missing or duplicated: ${asset.id ?? "missing"}.`);
@@ -340,6 +402,9 @@ function validateFinalAsset(asset, ids, outputs) {
     fail(
       `Final phone asset ${asset.id} has unsupported platform/device slot ${asset.platform}/${asset.deviceSlot ?? "missing"}.`,
     );
+  }
+  if (asset.kind === "phone") {
+    assertPhoneObjectPosition(asset);
   }
   if (!REQUIRED_LOCALES.includes(asset.locale)) {
     fail(`Final asset ${asset.id} has unsupported locale ${asset.locale ?? "missing"}.`);
@@ -872,56 +937,16 @@ export async function collectPackageInputs({
     });
   }
   assertValidStoreMetadata(metadataEntries);
-  payloads.push(
-    await payloadFromRepoFile(
-      absoluteRoot,
-      WORKSPACE_PATHS.consoleChangeSetTemplate,
-      "release/console-change-set-template.md",
-      "console-change-set-template",
-    ),
-    await payloadFromRepoFile(
-      absoluteRoot,
-      WORKSPACE_PATHS.uploadChecklist,
-      "release/upload-checklist.md",
-      "upload-checklist",
-    ),
-    await payloadFromRepoFile(
-      absoluteRoot,
-      WORKSPACE_PATHS.captureManifest,
-      "provenance/capture-manifest.json",
-      "capture-manifest",
-    ),
-    await payloadFromRepoFile(
-      absoluteRoot,
-      WORKSPACE_PATHS.renderManifest,
-      "provenance/render-manifest.json",
-      "render-manifest",
-    ),
-    await payloadFromRepoFile(
-      absoluteRoot,
-      WORKSPACE_PATHS.deliveryLedger,
-      "provenance/delivery-ledger.json",
-      "delivery-ledger",
-    ),
-    await payloadFromRepoFile(
-      absoluteRoot,
-      WORKSPACE_PATHS.googlePlayArtifactEvidence,
-      "provenance/google-play-artifact-evidence.md",
-      "google-play-artifact-evidence",
-    ),
-    await payloadFromRepoFile(
-      absoluteRoot,
-      WORKSPACE_PATHS.mediaProvenance,
-      "provenance/media-assets.json",
-      "media-provenance",
-    ),
-    await payloadFromRepoFile(
-      absoluteRoot,
-      WORKSPACE_PATHS.ownerAttestation,
-      "provenance/owner-attestation.md",
-      "owner-attestation",
-    ),
-  );
+  for (const supportPayload of REQUIRED_SUPPORT_PAYLOADS) {
+    payloads.push(
+      await payloadFromRepoFile(
+        absoluteRoot,
+        supportPayload.repoPath,
+        supportPayload.archivePath,
+        supportPayload.role,
+      ),
+    );
+  }
 
   payloads.sort((left, right) => compareText(left.archivePath, right.archivePath));
   compareSets(
@@ -1218,14 +1243,18 @@ export function readDeterministicZip(archive) {
   return entries;
 }
 
-function validateEmbeddedStoreMetadata(byPath) {
+function validateEmbeddedStoreMetadata(manifest, byPath) {
   const expectedPaths = REQUIRED_LOCALES.map((locale) => `metadata/${locale}.json`);
   const actualPaths = [...byPath.keys()].filter((entryPath) => entryPath.startsWith("metadata/"));
   compareSets(actualPaths, expectedPaths, "Embedded store metadata");
 
+  const filesByPath = new Map(manifest.files.map((file) => [file.path, file]));
   const metadataEntries = [];
   for (const locale of REQUIRED_LOCALES) {
     const entryPath = `metadata/${locale}.json`;
+    if (filesByPath.get(entryPath)?.role !== "metadata") {
+      fail(`Embedded package is missing declared ${locale} metadata.`);
+    }
     let metadata;
     try {
       metadata = JSON.parse(byPath.get(entryPath).data.toString("utf8"));
@@ -1426,6 +1455,31 @@ function validateEmbeddedAssetFileSet(manifest, expectedAssetPaths) {
   compareSets(actualAssetPaths, expectedAssetPaths, "Embedded store assets");
 }
 
+function validateEmbeddedSupportFiles(manifest, byPath) {
+  const expectedPaths = REQUIRED_SUPPORT_PAYLOADS.map(
+    (payload) => payload.archivePath,
+  );
+  const actualPaths = manifest.files
+    .filter(
+      (file) =>
+        file.path.startsWith("release/") ||
+        file.path.startsWith("provenance/"),
+    )
+    .map((file) => file.path);
+  compareSets(actualPaths, expectedPaths, "Embedded support files");
+
+  const filesByPath = new Map(manifest.files.map((file) => [file.path, file]));
+  for (const supportPayload of REQUIRED_SUPPORT_PAYLOADS) {
+    const entry = byPath.get(supportPayload.archivePath);
+    const file = filesByPath.get(supportPayload.archivePath);
+    if (!entry || file?.role !== supportPayload.role) {
+      fail(
+        `Embedded package is missing required ${supportPayload.role} support file.`,
+      );
+    }
+  }
+}
+
 function validateEmbeddedAssetPayloads(manifest, byPath) {
   const captureManifest = readEmbeddedJson(
     byPath,
@@ -1470,6 +1524,7 @@ function validateEmbeddedAssetPayloads(manifest, byPath) {
     ...validateEmbeddedIcons(manifest, byPath, captureManifest, renderInputsByPath),
   ];
   validateEmbeddedAssetFileSet(manifest, expectedAssetPaths);
+  return expectedAssetPaths;
 }
 
 function validateEmbeddedPackage(entries) {
@@ -1509,8 +1564,18 @@ function validateEmbeddedPackage(entries) {
       fail(`Embedded package hash or metadata mismatch for ${file.path}.`);
     }
   }
-  validateEmbeddedAssetPayloads(manifest, byPath);
-  validateEmbeddedStoreMetadata(byPath);
+  validateEmbeddedSupportFiles(manifest, byPath);
+  const expectedAssetPaths = validateEmbeddedAssetPayloads(manifest, byPath);
+  validateEmbeddedStoreMetadata(manifest, byPath);
+  compareSets(
+    manifest.files.map((file) => file.path),
+    [
+      ...expectedAssetPaths,
+      ...REQUIRED_LOCALES.map((locale) => `metadata/${locale}.json`),
+      ...REQUIRED_SUPPORT_PAYLOADS.map((payload) => payload.archivePath),
+    ],
+    "Embedded package file set",
+  );
   return manifest;
 }
 

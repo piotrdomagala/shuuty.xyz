@@ -17,6 +17,7 @@ import {
   validateFeatureSourceContract,
   validatePhoneDeviceSet,
   validatePhoneMatrix,
+  validatePhoneObjectPosition,
   validateOutputPath,
   windowsPowerShellPath,
 } from "./store-studio.mjs";
@@ -361,6 +362,16 @@ test("captureRect controls bounded output geometry", () => {
   assert.match(appStoreHtml, /class="canvas phone-canvas"[^>]+--headline-size: 96px/);
 });
 
+test("phone crop positions require two bounded percentages", () => {
+  assert.doesNotThrow(() => validatePhoneObjectPosition(phoneAsset));
+  for (const objectPosition of [undefined, "", "center", "50%", "50% auto", "-1% 50%", "50% 101%"]) {
+    assert.throws(
+      () => validatePhoneObjectPosition({ ...phoneAsset, objectPosition }),
+      /objectPosition must be two percentages between 0% and 100%/,
+    );
+  }
+});
+
 test("final document contains no technical-draft burn-in", () => {
   const draftHtml = renderAssetDocument({ ...templateContext, renderMode: "draft" });
   const finalHtml = renderAssetDocument({ ...templateContext, renderMode: "final" });
@@ -647,6 +658,7 @@ const createPhoneMatrixFixture = () => {
         height,
         locale,
         screenshotId,
+        objectPosition: "50% 50%",
         theme: index < 5 ? "dark" : "light",
         stage: { index: index + 1, total: 8 },
       })),
