@@ -287,6 +287,17 @@ function validateFinalAsset(asset, ids, outputs) {
   if (!["app-store", "google-play"].includes(asset.platform)) {
     fail(`Final asset ${asset.id} has unsupported platform ${asset.platform ?? "missing"}.`);
   }
+  if (
+    asset.kind === "phone" &&
+    !REQUIRED_PHONE_SETS.some(
+      (phoneSet) =>
+        phoneSet.platform === asset.platform && phoneSet.deviceSlot === asset.deviceSlot,
+    )
+  ) {
+    fail(
+      `Final phone asset ${asset.id} has unsupported platform/device slot ${asset.platform}/${asset.deviceSlot ?? "missing"}.`,
+    );
+  }
   if (!REQUIRED_LOCALES.includes(asset.locale)) {
     fail(`Final asset ${asset.id} has unsupported locale ${asset.locale ?? "missing"}.`);
   }

@@ -682,6 +682,50 @@ test("both localized Google Play feature graphics are mandatory", async () => {
   });
 });
 
+test("unsupported phone device slots are rejected even with complete output and ledger data", async () => {
+  await withFixture(async ({ rootDir, assets }) => {
+    const sourceAsset = assets.find(
+      asset => asset.kind === "phone" && asset.platform === "app-store",
+    );
+    assert.ok(sourceAsset);
+    const unsupportedOutput =
+      "store-listing/exports/final/app-store/en-US/ipad/unsupported.png";
+    const unsupportedAsset = {
+      ...sourceAsset,
+      id: "app-store-en-US-ipad-unsupported",
+      deviceSlot: "ipad",
+      finalOutput: unsupportedOutput,
+    };
+    delete unsupportedAsset._outputData;
+
+    const renderManifestPath = "store-listing/studio/render-manifest.json";
+    const renderManifest = JSON.parse(
+      await readFile(path.join(rootDir, ...renderManifestPath.split("/")), "utf8"),
+    );
+    renderManifest.assets.push(unsupportedAsset);
+    await writeJson(rootDir, renderManifestPath, renderManifest);
+    await writeRepoFile(rootDir, unsupportedOutput, sourceAsset._outputData);
+
+    const ledgerPath = "store-listing/delivery-ledger.json";
+    const ledger = JSON.parse(
+      await readFile(path.join(rootDir, ...ledgerPath.split("/")), "utf8"),
+    );
+    const sourceEntry = ledger.assets.find(entry => entry.id === sourceAsset.id);
+    assert.ok(sourceEntry);
+    ledger.assets.push({
+      ...sourceEntry,
+      id: unsupportedAsset.id,
+      output: unsupportedOutput,
+    });
+    await writeJson(rootDir, ledgerPath, ledger);
+
+    await assert.rejects(
+      () => collectPackageInputs({ rootDir, checkFreshness: false }),
+      /unsupported platform\/device slot app-store\/ipad/,
+    );
+  });
+});
+
 test("icon alpha contracts reject mismatched PNG color types", async () => {
   await withFixture(async ({ rootDir }) => {
     const rgbPlayIcon = png(512, 512, "rgb-play-icon");
