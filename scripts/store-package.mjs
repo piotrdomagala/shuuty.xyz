@@ -14,10 +14,14 @@ import path from "node:path";
 import process from "node:process";
 import { pathToFileURL } from "node:url";
 import pngjs from "pngjs";
+import {
+  STORE_METADATA_LOCALES,
+  validateStoreMetadataSet,
+} from "./store-metadata-validation.mjs";
 
 const { PNG } = pngjs;
 
-const REQUIRED_LOCALES = ["en-US", "pl-PL"];
+const REQUIRED_LOCALES = [...STORE_METADATA_LOCALES].sort(compareText);
 const PACKAGE_MANIFEST_ENTRY = "PACKAGE-MANIFEST.json";
 const DEFAULT_ARCHIVE =
   "store-listing/exports/Shuuty-Store-Listing-2026-final-candidates.zip";
@@ -74,6 +78,13 @@ const CRC32_TABLE = (() => {
 
 function fail(message) {
   throw new Error(message);
+}
+
+function assertValidStoreMetadata(entries) {
+  const failures = validateStoreMetadataSet(entries);
+  if (failures.length > 0) {
+    fail(`Store metadata validation failed:\n- ${failures.join("\n- ")}`);
+  }
 }
 
 function slash(value) {
@@ -705,12 +716,11 @@ export async function collectPackageInputs({
       bytes: icon.data.length,
     });
   }
+  const metadataEntries = [];
   for (const locale of REQUIRED_LOCALES) {
     const repoPath = `${WORKSPACE_PATHS.metadataRoot}/${locale}.json`;
     const metadata = await readRequiredJson(absoluteRoot, repoPath, `${locale} metadata`);
-    if (metadata.value.locale !== locale) {
-      fail(`${locale} metadata declares locale ${metadata.value.locale ?? "missing"}.`);
-    }
+    metadataEntries.push(metadata.value);
     payloads.push({
       archivePath: `metadata/${locale}.json`,
       repoPath,
@@ -720,6 +730,7 @@ export async function collectPackageInputs({
       bytes: metadata.data.length,
     });
   }
+  assertValidStoreMetadata(metadataEntries);
   payloads.push(
     await payloadFromRepoFile(
       absoluteRoot,
@@ -1013,6 +1024,23 @@ export function readDeterministicZip(archive) {
   return entries;
 }
 
+function validateEmbeddedStoreMetadata(byPath) {
+  const expectedPaths = REQUIRED_LOCALES.map((locale) => `metadata/${locale}.json`);
+  const actualPaths = [...byPath.keys()].filter((entryPath) => entryPath.startsWith("metadata/"));
+  compareSets(actualPaths, expectedPaths, "Embedded store metadata");
+
+  const metadataEntries = [];
+  for (const locale of REQUIRED_LOCALES) {
+    const entryPath = `metadata/${locale}.json`;
+    try {
+      metadataEntries.push(JSON.parse(byPath.get(entryPath).data.toString("utf8")));
+    } catch (error) {
+      fail(`Invalid embedded ${locale} metadata: ${error.message}`);
+    }
+  }
+  assertValidStoreMetadata(metadataEntries);
+}
+
 function validateEmbeddedPackage(entries) {
   const byPath = new Map(entries.map((entry) => [entry.path, entry]));
   const manifestEntry = byPath.get(PACKAGE_MANIFEST_ENTRY);
@@ -1050,6 +1078,7 @@ function validateEmbeddedPackage(entries) {
       fail(`Embedded package hash or metadata mismatch for ${file.path}.`);
     }
   }
+  validateEmbeddedStoreMetadata(byPath);
   return manifest;
 }
 

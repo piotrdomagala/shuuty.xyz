@@ -7,6 +7,7 @@ import test from "node:test";
 import pngjs from "pngjs";
 import {
   collectPackageInputs,
+  createDeterministicZip,
   readDeterministicZip,
   verifyStorePackage,
   writeStorePackage,
@@ -60,6 +61,30 @@ function validIconPng(width, height, colorType, alpha = 255) {
 
 const APP_ICON_PNG = validIconPng(1024, 1024, 2);
 const PLAY_ICON_PNG = validIconPng(512, 512, 6);
+
+function validMetadata(locale) {
+  return {
+    locale,
+    appStore: {
+      name: "Shuuty",
+      subtitle: "Voice tasks",
+      promotionalText: "Say it. Delegate it. Get it done.",
+      keywords: "voice,tasks,groups",
+      description: "Create and delegate tasks with full context.",
+      whatsNew: "Improved voice tasks and group workflows.",
+      marketingUrl: "https://shuuty.com/",
+      supportUrl: "https://shuuty.com/support/",
+      privacyPolicyUrl: "https://shuuty.com/privacy/",
+      termsOfUseUrl: "https://shuuty.com/terms/",
+    },
+    googlePlay: {
+      appName: "Shuuty",
+      shortDescription: "Create and delegate voice tasks.",
+      fullDescription: "Create and delegate tasks with full context.",
+      releaseNotes: "Improved voice tasks and group workflows.",
+    },
+  };
+}
 
 async function writeRepoFile(rootDir, relativePath, data) {
   const absolutePath = path.join(rootDir, ...relativePath.split("/"));
@@ -277,11 +302,7 @@ async function createFixture() {
   await writeJson(rootDir, "store-listing/studio/render-manifest.json", renderManifest);
   await writeJson(rootDir, "store-listing/delivery-ledger.json", ledger);
   for (const locale of LOCALES) {
-    await writeJson(rootDir, `store-listing/metadata/${locale}.json`, {
-      locale,
-      appStore: { name: "Shuuty" },
-      googlePlay: { appName: "Shuuty" },
-    });
+    await writeJson(rootDir, `store-listing/metadata/${locale}.json`, validMetadata(locale));
   }
 
   const oldTime = new Date("2020-01-01T00:00:00.000Z");
@@ -316,6 +337,33 @@ async function withFixture(run) {
   }
 }
 
+async function rewriteArchiveMetadata(archivePath, locale, mutate) {
+  const entries = readDeterministicZip(await readFile(archivePath));
+  const metadataPath = `metadata/${locale}.json`;
+  const metadataEntry = entries.find((entry) => entry.path === metadataPath);
+  const packageManifestEntry = entries.find(
+    (entry) => entry.path === "PACKAGE-MANIFEST.json",
+  );
+  assert.ok(metadataEntry);
+  assert.ok(packageManifestEntry);
+
+  const metadata = JSON.parse(metadataEntry.data.toString("utf8"));
+  mutate(metadata);
+  metadataEntry.data = Buffer.from(`${JSON.stringify(metadata, null, 2)}\n`, "utf8");
+
+  const packageManifest = JSON.parse(packageManifestEntry.data.toString("utf8"));
+  const metadataFile = packageManifest.files.find((file) => file.path === metadataPath);
+  assert.ok(metadataFile);
+  metadataFile.bytes = metadataEntry.data.length;
+  metadataFile.sha256 = digest(metadataEntry.data);
+  packageManifestEntry.data = Buffer.from(
+    `${JSON.stringify(packageManifest, null, 2)}\n`,
+    "utf8",
+  );
+
+  await writeFile(archivePath, createDeterministicZip(entries));
+}
+
 test("store package is deterministic and verifies against the workspace", async () => {
   await withFixture(async ({ rootDir }) => {
     const firstPath = path.join(rootDir, "first.zip");
@@ -339,6 +387,76 @@ test("store package is deterministic and verifies against the workspace", async 
     const verified = await verifyStorePackage({ rootDir, archivePath: firstPath });
     assert.equal(verified.sha256, first.sha256);
     assert.equal(verified.fileCount, 46);
+  });
+});
+
+test("package and archive-only verification reject over-limit metadata", async () => {
+  const expectedFailure = /en-US App Store subtitle is 31\/30 characters/;
+
+  await withFixture(async ({ rootDir }) => {
+    const metadataPath = "store-listing/metadata/en-US.json";
+    const metadata = validMetadata("en-US");
+    metadata.appStore.subtitle = "x".repeat(31);
+    await writeJson(rootDir, metadataPath, metadata);
+
+    await assert.rejects(
+      () => writeStorePackage({ rootDir, archivePath: path.join(rootDir, "invalid.zip") }),
+      expectedFailure,
+    );
+  });
+
+  await withFixture(async ({ rootDir }) => {
+    const archivePath = path.join(rootDir, "forged-over-limit.zip");
+    await writeStorePackage({ rootDir, archivePath });
+    await rewriteArchiveMetadata(archivePath, "en-US", (metadata) => {
+      metadata.appStore.subtitle = "x".repeat(31);
+    });
+
+    await assert.rejects(
+      () =>
+        verifyStorePackage({
+          rootDir,
+          archivePath,
+          againstWorkspace: false,
+          checkFreshness: false,
+        }),
+      expectedFailure,
+    );
+  });
+});
+
+test("package and archive-only verification reject a missing required URL", async () => {
+  const expectedFailure = /en-US App Store supportUrl is required/;
+
+  await withFixture(async ({ rootDir }) => {
+    const metadataPath = "store-listing/metadata/en-US.json";
+    const metadata = validMetadata("en-US");
+    metadata.appStore.supportUrl = null;
+    await writeJson(rootDir, metadataPath, metadata);
+
+    await assert.rejects(
+      () => writeStorePackage({ rootDir, archivePath: path.join(rootDir, "invalid.zip") }),
+      expectedFailure,
+    );
+  });
+
+  await withFixture(async ({ rootDir }) => {
+    const archivePath = path.join(rootDir, "forged-missing-url.zip");
+    await writeStorePackage({ rootDir, archivePath });
+    await rewriteArchiveMetadata(archivePath, "en-US", (metadata) => {
+      metadata.appStore.supportUrl = null;
+    });
+
+    await assert.rejects(
+      () =>
+        verifyStorePackage({
+          rootDir,
+          archivePath,
+          againstWorkspace: false,
+          checkFreshness: false,
+        }),
+      expectedFailure,
+    );
   });
 });
 
