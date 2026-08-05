@@ -1297,8 +1297,7 @@ function validateEmbeddedRenderInputs(
 function validateEmbeddedLedgerAsset(asset, outputEntry, ledgerEntry, renderInputsByPath) {
   assertDecodedOpaqueRgbPng(outputEntry.data, asset, `Embedded asset ${asset.id}`);
   if (
-    !ledgerEntry ||
-    ledgerEntry.status !== "final-candidate" ||
+    ledgerEntry?.status !== "final-candidate" ||
     ledgerEntry.renderMode !== "final" ||
     ledgerEntry.sourceGap ||
     ledgerEntry.output !== asset.finalOutput ||
