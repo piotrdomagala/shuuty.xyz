@@ -101,6 +101,15 @@ function validateLikeness(likeness, assetId, requireValue, failures) {
   failures.push(`${assetId} has an unsupported person-presence status`);
 }
 
+function recordLikenessStatus(likeness, state) {
+  if (likeness.releaseStatus === "owner-authorized") {
+    state.ownerAuthorizedLikenessCount += 1;
+  }
+  if (likeness.releaseStatus === "not-applicable") {
+    state.notApplicableLikenessCount += 1;
+  }
+}
+
 function validateMediaAsset(asset, index, state, requireValue, failures) {
   if (!isRecord(asset)) {
     failures.push(`Media asset ${index + 1} must be an object`);
@@ -160,12 +169,7 @@ function validateMediaAsset(asset, index, state, requireValue, failures) {
 
   const likeness = isRecord(asset.likeness) ? asset.likeness : {};
   validateLikeness(likeness, assetId, requireValue, failures);
-  if (likeness.releaseStatus === "owner-authorized") {
-    state.ownerAuthorizedLikenessCount += 1;
-  }
-  if (likeness.releaseStatus === "not-applicable") {
-    state.notApplicableLikenessCount += 1;
-  }
+  recordLikenessStatus(likeness, state);
 }
 
 function validateMediaAssetSet(mediaAssets, state, requireValue, failures) {
