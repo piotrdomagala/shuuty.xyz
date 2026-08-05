@@ -437,6 +437,14 @@ function validatePhoneNarrativeAsset(asset, index, narrative, requiredCaptures) 
       `${asset.id} does not match narrative slot ${expectedIndex} (${narrative[index]}).`,
     );
   }
+  const expectedPrefix = String(expectedIndex).padStart(2, "0");
+  const outputBasename = path.posix.basename(asset.finalOutput);
+  const stagePrefix = new RegExp(`^${expectedPrefix}(?:[-_.]|$)`, "u");
+  if (!stagePrefix.test(outputBasename)) {
+    fail(
+      `${asset.id} final output basename must use numeric prefix ${expectedPrefix} for narrative slot ${expectedIndex}.`,
+    );
+  }
 }
 
 function validateLocalizedPhoneSet(finalAssets, phoneSet, locale, device, narrative) {

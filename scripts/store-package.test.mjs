@@ -878,6 +878,25 @@ test("phone assets must match their capture-manifest device geometry", async () 
   });
 });
 
+test("phone output filenames must preserve the narrative stage order", async () => {
+  await withFixture(async ({ rootDir }) => {
+    const renderPath = "store-listing/studio/render-manifest.json";
+    const renderManifest = JSON.parse(
+      await readFile(path.join(rootDir, ...renderPath.split("/")), "utf8"),
+    );
+    const phone = renderManifest.assets.find(
+      (asset) => asset.kind === "phone" && asset.stage.index === 1,
+    );
+    phone.finalOutput = phone.finalOutput.replace("/01.png", "/08-swapped.png");
+    await writeJson(rootDir, renderPath, renderManifest);
+
+    await assert.rejects(
+      () => collectPackageInputs({ rootDir, checkFreshness: false }),
+      /final output basename must use numeric prefix 01/,
+    );
+  });
+});
+
 test("packaging rejects invalid phone crop contracts", async () => {
   const scenarios = [
     {
