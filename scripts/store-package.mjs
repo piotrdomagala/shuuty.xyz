@@ -204,6 +204,16 @@ function assertPngContract(data, expected, label) {
   return png;
 }
 
+function assertOpaqueRgbPng(data, expected, label) {
+  const png = assertPngGeometry(data, expected, label);
+  if (png.colorType !== 2) {
+    fail(
+      `${label} has PNG color type ${png.colorType}; expected RGB color type 2 with no alpha.`,
+    );
+  }
+  return png;
+}
+
 function expectedAssetSources(asset) {
   if (asset.source?.path) {
     return [asset.source];
@@ -462,6 +472,11 @@ async function validateLedger(rootDir, renderManifest, finalAssets, outputFiles)
     if (!entry || !output) {
       fail(`Delivery ledger is incomplete for ${asset.id}.`);
     }
+    if (entry.pngColorType !== 2 || entry.alpha !== false) {
+      fail(
+        `Delivery ledger PNG contract mismatch for ${asset.id}; expected pngColorType 2 and alpha false.`,
+      );
+    }
     if (
       entry.status !== "final-candidate" ||
       entry.sourceGap ||
@@ -611,7 +626,7 @@ export async function collectPackageInputs({
   const outputFiles = [];
   for (const asset of finalAssets) {
     const output = await readRequiredFile(absoluteRoot, asset.finalOutput, `${asset.id} final output`);
-    assertPngGeometry(output.data, asset, `${asset.id} final output`);
+    assertOpaqueRgbPng(output.data, asset, `${asset.id} final output`);
     outputFiles.push({ path: asset.finalOutput, data: output.data, asset });
   }
 

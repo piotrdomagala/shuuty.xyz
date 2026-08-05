@@ -235,6 +235,8 @@ async function createFixture() {
       bytes: asset._outputData.length,
       width: asset.width,
       height: asset.height,
+      pngColorType: 2,
+      alpha: false,
       sources: (asset.source ? [asset.source] : asset.sources).map((source) => {
         const sourceData = sourcePaths.get(`${asset.locale}:${NARRATIVE.find((id) => source.path.endsWith(`${id}.png`))}`)?.data;
         return {
@@ -373,6 +375,46 @@ test("ledger hash mismatches and stale render inputs are rejected", async () => 
     const future = new Date("2040-01-01T00:00:00.000Z");
     await utimes(path.join(rootDir, ...source.path.split("/")), future, future);
     await assert.rejects(() => collectPackageInputs({ rootDir }), /Stale final asset/);
+  });
+});
+
+test("final screenshots and ledger entries enforce RGB without alpha", async () => {
+  await withFixture(async ({ rootDir, assets }) => {
+    const asset = assets[0];
+    const rgbaOutput = png(asset.width, asset.height, "rgba-final-output", 6);
+    await writeRepoFile(rootDir, asset.finalOutput, rgbaOutput);
+
+    const ledgerPath = "store-listing/delivery-ledger.json";
+    const ledger = JSON.parse(
+      await readFile(path.join(rootDir, ...ledgerPath.split("/")), "utf8"),
+    );
+    const entry = ledger.assets.find((candidate) => candidate.id === asset.id);
+    entry.sha256 = digest(rgbaOutput);
+    entry.bytes = rgbaOutput.length;
+    entry.pngColorType = 6;
+    entry.alpha = true;
+    await writeJson(rootDir, ledgerPath, ledger);
+
+    await assert.rejects(
+      () => collectPackageInputs({ rootDir, checkFreshness: false }),
+      /final output has PNG color type 6; expected RGB color type 2 with no alpha/,
+    );
+  });
+
+  await withFixture(async ({ rootDir, assets }) => {
+    const ledgerPath = "store-listing/delivery-ledger.json";
+    const ledger = JSON.parse(
+      await readFile(path.join(rootDir, ...ledgerPath.split("/")), "utf8"),
+    );
+    const entry = ledger.assets.find((candidate) => candidate.id === assets[0].id);
+    entry.pngColorType = 6;
+    entry.alpha = true;
+    await writeJson(rootDir, ledgerPath, ledger);
+
+    await assert.rejects(
+      () => collectPackageInputs({ rootDir, checkFreshness: false }),
+      /Delivery ledger PNG contract mismatch.*expected pngColorType 2 and alpha false/,
+    );
   });
 });
 
