@@ -174,6 +174,22 @@ requireValue(
   'Media provenance must keep underlying acquisition documentation neutral',
 );
 requireValue(
+  mediaProvenance.attestation?.likenessAuthorizationStatus ===
+    'owner-authorized' &&
+    mediaProvenance.attestation?.likenessAuthorizationDate === '2026-08-05' &&
+    mediaProvenance.attestation?.likenessAuthorizationSource ===
+      'Direct product-owner statement in the project conversation',
+  'Media provenance must record the dated direct owner likeness authorization',
+);
+requireValue(
+  mediaProvenance.attestation?.modelReleaseDocumentation === 'not-recorded' &&
+    mediaProvenance.attestation?.generationOrigin ===
+      'owner-reported-generated-for-shuuty' &&
+    mediaProvenance.attestation?.generationMethodDocumentation ===
+      'not-independently-verified',
+  'Media provenance must preserve the model-release and generation-method evidence limits',
+);
+requireValue(
   JSON.stringify(mediaProvenance.attestation?.authorizedScopes) ===
     JSON.stringify(expectedScopes),
   'Media provenance must include the approved store, website, and promotional scopes',
@@ -236,8 +252,8 @@ for (const asset of mediaAssets) {
   } else if (likeness.personPresence === 'visible') {
     requireValue(
       typeof likeness.recognizableFace === 'boolean' &&
-        likeness.releaseStatus === 'to-be-confirmed',
-      `${asset.id} must keep likeness status to-be-confirmed until documented otherwise`,
+        likeness.releaseStatus === 'owner-authorized',
+      `${asset.id} must reference the recorded owner likeness authorization`,
     );
   } else {
     requireValue(false, `${asset.id} has an unsupported person-presence status`);
@@ -251,9 +267,9 @@ requireValue(
 );
 requireValue(
   mediaAssets.filter(
-    asset => asset.likeness.releaseStatus === 'to-be-confirmed',
+    asset => asset.likeness.releaseStatus === 'owner-authorized',
   ).length === 13,
-  'Exactly 13 media assets must retain to-be-confirmed likeness status',
+  'Exactly 13 media assets must use owner-authorized likeness status',
 );
 requireValue(
   mediaAssets.filter(
@@ -268,7 +284,8 @@ for (const requiredText of [
   'Google Play',
   'shuuty.xyz',
   'shuuty.com',
-  'to-be-confirmed',
+  'owner-authorized',
+  'does not claim that a real-person model release exists',
 ]) {
   requireValue(
     ownerAttestation.includes(requiredText),
@@ -294,5 +311,5 @@ for (const entry of metadata) {
 
 console.log('✓ Store listing metadata and capture manifest are structurally ready.');
 console.log(
-  '✓ Media provenance: 15/15 owner-attested; likeness 13 pending, 2 not applicable.',
+  '✓ Media provenance: 15/15 owner-attested; likeness 13 owner-authorized, 2 not applicable.',
 );

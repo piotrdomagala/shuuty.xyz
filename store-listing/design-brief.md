@@ -100,7 +100,7 @@ The same source captures, Golden Relay, feature motif, metadata hierarchy, and l
 
 - Every claim must exist in the submitted build.
 - Use only fictional demo data and approved images.
-- Keep every visible avatar, cover, and gallery image bound to `provenance/media-assets.json`; copyright is owner-attested, while likeness remains `to-be-confirmed` wherever a person is visible.
+- Keep every visible avatar, cover, and gallery image bound to `provenance/media-assets.json`; copyright is owner-attested and Shuuty use of every visible likeness is owner-authorized. This status does not claim a real-person model release or independently verify the reported generation method.
 - Do not expose emails, passwords, home addresses, private live locations, production notifications, or real private messages.
 - Do not use `best`, `#1`, awards, prices, unsupported AI claims, or install prompts inside artwork.
 - Screenshots, descriptions, privacy declarations, age rating, pricing, and the binary must describe the same release.

@@ -20,7 +20,7 @@
 - App Store device scope: resolve `supportsTablet: true` and `TARGETED_DEVICE_FAMILY = 1,2` by either supplying 13-inch iPad screenshots or returning the release to iPhone-only.
 - App Store privacy URL currently saved in the live listing, `https://shuuty.com/documents/privacy`, returns `404`; replace it with `https://shuuty.com/privacy/` in the new listing.
 - Media copyright: owner-attested for all 15 avatars, covers, and gallery images in `provenance/media-assets.json`.
-- People and likeness: confirm the applicable basis for the 13 images marked `to-be-confirmed`; the 2 person-free images are `not-applicable`.
+- People and likeness: the product owner authorized Shuuty use of every likeness visible in 13 registered images on 2026-08-05; the 2 person-free images are `not-applicable`. This records permission, not a real-person model release or independently verified generation method.
 - Native icon parity: verify the iOS AppIcon and Android adaptive launcher icon against the approved gold `S` master.
 - Store publication, release binaries, pricing, privacy declarations, and legal approval: manual owner actions.
 
@@ -120,5 +120,5 @@ Google references:
 - The calendar and booking screens appear later in the story.
 - Icon, screenshots, feature graphic, metadata, privacy declarations, and release binary describe the same version.
 - Every visible avatar, cover, and gallery image matches the hash-bound provenance register.
-- Every asset containing a person has a confirmed likeness basis before public upload.
+- Every asset containing a person retains the recorded owner-authorized likeness basis before public upload.
 - No upload or submission happens before explicit product-owner approval.

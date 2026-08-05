@@ -14,7 +14,7 @@ It is kept separate from the mobile product logic in `S-`.
 - The final renderer produces 16 Google Play phone images, 16 App Store iPhone 6.9-inch images, and localized PL and EN Google Play feature graphics.
 - The current gold `S` is exported for both stores.
 
-The phone and feature sets are complete visual candidates. Copyright provenance is owner-attested for all 15 store-demo photographs. Upload remains blocked until the likeness basis for the 13 images containing people, native icon parity, and the final policy declarations are confirmed. App Store also needs a native iOS parity check and an explicit decision about the currently declared iPad support because this Windows environment cannot run `xcrun` or an iOS Simulator.
+The phone and feature sets are complete visual candidates. Copyright provenance is owner-attested for all 15 store-demo images, and the product owner has authorized Shuuty use of the likenesses visible in 13 of them. This authorization does not claim a real-person model release or independently verify the reported generation method. Upload remains blocked until native icon parity and the final policy declarations are confirmed. App Store also needs a native iOS parity check and an explicit decision about the currently declared iPad support because this Windows environment cannot run `xcrun` or an iOS Simulator.
 
 ## Campaign story
 

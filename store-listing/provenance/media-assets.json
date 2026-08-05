@@ -11,6 +11,12 @@
     "source": "Direct product-owner statement in the project conversation",
     "copyrightStatus": "owner-attested",
     "underlyingAcquisitionDocumentation": "not-recorded",
+    "likenessAuthorizationStatus": "owner-authorized",
+    "likenessAuthorizationDate": "2026-08-05",
+    "likenessAuthorizationSource": "Direct product-owner statement in the project conversation",
+    "modelReleaseDocumentation": "not-recorded",
+    "generationOrigin": "owner-reported-generated-for-shuuty",
+    "generationMethodDocumentation": "not-independently-verified",
     "authorizedScopes": [
       "apple-app-store",
       "google-play",
@@ -39,7 +45,7 @@
     "derivation": "Original media is loaded by the isolated store-demo fixture, displayed in localized Shuuty UI, and embedded in captured store-listing screenshots."
   },
   "likenessStatusDefinitions": {
-    "to-be-confirmed": "A person is visible and the applicable likeness or model-release basis has not been recorded in this register.",
+    "owner-authorized": "A person is visible and the Shuuty product owner directly authorized use of the depicted likeness in the recorded project scopes. This status does not assert that a real-person model release exists.",
     "not-applicable": "No person is visible in the asset."
   },
   "assets": [
@@ -62,7 +68,7 @@
       "likeness": {
         "personPresence": "visible",
         "recognizableFace": true,
-        "releaseStatus": "to-be-confirmed"
+        "releaseStatus": "owner-authorized"
       }
     },
     {
@@ -84,7 +90,7 @@
       "likeness": {
         "personPresence": "visible",
         "recognizableFace": true,
-        "releaseStatus": "to-be-confirmed"
+        "releaseStatus": "owner-authorized"
       }
     },
     {
@@ -106,7 +112,7 @@
       "likeness": {
         "personPresence": "visible",
         "recognizableFace": true,
-        "releaseStatus": "to-be-confirmed"
+        "releaseStatus": "owner-authorized"
       }
     },
     {
@@ -128,7 +134,7 @@
       "likeness": {
         "personPresence": "visible",
         "recognizableFace": true,
-        "releaseStatus": "to-be-confirmed"
+        "releaseStatus": "owner-authorized"
       }
     },
     {
@@ -150,7 +156,7 @@
       "likeness": {
         "personPresence": "visible",
         "recognizableFace": true,
-        "releaseStatus": "to-be-confirmed"
+        "releaseStatus": "owner-authorized"
       }
     },
     {
@@ -172,7 +178,7 @@
       "likeness": {
         "personPresence": "visible",
         "recognizableFace": true,
-        "releaseStatus": "to-be-confirmed"
+        "releaseStatus": "owner-authorized"
       }
     },
     {
@@ -195,7 +201,7 @@
       "likeness": {
         "personPresence": "visible",
         "recognizableFace": true,
-        "releaseStatus": "to-be-confirmed"
+        "releaseStatus": "owner-authorized"
       }
     },
     {
@@ -218,7 +224,7 @@
       "likeness": {
         "personPresence": "visible",
         "recognizableFace": true,
-        "releaseStatus": "to-be-confirmed"
+        "releaseStatus": "owner-authorized"
       }
     },
     {
@@ -263,7 +269,7 @@
       "likeness": {
         "personPresence": "visible",
         "recognizableFace": false,
-        "releaseStatus": "to-be-confirmed"
+        "releaseStatus": "owner-authorized"
       }
     },
     {
@@ -285,7 +291,7 @@
       "likeness": {
         "personPresence": "visible",
         "recognizableFace": false,
-        "releaseStatus": "to-be-confirmed"
+        "releaseStatus": "owner-authorized"
       }
     },
     {
@@ -308,7 +314,7 @@
       "likeness": {
         "personPresence": "visible",
         "recognizableFace": true,
-        "releaseStatus": "to-be-confirmed"
+        "releaseStatus": "owner-authorized"
       }
     },
     {
@@ -331,7 +337,7 @@
       "likeness": {
         "personPresence": "visible",
         "recognizableFace": true,
-        "releaseStatus": "to-be-confirmed"
+        "releaseStatus": "owner-authorized"
       }
     },
     {
@@ -377,7 +383,7 @@
       "likeness": {
         "personPresence": "visible",
         "recognizableFace": false,
-        "releaseStatus": "to-be-confirmed"
+        "releaseStatus": "owner-authorized"
       }
     }
   ]
