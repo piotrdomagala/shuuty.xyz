@@ -397,6 +397,29 @@ async function swapArchiveMetadataPayloads(archivePath) {
   await writeFile(archivePath, createDeterministicZip(entries));
 }
 
+async function rewriteArchivePayloadAndFileHash(archivePath, entryPath, mutate) {
+  const entries = readDeterministicZip(await readFile(archivePath));
+  const payloadEntry = entries.find((entry) => entry.path === entryPath);
+  const packageManifestEntry = entries.find(
+    (entry) => entry.path === "PACKAGE-MANIFEST.json",
+  );
+  assert.ok(payloadEntry);
+  assert.ok(packageManifestEntry);
+
+  payloadEntry.data = mutate(Buffer.from(payloadEntry.data));
+  const packageManifest = JSON.parse(packageManifestEntry.data.toString("utf8"));
+  const declaredFile = packageManifest.files.find((file) => file.path === entryPath);
+  assert.ok(declaredFile);
+  declaredFile.bytes = payloadEntry.data.length;
+  declaredFile.sha256 = digest(payloadEntry.data);
+  packageManifestEntry.data = Buffer.from(
+    `${JSON.stringify(packageManifest, null, 2)}\n`,
+    "utf8",
+  );
+
+  await writeFile(archivePath, createDeterministicZip(entries));
+}
+
 test("store package is deterministic and verifies against the workspace", async () => {
   await withFixture(async ({ rootDir }) => {
     const firstPath = path.join(rootDir, "first.zip");
@@ -528,6 +551,33 @@ test("archive-only verification rejects swapped metadata with forged manifest ha
           checkFreshness: false,
         }),
       /Embedded metadata\/en-US\.json declares locale pl-PL; expected en-US/,
+    );
+  });
+});
+
+test("archive-only verification binds embedded provenance to render-input hashes", async () => {
+  await withFixture(async ({ rootDir }) => {
+    const archivePath = path.join(rootDir, "forged-capture-provenance.zip");
+    await writeStorePackage({ rootDir, archivePath });
+    await rewriteArchivePayloadAndFileHash(
+      archivePath,
+      "provenance/capture-manifest.json",
+      (data) => {
+        const captureManifest = JSON.parse(data.toString("utf8"));
+        captureManifest.campaign = "forged-campaign";
+        return Buffer.from(`${JSON.stringify(captureManifest, null, 2)}\n`, "utf8");
+      },
+    );
+
+    await assert.rejects(
+      () =>
+        verifyStorePackage({
+          rootDir,
+          archivePath,
+          againstWorkspace: false,
+          checkFreshness: false,
+        }),
+      /Embedded render input hash or metadata mismatch for store-listing\/capture-manifest\.json/,
     );
   });
 });

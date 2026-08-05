@@ -51,6 +51,11 @@ const ICON_TARGETS = {
   googlePlayIcon: "store-listing/exports/final/google-play/icon",
 };
 
+const EMBEDDED_RENDER_INPUTS = new Map([
+  [WORKSPACE_PATHS.captureManifest, "provenance/capture-manifest.json"],
+  [WORKSPACE_PATHS.renderManifest, "provenance/render-manifest.json"],
+]);
+
 const REQUIRED_PHONE_SETS = [
   {
     captureKey: "appStoreIphone69",
@@ -1156,6 +1161,39 @@ function validateEmbeddedStoreMetadata(byPath) {
   assertValidStoreMetadata(metadataEntries);
 }
 
+function validateEmbeddedRenderInputs(manifest, byPath) {
+  if (!Array.isArray(manifest.renderInputs)) {
+    fail("Embedded package manifest must contain a renderInputs array.");
+  }
+
+  const renderInputsByPath = new Map();
+  for (const input of manifest.renderInputs) {
+    const inputPath = assertSafeRelativePath(input?.path, "embedded render input path");
+    if (
+      renderInputsByPath.has(inputPath) ||
+      !Number.isSafeInteger(input.bytes) ||
+      input.bytes < 0 ||
+      !/^[a-f0-9]{64}$/.test(input.sha256 ?? "")
+    ) {
+      fail(`Embedded render input metadata is invalid or duplicated for ${inputPath}.`);
+    }
+    renderInputsByPath.set(inputPath, input);
+  }
+
+  for (const [repoPath, archivePath] of EMBEDDED_RENDER_INPUTS) {
+    const input = renderInputsByPath.get(repoPath);
+    const entry = byPath.get(archivePath);
+    if (
+      !input ||
+      !entry ||
+      input.bytes !== entry.data.length ||
+      input.sha256 !== sha256(entry.data)
+    ) {
+      fail(`Embedded render input hash or metadata mismatch for ${repoPath}.`);
+    }
+  }
+}
+
 function validateEmbeddedPackage(entries) {
   const byPath = new Map(entries.map((entry) => [entry.path, entry]));
   const manifestEntry = byPath.get(PACKAGE_MANIFEST_ENTRY);
@@ -1193,6 +1231,7 @@ function validateEmbeddedPackage(entries) {
       fail(`Embedded package hash or metadata mismatch for ${file.path}.`);
     }
   }
+  validateEmbeddedRenderInputs(manifest, byPath);
   validateEmbeddedStoreMetadata(byPath);
   return manifest;
 }
