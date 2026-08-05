@@ -1,0 +1,413 @@
+import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
+import { mkdtemp, mkdir, readFile, rm, utimes, writeFile } from "node:fs/promises";
+import os from "node:os";
+import path from "node:path";
+import test from "node:test";
+import {
+  collectPackageInputs,
+  readDeterministicZip,
+  verifyStorePackage,
+  writeStorePackage,
+} from "./store-package.mjs";
+
+const LOCALES = ["en-US", "pl-PL"];
+const NARRATIVE = [
+  "01-voice",
+  "02-assignee",
+  "03-task",
+  "04-groups",
+  "05-offer",
+  "06-modules",
+  "07-bookings",
+  "08-discover",
+];
+
+function digest(data) {
+  return createHash("sha256").update(data).digest("hex");
+}
+
+function png(width, height, marker) {
+  const buffer = Buffer.alloc(40 + Buffer.byteLength(marker));
+  Buffer.from("89504e470d0a1a0a", "hex").copy(buffer, 0);
+  buffer.writeUInt32BE(13, 8);
+  buffer.write("IHDR", 12, "ascii");
+  buffer.writeUInt32BE(width, 16);
+  buffer.writeUInt32BE(height, 20);
+  buffer[24] = 8;
+  buffer[25] = 2;
+  buffer.write(marker, 40, "utf8");
+  return buffer;
+}
+
+async function writeRepoFile(rootDir, relativePath, data) {
+  const absolutePath = path.join(rootDir, ...relativePath.split("/"));
+  await mkdir(path.dirname(absolutePath), { recursive: true });
+  await writeFile(absolutePath, data);
+  return absolutePath;
+}
+
+async function writeJson(rootDir, relativePath, value) {
+  return writeRepoFile(rootDir, relativePath, `${JSON.stringify(value, null, 2)}\n`);
+}
+
+async function createFixture() {
+  const rootDir = await mkdtemp(path.join(os.tmpdir(), "shuuty-store-package-"));
+  const sourcePaths = new Map();
+  for (const locale of LOCALES) {
+    for (const screenshotId of NARRATIVE) {
+      const sourcePath = `store-listing/assets/source/${locale}/${screenshotId}.png`;
+      const data = png(1080, 2400, `${locale}-${screenshotId}-source`);
+      await writeRepoFile(rootDir, sourcePath, data);
+      sourcePaths.set(`${locale}:${screenshotId}`, { path: sourcePath, data });
+    }
+  }
+  const relayPath = "store-listing/assets/brand/relay.png";
+  const brandPath = "store-listing/assets/brand/icon.png";
+  await writeRepoFile(rootDir, relayPath, png(2048, 256, "relay"));
+  await writeRepoFile(rootDir, brandPath, png(1024, 1024, "brand"));
+  await writeRepoFile(rootDir, "store-listing/studio/template.mjs", "export {};\n");
+  await writeRepoFile(rootDir, "store-listing/studio/studio.css", ":root {}\n");
+  await writeRepoFile(
+    rootDir,
+    "store-listing/console-change-set-template.md",
+    "# Console change set\n",
+  );
+  await writeRepoFile(rootDir, "store-listing/upload-checklist.md", "# Upload checklist\n");
+  await writeJson(rootDir, "store-listing/provenance/media-assets.json", {
+    schemaVersion: 1,
+    status: "owner-attested",
+    assets: [],
+  });
+  await writeRepoFile(
+    rootDir,
+    "store-listing/provenance/google-play-artifact-evidence.md",
+    "# Google Play artifact evidence\n",
+  );
+  await writeRepoFile(
+    rootDir,
+    "store-listing/provenance/owner-attestation.md",
+    "# Owner attestation\n",
+  );
+
+  const appIconSource = "store-listing/assets/store/app-store/app-icon-1024.png";
+  const playIconSource = "store-listing/assets/store/google-play/app-icon-512.png";
+  const appIcon = png(1024, 1024, "app-icon");
+  const playIcon = png(512, 512, "play-icon");
+  await writeRepoFile(rootDir, appIconSource, appIcon);
+  await writeRepoFile(rootDir, playIconSource, playIcon);
+  await writeRepoFile(
+    rootDir,
+    "store-listing/exports/final/app-store/icon/app-icon-1024.png",
+    appIcon,
+  );
+  await writeRepoFile(
+    rootDir,
+    "store-listing/exports/final/google-play/icon/app-icon-512.png",
+    playIcon,
+  );
+
+  const captureManifest = {
+    schemaVersion: 3,
+    campaign: "official-2026",
+    locales: ["pl-PL", "en-US"],
+    deviceSets: {
+      appStoreIphone69: { requiredCaptures: 8, locales: ["pl-PL", "en-US"] },
+      googlePlayPhone: { requiredCaptures: 8, locales: ["pl-PL", "en-US"] },
+    },
+    storeAssets: {
+      appStoreIcon: {
+        source: appIconSource,
+        status: "final-ready",
+        width: 1024,
+        height: 1024,
+      },
+      googlePlayIcon: {
+        source: playIconSource,
+        status: "final-ready",
+        width: 512,
+        height: 512,
+        maxBytes: 1_048_576,
+      },
+      googlePlayFeatureGraphic: {
+        localization: "per-locale",
+        width: 1024,
+        height: 500,
+        outputs: {
+          "en-US": "store-listing/exports/final/google-play/en-US/feature/product-proof.png",
+          "pl-PL": "store-listing/exports/final/google-play/pl-PL/feature/product-proof.png",
+        },
+      },
+    },
+    coveragePlan: { primaryPhoneNarrative: NARRATIVE },
+  };
+
+  const assets = [];
+  for (const platform of ["app-store", "google-play"]) {
+    for (const locale of LOCALES) {
+      for (const [index, screenshotId] of NARRATIVE.entries()) {
+        const source = sourcePaths.get(`${locale}:${screenshotId}`);
+        const deviceSlot = platform === "app-store" ? "iphone-6.9" : "phone";
+        const width = platform === "app-store" ? 1320 : 1080;
+        const height = platform === "app-store" ? 2868 : 1920;
+        const output = `store-listing/exports/final/${platform}/${locale}/${deviceSlot}/${String(index + 1).padStart(2, "0")}.png`;
+        const outputData = png(width, height, `${platform}-${locale}-${screenshotId}-output`);
+        await writeRepoFile(rootDir, output, outputData);
+        assets.push({
+          id: `${platform}-${locale}-${screenshotId}`,
+          kind: "phone",
+          status: "final-ready",
+          platform,
+          deviceSlot,
+          locale,
+          screenshotId,
+          stage: { index: index + 1, total: 8 },
+          source: {
+            path: source.path,
+            locale,
+            expectedWidth: 1080,
+            expectedHeight: 2400,
+          },
+          width,
+          height,
+          finalOutput: output,
+          _outputData: outputData,
+        });
+      }
+    }
+  }
+
+  for (const locale of LOCALES) {
+    const featureSources = NARRATIVE.slice(0, 3).map((screenshotId, index) => {
+      const source = sourcePaths.get(`${locale}:${screenshotId}`);
+      return {
+        role: ["voice", "assignee", "task"][index],
+        path: source.path,
+        locale,
+        expectedWidth: 1080,
+        expectedHeight: 2400,
+      };
+    });
+    const output = `store-listing/exports/final/google-play/${locale}/feature/product-proof.png`;
+    const outputData = png(1024, 500, `${locale}-feature-output`);
+    await writeRepoFile(rootDir, output, outputData);
+    assets.push({
+      id: `google-play-${locale}-feature`,
+      kind: "feature",
+      composition: "product-proof",
+      status: "final-ready",
+      platform: "google-play",
+      deviceSlot: "feature-graphic",
+      locale,
+      storeAssetId: "googlePlayFeatureGraphic",
+      sources: featureSources,
+      relayArtwork: { path: relayPath },
+      width: 1024,
+      height: 500,
+      finalOutput: output,
+      _outputData: outputData,
+    });
+  }
+
+  const renderManifest = {
+    schemaVersion: 3,
+    campaign: "official-2026-golden-relay",
+    status: "final-ready",
+    brandMark: { path: brandPath },
+    fonts: [],
+    assets: assets.map(({ _outputData, ...asset }) => asset),
+  };
+  const ledger = {
+    schemaVersion: 2,
+    campaign: renderManifest.campaign,
+    generatedAt: "2030-01-01T00:00:00.000Z",
+    latestRenderMode: "final",
+    manifest: "store-listing/studio/render-manifest.json",
+    assets: assets.map((asset) => ({
+      id: asset.id,
+      renderMode: "final",
+      status: "final-candidate",
+      sourceGap: null,
+      output: asset.finalOutput,
+      sha256: digest(asset._outputData),
+      bytes: asset._outputData.length,
+      width: asset.width,
+      height: asset.height,
+      sources: (asset.source ? [asset.source] : asset.sources).map((source) => {
+        const sourceData = sourcePaths.get(`${asset.locale}:${NARRATIVE.find((id) => source.path.endsWith(`${id}.png`))}`)?.data;
+        return {
+          path: source.path,
+          sha256: digest(sourceData),
+          width: 1080,
+          height: 2400,
+        };
+      }),
+    })),
+  };
+
+  await writeJson(rootDir, "store-listing/capture-manifest.json", captureManifest);
+  await writeJson(rootDir, "store-listing/studio/render-manifest.json", renderManifest);
+  await writeJson(rootDir, "store-listing/delivery-ledger.json", ledger);
+  for (const locale of LOCALES) {
+    await writeJson(rootDir, `store-listing/metadata/${locale}.json`, {
+      locale,
+      appStore: { name: "Shuuty" },
+      googlePlay: { appName: "Shuuty" },
+    });
+  }
+
+  const oldTime = new Date("2020-01-01T00:00:00.000Z");
+  const newTime = new Date("2021-01-01T00:00:00.000Z");
+  const renderInputs = [
+    "store-listing/capture-manifest.json",
+    "store-listing/studio/render-manifest.json",
+    "store-listing/studio/template.mjs",
+    "store-listing/studio/studio.css",
+    brandPath,
+    relayPath,
+    appIconSource,
+    playIconSource,
+    ...[...sourcePaths.values()].map((source) => source.path),
+  ];
+  for (const relativePath of renderInputs) {
+    await utimes(path.join(rootDir, ...relativePath.split("/")), oldTime, oldTime);
+  }
+  for (const asset of assets) {
+    await utimes(path.join(rootDir, ...asset.finalOutput.split("/")), newTime, newTime);
+  }
+
+  return { rootDir, assets, sourcePaths };
+}
+
+async function withFixture(run) {
+  const fixture = await createFixture();
+  try {
+    await run(fixture);
+  } finally {
+    await rm(fixture.rootDir, { recursive: true, force: true });
+  }
+}
+
+test("store package is deterministic and verifies against the workspace", async () => {
+  await withFixture(async ({ rootDir }) => {
+    const firstPath = path.join(rootDir, "first.zip");
+    const secondPath = path.join(rootDir, "second.zip");
+    const first = await writeStorePackage({ rootDir, archivePath: firstPath });
+    const second = await writeStorePackage({ rootDir, archivePath: secondPath });
+    assert.equal(first.fileCount, 46);
+    assert.equal(first.sha256, second.sha256);
+    assert.deepEqual(await readFile(firstPath), await readFile(secondPath));
+
+    const entries = readDeterministicZip(await readFile(firstPath));
+    const changeSetTemplate = entries.find(
+      (entry) => entry.path === "release/console-change-set-template.md",
+    );
+    assert.equal(changeSetTemplate?.data.toString("utf8"), "# Console change set\n");
+    const playEvidence = entries.find(
+      (entry) => entry.path === "provenance/google-play-artifact-evidence.md",
+    );
+    assert.equal(playEvidence?.data.toString("utf8"), "# Google Play artifact evidence\n");
+
+    const verified = await verifyStorePackage({ rootDir, archivePath: firstPath });
+    assert.equal(verified.sha256, first.sha256);
+    assert.equal(verified.fileCount, 46);
+  });
+});
+
+test("console change-set template is mandatory", async () => {
+  await withFixture(async ({ rootDir }) => {
+    await rm(path.join(rootDir, "store-listing/console-change-set-template.md"));
+    await assert.rejects(
+      () => collectPackageInputs({ rootDir }),
+      /Missing required console-change-set-template/,
+    );
+  });
+});
+
+test("Google Play artifact evidence is mandatory", async () => {
+  await withFixture(async ({ rootDir }) => {
+    await rm(path.join(rootDir, "store-listing/provenance/google-play-artifact-evidence.md"));
+    await assert.rejects(
+      () => collectPackageInputs({ rootDir }),
+      /Missing required google-play-artifact-evidence/,
+    );
+  });
+});
+
+test("missing and unexpected final exports are rejected", async () => {
+  await withFixture(async ({ rootDir, assets }) => {
+    const missing = assets[0].finalOutput;
+    await rm(path.join(rootDir, ...missing.split("/")));
+    await assert.rejects(
+      () => collectPackageInputs({ rootDir }),
+      /Missing required .* final output/,
+    );
+  });
+
+  await withFixture(async ({ rootDir }) => {
+    await writeRepoFile(
+      rootDir,
+      "store-listing/exports/final/google-play/en-US/phone/old.png",
+      png(1080, 1920, "unexpected"),
+    );
+    await assert.rejects(
+      () => collectPackageInputs({ rootDir }),
+      /unexpected: .*old\.png/,
+    );
+  });
+});
+
+test("ledger hash mismatches and stale render inputs are rejected", async () => {
+  await withFixture(async ({ rootDir, assets }) => {
+    await writeRepoFile(rootDir, assets[0].finalOutput, png(assets[0].width, assets[0].height, "changed"));
+    await assert.rejects(
+      () => collectPackageInputs({ rootDir }),
+      /Delivery ledger hash or metadata mismatch/,
+    );
+  });
+
+  await withFixture(async ({ rootDir, sourcePaths }) => {
+    const source = [...sourcePaths.values()][0];
+    const future = new Date("2040-01-01T00:00:00.000Z");
+    await utimes(path.join(rootDir, ...source.path.split("/")), future, future);
+    await assert.rejects(() => collectPackageInputs({ rootDir }), /Stale final asset/);
+  });
+});
+
+test("both localized Google Play feature graphics are mandatory", async () => {
+  await withFixture(async ({ rootDir }) => {
+    const manifestPath = path.join(rootDir, "store-listing/studio/render-manifest.json");
+    const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
+    const polishFeature = manifest.assets.find(
+      (asset) => asset.kind === "feature" && asset.locale === "pl-PL",
+    );
+    polishFeature.locale = "localization-independent";
+    await writeJson(rootDir, "store-listing/studio/render-manifest.json", manifest);
+    await assert.rejects(
+      () => collectPackageInputs({ rootDir, checkFreshness: false }),
+      /unsupported locale localization-independent/,
+    );
+  });
+});
+
+test("archive verification detects payload tampering", async () => {
+  await withFixture(async ({ rootDir }) => {
+    const archivePath = path.join(rootDir, "store.zip");
+    await writeStorePackage({ rootDir, archivePath });
+    const archive = await readFile(archivePath);
+    const markerOffset = archive.indexOf(Buffer.from('"locale"', "utf8"));
+    assert.ok(markerOffset > 0);
+    archive[markerOffset + 1] ^= 0x01;
+    await writeFile(archivePath, archive);
+    await assert.rejects(
+      () =>
+        verifyStorePackage({
+          rootDir,
+          archivePath,
+          againstWorkspace: false,
+          checkFreshness: false,
+        }),
+      /CRC mismatch/,
+    );
+  });
+});

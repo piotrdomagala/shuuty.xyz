@@ -43,3 +43,9 @@ next-env.d.ts
 # Vercel
 .vercel
 
+# Generated store-listing renders (reproducible local artifacts)
+store-listing/exports/
+store-listing/delivery-ledger.json
+store-listing/studio/qa-evidence/
+store-listing/tmp/
+
