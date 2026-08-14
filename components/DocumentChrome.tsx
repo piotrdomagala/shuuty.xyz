@@ -160,6 +160,7 @@ export function DocumentHeader({
 interface DocumentFooterProps {
   tagline: string;
   supportLabel: string;
+  accountDeletionLabel: string;
   privacyLabel: string;
   termsLabel: string;
   language: DocumentLanguage;
@@ -168,6 +169,7 @@ interface DocumentFooterProps {
 export function DocumentFooter({
   tagline,
   supportLabel,
+  accountDeletionLabel,
   privacyLabel,
   termsLabel,
   language,
@@ -182,6 +184,12 @@ export function DocumentFooter({
         <nav className={styles.footerLinks}>
           <Link href={localizedPath(language, '/support/')} className={styles.footerLink}>
             {supportLabel}
+          </Link>
+          <Link
+            href={localizedPath(language, '/account-deletion/')}
+            className={styles.footerLink}
+          >
+            {accountDeletionLabel}
           </Link>
           <Link href={localizedPath(language, '/privacy/')} className={styles.footerLink}>
             {privacyLabel}
@@ -203,6 +211,7 @@ interface DocumentShellProps {
   onLanguageChange: (language: DocumentLanguage) => void;
   tagline: string;
   supportLabel: string;
+  accountDeletionLabel: string;
   privacyLabel: string;
   termsLabel: string;
   children: ReactNode;
@@ -216,6 +225,7 @@ export function DocumentShell({
   onLanguageChange,
   tagline,
   supportLabel,
+  accountDeletionLabel,
   privacyLabel,
   termsLabel,
   children,
@@ -242,6 +252,7 @@ export function DocumentShell({
       <DocumentFooter
         tagline={tagline}
         supportLabel={supportLabel}
+        accountDeletionLabel={accountDeletionLabel}
         privacyLabel={privacyLabel}
         termsLabel={termsLabel}
         language={language}

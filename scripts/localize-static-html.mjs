@@ -6,6 +6,10 @@ const polishPages = [
   'out/pl/privacy/index.html',
   'out/pl/terms/index.html',
   'out/pl/support/index.html',
+  'out/pl/account-deletion/index.html',
+  'out/pl/documents/privacy/index.html',
+  'out/pl/documents/terms/index.html',
+  'out/pl/documents/support/index.html',
 ];
 
 for (const pagePath of polishPages) {

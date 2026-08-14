@@ -218,6 +218,7 @@
       "tagline": "From idea to action.",
       "copyright": "© 2026 Shuuty. All rights reserved.",
       "support": "Support",
+      "accountDeletion": "Delete account",
       "privacy": "Privacy",
       "terms": "Terms"
     }
@@ -441,6 +442,7 @@
       "tagline": "Od pomysłu do działania.",
       "copyright": "© 2026 Shuuty. Wszelkie prawa zastrzeżone.",
       "support": "Wsparcie",
+      "accountDeletion": "Usuń konto",
       "privacy": "Prywatność",
       "terms": "Regulamin"
     }

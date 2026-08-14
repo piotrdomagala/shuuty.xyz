@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useState } from 'react';
+import Link from 'next/link';
 import { DocumentShell } from '@/components/DocumentChrome';
 import { documentTranslations } from '@/components/documentLocale';
 import { useSiteLanguage } from '@/components/useSiteLanguage';
@@ -22,6 +23,8 @@ const supportTranslations = {
     copyAddress: 'Copy email address',
     copied: 'Email address copied.',
     copyFailed: 'Could not copy the address. Select it and copy it manually.',
+    accountDeletionHint: 'Need to delete your account or submit a deletion request?',
+    accountDeletionAction: 'Delete your account',
   },
   pl: {
     ...documentTranslations.pl,
@@ -35,6 +38,8 @@ const supportTranslations = {
     copyAddress: 'Kopiuj adres e-mail',
     copied: 'Adres e-mail został skopiowany.',
     copyFailed: 'Nie udało się skopiować adresu. Zaznacz go i skopiuj ręcznie.',
+    accountDeletionHint: 'Chcesz usunąć konto albo wysłać prośbę o jego usunięcie?',
+    accountDeletionAction: 'Usuń konto',
   },
 } as const;
 
@@ -106,6 +111,7 @@ export default function SupportPageClient({ initialLanguage = 'en' }: SupportPag
       onLanguageChange={handleLanguageChange}
       tagline={translations.footerTagline}
       supportLabel={translations.support}
+      accountDeletionLabel={translations.accountDeletion}
       privacyLabel={translations.privacy}
       termsLabel={translations.terms}
     >
@@ -137,6 +143,14 @@ export default function SupportPageClient({ initialLanguage = 'en' }: SupportPag
         <p className={styles.copyStatus} role="status" aria-live="polite">
           {copyAnnouncement}
         </p>
+
+        <p className={styles.supportHint}>{translations.accountDeletionHint}</p>
+        <Link
+          href={language === 'pl' ? '/pl/account-deletion/' : '/account-deletion/'}
+          className={styles.supportMailButton}
+        >
+          <span>{translations.accountDeletionAction}</span>
+        </Link>
       </div>
     </DocumentShell>
   );

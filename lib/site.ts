@@ -104,3 +104,27 @@ export function createNoIndexMetadata({
     },
   };
 }
+
+export function createLegacyAliasMetadata({
+  title,
+  description,
+  canonicalPath,
+}: {
+  title: string;
+  description: string;
+  canonicalPath: `/${string}`;
+}): Metadata {
+  return {
+    title,
+    description,
+    alternates: { canonical: canonicalPath },
+    robots: {
+      index: false,
+      follow: true,
+      googleBot: {
+        index: false,
+        follow: true,
+      },
+    },
+  };
+}

@@ -38,6 +38,7 @@ const pages = {
       '/images/app/discover-meetings.png',
       '/images/app/profile-settings.png',
       'https://play.google.com/store/apps/details?id=com.shuuty.app',
+      '/account-deletion/',
       'Switch to light mode',
     ],
     requiredPatterns: [
@@ -64,6 +65,7 @@ const pages = {
       'FAQPage',
       'Co Shuuty rozumie z zadania głosowego?',
       '/pl/support/',
+      '/pl/account-deletion/',
       '/pl/privacy/',
       '/pl/terms/',
     ],
@@ -81,7 +83,7 @@ const pages = {
   support: {
     path: 'out/support/index.html',
     route: '/support/',
-    required: ['Contact Support', supportEmail, 'Copy email address'],
+    required: ['Contact Support', supportEmail, 'Copy email address', '/account-deletion/'],
     requiredPatterns: [
       /<button[^>]+aria-label="Copy email address: shuuty\.app@gmail\.com"/,
       /aria-live="polite"/,
@@ -92,13 +94,37 @@ const pages = {
   supportPl: {
     path: 'out/pl/support/index.html',
     route: '/pl/support/',
-    required: ['Pomoc i kontakt', supportEmail, 'Kopiuj adres e-mail'],
+    required: ['Pomoc i kontakt', supportEmail, 'Kopiuj adres e-mail', '/pl/account-deletion/'],
     requiredPatterns: [
       /<button[^>]+aria-label="Kopiuj adres e-mail: shuuty\.app@gmail\.com"/,
       /aria-live="polite"/,
     ],
     language: 'pl',
     alternateRoute: '/support/',
+  },
+  accountDeletion: {
+    path: 'out/account-deletion/index.html',
+    route: '/account-deletion/',
+    required: [
+      'Delete your Shuuty account',
+      supportEmail,
+      'Never send us your password',
+      'does not automatically cancel a subscription',
+    ],
+    language: 'en',
+    alternateRoute: '/pl/account-deletion/',
+  },
+  accountDeletionPl: {
+    path: 'out/pl/account-deletion/index.html',
+    route: '/pl/account-deletion/',
+    required: [
+      'Usuń konto Shuuty',
+      supportEmail,
+      'Nigdy nie przesyłaj nam hasła',
+      'nie anuluje automatycznie subskrypcji',
+    ],
+    language: 'pl',
+    alternateRoute: '/account-deletion/',
   },
   privacy: {
     path: 'out/privacy/index.html',
@@ -127,6 +153,54 @@ const pages = {
     required: ['Regulamin aplikacji mobilnej Shuuty', supportEmail],
     language: 'pl',
     alternateRoute: '/terms/',
+  },
+  legacyPrivacy: {
+    path: 'out/documents/privacy/index.html',
+    route: '/documents/privacy/',
+    canonicalRoute: '/privacy/',
+    required: ['Privacy Policy of the Shuuty Mobile Application', supportEmail],
+    language: 'en',
+    noindex: true,
+  },
+  legacyPrivacyPl: {
+    path: 'out/pl/documents/privacy/index.html',
+    route: '/pl/documents/privacy/',
+    canonicalRoute: '/pl/privacy/',
+    required: ['Polityka prywatności aplikacji mobilnej Shuuty', supportEmail],
+    language: 'pl',
+    noindex: true,
+  },
+  legacyTerms: {
+    path: 'out/documents/terms/index.html',
+    route: '/documents/terms/',
+    canonicalRoute: '/terms/',
+    required: ['Shuuty Mobile Application Terms and Conditions', supportEmail],
+    language: 'en',
+    noindex: true,
+  },
+  legacyTermsPl: {
+    path: 'out/pl/documents/terms/index.html',
+    route: '/pl/documents/terms/',
+    canonicalRoute: '/pl/terms/',
+    required: ['Regulamin aplikacji mobilnej Shuuty', supportEmail],
+    language: 'pl',
+    noindex: true,
+  },
+  legacySupport: {
+    path: 'out/documents/support/index.html',
+    route: '/documents/support/',
+    canonicalRoute: '/support/',
+    required: ['Contact Support', supportEmail],
+    language: 'en',
+    noindex: true,
+  },
+  legacySupportPl: {
+    path: 'out/pl/documents/support/index.html',
+    route: '/pl/documents/support/',
+    canonicalRoute: '/pl/support/',
+    required: ['Pomoc i kontakt', supportEmail],
+    language: 'pl',
+    noindex: true,
   },
 };
 
@@ -161,7 +235,7 @@ for (const [name, page] of Object.entries(pages)) {
     }
   }
 
-  const canonicalUrl = `${siteUrl}${page.route}`;
+  const canonicalUrl = `${siteUrl}${page.canonicalRoute ?? page.route}`;
   if (!html.includes(`<link rel="canonical" href="${canonicalUrl}"`)) {
     failures.push(`${name} static HTML is missing canonical URL: ${canonicalUrl}`);
   }
@@ -210,6 +284,27 @@ for (const [name, page] of Object.entries(pages)) {
 
   if (page.routeMetadata !== false && !/<title>[^<]+\| Shuuty<\/title>/.test(html)) {
     failures.push(`${name} static HTML is missing route metadata`);
+  }
+
+  if (page.noindex && !html.includes('<meta name="robots" content="noindex, follow"')) {
+    failures.push(`${name} static HTML is missing noindex, follow`);
+  }
+}
+
+for (const [name, canonicalRoute] of Object.entries({
+  'privacy.html': '/privacy/',
+  'terms.html': '/terms/',
+  'support.html': '/support/',
+})) {
+  const html = await readFile(new URL(`out/documents/${name}`, root), 'utf8');
+  if (!html.includes(`http-equiv="refresh" content="0; url=${canonicalRoute}"`)) {
+    failures.push(`${name} is missing its canonical refresh target`);
+  }
+  if (!html.includes(`<link rel="canonical" href="${siteUrl}${canonicalRoute}"`)) {
+    failures.push(`${name} is missing its canonical URL`);
+  }
+  if (!html.includes('<meta name="robots" content="noindex, follow"')) {
+    failures.push(`${name} is missing noindex, follow`);
   }
 }
 
@@ -276,6 +371,8 @@ for (const route of [
   '/pl/',
   '/support/',
   '/pl/support/',
+  '/account-deletion/',
+  '/pl/account-deletion/',
   '/privacy/',
   '/pl/privacy/',
   '/terms/',
