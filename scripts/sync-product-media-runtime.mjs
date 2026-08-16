@@ -5,14 +5,20 @@ const manifest = JSON.parse(
   await readFile(new URL('content/product-media.json', root), 'utf8'),
 );
 
+for (const asset of manifest.assets) {
+  if (!asset.web) {
+    throw new Error(`${asset.id} has no validated website derivative.`);
+  }
+}
+
 const runtimeManifest = {
   schemaVersion: manifest.schemaVersion,
-  assets: manifest.assets.map(({ id, altKey, path, width, height }) => ({
+  assets: manifest.assets.map(({ id, altKey, web }) => ({
     id,
     altKey,
-    path,
-    width,
-    height,
+    path: web.path,
+    width: web.width,
+    height: web.height,
   })),
   placementSets: manifest.placementSets,
   placementSelection: manifest.placementSelection,

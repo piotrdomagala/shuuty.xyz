@@ -12,6 +12,7 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit --incremental false",
     "test": "node --test scripts/*.test.mjs",
+    "generate:media-derivatives": "node scripts/generate-product-media-derivatives.mjs",
     "sync:media-runtime": "node scripts/sync-product-media-runtime.mjs",
     "validate:legal": "node scripts/validate-legal-documents.mjs",
     "validate:media": "node scripts/validate-product-media.mjs",
@@ -32,6 +33,7 @@
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.2.33",
+    "sharp": "0.35.3",
     "typescript": "^5"
   }
 }

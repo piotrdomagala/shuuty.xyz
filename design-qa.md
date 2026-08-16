@@ -1,169 +1,174 @@
-# Design QA - Shuuty website refresh
+# Design QA - spatial task handoff
 
-## Źródło prawdy i środowisko
+## Zakres i źródło prawdy
 
-- Źródło wizualne: eksport aktualnego `origin/main` w
-  `C:\Apps\shuuty.xyz\out`, oparty na commicie
-  `7e3c0bdbf40cb7c8646de9a0be42648811e02638`.
-- Implementacja: produkcyjny eksport gałęzi
-  `agent/shuuty-xyz-refresh-2026` w
-  `C:\Apps\.worktrees\shuuty-xyz-refresh-2026\out`.
-- Przeglądarka: Microsoft Edge 151.0.4129.86 w trybie headless.
-- Normalizacja: identyczny CSS viewport, `deviceScaleFactor: 1`, ten sam język,
-  motyw, pozycja karuzeli i zredukowany ruch. W porównaniach sekcji ukryto wyłącznie
-  stały header, skip link i mobilny dock, aby globalny chrome nie zasłaniał
-  fotografowanego regionu.
-- Surowe duplikaty capture i lokalne logi z absolutnymi ścieżkami zostały usunięte
-  po kontroli. W repo pozostaje mały, reprezentatywny zestaw porównań.
+- Zakres tej iteracji: sekcja `01 Tasks` / `01 Zadania`, realne media produktu oraz
+  zróżnicowanie sekcji Product Depth w istniejącym landingu.
+- Wybrany kierunek wizualny: wariant 3 - przestrzenne przekazanie zadania.
+- Hero zachowuje zaakceptowaną płynną karuzelę, ale nie nakłada pigułek na UI.
+- Referencja kompozycji:
+  `C:\Users\piotr\.codex\generated_images\01a00bba-e0a8-7631-b549-4b31f76c0d8c\exec-e3c8a91f-f42f-40e5-bcbd-c2b3a1246ffb.png`.
+  Ma 1435 x 1096 px i służy wyłącznie do oceny rytmu, perspektywy i skali. Nie
+  jest częścią builda, ponieważ zawiera wygenerowane UI.
+- Źródłem prawdziwego UI jest 16 kanonicznych capture PL/EN z
+  `piotrdomagala/S-` na commicie
+  `20a14889e2397514b7c7bcd73269508f24c8004f`.
+- Golden Relay jest dokładną kopią
+  `store-listing/assets/brand/golden-relay-transparent-2048x256.png`, SHA-256
+  `4e49a0b5b2f07f5cb934321d573173463e5ab10d986c29acf64593548956ce15`.
 
-## Macierz renderów
+Kanoniczne PNG pozostają byte-for-byte źródłami provenance. Strona renderuje ich
+deterministyczne, półskalowe pochodne WebP. Każda pochodna ma zapisany osobny hash,
+rozmiar, `sourceSha256`, encoder i wersję libvips. Runtime nie ma fallbacku do PNG.
 
-| Widok | CSS viewport | Źródło - piksele pełnej strony | Implementacja - piksele pełnej strony | DPR | Stan |
-| --- | ---: | ---: | ---: | ---: | --- |
-| Desktop | 1440 x 1100 | 1440 x 7062 | 1440 x 8043 | 1 | EN, Dark |
-| Tablet | 1024 x 1366 | 1024 x 6947 | 1024 x 8151 | 1 | EN, Dark |
-| Mobile | 390 x 844 | 390 x 10217 | 390 x 12720 | 1 | EN, Dark |
+## Wybrana kompozycja
 
-Dodatkowo porównano hero w Light Mode przy wszystkich trzech viewportach oraz
-polskie hero na desktopie i mobile. Większa wysokość implementacji jest zamierzona:
-wynika z konkretnego opisu mechanizmu grup i nowej sekcji głębi produktu, a nie
-z rozciągniętych odstępów lub pustych regionów.
+Sekcja Tasks używa trzech realnych ekranów jako jednej sekwencji:
 
-## Dowody
+1. Capture - `Say it.` / `Powiedz.`
+2. Context - `Choose a person or group.` / `Wybierz osobę lub grupę.`
+3. Hand-off - `Delegate now. The task is ready.` / `Deleguj teraz. Zadanie jest gotowe.`
 
-### Renderowana implementacja
+Aktywny ekran rośnie, rozjaśnia się i wychodzi do przodu. Pozostałe ekrany
+zachowują kontekst, ale nie konkurują z aktywnym. Prawdziwy Golden Relay łączy
+sekwencję poza warstwą interfejsu produktu.
 
-- [Desktop - pełna strona](docs/qa/implementation-desktop-full.jpg)
-- [Tablet - pełna strona](docs/qa/implementation-tablet-full.jpg)
-- [Mobile - pełna strona](docs/qa/implementation-mobile-full.jpg)
-- [Nowa sekcja głębi produktu - desktop](docs/qa/implementation-desktop-experience.jpg)
-- [Nowa sekcja głębi produktu - mobile](docs/qa/implementation-mobile-experience.jpg)
+Product Depth zestawia czysty capture galerii na iPadzie z telefonem ustawień
+modułów. To wprowadza inny rytm niż wcześniejsze pary telefonów i rozwiązuje wadę
+przyciętego nagłówka w telefonicznym capture galerii.
 
-### Porównania pełnego widoku i hero
+## Interakcje i accessibility
 
-- [Pełna strona - desktop](docs/qa/comparison-desktop-full.jpg)
-- [Hero - desktop](docs/qa/comparison-desktop-hero.jpg)
-- [Hero - tablet](docs/qa/comparison-tablet-hero.jpg)
-- [Hero - mobile](docs/qa/comparison-mobile-hero.jpg)
-- [Light hero - desktop](docs/qa/comparison-light-desktop-hero.jpg)
-- [Light hero - tablet](docs/qa/comparison-light-tablet-hero.jpg)
-- [Light hero - mobile](docs/qa/comparison-light-mobile-hero.jpg)
-- [Polskie hero - desktop](docs/qa/comparison-pl-desktop-hero.jpg)
-- [Polskie hero - mobile](docs/qa/comparison-pl-mobile-hero.jpg)
+Implementacja obsługuje:
 
-### Porównania skupionych regionów
+- jednorazowy automat po wejściu sekcji w viewport: `0 -> 1 -> 2`;
+- hover, który aktywuje wskazany ekran i zatrzymuje automat;
+- click i tap, które utrzymują wybrany ekran;
+- swipe powyżej progu 36 px;
+- `ArrowLeft` i `ArrowRight` wraz z przeniesieniem focusu;
+- `prefers-reduced-motion: reduce`, który blokuje automat;
+- lokalizowane `aria-labelledby` i `aria-describedby` dla każdego kroku;
+- `aria-pressed` bez automatycznego `aria-live`.
 
-- [Zadania - desktop](docs/qa/comparison-desktop-tasks.jpg)
-- [Zadania - mobile](docs/qa/comparison-mobile-tasks.jpg)
-- [Grupy - desktop](docs/qa/comparison-desktop-groups.jpg)
-- [Grupy - mobile](docs/qa/comparison-mobile-groups.jpg)
+Nieaktywne podpisy pozostają czytelne na desktopie i tablecie. Na mobile są
+wizualnie ukryte przez opacity, ale pozostają w drzewie dostępności i pojawiają się
+po focusie. Tekst nie jest przygaszany wspólną opacity z ekranem telefonu, dzięki
+czemu kontrast małego kickera i opisu spełnia WCAG AA.
 
-## Obowiązkowe powierzchnie jakości
+## Responsywność
 
-- Typografia - zachowano Outfit dla nagłówków i Plus Jakarta Sans dla treści,
-  ten sam system wag, rytm linii i optyczną hierarchię. Nie ma clippingu,
-  niezamierzonej truncation ani kolizji tekstu przy 1440, 1024 i 390 px.
-- Spacing i rytm - istniejąca siatka, promienie, obramowania, cienie i gęstość
-  pozostają spójne. Tablet i mobile przechodzą bez poziomego overflow. Dłuższy
-  storytelling zachowuje wyraźne rozdziały zamiast zagęszczać pojedyncze ekrany.
-- Kolory i tokeny - Golden Relay pozostaje oparty na granacie, złocie, błękicie
-  i kontrolowanym świetle. Dark i Light używają tych samych semantycznych tokenów,
-  a przełącznik aktualizuje również `theme-color`.
-- Jakość i wierność obrazów - wszystkie widoczne ekrany są prawdziwymi,
-  istniejącymi assetami produktu z `origin/main`. Usunięto pigułki zasłaniające
-  ekrany oraz syntetyczną makietę voice/task. Pliki JPEG mają teraz prawidłowe
-  rozszerzenie. Nie utworzono ani nie zrekonstruowano żadnego ekranu produktu.
-- Copy - EN i PL mają identyczną strukturę, a test kontraktowy pilnuje parytetu.
-  Hero wyjaśnia przepływ głos lub ręczne wejście -> osoba albo grupa -> kompletne
-  zadanie. Grupy obejmują pracę, społeczność, usługi, sprzedaż, galerie,
-  lokalizację, zainteresowania, rezerwacje, projekty, plany, czas i rozmowy.
-  Copy nie ujawnia dostawców narzędzi ani modeli.
+- Desktop - trzy płaszczyzny tworzą jedną scenę z aktywnym ekranem na pierwszym
+  planie.
+- Tablet - scena kompresuje się bez kolizji podpisów.
+- Mobile - transformowany carousel pokazuje jeden centralny ekran i nie używa
+  poziomego scrolla dokumentu.
+- Product Depth - przy szerokości 320-390 px zestawienie iPad + telefon ma dokładnie
+  budżet `100vw - 72px`, odpowiadający paddingowi rozdziału i figury. Nie polega na
+  ucinaniu overflow.
 
-## Interakcje, accessibility i runtime
+## Dowody renderu
 
-W Edge sprawdzono:
+Pierwszy produkcyjny render kierunku 3 został zapisany w trzech viewportach:
 
-- klik, klawiaturę i swipe karuzeli trzech ekranów;
-- stan `aria-pressed`, komunikat `aria-live` i trzy selektory po 44 x 44 px;
-- przełączenie Dark/Light i zapis preferencji;
-- przełączenie EN/PL wraz z `html[lang]` i zachowaniem kotwicy;
-- nawigację do sekcji, skip link z widocznym focusem oraz FAQ open/close;
-- trasy `/privacy/`, `/terms/`, `/support/` i ich odpowiedniki `/pl/`;
-- jeden `h1`, landmark `main`, dostępne nazwy przycisków, brak brakujących
-  obrazów po przewinięciu strony i brak poziomego overflow;
-- kluczowe kontrolki mobile co najmniej 40 px, przy selektorach karuzeli 44 px;
-- konsolę i wyjątki runtime - 0 błędów.
+| Widok | CSS viewport | Screenshot sekcji | Język i motyw | Stan |
+| --- | ---: | ---: | --- | --- |
+| Desktop | 1440 x 1100 | 1180 x 1430 px | EN, Dark | krok 02 |
+| Tablet | 768 x 1024 | 704 x 1532 px | EN, Dark | krok 02 |
+| Mobile | 390 x 844 | 354 x 1910 px | PL, Dark | krok 02 |
 
-## Lab performance
+- [Desktop EN Dark](docs/qa/task-flow-v3-desktop-en-dark.png)
+- [Tablet EN Dark](docs/qa/task-flow-v3-tablet-en-dark.png)
+- [Mobile PL Dark](docs/qa/task-flow-v3-mobile-pl-dark.png)
 
-Chrome DevTools MCP wymagany przez dedykowany workflow nie był skonfigurowany.
-Zastosowano więc jawnie ograniczony fallback w tym samym Microsoft Edge:
-trzy zimne przebiegi lokalnego eksportu i medianę.
+Referencję kierunku i desktopowy render otwarto razem w jednym porównaniu. Układ
+zachowuje przestrzenny rytm referencji, ale wszystkie widoczne ekrany zastępuje
+prawdziwym UI Shuuty.
 
-| Scenariusz | FCP | LCP | CLS | TBT proxy | Transfer bez kompresji |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| Desktop 1440, lokalnie bez throttlingu | 148 ms | 148 ms | 0 | 0 ms | 844218 B |
-| Mobile 390, 150 ms RTT, 1.6 Mbps, CPU x4 | 1280 ms | 1280 ms | 0 | 8 ms | 810974 B |
+Te trzy screenshoty poprzedzają końcowe zwiększenie kontrastu podpisów, przejście
+runtime na WebP oraz zestawienie iPad + telefon. Geometria samej sekcji Tasks nie
+zmieniła się, ale screenshoty nie są traktowane jako końcowy dowód zamrożonego
+diffu. Świeży browser capture jest nadal wymagany.
 
-Aktualnym elementem LCP jest priorytetowy
-`/images/app/create-menu.jpg`. Wyniki są danymi laboratoryjnymi, nie p75 CrUX.
-Nie mierzą terenowego INP. Statyczny serwer QA nie stosował Brotli/Gzip, a obrazy
-poniżej pierwszego ekranu pozostawały lazy do przewinięcia. Finalny budżet obrazów
-musi zostać powtórzony po mechanicznym imporcie zaakceptowanego ZIP-a.
+## Media i wydajność
 
-## Findings
+- Źródła PNG: 15,382,131 B łącznie, zachowane wyłącznie jako kanoniczne źródła.
+- Serwowane WebP: 984,442 B łącznie - redukcja 93.6%.
+- `en-US`: 494,680 B.
+- `pl-PL`: 489,762 B.
+- Największa pochodna: 160,510 B.
+- Gate: maksymalnie 200 KiB na asset i 600 KiB na locale.
+- Sharp 0.35.3 i libvips 8.18.3 są przypięte, a test reprodukuje wszystkie 16
+  wynikowych hashy byte-for-byte.
 
-Brak otwartych P0, P1 i P2.
+Statyczny HTML EN zawiera wyłącznie ścieżki `en-US/*.webp`, a PL wyłącznie
+`pl-PL/*.webp`. Walidator odrzuca produktowe PNG w renderze, mieszanie locale,
+`exports/final`, brak pochodnej, zły MIME, hash, wymiar, encoder i przekroczenie
+obu budżetów.
 
-Akceptowane, zamierzone różnice względem `origin/main`:
+## Weryfikacja techniczna
 
-- hero nie ma pigułek `Tasks`, `Groups`, `Meetings` ani `Voice`;
-- sekcja zadania nie udaje produktu w HTML/CSS - pokazuje prawdziwy ekran i opisuje
-  przepływ w semantycznych krokach;
-- podpisy prawdziwych ekranów znajdują się pod obrazami, nie na ich interfejsie;
-- strona jest dłuższa o konkretną sekcję głębi produktu i pełniejszy model grup.
+Na zamrożonym diffie drugiego review przeszły:
 
-Zależność oczekująca, ale nie defekt tego PR-a:
+- `npm run lint`;
+- `npm run typecheck`;
+- `npm test` - 11/11;
+- `npm run validate:media`;
+- `npm run build` - 17 statycznych stron;
+- `git diff --check HEAD`.
 
-- obecne cztery obrazy bazowe są wyłącznie EN i Light. PL/EN, iOS/Android oraz
-  Light/Dark zostaną rozdzielone dopiero po zaakceptowanym artefakcie no-publish
-  po PR #438. Kontrakt blokuje częściowe, kandydackie i niepowiązane importy.
+Static export zachowuje 11 istniejących tras strony i ma po jednym `h1`, poprawne
+`lang`, canonical i locale alternates. Jedynym ostrzeżeniem builda jest nieaktualna
+baza `caniuse-lite`.
 
-## Historia porównania
+Pierwsze browser QA przed końcowymi poprawkami potwierdziło auto, hover, click,
+tap, swipe, klawiaturę, reduced motion, brak overflow, 14/14 załadowanych obrazów,
+0 błędów i 0 ostrzeżeń konsoli. Aktualna powierzchnia Browser nie udostępniła
+żadnego okna, dlatego po końcowych poprawkach nie wykonano jeszcze ponownego live QA.
 
-### Iteracja bazowa
+## Findings i ich status
 
-- P1 - pigułki hero zasłaniały prawdziwe ekrany. Usunięto je bez zmiany mechaniki
-  karuzeli.
-- P1 - sekcja voice/task była fikcyjną makietą HTML/CSS z etykietą AI. Zastąpiono
-  ją istniejącym prawdziwym ekranem oraz semantycznym opisem Golden Relay.
-- P2 - podpisy map zasłaniały produkt. Przeniesiono je poza obszar obrazu.
-- P2 - layout tabletowy miał ryzyko overflow przy długim copy. Usunięto twarde
-  minima i potwierdzono `scrollWidth === innerWidth` na 1440, 1024 i 390 px.
+- P2 contrast - naprawione. Tekst i ekran mają osobne poziomy przygaszenia.
+- P2 accessible descriptions - naprawione przez `aria-labelledby` i
+  `aria-describedby`.
+- P2 wrong group alt - naprawione; opis odpowiada ekranowi Chat/Czat.
+- P2 cropped gallery - naprawione czystym capture iPada EN/PL.
+- P2 preview provenance - naprawione przez schema 2 i wspólne invariants dla
+  preview oraz bound package.
+- P2 image weight - naprawione deterministycznymi WebP oraz twardymi budżetami.
+- P2 stale QA documentation - naprawione w tym dokumencie.
+- P2 fresh browser visual QA - otwarte do czasu aktualnego capture.
+- P3 derivative publication - generator waliduje wszystkie źródła i wyniki przed
+  publikacją oraz używa plików tymczasowych. Awaria pomiędzy kolejnymi `rename`
+  może pozostawić częściowy zestaw, który kolejna walidacja odrzuci.
 
-### Końcowa iteracja
+## Separacja PR #11
 
-Po poprawkach wykonano pełne i skupione porównania przy tych samych viewportach
-i stanach. Dowody powyżej pokazują zachowaną typografię, tokeny, proporcje telefonów
-i hierarchię, bez wcześniejszych nakładek. Nie znaleziono kolejnych P0/P1/P2,
-więc nie była potrzebna następna iteracja wizualna.
+Nie zmieniono tras account deletion, aliasów legal, dokumentów ani sitemap z PR
+#11. Późniejsza integracja ma jeden mechaniczny konflikt w
+`scripts/validate-static-export.mjs`; należy połączyć nowe asercje produktowe z
+asercjami account deletion i legacy routes.
 
-## Implementation checklist
+## Zależność od finalnego ZIP-a
 
-- [x] Desktop, tablet i mobile - Dark
-- [x] Desktop, tablet i mobile - Light hero
-- [x] EN i PL
-- [x] Karuzela: click, keyboard, swipe
-- [x] Theme, language, anchors i FAQ
-- [x] Privacy, terms i support w obu językach
-- [x] Brak poziomego overflow i błędów runtime
-- [x] Pełne oraz skupione porównania source vs implementation
-- [x] Lab performance fallback i jawne ograniczenia pomiaru
-- [x] Niezależny code review bez otwartych findings
+`artifactBinding` pozostaje `null`. Obecne capture są owner-attested preview, nie
+finalnym bindingiem sklepowym.
 
-## Open questions
+Po zaakceptowaniu jednego kompletnego no-publish artefaktu importer musi sprawdzić
+package/run/head SHA, 50/50 plików, ledger, QA, locale, platformę, urządzenie,
+pozycję, format, wymiary i każdy SHA-256. Następnie mechanicznie:
 
-Brak pytań blokujących ten PR. Import docelowych obrazów pozostaje osobną,
-mechaniczną zmianą po zaakceptowaniu kompletnego pakietu sklepowego.
+1. podmieni tylko różniące się źródła w ośmiu stabilnych slotach PL i EN;
+2. zastąpi `sourceArtifactEntry` wpisami z zaakceptowanego ZIP-a;
+3. uzupełni `artifactBinding` i ustawi `approved-no-publish-imported`;
+4. wygeneruje deterministyczne WebP, zsynchronizuje runtime i ponowi pełne QA.
 
-final result: passed
+Częściowy `exports/final`, PR #9 oraz wygenerowana koncepcja pozostają zakazane
+jako źródła UI.
+
+## Niezależny review
+
+Drugi review potwierdził naprawę wszystkich sześciu findingów implementacyjnych.
+Kod i pipeline assetów są technicznie gotowe. Finalny werdykt PR pozostaje
+`NOT READY` wyłącznie do czasu świeżego browser visual QA zamrożonego diffu.
+
+final result: pending fresh browser visual QA

@@ -849,35 +849,6 @@
   height: 15px;
 }
 
-.taskProof {
-  min-height: 650px;
-  padding: 34px;
-  display: grid;
-  grid-template-columns: minmax(150px, 0.72fr) minmax(0, 1.28fr);
-  gap: 28px;
-  align-items: center;
-  border: 1px solid var(--border);
-  border-radius: var(--r-2xl);
-  background:
-    radial-gradient(circle at 14% 22%, rgba(var(--gold-rgb), 0.12), transparent 36%),
-    radial-gradient(circle at 88% 78%, rgba(var(--blue-rgb), 0.09), transparent 38%),
-    var(--bg-soft);
-  box-shadow: var(--shadow-soft);
-}
-
-.productScreen {
-  margin: 0;
-  display: grid;
-  gap: 16px;
-  justify-items: center;
-}
-
-.taskPhone {
-  width: min(250px, 100%);
-  transform: rotate(-1.5deg);
-}
-
-.productScreen figcaption,
 .experienceVisual figcaption,
 .mapPhoneLeft figcaption,
 .mapPhoneRight figcaption {
@@ -889,54 +860,267 @@
   text-align: center;
 }
 
-.mechanismPanel {
+.taskChapter {
+  overflow: clip;
+  color: #f7f4ee;
+  background: #07101c;
+  border-top-color: rgba(239, 199, 104, 0.18);
+}
+
+.taskChapter .sectionLabel {
+  color: #e9bf5d;
+}
+
+.taskIntro {
+  margin-bottom: 58px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+  gap: clamp(42px, 8vw, 112px);
+  align-items: end;
+}
+
+.taskIntro h2 {
+  max-width: 720px;
+  margin-top: 18px;
+  color: #f9f7f2;
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 5.5vw, 5.5rem);
+  font-weight: 750;
+  letter-spacing: -0.052em;
+  line-height: 0.98;
+}
+
+.taskIntroLead {
+  padding: 2px 0 2px 28px;
+  border-left: 1px solid rgba(239, 199, 104, 0.32);
+}
+
+.taskIntroLead > span {
+  color: #e9bf5d;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.taskIntroLead p {
+  margin-top: 14px;
+  color: rgba(241, 242, 244, 0.7);
+  font-size: 0.88rem;
+  line-height: 1.75;
+}
+
+.taskIntroLead p + p {
+  margin-top: 10px;
+  color: rgba(241, 242, 244, 0.48);
+  font-size: 0.76rem;
+}
+
+.taskFlow {
+  position: relative;
+  padding: 30px 34px 46px;
+  overflow: hidden;
+  overflow: clip;
+  isolation: isolate;
+  border: 1px solid rgba(239, 199, 104, 0.17);
+  border-radius: 34px;
+  background: #050b14;
+  box-shadow: 0 34px 100px rgba(0, 0, 0, 0.34);
+  touch-action: pan-y pinch-zoom;
+}
+
+.taskRelayAsset {
+  position: absolute;
+  top: 360px;
+  left: 2%;
+  z-index: 1;
+  width: 96%;
+  height: auto;
+  opacity: 0.78;
+  pointer-events: none;
+  user-select: none;
+}
+
+.taskFlowList {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(14px, 2.2vw, 32px);
+  list-style: none;
+}
+
+.taskFlowItem {
+  position: relative;
+  z-index: 1;
   min-width: 0;
 }
 
-.mechanismPanel > p {
-  margin: 12px 0 20px;
-  color: var(--text-secondary);
+.taskFlowItem[data-active='true'] {
+  z-index: 4;
+}
+
+.taskFlowButton {
+  width: 100%;
+  padding: 0;
+  display: block;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  appearance: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.taskScreenSlot {
+  height: 660px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1400px;
+  perspective-origin: 50% 45%;
+}
+
+.taskScreenPlane {
+  position: relative;
+  width: clamp(205px, 20vw, 272px);
+  display: block;
+  border-color: rgba(247, 220, 151, 0.2);
+  border-radius: 32px;
+  background: #080d15;
+  box-shadow: 0 24px 46px rgba(0, 0, 0, 0.38);
+  opacity: 0.64;
+  transform-style: preserve-3d;
+  transition:
+    transform 0.72s var(--ease-out),
+    opacity 0.42s ease,
+    box-shadow 0.52s ease,
+    border-color 0.42s ease;
+}
+
+.taskScreenPlane img {
+  display: block;
+}
+
+.taskFlowItem:nth-child(1) .taskScreenPlane {
+  transform: translate3d(14px, 34px, 0) rotateY(8deg) rotateZ(-2deg) scale(0.88);
+}
+
+.taskFlowItem:nth-child(2) .taskScreenPlane {
+  transform: translate3d(0, -8px, 0) scale(0.94);
+}
+
+.taskFlowItem:nth-child(3) .taskScreenPlane {
+  transform: translate3d(-14px, 32px, 0) rotateY(-8deg) rotateZ(2deg) scale(0.88);
+}
+
+.taskFlowItem:nth-child(1)[data-active='true'] .taskScreenPlane {
+  border-color: rgba(247, 220, 151, 0.5);
+  box-shadow: 0 38px 78px rgba(0, 0, 0, 0.55), 0 0 34px rgba(239, 199, 104, 0.11);
+  opacity: 1;
+  transform: translate3d(18px, 8px, 78px) rotateY(2deg) rotateZ(-1deg) scale(1.02);
+}
+
+.taskFlowItem:nth-child(2)[data-active='true'] .taskScreenPlane {
+  border-color: rgba(247, 220, 151, 0.54);
+  box-shadow: 0 42px 84px rgba(0, 0, 0, 0.58), 0 0 38px rgba(239, 199, 104, 0.12);
+  opacity: 1;
+  transform: translate3d(0, -8px, 92px) scale(1.06);
+}
+
+.taskFlowItem:nth-child(3)[data-active='true'] .taskScreenPlane {
+  border-color: rgba(247, 220, 151, 0.5);
+  box-shadow: 0 38px 78px rgba(0, 0, 0, 0.55), 0 0 34px rgba(239, 199, 104, 0.11);
+  opacity: 1;
+  transform: translate3d(-18px, 6px, 78px) rotateY(-2deg) rotateZ(1deg) scale(1.02);
+}
+
+.taskFlowButton:focus-visible {
+  outline: none;
+}
+
+.taskFlowButton:focus-visible .taskScreenPlane {
+  outline: 3px solid #efc768;
+  outline-offset: 6px;
+}
+
+.taskStepCopy {
+  min-height: 198px;
+  padding: 30px 8px 4px;
+  display: block;
+  transform: translateY(7px);
+  transition: transform 0.48s var(--ease-out);
+}
+
+.taskFlowItem[data-active='true'] .taskStepCopy {
+  transform: translateY(0);
+}
+
+.taskStepKicker {
+  display: block;
+  color: #e9c46d;
+  font-family: var(--font-display);
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.taskStepCopy strong {
+  margin-top: 14px;
+  display: block;
+  color: rgba(249, 247, 242, 0.78);
+  font-family: var(--font-display);
+  font-size: clamp(1.55rem, 2.7vw, 2.5rem);
+  font-weight: 750;
+  letter-spacing: -0.04em;
+  line-height: 1.04;
+}
+
+.taskStepDescription {
+  max-width: 310px;
+  margin-top: 14px;
+  display: block;
+  color: rgba(241, 242, 244, 0.74);
   font-size: 0.78rem;
   line-height: 1.65;
 }
 
-.mechanismList {
+.taskFlowItem[data-active='true'] .taskStepCopy strong {
+  color: #f9f7f2;
+}
+
+.taskFlowItem[data-active='true'] .taskStepDescription {
+  color: rgba(241, 242, 244, 0.84);
+}
+
+.taskDepthList {
+  margin-top: 46px;
   display: grid;
-  gap: 9px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
   list-style: none;
 }
 
-.mechanismList li {
-  padding: 14px;
-  display: grid;
-  grid-template-columns: 34px 1fr;
-  gap: 12px;
-  align-items: start;
-  border: 1px solid var(--border);
-  border-radius: 15px;
-  background: var(--bg-raised);
+.taskDepthList li {
+  padding-top: 17px;
+  border-top: 1px solid rgba(239, 199, 104, 0.2);
 }
 
-.mechanismList li > span {
-  padding-top: 2px;
-  color: var(--accent-text);
+.taskDepthList li > span {
+  color: #e9bf5d;
   font-family: var(--font-display);
-  font-size: 0.66rem;
+  font-size: 0.62rem;
   font-weight: 800;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
 }
 
-.mechanismList strong {
-  color: var(--text);
-  font-family: var(--font-display);
-  font-size: 0.82rem;
-}
-
-.mechanismList p {
-  margin-top: 3px;
-  color: var(--text-muted);
-  font-size: 0.67rem;
-  line-height: 1.5;
+.taskDepthList p {
+  margin-top: 11px;
+  color: rgba(241, 242, 244, 0.58);
+  font-size: 0.72rem;
+  line-height: 1.65;
 }
 
 .groupsVisual {
@@ -1225,19 +1409,20 @@
   justify-content: center;
 }
 
-.experiencePhone {
+.experienceDevice {
   flex: 0 0 auto;
 }
 
-.experiencePhonePrimary {
-  width: min(230px, 64%);
-  transform: rotate(-3deg);
+.experienceTabletPrimary {
+  width: min(390px, 78%);
+  border-radius: 25px;
+  transform: rotate(-2deg);
 }
 
 .experiencePhoneSecondary {
-  width: min(215px, 60%);
-  margin-left: -72px;
-  transform: translateY(30px) rotate(4deg);
+  width: min(178px, 38%);
+  margin-left: -76px;
+  transform: translateY(56px) rotate(4deg);
 }
 
 .experienceList {
@@ -1707,12 +1892,45 @@
     order: -1;
   }
 
-  .taskProof,
   .groupsVisual,
   .mapVisual,
   .experienceVisual {
     width: min(650px, 100%);
     margin: 0 auto;
+  }
+
+  .taskIntro {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .taskIntroLead {
+    max-width: 720px;
+  }
+
+  .taskFlow {
+    padding-right: 24px;
+    padding-left: 24px;
+  }
+
+  .taskScreenSlot {
+    height: 580px;
+  }
+
+  .taskScreenPlane {
+    width: min(23vw, 218px);
+  }
+
+  .taskRelayAsset {
+    top: 315px;
+  }
+
+  .taskStepCopy {
+    min-height: 210px;
+  }
+
+  .taskDepthList {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
 }
@@ -1853,24 +2071,92 @@
     margin-top: 42px;
   }
 
-  .taskProof {
-    min-height: 0;
-    padding: 28px 18px;
+  .taskChapter {
+    padding-right: 18px;
+    padding-left: 18px;
+  }
+
+  .taskIntro {
+    margin-bottom: 36px;
+    gap: 25px;
+  }
+
+  .taskIntro h2 {
+    font-size: clamp(2.5rem, 12vw, 4rem);
+  }
+
+  .taskIntroLead {
+    padding-left: 18px;
+  }
+
+  .taskFlow {
+    --task-card-width: min(76vw, 292px);
+    padding: 20px 0 30px;
+    border-radius: 26px;
+  }
+
+  .taskFlowList {
+    width: max-content;
+    padding-left: max(12vw, calc(50% - 146px));
+    grid-template-columns: repeat(3, var(--task-card-width));
+    gap: 16px;
+    transition: transform 0.62s var(--ease-out);
+  }
+
+  .taskFlow[data-active='1'] .taskFlowList {
+    transform: translateX(calc(0px - var(--task-card-width) - 16px));
+  }
+
+  .taskFlow[data-active='2'] .taskFlowList {
+    transform: translateX(calc(0px - var(--task-card-width) - var(--task-card-width) - 32px));
+  }
+
+  .taskRelayAsset {
+    top: 250px;
+    left: -30%;
+    width: 160%;
+    opacity: 0.66;
+  }
+
+  .taskScreenSlot {
+    height: 550px;
+  }
+
+  .taskScreenPlane {
+    width: min(66vw, 250px);
+    opacity: 0.28;
+  }
+
+  .taskFlowItem:nth-child(1) .taskScreenPlane,
+  .taskFlowItem:nth-child(2) .taskScreenPlane,
+  .taskFlowItem:nth-child(3) .taskScreenPlane {
+    transform: translate3d(0, 18px, 0) scale(0.88);
+  }
+
+  .taskFlowItem:nth-child(1)[data-active='true'] .taskScreenPlane,
+  .taskFlowItem:nth-child(2)[data-active='true'] .taskScreenPlane,
+  .taskFlowItem:nth-child(3)[data-active='true'] .taskScreenPlane {
+    transform: translate3d(0, 0, 70px) scale(1);
+  }
+
+  .taskStepCopy {
+    min-height: 185px;
+    padding: 20px 8px 4px;
+  }
+
+  .taskFlowItem:not([data-active='true']) .taskStepCopy {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .taskStepCopy strong {
+    font-size: clamp(1.7rem, 8.2vw, 2.25rem);
+  }
+
+  .taskDepthList {
+    margin-top: 38px;
     grid-template-columns: 1fr;
-    gap: 30px;
-    border-radius: 25px;
-  }
-
-  .taskPhone {
-    width: min(230px, 58vw);
-  }
-
-  .mechanismPanel > p {
-    font-size: 0.74rem;
-  }
-
-  .mechanismList li {
-    padding: 13px;
+    gap: 18px;
   }
 
   .groupsVisual {
@@ -1928,13 +2214,14 @@
     padding: 32px 18px 24px;
   }
 
-  .experiencePhonePrimary {
-    width: min(220px, 52vw);
+  .experienceTabletPrimary {
+    width: min(260px, 66vw);
   }
 
   .experiencePhoneSecondary {
-    width: min(205px, 49vw);
-    margin-left: -66px;
+    width: min(134px, 34vw);
+    margin-left: -72px;
+    transform: translateY(38px) rotate(4deg);
   }
 
   .experienceList {

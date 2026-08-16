@@ -20,25 +20,40 @@ exact content:
 
 ## Current checked-in media
 
-The four active screenshots already existed on `origin/main` at
-`7e3c0bdbf40cb7c8646de9a0be42648811e02638`. Their bytes are unchanged. Their
-extensions were corrected from `.png` to `.jpg` because the files are JPEGs.
+The website now carries 16 byte-for-byte canonical product captures selected from
+`piotrdomagala/S-` at `20a14889e2397514b7c7bcd73269508f24c8004f` - eight
+`en-US` and eight `pl-PL`. They are clean product UI, not the marketing boards from
+`exports/final`. Each locale deliberately includes iOS and Android plus Dark and
+Light screens.
 
-| Placement | Public path | SHA-256 | Locale | Theme |
-| --- | --- | --- | --- | --- |
-| Creation entry | `/images/app/create-menu.jpg` | `90e39996d591e1b3233a3721ede64b9c3cb26f30ae8c79346b346e1bf0260b8c` | EN | Light |
-| Profile settings | `/images/app/profile-settings.jpg` | `24678a8a252fec0e4b79499b6371b8373bb9948563cee60e326a3298d586cc5c` | EN | Light |
-| Nearby groups | `/images/app/discover-groups.jpg` | `5da99fc4ff2ac8d1f97e7e9c232d1410c422e4fa5b7c07c4b8dbe59acd16c2cf` | EN | Light |
-| Nearby meetings | `/images/app/discover-meetings.jpg` | `0b3056a282afa7065358d315408d7eda1755b7533d10cfe3388561d136774d3f` | EN | Light |
+The checked-in paths are:
 
-These are temporary website-baseline assets, not the final Golden Relay set.
-They do not provide complete PL/EN or Light/Dark coverage and have no binding to
-Android 106 or iOS 143. This limitation stays explicit in the manifest.
+```text
+public/images/product/canonical-flow-2026/en-US/01-voice-input.png ... 08-nearby.png
+public/images/product/canonical-flow-2026/pl-PL/01-voice-input.png ... 08-nearby.png
+public/images/product/canonical-flow-2026/en-US/01-voice-input.webp ... 08-nearby.webp
+public/images/product/canonical-flow-2026/pl-PL/01-voice-input.webp ... 08-nearby.webp
+```
+
+`content/product-media.json` schema 2 records every source path, source SHA-256,
+dimensions, locale, theme, platform, device and semantic slot. The PNG copies are
+exact - no crop, compression, generated UI or content change was made. Each source
+also owns a deterministic WebP record with its source SHA-256, output SHA-256,
+byte length, half-size dimensions and pinned Sharp/libvips pipeline. Only WebP
+paths enter the runtime manifest and static HTML.
+The Golden Relay line used by the interactive task flow is also an exact copy of
+`store-listing/assets/brand/golden-relay-transparent-2048x256.png`, SHA-256
+`4e49a0b5b2f07f5cb934321d573173463e5ab10d986c29acf64593548956ce15`.
+
+This checked-in set is an owner-attested website preview, not the final store
+artifact binding. `artifactBinding` therefore remains `null`, and
+`finalArtifactContract.status` remains `awaiting-approved-no-publish-package`.
 
 ## Final package gate
 
-Do not import anything until one accepted no-publish workflow after PR #438 has
-produced and verified all three artifacts:
+Do not promote the current source preview to the final artifact binding until one
+accepted no-publish workflow after PR #438 has produced and verified all three
+artifacts:
 
 - `shuuty-store-listing-package-<sha>`;
 - `shuuty-store-listing-ledger-<sha>`;
@@ -83,66 +98,66 @@ the canonical `shuuty-store-listing-package-<sha>.zip` basename, `packageSha256`
 `ledgerSha256` and `qaSha256`. It contains no local absolute path, credential,
 remote signed URL or temporary directory.
 
-## Read-only candidate selection
+## Canonical source selection
 
-The current store materials were reviewed only as visual and provenance references.
-They are not copied into this branch and remain ineligible until the accepted
-no-publish artifact exists. The clean product captures fit the website phone frames
-better than the store boards, which already contain their own Golden Relay headline
-and marketing copy.
-
-The provisional per-locale selection is deliberately mixed across both platforms:
+The clean product captures fit the website phone frames better than the store
+boards, which already contain their own Golden Relay headline and marketing copy.
+The current per-locale preview is deliberately mixed across both platforms:
 
 | Slot | Platform and device | Relative source entry |
 | --- | --- | --- |
-| `voice-input` | iOS, iPhone 6.9 | `provenance/ios-captures/source/iphone-6.9/<locale>/voice-input-dark-<lang>.png` |
-| `assignee` | Android phone | `provenance/android-captures/<locale>/<lang>-02-assignee-<person>-dark/voice-assignee-<person>-dark-<lang>.png` |
-| `delegated-task` | iOS, iPhone 6.9 | `provenance/ios-captures/source/iphone-6.9/<locale>/delegated-task-detail-dark-<lang>.png` |
-| `groups` | iOS, iPhone 6.9 | `provenance/ios-captures/source/iphone-6.9/<locale>/groups-list-dark-<lang>.png` |
-| `group-offer-gallery` | iOS, iPhone 6.9 | `provenance/ios-captures/source/iphone-6.9/<locale>/product-group-gallery-dark-<lang>.png` |
-| `modules` | iOS, iPhone 6.9 | `provenance/ios-captures/source/iphone-6.9/<locale>/group-settings-modules-light-<lang>.png` |
-| `bookings` | Android phone | `provenance/android-captures/<locale>/<lang>-07-booking-light/booking-calendar-populated-light-<lang>.png` |
-| `nearby` | Android phone | `provenance/android-captures/<locale>/<lang>-08-discover-<city>-light/discover-map-light-<lang>.png` |
+| `voice-input` | iOS, iPhone 6.9 | `store-listing/assets/source/ios/iphone-6.9/<locale>/voice-input-dark-<lang>.png` |
+| `assignee` | Android phone | `store-listing/assets/source/android/<locale>/voice-assignee-<person>-dark-<lang>.png` |
+| `delegated-task` | iOS, iPhone 6.9 | `store-listing/assets/source/ios/iphone-6.9/<locale>/delegated-task-detail-dark-<lang>.png` |
+| `groups` | iOS, iPhone 6.9 | `store-listing/assets/source/ios/iphone-6.9/<locale>/groups-list-dark-<lang>.png` |
+| `group-offer-gallery` | iOS, iPad 13 | `store-listing/assets/source/ios/ipad-13/<locale>/product-group-gallery-dark-<lang>.png` |
+| `modules` | iOS, iPhone 6.9 | `store-listing/assets/source/ios/iphone-6.9/<locale>/group-settings-modules-light-<lang>.png` |
+| `bookings` | Android phone | `store-listing/assets/source/android/<locale>/booking-calendar-populated-light-<lang>.png` |
+| `nearby` | Android phone | `store-listing/assets/source/android/<locale>/discover-map-light-<lang>.png` |
 
 Here `<locale>` is `en-US` or `pl-PL`, `<lang>` is `en` or `pl`, and `<person>`
-is `alex` or `olek`, and `<city>` is `london` or `warsaw`. These are paths inside
-the current package structure, not paths to a working export directory. This mapping
-preserves the same 1-8 flow, both languages, Dark and Light product states, and
-visible iOS and Android representation.
+is `alex` or `olek`. These are tracked source paths, never paths to a working export
+directory. This mapping preserves the same 1-8 flow, both languages, Dark and Light
+product states, and visible iOS and Android representation.
 
 The current Android PL group list contains fallback initials instead of the verified
 avatars. The Android module screen has a line crossing the final task row, and the
-Android group-gallery capture has a more severe top crop. Those variants are not in
-the provisional selection. iPad captures stay in provenance but cannot be selected
-for the existing phone-shaped placements. Final hashes and filenames must be read
-again from the accepted artifact - this table is not an artifact binding.
+Android and iPhone group-gallery captures have a top crop. Those variants are not in
+the preview selection. The clean iPad gallery capture is displayed in the dedicated
+tablet-shaped slot; all phone-shaped slots continue to reject iPad assets. Final
+hashes and filenames must be read again from the accepted artifact - this table is
+not an artifact binding.
 
 ## Mechanical import
 
-1. Copy the verified subset byte-for-byte to stable paths such as
-   `public/images/product/golden-relay-2026/pl-PL/01-voice-input.png` and the EN
-   equivalent.
-2. Add the imported records and relative `sourceArtifactEntry` values to the
-   build-only `content/product-media.json`.
+1. Compare every selected source hash with the accepted package ledger. Copy only
+   source files that differ, byte-for-byte, to the stable PNG paths.
+2. Replace preview `sourceArtifactEntry` values with accepted package entries in
+   the build-only `content/product-media.json`.
 3. Change `finalArtifactContract.status` to `approved-no-publish-imported` and
    fill `artifactBinding`.
-4. Add separate `placementSets` for `en` and `pl`, bind every semantic placement
-   to an asset of the matching locale, and update `placementSelection`. The
-   resolver constructs the three-screen hero from `voiceInput`, `assignee` and
+4. Preserve the separate `en` and `pl` placement sets. The resolver constructs the
+   three-screen hero and interactive task handoff from `voiceInput`, `assignee` and
    `delegatedTask`; layout components require no rewrite.
-5. Run `npm run sync:media-runtime`. Commit the deterministic runtime projection;
-   never add provenance fields to it.
+5. Run `npm run generate:media-derivatives`, then `npm run sync:media-runtime`.
+   Commit the deterministic WebP files and runtime projection; never add provenance
+   fields to the runtime file.
 6. Run `npm run validate:media`, `npm test`, `npm run typecheck`, `npm run lint`
    and `npm run build`.
 7. Repeat browser QA for PL/EN, Light/Dark and desktop/tablet/mobile.
 
-The current schema deliberately validates each selected import as an exact
-byte-for-byte copy: `sourceSha256` must equal the public asset `sha256`, every
-`sourceArtifactEntry` must be unique, and every semantic slot must use its matching
-localized alt key. A later WebP or AVIF derivative requires an explicit schema and
-validator extension that records both source and output hashes before a selected
-asset may differ from its accepted source. Missing screens must never be generated
-or reconstructed.
+Schema 2 validates each selected import as an exact byte-for-byte source copy:
+`sourceSha256` must equal the PNG `sha256`, every `sourceArtifactEntry` must be safe
+and unique, and every semantic slot must use its matching localized alt key. Its
+WebP must preserve the locale and filename stem, reproduce with Sharp 0.35.3 and
+libvips 8.18.3, match its declared output hash and byte length, and remain at or
+below 200 KiB. A complete locale must remain at or below 600 KiB. Missing screens
+must never be generated or reconstructed.
+
+The current derivative totals are 494,680 bytes for `en-US` and 489,762 bytes for
+`pl-PL`; the largest single WebP is 160,510 bytes. A normal production build only
+validates these checked-in bytes. Regeneration is deliberate and fails before
+publishing files if source provenance, the pinned pipeline or either budget drifts.
 
 PR #9 remains an archive. Its raster files and ignored `exports` directories are
 not inputs to this contract. Only its semantic slot vocabulary informed the

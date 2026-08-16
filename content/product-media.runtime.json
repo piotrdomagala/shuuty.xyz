@@ -1,49 +1,143 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "assets": [
     {
-      "id": "creation-entry",
-      "altKey": "create",
-      "path": "/images/app/create-menu.jpg",
-      "width": 471,
-      "height": 1024
+      "id": "en-voice-input",
+      "altKey": "voiceInput",
+      "path": "/images/product/canonical-flow-2026/en-US/01-voice-input.webp",
+      "width": 660,
+      "height": 1434
     },
     {
-      "id": "profile-settings",
-      "altKey": "settings",
-      "path": "/images/app/profile-settings.jpg",
-      "width": 471,
-      "height": 1024
+      "id": "en-assignee",
+      "altKey": "assignee",
+      "path": "/images/product/canonical-flow-2026/en-US/02-assignee.webp",
+      "width": 540,
+      "height": 1200
     },
     {
-      "id": "nearby-groups",
+      "id": "en-delegated-task",
+      "altKey": "delegatedTask",
+      "path": "/images/product/canonical-flow-2026/en-US/03-delegated-task.webp",
+      "width": 660,
+      "height": 1434
+    },
+    {
+      "id": "en-groups",
       "altKey": "groups",
-      "path": "/images/app/discover-groups.jpg",
-      "width": 471,
-      "height": 1024
+      "path": "/images/product/canonical-flow-2026/en-US/04-groups.webp",
+      "width": 660,
+      "height": 1434
     },
     {
-      "id": "nearby-meetings",
-      "altKey": "meetings",
-      "path": "/images/app/discover-meetings.jpg",
-      "width": 471,
-      "height": 1024
+      "id": "en-group-offer-gallery",
+      "altKey": "groupGallery",
+      "path": "/images/product/canonical-flow-2026/en-US/05-group-offer-gallery.webp",
+      "width": 1032,
+      "height": 1376
+    },
+    {
+      "id": "en-modules",
+      "altKey": "modules",
+      "path": "/images/product/canonical-flow-2026/en-US/06-modules.webp",
+      "width": 660,
+      "height": 1434
+    },
+    {
+      "id": "en-bookings",
+      "altKey": "bookings",
+      "path": "/images/product/canonical-flow-2026/en-US/07-bookings.webp",
+      "width": 540,
+      "height": 1200
+    },
+    {
+      "id": "en-nearby",
+      "altKey": "nearby",
+      "path": "/images/product/canonical-flow-2026/en-US/08-nearby.webp",
+      "width": 540,
+      "height": 1200
+    },
+    {
+      "id": "pl-voice-input",
+      "altKey": "voiceInput",
+      "path": "/images/product/canonical-flow-2026/pl-PL/01-voice-input.webp",
+      "width": 660,
+      "height": 1434
+    },
+    {
+      "id": "pl-assignee",
+      "altKey": "assignee",
+      "path": "/images/product/canonical-flow-2026/pl-PL/02-assignee.webp",
+      "width": 540,
+      "height": 1200
+    },
+    {
+      "id": "pl-delegated-task",
+      "altKey": "delegatedTask",
+      "path": "/images/product/canonical-flow-2026/pl-PL/03-delegated-task.webp",
+      "width": 660,
+      "height": 1434
+    },
+    {
+      "id": "pl-groups",
+      "altKey": "groups",
+      "path": "/images/product/canonical-flow-2026/pl-PL/04-groups.webp",
+      "width": 660,
+      "height": 1434
+    },
+    {
+      "id": "pl-group-offer-gallery",
+      "altKey": "groupGallery",
+      "path": "/images/product/canonical-flow-2026/pl-PL/05-group-offer-gallery.webp",
+      "width": 1032,
+      "height": 1376
+    },
+    {
+      "id": "pl-modules",
+      "altKey": "modules",
+      "path": "/images/product/canonical-flow-2026/pl-PL/06-modules.webp",
+      "width": 660,
+      "height": 1434
+    },
+    {
+      "id": "pl-bookings",
+      "altKey": "bookings",
+      "path": "/images/product/canonical-flow-2026/pl-PL/07-bookings.webp",
+      "width": 540,
+      "height": 1200
+    },
+    {
+      "id": "pl-nearby",
+      "altKey": "nearby",
+      "path": "/images/product/canonical-flow-2026/pl-PL/08-nearby.webp",
+      "width": 540,
+      "height": 1200
     }
   ],
   "placementSets": {
-    "baseline": {
-      "voiceInput": "creation-entry",
-      "assignee": "nearby-groups",
-      "delegatedTask": "nearby-meetings",
-      "groups": "nearby-groups",
-      "groupGallery": "nearby-groups",
-      "modules": "profile-settings",
-      "bookings": "nearby-meetings",
-      "nearby": "nearby-groups"
+    "canonical-source-en": {
+      "voiceInput": "en-voice-input",
+      "assignee": "en-assignee",
+      "delegatedTask": "en-delegated-task",
+      "groups": "en-groups",
+      "groupGallery": "en-group-offer-gallery",
+      "modules": "en-modules",
+      "bookings": "en-bookings",
+      "nearby": "en-nearby"
+    },
+    "canonical-source-pl": {
+      "voiceInput": "pl-voice-input",
+      "assignee": "pl-assignee",
+      "delegatedTask": "pl-delegated-task",
+      "groups": "pl-groups",
+      "groupGallery": "pl-group-offer-gallery",
+      "modules": "pl-modules",
+      "bookings": "pl-bookings",
+      "nearby": "pl-nearby"
     }
   },
   "placementSelection": {
-    "en": "baseline",
-    "pl": "baseline"
+    "en": "canonical-source-en",
+    "pl": "canonical-source-pl"
   }
 }

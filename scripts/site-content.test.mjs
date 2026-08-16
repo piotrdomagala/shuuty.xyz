@@ -35,6 +35,10 @@ test('the Golden Relay and flexible group story stay explicit in both languages'
   assert.equal(content.pl.groups.modes.length, 4);
   assert.equal(content.en.groups.modules.length, 10);
   assert.equal(content.pl.groups.modules.length, 10);
+  assert.equal(content.en.tasks.mechanism.length, 3);
+  assert.equal(content.pl.tasks.mechanism.length, 3);
+  assert.equal(content.en.tasks.mechanism[2].title, 'Delegate now. The task is ready.');
+  assert.equal(content.pl.tasks.mechanism[2].title, 'Deleguj teraz. Zadanie jest gotowe.');
 
   for (const required of [
     'A place to work',
@@ -59,6 +63,7 @@ test('the landing does not recreate product UI or disclose implementation provid
     [
       'app/homeContent.json',
       'components/HomePageClient.tsx',
+      'components/TaskSpatialHandoff.tsx',
       'app/page.module.css',
     ].map(async (path) => [path, await readFile(new URL(path, root), 'utf8')]),
   );
@@ -74,6 +79,8 @@ test('the landing does not recreate product UI or disclose implementation provid
     'Anthropic',
     'Gemini',
     'exports/final',
+    'generated_images',
+    'exec-e3c8a91f-f42f-40e5-bcbd-c2b3a1246ffb',
   ]) {
     assert.equal(combined.includes(forbidden), false, `Landing contains forbidden marker: ${forbidden}`);
   }

@@ -33,6 +33,8 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ```bash
 npm run lint
+npm run typecheck
+npm test
 npm run build
 ```
 
@@ -53,14 +55,23 @@ The two themes mirror the current mobile application tokens:
 
 The selected theme is stored as `shuuty-theme` and applied before first paint. The language is stored in the `lang` cookie.
 
-Current public screenshots live under `public/images/app/` and are registered in
-`content/product-media.json`. Add only approved, anonymised product imagery; do
-not link to working files in another repository.
+Current product captures live under `public/images/product/canonical-flow-2026/`
+and are registered with source hashes in `content/product-media.json`. The PNG
+files are byte-for-byte canonical PL/EN captures selected for the website - never
+generated or reconstructed UI. The browser receives deterministic half-size WebP
+derivatives whose output hash, byte length, encoder and source hash are recorded
+separately. The complete EN set is 494,680 bytes and the PL set is 489,762 bytes.
 
-The accepted Golden Relay package will be integrated through the stable media
-manifest after the complete 50-image no-publish artifact passes its ledger and QA
-gates. See `docs/PRODUCT-MEDIA-INTEGRATION.md`. Never import a partial
-`exports/final` directory or recreate a missing product screen.
+`npm run generate:media-derivatives` is an explicit asset-maintenance step. A
+normal build never regenerates product media; it validates checked-in source and
+derivative bytes, provenance, locale isolation and the 200 KiB per-asset / 600 KiB
+per-locale budgets.
+
+They remain an explicitly unbound preview. The accepted Golden Relay package will
+be integrated through the stable media manifest after the complete 50-image
+no-publish artifact passes its ledger and QA gates. See
+`docs/PRODUCT-MEDIA-INTEGRATION.md`. Never import a partial `exports/final`
+directory or recreate a missing product screen.
 
 ## Deployment
 

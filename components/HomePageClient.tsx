@@ -11,6 +11,7 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 import type { DocumentLanguage } from '@/components/documentLocale';
+import TaskSpatialHandoff from '@/components/TaskSpatialHandoff';
 import { useSiteLanguage } from '@/components/useSiteLanguage';
 import { getProductMediaPlacements } from '@/lib/productMedia';
 import { SITE_URL, SOCIAL_IMAGE } from '@/lib/site';
@@ -253,6 +254,14 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
     ...media,
     alt: mediaAlt(media),
     priority: index === 0,
+  }));
+  const taskFlowScreens = [
+    productMediaPlacements.voiceInput,
+    productMediaPlacements.assignee,
+    productMediaPlacements.delegatedTask,
+  ].map((media) => ({
+    ...media,
+    alt: mediaAlt(media),
   }));
 
   const selectHeroPhone = useCallback((index: number) => {
@@ -544,43 +553,35 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
           </div>
         </section>
 
-        <section id="tasks" className={`${s.chapter} ${s.reveal}`} data-reveal>
-          <div className={`${s.container} ${s.chapterGrid}`}>
-            <div className={s.chapterCopy}>
-              <span className={s.sectionLabel}>{c.tasks.label}</span>
-              <h2>{c.tasks.heading}</h2>
-              <p className={s.chapterLead}>{c.tasks.lead}</p>
-              <ul className={s.bulletList}>
-                {c.tasks.bullets.map((bullet) => <li key={bullet}><span><Icon name="check" /></span>{bullet}</li>)}
-              </ul>
-            </div>
-
-            <div className={s.taskProof}>
-              <figure className={s.productScreen}>
-                <div className={`${s.phone} ${s.taskPhone}`}>
-                  <Image
-                    src={productMediaPlacements.voiceInput.path}
-                    alt={mediaAlt(productMediaPlacements.voiceInput)}
-                    width={productMediaPlacements.voiceInput.width}
-                    height={productMediaPlacements.voiceInput.height}
-                    sizes="(max-width: 720px) 52vw, 250px"
-                  />
-                </div>
-                <figcaption>{mediaAlt(productMediaPlacements.voiceInput)}</figcaption>
-              </figure>
-              <div className={s.mechanismPanel}>
-                <span className={s.modesLabel}>{c.tasks.mechanismLabel}</span>
+        <section id="tasks" className={`${s.chapter} ${s.taskChapter} ${s.reveal}`} data-reveal>
+          <div className={s.container}>
+            <div className={s.taskIntro}>
+              <div>
+                <span className={s.sectionLabel}>{c.tasks.label}</span>
+                <h2>{c.tasks.heading}</h2>
+              </div>
+              <div className={s.taskIntroLead}>
+                <span>{c.tasks.mechanismLabel}</span>
+                <p>{c.tasks.lead}</p>
                 <p>{c.tasks.mechanismLead}</p>
-                <ol className={s.mechanismList}>
-                  {c.tasks.mechanism.map((step, index) => (
-                    <li key={step.title}>
-                      <span>{String(index + 1).padStart(2, '0')}</span>
-                      <div><strong>{step.title}</strong><p>{step.desc}</p></div>
-                    </li>
-                  ))}
-                </ol>
               </div>
             </div>
+
+            <TaskSpatialHandoff
+              regionLabel={c.tasks.flowRegionLabel}
+              selectLabel={c.tasks.flowSelectLabel}
+              screens={taskFlowScreens}
+              steps={c.tasks.mechanism}
+            />
+
+            <ul className={s.taskDepthList}>
+              {c.tasks.bullets.map((bullet, index) => (
+                <li key={bullet}>
+                  <span>{String(index + 1).padStart(2, '0')}</span>
+                  <p>{bullet}</p>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 
@@ -675,16 +676,16 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
           <div className={`${s.container} ${s.experienceGrid}`}>
             <figure className={s.experienceVisual}>
               <div className={s.experienceScreens}>
-                <div className={`${s.phone} ${s.experiencePhone} ${s.experiencePhonePrimary}`}>
+                <div className={`${s.phone} ${s.experienceDevice} ${s.experienceTabletPrimary}`}>
                   <Image
                     src={productMediaPlacements.groupGallery.path}
                     alt={mediaAlt(productMediaPlacements.groupGallery)}
                     width={productMediaPlacements.groupGallery.width}
                     height={productMediaPlacements.groupGallery.height}
-                    sizes="(max-width: 720px) 48vw, 230px"
+                    sizes="(max-width: 720px) 72vw, 390px"
                   />
                 </div>
-                <div className={`${s.phone} ${s.experiencePhone} ${s.experiencePhoneSecondary}`}>
+                <div className={`${s.phone} ${s.experienceDevice} ${s.experiencePhoneSecondary}`}>
                   <Image
                     src={productMediaPlacements.modules.path}
                     alt={mediaAlt(productMediaPlacements.modules)}

@@ -67,24 +67,25 @@
         "A shared or delegated task can become a focused thinking space. Discussion, replies and all activity stay with the task.",
         "Manual creation keeps the same depth: descriptions, subtasks, priority, reminders, people, location and time tracking."
       ],
-      "mechanismLabel": "The Shuuty relay",
+      "mechanismLabel": "A real task. Three decisive moments.",
       "mechanismLead": "It is one continuous product flow. Before the task moves, you can see who receives it, when it matters and which context stays with it.",
+      "flowRegionLabel": "From voice to a delegated task",
+      "flowSelectLabel": "Show this step",
       "mechanism": [
         {
-          "title": "Speak or type",
-          "desc": "Capture one thought or several details while they are still fresh."
+          "kicker": "Capture",
+          "title": "Say it.",
+          "desc": "Speak naturally or type. Shuuty keeps the title, details, timing and reminder together."
         },
         {
-          "title": "Choose the recipient",
-          "desc": "Keep it private, assign a person or connect the task with a group."
+          "kicker": "Context",
+          "title": "Choose a person or group.",
+          "desc": "Keep it private, assign a person or place it directly in the right group."
         },
         {
-          "title": "Review the structure",
-          "desc": "Check the title, description, subtasks, date, reminder, priority and place."
-        },
-        {
-          "title": "Move together",
-          "desc": "The task arrives with its context and keeps discussion, activity and time together."
+          "kicker": "Hand-off",
+          "title": "Delegate now. The task is ready.",
+          "desc": "Review the structured task, then send it with its discussion, activity and time in one place."
         }
       ]
     },
@@ -244,7 +245,7 @@
     "images": {
       "create": "Shuuty create menu with task, voice, meeting and group actions",
       "settings": "Shuuty settings with light mode and language controls",
-      "groups": "Shuuty map showing nearby groups",
+      "groups": "Shuuty chat showing conversations and activity across groups",
       "meetings": "Shuuty map showing a meeting",
       "voiceInput": "Shuuty voice input for capturing a task",
       "assignee": "Shuuty task recipient selection",
@@ -336,24 +337,25 @@
         "Wspólne lub delegowane zadanie może stać się przestrzenią do wspólnego myślenia. Dyskusja, odpowiedzi i cała aktywność zostają przy zadaniu.",
         "Ręczne tworzenie zachowuje tę samą głębię: opis, podzadania, priorytet, przypomnienia, osoby, lokalizację i pomiar czasu."
       ],
-      "mechanismLabel": "Przepływ Shuuty",
+      "mechanismLabel": "Prawdziwe zadanie. Trzy decydujące momenty.",
       "mechanismLead": "To jeden ciągły przepływ produktu. Zanim zadanie ruszy dalej, widzisz, kto je otrzyma, kiedy jest ważne i jaki kontekst pozostanie razem z nim.",
+      "flowRegionLabel": "Od głosu do delegowanego zadania",
+      "flowSelectLabel": "Pokaż ten krok",
       "mechanism": [
         {
-          "title": "Powiedz albo wpisz",
-          "desc": "Złap jedną myśl lub kilka szczegółów, zanim znikną z głowy."
+          "kicker": "Uchwyć",
+          "title": "Powiedz.",
+          "desc": "Mów naturalnie albo wpisz treść. Shuuty zachowa razem tytuł, szczegóły, termin i przypomnienie."
         },
         {
-          "title": "Wybierz odbiorcę",
-          "desc": "Zostaw zadanie prywatne, przypisz osobę albo połącz je z grupą."
+          "kicker": "Kontekst",
+          "title": "Wybierz osobę lub grupę.",
+          "desc": "Zostaw zadanie prywatne, przypisz osobę albo umieść je bezpośrednio we właściwej grupie."
         },
         {
-          "title": "Sprawdź strukturę",
-          "desc": "Zobacz tytuł, opis, podzadania, datę, przypomnienie, priorytet i miejsce."
-        },
-        {
-          "title": "Działajcie razem",
-          "desc": "Zadanie trafia z kontekstem i zachowuje rozmowę, aktywność oraz czas."
+          "kicker": "Przekazanie",
+          "title": "Deleguj teraz. Zadanie jest gotowe.",
+          "desc": "Sprawdź uporządkowane zadanie i wyślij je z rozmową, aktywnością oraz czasem w jednym miejscu."
         }
       ]
     },
@@ -513,7 +515,7 @@
     "images": {
       "create": "Menu tworzenia Shuuty z zadaniem, głosem, spotkaniem i grupą",
       "settings": "Ustawienia Shuuty z kontrolą jasnego motywu i języka",
-      "groups": "Mapa Shuuty pokazująca grupy w pobliżu",
+      "groups": "Czat Shuuty z rozmowami i aktywnością w grupach",
       "meetings": "Mapa Shuuty pokazująca spotkanie",
       "voiceInput": "Wprowadzanie głosowe zadania w Shuuty",
       "assignee": "Wybór odbiorcy zadania w Shuuty",

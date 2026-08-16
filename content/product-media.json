@@ -1,78 +1,687 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "source": {
-    "repository": "piotrdomagala/shuuty.xyz",
-    "commit": "7e3c0bdbf40cb7c8646de9a0be42648811e02638",
-    "status": "existing-public-site-assets",
-    "note": "These files already existed on origin/main. No raster from PR #9 or a partial exports/final directory is included."
+    "repository": "piotrdomagala/S-",
+    "commit": "20a14889e2397514b7c7bcd73269508f24c8004f",
+    "status": "owner-attested-canonical-source-preview",
+    "note": "Byte-for-byte canonical product captures selected for the website with owner-attested shuuty.com and shuuty.xyz usage. This is not the final no-publish store artifact binding."
   },
   "artifactBinding": null,
   "assets": [
     {
-      "id": "creation-entry",
-      "altKey": "create",
-      "path": "/images/app/create-menu.jpg",
-      "mediaType": "image/jpeg",
-      "width": 471,
-      "height": 1024,
-      "sha256": "90e39996d591e1b3233a3721ede64b9c3cb26f30ae8c79346b346e1bf0260b8c",
-      "locales": ["en-US"],
-      "theme": "light"
+      "id": "en-voice-input",
+      "altKey": "voiceInput",
+      "path": "/images/product/canonical-flow-2026/en-US/01-voice-input.png",
+      "mediaType": "image/png",
+      "width": 1320,
+      "height": 2868,
+      "sha256": "0e1cf4ae22b6cd8e6050731077f462aac7cb79bb798f83d6f7dda726d07cbdfb",
+      "locales": [
+        "en-US"
+      ],
+      "theme": "dark",
+      "semanticSlot": "voice-input",
+      "sourceArtifactEntry": "store-listing/assets/source/ios/iphone-6.9/en-US/voice-input-dark-en.png",
+      "sourceSha256": "0e1cf4ae22b6cd8e6050731077f462aac7cb79bb798f83d6f7dda726d07cbdfb",
+      "platform": "ios",
+      "device": "iphone-6.9",
+      "storePosition": 1,
+      "web": {
+        "path": "/images/product/canonical-flow-2026/en-US/01-voice-input.webp",
+        "mediaType": "image/webp",
+        "width": 660,
+        "height": 1434,
+        "byteLength": 36306,
+        "sha256": "b77c860bef86a32881c10cd09f0a268d501c549d56ef174eb411711e7561890f",
+        "sourceSha256": "0e1cf4ae22b6cd8e6050731077f462aac7cb79bb798f83d6f7dda726d07cbdfb",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.5,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      }
     },
     {
-      "id": "profile-settings",
-      "altKey": "settings",
-      "path": "/images/app/profile-settings.jpg",
-      "mediaType": "image/jpeg",
-      "width": 471,
-      "height": 1024,
-      "sha256": "24678a8a252fec0e4b79499b6371b8373bb9948563cee60e326a3298d586cc5c",
-      "locales": ["en-US"],
-      "theme": "light"
+      "id": "en-assignee",
+      "altKey": "assignee",
+      "path": "/images/product/canonical-flow-2026/en-US/02-assignee.png",
+      "mediaType": "image/png",
+      "width": 1080,
+      "height": 2400,
+      "sha256": "8c367e089779458a2dcc83801fb0400ee3a07e64f2c6993a94758e6e99c57565",
+      "locales": [
+        "en-US"
+      ],
+      "theme": "dark",
+      "semanticSlot": "assignee",
+      "sourceArtifactEntry": "store-listing/assets/source/android/en-US/voice-assignee-alex-dark-en.png",
+      "sourceSha256": "8c367e089779458a2dcc83801fb0400ee3a07e64f2c6993a94758e6e99c57565",
+      "platform": "android",
+      "device": "android-phone",
+      "storePosition": 2,
+      "web": {
+        "path": "/images/product/canonical-flow-2026/en-US/02-assignee.webp",
+        "mediaType": "image/webp",
+        "width": 540,
+        "height": 1200,
+        "byteLength": 30458,
+        "sha256": "1853323abf733b701828728d74bd303896ed8bfb0cfbf880e4f0913ed4553487",
+        "sourceSha256": "8c367e089779458a2dcc83801fb0400ee3a07e64f2c6993a94758e6e99c57565",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.5,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      }
     },
     {
-      "id": "nearby-groups",
+      "id": "en-delegated-task",
+      "altKey": "delegatedTask",
+      "path": "/images/product/canonical-flow-2026/en-US/03-delegated-task.png",
+      "mediaType": "image/png",
+      "width": 1320,
+      "height": 2868,
+      "sha256": "b1da13fa5cdf7238558dbf648ab5aa8d2513158037824b1f278b69ea66caa8d7",
+      "locales": [
+        "en-US"
+      ],
+      "theme": "dark",
+      "semanticSlot": "delegated-task",
+      "sourceArtifactEntry": "store-listing/assets/source/ios/iphone-6.9/en-US/delegated-task-detail-dark-en.png",
+      "sourceSha256": "b1da13fa5cdf7238558dbf648ab5aa8d2513158037824b1f278b69ea66caa8d7",
+      "platform": "ios",
+      "device": "iphone-6.9",
+      "storePosition": 3,
+      "web": {
+        "path": "/images/product/canonical-flow-2026/en-US/03-delegated-task.webp",
+        "mediaType": "image/webp",
+        "width": 660,
+        "height": 1434,
+        "byteLength": 49664,
+        "sha256": "7e6ab364cb780de92c833c1001ba3627c9634b3b20ba4926a34ea51c18dff634",
+        "sourceSha256": "b1da13fa5cdf7238558dbf648ab5aa8d2513158037824b1f278b69ea66caa8d7",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.5,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      }
+    },
+    {
+      "id": "en-groups",
       "altKey": "groups",
-      "path": "/images/app/discover-groups.jpg",
-      "mediaType": "image/jpeg",
-      "width": 471,
-      "height": 1024,
-      "sha256": "5da99fc4ff2ac8d1f97e7e9c232d1410c422e4fa5b7c07c4b8dbe59acd16c2cf",
-      "locales": ["en-US"],
-      "theme": "light"
+      "path": "/images/product/canonical-flow-2026/en-US/04-groups.png",
+      "mediaType": "image/png",
+      "width": 1320,
+      "height": 2868,
+      "sha256": "6380ecb85dfaf76f1c713de118cd5075e49c874939a68fccb0786e86b3bd1ff0",
+      "locales": [
+        "en-US"
+      ],
+      "theme": "dark",
+      "semanticSlot": "groups",
+      "sourceArtifactEntry": "store-listing/assets/source/ios/iphone-6.9/en-US/groups-list-dark-en.png",
+      "sourceSha256": "6380ecb85dfaf76f1c713de118cd5075e49c874939a68fccb0786e86b3bd1ff0",
+      "platform": "ios",
+      "device": "iphone-6.9",
+      "storePosition": 4,
+      "web": {
+        "path": "/images/product/canonical-flow-2026/en-US/04-groups.webp",
+        "mediaType": "image/webp",
+        "width": 660,
+        "height": 1434,
+        "byteLength": 60196,
+        "sha256": "12096bcc10ecf3ec48d7a04c6693030141aced4b08730e2dc93b87233b0325b0",
+        "sourceSha256": "6380ecb85dfaf76f1c713de118cd5075e49c874939a68fccb0786e86b3bd1ff0",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.5,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      }
     },
     {
-      "id": "nearby-meetings",
-      "altKey": "meetings",
-      "path": "/images/app/discover-meetings.jpg",
-      "mediaType": "image/jpeg",
-      "width": 471,
-      "height": 1024,
-      "sha256": "0b3056a282afa7065358d315408d7eda1755b7533d10cfe3388561d136774d3f",
-      "locales": ["en-US"],
-      "theme": "light"
+      "id": "en-group-offer-gallery",
+      "altKey": "groupGallery",
+      "path": "/images/product/canonical-flow-2026/en-US/05-group-offer-gallery.png",
+      "mediaType": "image/png",
+      "width": 2064,
+      "height": 2752,
+      "sha256": "a9b0661e00ae53e8135983e0671949250b7a5ef84462fe2d7e3b1a6063ba9e97",
+      "locales": [
+        "en-US"
+      ],
+      "theme": "dark",
+      "semanticSlot": "group-offer-gallery",
+      "sourceArtifactEntry": "store-listing/assets/source/ios/ipad-13/en-US/product-group-gallery-dark-en.png",
+      "sourceSha256": "a9b0661e00ae53e8135983e0671949250b7a5ef84462fe2d7e3b1a6063ba9e97",
+      "platform": "ios",
+      "device": "ipad-13",
+      "storePosition": 5,
+      "web": {
+        "path": "/images/product/canonical-flow-2026/en-US/05-group-offer-gallery.webp",
+        "mediaType": "image/webp",
+        "width": 1032,
+        "height": 1376,
+        "byteLength": 65184,
+        "sha256": "4927f9e01f68b910a7ed5bd7d2e588ef0c334e5c20afe5119c0663a78708a650",
+        "sourceSha256": "a9b0661e00ae53e8135983e0671949250b7a5ef84462fe2d7e3b1a6063ba9e97",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.5,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      }
+    },
+    {
+      "id": "en-modules",
+      "altKey": "modules",
+      "path": "/images/product/canonical-flow-2026/en-US/06-modules.png",
+      "mediaType": "image/png",
+      "width": 1320,
+      "height": 2868,
+      "sha256": "0959a7e6ac6ece9eaf23afd1cd33574f52e48630fad73b2f4d53c1564b310341",
+      "locales": [
+        "en-US"
+      ],
+      "theme": "light",
+      "semanticSlot": "modules",
+      "sourceArtifactEntry": "store-listing/assets/source/ios/iphone-6.9/en-US/group-settings-modules-light-en.png",
+      "sourceSha256": "0959a7e6ac6ece9eaf23afd1cd33574f52e48630fad73b2f4d53c1564b310341",
+      "platform": "ios",
+      "device": "iphone-6.9",
+      "storePosition": 6,
+      "web": {
+        "path": "/images/product/canonical-flow-2026/en-US/06-modules.webp",
+        "mediaType": "image/webp",
+        "width": 660,
+        "height": 1434,
+        "byteLength": 67594,
+        "sha256": "9c860ae9f60d1b0f49f8f6e59658bdd902b9301451ad1906a10cd6510a75f3e1",
+        "sourceSha256": "0959a7e6ac6ece9eaf23afd1cd33574f52e48630fad73b2f4d53c1564b310341",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.5,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      }
+    },
+    {
+      "id": "en-bookings",
+      "altKey": "bookings",
+      "path": "/images/product/canonical-flow-2026/en-US/07-bookings.png",
+      "mediaType": "image/png",
+      "width": 1080,
+      "height": 2400,
+      "sha256": "6990018013536b0f3084124f7fb479a3e0ee382d69e8a123225cfb67be7cdc88",
+      "locales": [
+        "en-US"
+      ],
+      "theme": "light",
+      "semanticSlot": "bookings",
+      "sourceArtifactEntry": "store-listing/assets/source/android/en-US/booking-calendar-populated-light-en.png",
+      "sourceSha256": "6990018013536b0f3084124f7fb479a3e0ee382d69e8a123225cfb67be7cdc88",
+      "platform": "android",
+      "device": "android-phone",
+      "storePosition": 7,
+      "web": {
+        "path": "/images/product/canonical-flow-2026/en-US/07-bookings.webp",
+        "mediaType": "image/webp",
+        "width": 540,
+        "height": 1200,
+        "byteLength": 24768,
+        "sha256": "507b3a5e88d6d051436d8ef80de5ef79e2efa7a8545953452256f30e845a5a00",
+        "sourceSha256": "6990018013536b0f3084124f7fb479a3e0ee382d69e8a123225cfb67be7cdc88",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.5,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      }
+    },
+    {
+      "id": "en-nearby",
+      "altKey": "nearby",
+      "path": "/images/product/canonical-flow-2026/en-US/08-nearby.png",
+      "mediaType": "image/png",
+      "width": 1080,
+      "height": 2400,
+      "sha256": "2a983bea1cf6e42ecac8261a286901101c5cca50ddc5c35a89bc6c3cfdd96de9",
+      "locales": [
+        "en-US"
+      ],
+      "theme": "light",
+      "semanticSlot": "nearby",
+      "sourceArtifactEntry": "store-listing/assets/source/android/en-US/discover-map-light-en.png",
+      "sourceSha256": "2a983bea1cf6e42ecac8261a286901101c5cca50ddc5c35a89bc6c3cfdd96de9",
+      "platform": "android",
+      "device": "android-phone",
+      "storePosition": 8,
+      "web": {
+        "path": "/images/product/canonical-flow-2026/en-US/08-nearby.webp",
+        "mediaType": "image/webp",
+        "width": 540,
+        "height": 1200,
+        "byteLength": 160510,
+        "sha256": "6fe8a593f2b9e4d67ddc0cdc8f0331b8c64ac576d4568511a9f59ce54b44b7c6",
+        "sourceSha256": "2a983bea1cf6e42ecac8261a286901101c5cca50ddc5c35a89bc6c3cfdd96de9",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.5,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      }
+    },
+    {
+      "id": "pl-voice-input",
+      "altKey": "voiceInput",
+      "path": "/images/product/canonical-flow-2026/pl-PL/01-voice-input.png",
+      "mediaType": "image/png",
+      "width": 1320,
+      "height": 2868,
+      "sha256": "3b3743d0270acc67df872da217652f1aea830628591efdd54934fc0bc4d1a770",
+      "locales": [
+        "pl-PL"
+      ],
+      "theme": "dark",
+      "semanticSlot": "voice-input",
+      "sourceArtifactEntry": "store-listing/assets/source/ios/iphone-6.9/pl-PL/voice-input-dark-pl.png",
+      "sourceSha256": "3b3743d0270acc67df872da217652f1aea830628591efdd54934fc0bc4d1a770",
+      "platform": "ios",
+      "device": "iphone-6.9",
+      "storePosition": 1,
+      "web": {
+        "path": "/images/product/canonical-flow-2026/pl-PL/01-voice-input.webp",
+        "mediaType": "image/webp",
+        "width": 660,
+        "height": 1434,
+        "byteLength": 37270,
+        "sha256": "19a16835685f9528f76ec8bd728e492d4de0ba301fda747347f5ec64f5b08b32",
+        "sourceSha256": "3b3743d0270acc67df872da217652f1aea830628591efdd54934fc0bc4d1a770",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.5,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      }
+    },
+    {
+      "id": "pl-assignee",
+      "altKey": "assignee",
+      "path": "/images/product/canonical-flow-2026/pl-PL/02-assignee.png",
+      "mediaType": "image/png",
+      "width": 1080,
+      "height": 2400,
+      "sha256": "ab5cf806941776f0d252536cd9078fff168482d4b50e9b5f9052c5cc8cef8d79",
+      "locales": [
+        "pl-PL"
+      ],
+      "theme": "dark",
+      "semanticSlot": "assignee",
+      "sourceArtifactEntry": "store-listing/assets/source/android/pl-PL/voice-assignee-olek-dark-pl.png",
+      "sourceSha256": "ab5cf806941776f0d252536cd9078fff168482d4b50e9b5f9052c5cc8cef8d79",
+      "platform": "android",
+      "device": "android-phone",
+      "storePosition": 2,
+      "web": {
+        "path": "/images/product/canonical-flow-2026/pl-PL/02-assignee.webp",
+        "mediaType": "image/webp",
+        "width": 540,
+        "height": 1200,
+        "byteLength": 31324,
+        "sha256": "d4108ab79fb1360311fe67c6afd52a9512a0e5ffb277babb160ae24038019d69",
+        "sourceSha256": "ab5cf806941776f0d252536cd9078fff168482d4b50e9b5f9052c5cc8cef8d79",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.5,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      }
+    },
+    {
+      "id": "pl-delegated-task",
+      "altKey": "delegatedTask",
+      "path": "/images/product/canonical-flow-2026/pl-PL/03-delegated-task.png",
+      "mediaType": "image/png",
+      "width": 1320,
+      "height": 2868,
+      "sha256": "d97ab18439e7c1f1a0c752c3f0bf5943ef4a9cd30a4c7543c7fea9648750afdb",
+      "locales": [
+        "pl-PL"
+      ],
+      "theme": "dark",
+      "semanticSlot": "delegated-task",
+      "sourceArtifactEntry": "store-listing/assets/source/ios/iphone-6.9/pl-PL/delegated-task-detail-dark-pl.png",
+      "sourceSha256": "d97ab18439e7c1f1a0c752c3f0bf5943ef4a9cd30a4c7543c7fea9648750afdb",
+      "platform": "ios",
+      "device": "iphone-6.9",
+      "storePosition": 3,
+      "web": {
+        "path": "/images/product/canonical-flow-2026/pl-PL/03-delegated-task.webp",
+        "mediaType": "image/webp",
+        "width": 660,
+        "height": 1434,
+        "byteLength": 52280,
+        "sha256": "f99c72d7824683ad15448423601788d8d8d3641a53fa6cfd1e3af3cba655995c",
+        "sourceSha256": "d97ab18439e7c1f1a0c752c3f0bf5943ef4a9cd30a4c7543c7fea9648750afdb",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.5,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      }
+    },
+    {
+      "id": "pl-groups",
+      "altKey": "groups",
+      "path": "/images/product/canonical-flow-2026/pl-PL/04-groups.png",
+      "mediaType": "image/png",
+      "width": 1320,
+      "height": 2868,
+      "sha256": "bd36b35d0ea567a2d467fe14b15d70fe50f72b1c9d73098a8157b211241836ee",
+      "locales": [
+        "pl-PL"
+      ],
+      "theme": "dark",
+      "semanticSlot": "groups",
+      "sourceArtifactEntry": "store-listing/assets/source/ios/iphone-6.9/pl-PL/groups-list-dark-pl.png",
+      "sourceSha256": "bd36b35d0ea567a2d467fe14b15d70fe50f72b1c9d73098a8157b211241836ee",
+      "platform": "ios",
+      "device": "iphone-6.9",
+      "storePosition": 4,
+      "web": {
+        "path": "/images/product/canonical-flow-2026/pl-PL/04-groups.webp",
+        "mediaType": "image/webp",
+        "width": 660,
+        "height": 1434,
+        "byteLength": 63854,
+        "sha256": "a60c3bbb4625465e9acb8e6fe73007cb7a064229d6c11d78700d1e31e7d86b63",
+        "sourceSha256": "bd36b35d0ea567a2d467fe14b15d70fe50f72b1c9d73098a8157b211241836ee",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.5,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      }
+    },
+    {
+      "id": "pl-group-offer-gallery",
+      "altKey": "groupGallery",
+      "path": "/images/product/canonical-flow-2026/pl-PL/05-group-offer-gallery.png",
+      "mediaType": "image/png",
+      "width": 2064,
+      "height": 2752,
+      "sha256": "e344cc6dee94f0aba9369a10611e65978f5c2a2f7da540f5f23171aa09e8dc0b",
+      "locales": [
+        "pl-PL"
+      ],
+      "theme": "dark",
+      "semanticSlot": "group-offer-gallery",
+      "sourceArtifactEntry": "store-listing/assets/source/ios/ipad-13/pl-PL/product-group-gallery-dark-pl.png",
+      "sourceSha256": "e344cc6dee94f0aba9369a10611e65978f5c2a2f7da540f5f23171aa09e8dc0b",
+      "platform": "ios",
+      "device": "ipad-13",
+      "storePosition": 5,
+      "web": {
+        "path": "/images/product/canonical-flow-2026/pl-PL/05-group-offer-gallery.webp",
+        "mediaType": "image/webp",
+        "width": 1032,
+        "height": 1376,
+        "byteLength": 65816,
+        "sha256": "a792d97962dfaca10c510b5cc83a351dce777d7f5e342b4865e147679a986d68",
+        "sourceSha256": "e344cc6dee94f0aba9369a10611e65978f5c2a2f7da540f5f23171aa09e8dc0b",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.5,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      }
+    },
+    {
+      "id": "pl-modules",
+      "altKey": "modules",
+      "path": "/images/product/canonical-flow-2026/pl-PL/06-modules.png",
+      "mediaType": "image/png",
+      "width": 1320,
+      "height": 2868,
+      "sha256": "0a4d28c3220b791d2449afa4bc48c712c676d5ce997f8374266f599723870977",
+      "locales": [
+        "pl-PL"
+      ],
+      "theme": "light",
+      "semanticSlot": "modules",
+      "sourceArtifactEntry": "store-listing/assets/source/ios/iphone-6.9/pl-PL/group-settings-modules-light-pl.png",
+      "sourceSha256": "0a4d28c3220b791d2449afa4bc48c712c676d5ce997f8374266f599723870977",
+      "platform": "ios",
+      "device": "iphone-6.9",
+      "storePosition": 6,
+      "web": {
+        "path": "/images/product/canonical-flow-2026/pl-PL/06-modules.webp",
+        "mediaType": "image/webp",
+        "width": 660,
+        "height": 1434,
+        "byteLength": 67148,
+        "sha256": "4cdb23deddc45d891569d73c2950f22d5ddfa69fc2c602ad54834f15afa50b1e",
+        "sourceSha256": "0a4d28c3220b791d2449afa4bc48c712c676d5ce997f8374266f599723870977",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.5,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      }
+    },
+    {
+      "id": "pl-bookings",
+      "altKey": "bookings",
+      "path": "/images/product/canonical-flow-2026/pl-PL/07-bookings.png",
+      "mediaType": "image/png",
+      "width": 1080,
+      "height": 2400,
+      "sha256": "5e0e8cb00272aa9d45b4d0540416cf624e4d0fa31e55d9671bfc5d66242ea602",
+      "locales": [
+        "pl-PL"
+      ],
+      "theme": "light",
+      "semanticSlot": "bookings",
+      "sourceArtifactEntry": "store-listing/assets/source/android/pl-PL/booking-calendar-populated-light-pl.png",
+      "sourceSha256": "5e0e8cb00272aa9d45b4d0540416cf624e4d0fa31e55d9671bfc5d66242ea602",
+      "platform": "android",
+      "device": "android-phone",
+      "storePosition": 7,
+      "web": {
+        "path": "/images/product/canonical-flow-2026/pl-PL/07-bookings.webp",
+        "mediaType": "image/webp",
+        "width": 540,
+        "height": 1200,
+        "byteLength": 25944,
+        "sha256": "fe0e3d52b944ac269a1d0f0da783efa1fe52915272f0de522846b91560d65a95",
+        "sourceSha256": "5e0e8cb00272aa9d45b4d0540416cf624e4d0fa31e55d9671bfc5d66242ea602",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.5,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      }
+    },
+    {
+      "id": "pl-nearby",
+      "altKey": "nearby",
+      "path": "/images/product/canonical-flow-2026/pl-PL/08-nearby.png",
+      "mediaType": "image/png",
+      "width": 1080,
+      "height": 2400,
+      "sha256": "e7bfe8c9cc82e8e80c5ed99f46d31848da1c012f490b335c519f8600a86c139b",
+      "locales": [
+        "pl-PL"
+      ],
+      "theme": "light",
+      "semanticSlot": "nearby",
+      "sourceArtifactEntry": "store-listing/assets/source/android/pl-PL/discover-map-light-pl.png",
+      "sourceSha256": "e7bfe8c9cc82e8e80c5ed99f46d31848da1c012f490b335c519f8600a86c139b",
+      "platform": "android",
+      "device": "android-phone",
+      "storePosition": 8,
+      "web": {
+        "path": "/images/product/canonical-flow-2026/pl-PL/08-nearby.webp",
+        "mediaType": "image/webp",
+        "width": 540,
+        "height": 1200,
+        "byteLength": 146126,
+        "sha256": "7db04ab93e9b14f0bd454974189aa6f9d6e61d329b291e42c419e2d21bb6c578",
+        "sourceSha256": "e7bfe8c9cc82e8e80c5ed99f46d31848da1c012f490b335c519f8600a86c139b",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.5,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      }
     }
   ],
   "placementSets": {
-    "baseline": {
-      "voiceInput": "creation-entry",
-      "assignee": "nearby-groups",
-      "delegatedTask": "nearby-meetings",
-      "groups": "nearby-groups",
-      "groupGallery": "nearby-groups",
-      "modules": "profile-settings",
-      "bookings": "nearby-meetings",
-      "nearby": "nearby-groups"
+    "canonical-source-en": {
+      "voiceInput": "en-voice-input",
+      "assignee": "en-assignee",
+      "delegatedTask": "en-delegated-task",
+      "groups": "en-groups",
+      "groupGallery": "en-group-offer-gallery",
+      "modules": "en-modules",
+      "bookings": "en-bookings",
+      "nearby": "en-nearby"
+    },
+    "canonical-source-pl": {
+      "voiceInput": "pl-voice-input",
+      "assignee": "pl-assignee",
+      "delegatedTask": "pl-delegated-task",
+      "groups": "pl-groups",
+      "groupGallery": "pl-group-offer-gallery",
+      "modules": "pl-modules",
+      "bookings": "pl-bookings",
+      "nearby": "pl-nearby"
     }
   },
   "placementSelection": {
-    "en": "baseline",
-    "pl": "baseline"
+    "en": "canonical-source-en",
+    "pl": "canonical-source-pl"
   },
   "finalArtifactContract": {
     "status": "awaiting-approved-no-publish-package",
     "requiredImageCount": 50,
-    "requiredLocales": ["pl-PL", "en-US"],
+    "requiredLocales": [
+      "pl-PL",
+      "en-US"
+    ],
     "semanticSlots": [
       "voice-input",
       "assignee",
