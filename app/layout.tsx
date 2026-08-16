@@ -49,11 +49,11 @@ const themeScript = `
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'Shuuty — Voice Tasks, Groups & Nearby Discovery',
+    default: 'Shuuty - Voice Tasks, Flexible Groups & Meetings',
     template: '%s | Shuuty',
   },
   description:
-    'Turn ideas into action with Shuuty: create and delegate tasks by voice, build flexible groups, organise meetings, and discover what matters nearby.',
+    'Turn ideas into action with Shuuty: create and delegate complete tasks by voice, shape groups for work, communities, services and sales, organise meetings, bookings and nearby discovery.',
   applicationName: 'Shuuty',
   category: 'Lifestyle',
   keywords: [
@@ -63,6 +63,9 @@ export const metadata: Metadata = {
     'shared planner',
     'group calendar',
     'bookings',
+    'projects and plans',
+    'time tracking',
+    'group galleries',
     'local offers',
     'service listings',
     'local meetings',
@@ -88,9 +91,9 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'Shuuty — From Idea to Action',
+    title: 'Shuuty - From Idea to Action',
     description:
-      'Voice tasks delivered immediately, groups for any purpose, meetings and nearby discovery in one connected app.',
+      'Say it, choose a person or group, and move a complete task forward. Build groups for work, community, services, sales and bookings.',
     url: '/',
     type: 'website',
     locale: 'en_US',
@@ -99,9 +102,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Shuuty — From Idea to Action',
+    title: 'Shuuty - From Idea to Action',
     description:
-      'Create by voice, delegate immediately, shape groups freely and discover what matters nearby.',
+      'Say it. Delegate it. Get it done. Shape groups for work, community, services, sales and bookings.',
     images: [SOCIAL_IMAGE.url],
   },
   icons: {

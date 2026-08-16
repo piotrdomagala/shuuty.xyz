@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "repository": "piotrdomagala/shuuty.xyz",
+    "commit": "7e3c0bdbf40cb7c8646de9a0be42648811e02638",
+    "status": "existing-public-site-assets",
+    "note": "These files already existed on origin/main. No raster from PR #9 or a partial exports/final directory is included."
+  },
+  "artifactBinding": null,
+  "assets": [
+    {
+      "id": "creation-entry",
+      "altKey": "create",
+      "path": "/images/app/create-menu.jpg",
+      "mediaType": "image/jpeg",
+      "width": 471,
+      "height": 1024,
+      "sha256": "90e39996d591e1b3233a3721ede64b9c3cb26f30ae8c79346b346e1bf0260b8c",
+      "locales": ["en-US"],
+      "theme": "light"
+    },
+    {
+      "id": "profile-settings",
+      "altKey": "settings",
+      "path": "/images/app/profile-settings.jpg",
+      "mediaType": "image/jpeg",
+      "width": 471,
+      "height": 1024,
+      "sha256": "24678a8a252fec0e4b79499b6371b8373bb9948563cee60e326a3298d586cc5c",
+      "locales": ["en-US"],
+      "theme": "light"
+    },
+    {
+      "id": "nearby-groups",
+      "altKey": "groups",
+      "path": "/images/app/discover-groups.jpg",
+      "mediaType": "image/jpeg",
+      "width": 471,
+      "height": 1024,
+      "sha256": "5da99fc4ff2ac8d1f97e7e9c232d1410c422e4fa5b7c07c4b8dbe59acd16c2cf",
+      "locales": ["en-US"],
+      "theme": "light"
+    },
+    {
+      "id": "nearby-meetings",
+      "altKey": "meetings",
+      "path": "/images/app/discover-meetings.jpg",
+      "mediaType": "image/jpeg",
+      "width": 471,
+      "height": 1024,
+      "sha256": "0b3056a282afa7065358d315408d7eda1755b7533d10cfe3388561d136774d3f",
+      "locales": ["en-US"],
+      "theme": "light"
+    }
+  ],
+  "placementSets": {
+    "baseline": {
+      "voiceInput": "creation-entry",
+      "assignee": "nearby-groups",
+      "delegatedTask": "nearby-meetings",
+      "groups": "nearby-groups",
+      "groupGallery": "nearby-groups",
+      "modules": "profile-settings",
+      "bookings": "nearby-meetings",
+      "nearby": "nearby-groups"
+    }
+  },
+  "placementSelection": {
+    "en": "baseline",
+    "pl": "baseline"
+  },
+  "finalArtifactContract": {
+    "status": "awaiting-approved-no-publish-package",
+    "requiredImageCount": 50,
+    "requiredLocales": ["pl-PL", "en-US"],
+    "semanticSlots": [
+      "voice-input",
+      "assignee",
+      "delegated-task",
+      "groups",
+      "group-offer-gallery",
+      "modules",
+      "bookings",
+      "nearby"
+    ]
+  }
+}

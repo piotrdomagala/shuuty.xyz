@@ -19,15 +19,15 @@
       "badge": "Available on iOS and Android",
       "title": "From idea",
       "accent": "to action.",
-      "sub": "Create and delegate tasks by voice. Shape groups around any purpose, organise meetings and discover what you need nearby.",
+      "relay": "Say it. Delegate it. Get it done.",
+      "sub": "Turn a spoken thought into a structured task for a person or group. Then shape groups around work, community, services, sales, bookings or whatever comes next.",
       "secondaryCta": "See how it works",
       "signals": [
-        "Voice to task",
-        "Immediate delegation",
-        "Groups for any purpose"
+        "Voice or manual input",
+        "A person or group",
+        "One complete task"
       ],
-      "visualLabel": "One connected place",
-      "voice": "Voice"
+      "visualLabel": "Real Shuuty product views"
     },
     "overview": {
       "label": "One connected ecosystem",
@@ -59,68 +59,79 @@
     },
     "tasks": {
       "label": "01 · Tasks",
-      "heading": "Say it. Delegate it now. Remind at the right time.",
-      "lead": "Say: “Alex should send the proposal tomorrow at 9. Remind Alex 30 minutes earlier.” Shuuty prepares the task with Alex as assignee, 09:00 as the due time and 08:30 as the reminder. Once created, Alex receives the task immediately. If approval is required, the request arrives immediately instead.",
+      "heading": "Say it. Choose a person or group. The task is ready.",
+      "lead": "Say: “Alex should send the proposal tomorrow at 9. Remind Alex 30 minutes earlier.” Shuuty prepares the title, description, assignee, due time and reminder for review. Create it, and Alex receives the task immediately - or an approval request when their settings require one.",
       "bullets": [
         "Private, received and delegated tasks stay in clear, separate views.",
         "A delegated task is delivered as soon as it is created. The due time defines when to do it. The reminder defines when the recipient is notified.",
         "A shared or delegated task can become a focused thinking space. Discussion, replies and all activity stay with the task.",
-        "Subtasks, priority and time tracking help move from decisions to action."
+        "Manual creation keeps the same depth: descriptions, subtasks, priority, reminders, people, location and time tracking."
       ],
-      "voiceLabel": "Voice task",
-      "voicePrompt": "Alex should send the proposal tomorrow at 9. Remind Alex 30 minutes earlier.",
-      "parsedLabel": "Ready to delegate",
-      "parsedTitle": "Send the proposal",
-      "parsedMeta": [
-        "Due · Tomorrow 09:00",
-        "Alex · receives it now",
-        "Reminder · 08:30"
-      ],
-      "delegate": "Delegate to Alex now",
-      "deliveryNote": "Alex receives the task now. Reminder: 08:30 · Due: 09:00.",
-      "flow": [
-        "Speak",
-        "Review",
-        "Delegate now",
-        "Remind at 08:30"
+      "mechanismLabel": "The Shuuty relay",
+      "mechanismLead": "It is one continuous product flow. Before the task moves, you can see who receives it, when it matters and which context stays with it.",
+      "mechanism": [
+        {
+          "title": "Speak or type",
+          "desc": "Capture one thought or several details while they are still fresh."
+        },
+        {
+          "title": "Choose the recipient",
+          "desc": "Keep it private, assign a person or connect the task with a group."
+        },
+        {
+          "title": "Review the structure",
+          "desc": "Check the title, description, subtasks, date, reminder, priority and place."
+        },
+        {
+          "title": "Move together",
+          "desc": "The task arrives with its context and keeps discussion, activity and time together."
+        }
       ]
     },
     "groups": {
       "label": "02 · Groups",
-      "heading": "One group. Any purpose.",
-      "lead": "A group can be a private circle, open community, team, client space or booking system. It can also be a listing, an offer, a catalogue or simply an information space. You decide who can see it and which modules it needs.",
+      "heading": "Your group can become its own world.",
+      "lead": "As its creator, you choose what the group becomes, what people outside it can see and which modules are active. Keep it private, open it to everyone or let the public discover the offer while members see the working context.",
       "bullets": [
-        "Present services, products or announcements: local produce, vehicles, machinery or specialist services.",
-        "Add a location so people can discover a public group and what it offers on the map.",
-        "Keep it information-only, or enable chat, threads, tasks, calendars, bookings and time logs as its purpose grows."
+        "Build the public description with a gallery, location and interests, or reserve selected details for members.",
+        "Present services, products or announcements: a practice, workshop, local produce, vehicles, machinery or specialist services.",
+        "Keep the group information-only, or connect tasks, conversations, calendars, bookings, projects, plans and time records as its purpose grows."
       ],
-      "modesLabel": "One group, shaped around your needs",
+      "modesLabel": "Four starting points. No fixed template.",
       "modes": [
         {
-          "icon": "private",
-          "title": "Private circle",
-          "desc": "Plans for a couple, family or close friends."
+          "icon": "work",
+          "title": "A place to work",
+          "desc": "A team, clients, projects, plans, delegated tasks and per-person time."
         },
         {
           "icon": "community",
-          "title": "Open community",
-          "desc": "People, interests and recurring activities."
-        },
-        {
-          "icon": "work",
-          "title": "Team & clients",
-          "desc": "Tasks, decisions and per-person time logs."
+          "title": "A community",
+          "desc": "Private or open people, interests, information and recurring activities."
         },
         {
           "icon": "calendar",
-          "title": "Reservations",
-          "desc": "Availability, fixed times or flexible booking ranges."
+          "title": "A service offer",
+          "desc": "A practice, workshop or specialist with public or limited reservations."
         },
         {
           "icon": "offer",
-          "title": "Offers & information",
-          "desc": "Listings, services, products or a public showcase."
+          "title": "A sales showcase",
+          "desc": "Products, vehicles, machinery, local goods, announcements or a catalogue."
         }
+      ],
+      "modulesLabel": "Shape it with the modules you need",
+      "modules": [
+        "Gallery",
+        "Location",
+        "Interests",
+        "Tasks",
+        "Calendars",
+        "Bookings",
+        "Projects",
+        "Plans",
+        "Time records",
+        "Conversations"
       ]
     },
     "discover": {
@@ -144,6 +155,30 @@
       "meetings": "Meetings",
       "groups": "Groups & offers",
       "mapCaption": "Meetings, groups, offers and information around you"
+    },
+    "experience": {
+      "label": "Product depth",
+      "heading": "Start simple. Add structure when it helps.",
+      "lead": "Shuuty can be a fast place for one thought or the shared operating context for a longer plan. The same product adapts without forcing every module on every group.",
+      "screenCaption": "Real product views",
+      "items": [
+        {
+          "title": "Light and Dark",
+          "desc": "Use the appearance that fits the moment without changing how the product works."
+        },
+        {
+          "title": "Projects and plans",
+          "desc": "Connect longer work with the tasks, people and group that already hold its context."
+        },
+        {
+          "title": "Calendars and bookings",
+          "desc": "Coordinate shared dates or offer reservations to a broad or limited audience."
+        },
+        {
+          "title": "Time and conversations",
+          "desc": "Keep per-person records, decisions and discussion close to the work."
+        }
+      ]
     },
     "flow": {
       "label": "From idea to action",
@@ -185,7 +220,11 @@
         },
         {
           "q": "Is a group only for collaboration?",
-          "a": "No. It can be a private circle, community, team, client space, booking system, listing, offer or catalogue of services and products. It can also be information-only and discoverable on the map."
+          "a": "No. It can be a private circle, community, workplace, client space, booking system, service offer, sales showcase or information-only group. Its creator chooses the visibility and active modules."
+        },
+        {
+          "q": "What can people see before joining a group?",
+          "a": "The creator decides whether the group and its description are public and which context remains available only to members. A public presentation can include information, gallery images, location and interests."
         },
         {
           "q": "How does the map help?",
@@ -206,7 +245,14 @@
       "create": "Shuuty create menu with task, voice, meeting and group actions",
       "settings": "Shuuty settings with light mode and language controls",
       "groups": "Shuuty map showing nearby groups",
-      "meetings": "Shuuty map showing a meeting"
+      "meetings": "Shuuty map showing a meeting",
+      "voiceInput": "Shuuty voice input for capturing a task",
+      "assignee": "Shuuty task recipient selection",
+      "delegatedTask": "A structured delegated task in Shuuty",
+      "groupGallery": "A Shuuty group presentation with a real product gallery",
+      "modules": "Shuuty group module settings",
+      "bookings": "A populated booking calendar in Shuuty",
+      "nearby": "Shuuty discovery map with nearby results"
     },
     "store": {
       "apple": "App Store",
@@ -242,15 +288,15 @@
       "badge": "Dostępne na iOS i Android",
       "title": "Od pomysłu",
       "accent": "do działania.",
-      "sub": "Twórz i deleguj zadania głosem. Dopasuj grupy do dowolnego celu, organizuj spotkania i odkrywaj w pobliżu to, czego potrzebujesz.",
+      "relay": "Powiedz. Deleguj. Działajcie.",
+      "sub": "Zamień wypowiedzianą myśl w uporządkowane zadanie dla osoby lub grupy. Potem twórz grupy do pracy, społeczności, usług, sprzedaży, rezerwacji i wszystkiego, co przyjdzie dalej.",
       "secondaryCta": "Zobacz, jak to działa",
       "signals": [
-        "Głos zamienia się w zadanie",
-        "Natychmiastowe delegowanie",
-        "Grupy do dowolnego celu"
+        "Głos lub ręczny wpis",
+        "Osoba albo grupa",
+        "Jedno kompletne zadanie"
       ],
-      "visualLabel": "Jedno połączone miejsce",
-      "voice": "Głos"
+      "visualLabel": "Prawdziwe widoki produktu Shuuty"
     },
     "overview": {
       "label": "Jeden połączony ekosystem",
@@ -282,68 +328,79 @@
     },
     "tasks": {
       "label": "01 · Zadania",
-      "heading": "Powiedz. Deleguj od razu. Przypomnij na czas.",
-      "lead": "Powiedz: „Ola ma jutro o 9 wysłać ofertę. Przypomnij jej 30 minut wcześniej”. Shuuty przygotuje zadanie dla Oli, ustawi termin na 09:00 i przypomnienie na 08:30. Po utworzeniu Ola otrzyma zadanie od razu. Jeśli wymaga akceptacji, od razu otrzyma prośbę o jego przyjęcie.",
+      "heading": "Powiedz. Wybierz osobę lub grupę. Zadanie jest gotowe.",
+      "lead": "Powiedz: „Ola ma jutro o 9 wysłać ofertę. Przypomnij jej 30 minut wcześniej”. Shuuty przygotuje do sprawdzenia tytuł, opis, odbiorcę, termin i przypomnienie. Utwórz zadanie, a Ola otrzyma je od razu - albo prośbę o akceptację, jeśli wymagają tego jej ustawienia.",
       "bullets": [
         "Zadania prywatne, otrzymane i delegowane mają czytelne, osobne widoki.",
         "Delegowane zadanie trafia do odbiorcy od razu po utworzeniu. Termin określa czas wykonania. Przypomnienie określa czas powiadomienia.",
         "Wspólne lub delegowane zadanie może stać się przestrzenią do wspólnego myślenia. Dyskusja, odpowiedzi i cała aktywność zostają przy zadaniu.",
-        "Podzadania, priorytet i pomiar czasu pomagają przejść od ustaleń do działania."
+        "Ręczne tworzenie zachowuje tę samą głębię: opis, podzadania, priorytet, przypomnienia, osoby, lokalizację i pomiar czasu."
       ],
-      "voiceLabel": "Zadanie głosowe",
-      "voicePrompt": "Ola ma jutro o 9 wysłać ofertę. Przypomnij jej 30 minut wcześniej.",
-      "parsedLabel": "Gotowe do delegowania",
-      "parsedTitle": "Wyślij ofertę",
-      "parsedMeta": [
-        "Termin · Jutro 09:00",
-        "Ola · otrzymuje teraz",
-        "Przypomnienie · 08:30"
-      ],
-      "delegate": "Deleguj Oli teraz",
-      "deliveryNote": "Ola otrzymuje zadanie teraz. Przypomnienie: 08:30 · Termin: 09:00.",
-      "flow": [
-        "Powiedz",
-        "Sprawdź",
-        "Deleguj od razu",
-        "Przypomnij o 08:30"
+      "mechanismLabel": "Przepływ Shuuty",
+      "mechanismLead": "To jeden ciągły przepływ produktu. Zanim zadanie ruszy dalej, widzisz, kto je otrzyma, kiedy jest ważne i jaki kontekst pozostanie razem z nim.",
+      "mechanism": [
+        {
+          "title": "Powiedz albo wpisz",
+          "desc": "Złap jedną myśl lub kilka szczegółów, zanim znikną z głowy."
+        },
+        {
+          "title": "Wybierz odbiorcę",
+          "desc": "Zostaw zadanie prywatne, przypisz osobę albo połącz je z grupą."
+        },
+        {
+          "title": "Sprawdź strukturę",
+          "desc": "Zobacz tytuł, opis, podzadania, datę, przypomnienie, priorytet i miejsce."
+        },
+        {
+          "title": "Działajcie razem",
+          "desc": "Zadanie trafia z kontekstem i zachowuje rozmowę, aktywność oraz czas."
+        }
       ]
     },
     "groups": {
       "label": "02 · Grupy",
-      "heading": "Jedna grupa. Dowolny cel.",
-      "lead": "Grupa może być prywatnym kręgiem, otwartą społecznością, zespołem, przestrzenią dla klientów lub systemem rezerwacji. Może też działać jako ogłoszenie, oferta, katalog albo przestrzeń informacyjna. To Ty wybierasz jej widoczność i potrzebne moduły.",
+      "heading": "Twoja grupa może stać się własnym światem.",
+      "lead": "Jako twórca wybierasz, czym grupa będzie, co zobaczą osoby spoza niej i które moduły pozostaną aktywne. Zachowaj ją prywatną, otwórz dla wszystkich albo pokaż publicznie ofertę, zostawiając kontekst pracy członkom.",
       "bullets": [
-        "Prezentuj usługi, produkty i ogłoszenia: lokalne warzywa, samochody, maszyny lub usługi specjalistyczne.",
-        "Dodaj lokalizację, aby użytkownicy mogli znaleźć publiczną grupę i jej ofertę na mapie.",
-        "Zostaw ją wyłącznie informacyjną albo włącz czat, wątki, zadania, kalendarz, rezerwacje i ewidencję czasu, gdy tego potrzebujesz."
+        "Zbuduj publiczny opis z galerią, lokalizacją i zainteresowaniami albo zachowaj wybrane informacje tylko dla członków.",
+        "Prezentuj usługi, produkty i ogłoszenia: gabinet, zakład, lokalne warzywa, samochody, maszyny lub usługi specjalistyczne.",
+        "Zostaw grupę wyłącznie informacyjną albo połącz zadania, rozmowy, kalendarze, rezerwacje, projekty, plany i ewidencję czasu, gdy jej cel rośnie."
       ],
-      "modesLabel": "Jedna grupa, dokładnie taka, jakiej potrzebujesz",
+      "modesLabel": "Cztery punkty wyjścia. Bez sztywnego szablonu.",
       "modes": [
         {
-          "icon": "private",
-          "title": "Prywatny krąg",
-          "desc": "Plany dla pary, rodziny albo bliskich znajomych."
+          "icon": "work",
+          "title": "Miejsce pracy",
+          "desc": "Zespół, klienci, projekty, plany, delegowane zadania i czas każdej osoby."
         },
         {
           "icon": "community",
-          "title": "Otwarta społeczność",
-          "desc": "Ludzie, zainteresowania i powtarzalne aktywności."
-        },
-        {
-          "icon": "work",
-          "title": "Zespół i klienci",
-          "desc": "Zadania, decyzje i ewidencja czasu dla każdej osoby."
+          "title": "Społeczność",
+          "desc": "Prywatni lub otwarci ludzie, zainteresowania, informacje i cykliczne aktywności."
         },
         {
           "icon": "calendar",
-          "title": "Rezerwacje",
-          "desc": "Dostępność, stałe terminy lub elastyczne przedziały."
+          "title": "Oferta usługowa",
+          "desc": "Gabinet, zakład albo specjalista z otwartymi lub ograniczonymi rezerwacjami."
         },
         {
           "icon": "offer",
-          "title": "Oferty i informacje",
-          "desc": "Ogłoszenia, usługi, produkty albo publiczna wizytówka."
+          "title": "Oferta sprzedażowa",
+          "desc": "Produkty, samochody, maszyny, lokalne towary, ogłoszenia albo katalog."
         }
+      ],
+      "modulesLabel": "Dobierz moduły, których potrzebujesz",
+      "modules": [
+        "Galeria",
+        "Lokalizacja",
+        "Zainteresowania",
+        "Zadania",
+        "Kalendarze",
+        "Rezerwacje",
+        "Projekty",
+        "Plany",
+        "Ewidencja czasu",
+        "Rozmowy"
       ]
     },
     "discover": {
@@ -367,6 +424,30 @@
       "meetings": "Spotkania",
       "groups": "Grupy i oferty",
       "mapCaption": "Spotkania, grupy, oferty i informacje wokół Ciebie"
+    },
+    "experience": {
+      "label": "Głębia produktu",
+      "heading": "Zacznij prosto. Dodaj strukturę, gdy pomaga.",
+      "lead": "Shuuty może być szybkim miejscem dla jednej myśli albo wspólnym kontekstem dłuższego planu. Ten sam produkt dopasowuje się bez narzucania każdej grupie wszystkich modułów.",
+      "screenCaption": "Prawdziwe widoki produktu",
+      "items": [
+        {
+          "title": "Jasny i ciemny motyw",
+          "desc": "Wybierz wygląd odpowiedni do chwili bez zmiany sposobu działania produktu."
+        },
+        {
+          "title": "Projekty i plany",
+          "desc": "Połącz dłuższą pracę z zadaniami, ludźmi i grupą, które już zachowują jej kontekst."
+        },
+        {
+          "title": "Kalendarze i rezerwacje",
+          "desc": "Koordynuj wspólne terminy albo udostępniaj rezerwacje szerokiemu lub ograniczonemu gronu."
+        },
+        {
+          "title": "Czas i rozmowy",
+          "desc": "Trzymaj ewidencję każdej osoby, decyzje i dyskusję blisko wykonywanej pracy."
+        }
+      ]
     },
     "flow": {
       "label": "Od pomysłu do działania",
@@ -408,7 +489,11 @@
         },
         {
           "q": "Czy grupa służy tylko do współpracy?",
-          "a": "Nie. Może być prywatnym kręgiem, społecznością, zespołem, przestrzenią dla klientów, systemem rezerwacji, ogłoszeniem, ofertą albo katalogiem usług i produktów. Może też być wyłącznie informacyjna i widoczna na mapie."
+          "a": "Nie. Może być prywatnym kręgiem, społecznością, miejscem pracy, przestrzenią dla klientów, systemem rezerwacji, ofertą usługową, prezentacją sprzedażową albo grupą wyłącznie informacyjną. Twórca wybiera jej widoczność i aktywne moduły."
+        },
+        {
+          "q": "Co można zobaczyć przed dołączeniem do grupy?",
+          "a": "Twórca decyduje, czy grupa i jej opis są publiczne oraz który kontekst pozostaje dostępny tylko dla członków. Publiczna prezentacja może zawierać informacje, zdjęcia galerii, lokalizację i zainteresowania."
         },
         {
           "q": "W czym pomaga mapa?",
@@ -429,7 +514,14 @@
       "create": "Menu tworzenia Shuuty z zadaniem, głosem, spotkaniem i grupą",
       "settings": "Ustawienia Shuuty z kontrolą jasnego motywu i języka",
       "groups": "Mapa Shuuty pokazująca grupy w pobliżu",
-      "meetings": "Mapa Shuuty pokazująca spotkanie"
+      "meetings": "Mapa Shuuty pokazująca spotkanie",
+      "voiceInput": "Wprowadzanie głosowe zadania w Shuuty",
+      "assignee": "Wybór odbiorcy zadania w Shuuty",
+      "delegatedTask": "Uporządkowane delegowane zadanie w Shuuty",
+      "groupGallery": "Prezentacja grupy Shuuty z prawdziwą galerią produktu",
+      "modules": "Ustawienia modułów grupy Shuuty",
+      "bookings": "Wypełniony kalendarz rezerwacji w Shuuty",
+      "nearby": "Mapa odkrywania Shuuty z wynikami w pobliżu"
     },
     "store": {
       "apple": "App Store",

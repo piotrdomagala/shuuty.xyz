@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "assets": [
+    {
+      "id": "creation-entry",
+      "altKey": "create",
+      "path": "/images/app/create-menu.jpg",
+      "width": 471,
+      "height": 1024
+    },
+    {
+      "id": "profile-settings",
+      "altKey": "settings",
+      "path": "/images/app/profile-settings.jpg",
+      "width": 471,
+      "height": 1024
+    },
+    {
+      "id": "nearby-groups",
+      "altKey": "groups",
+      "path": "/images/app/discover-groups.jpg",
+      "width": 471,
+      "height": 1024
+    },
+    {
+      "id": "nearby-meetings",
+      "altKey": "meetings",
+      "path": "/images/app/discover-meetings.jpg",
+      "width": 471,
+      "height": 1024
+    }
+  ],
+  "placementSets": {
+    "baseline": {
+      "voiceInput": "creation-entry",
+      "assignee": "nearby-groups",
+      "delegatedTask": "nearby-meetings",
+      "groups": "nearby-groups",
+      "groupGallery": "nearby-groups",
+      "modules": "profile-settings",
+      "bookings": "nearby-meetings",
+      "nearby": "nearby-groups"
+    }
+  },
+  "placementSelection": {
+    "en": "baseline",
+    "pl": "baseline"
+  }
+}

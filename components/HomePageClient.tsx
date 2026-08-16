@@ -12,6 +12,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import type { DocumentLanguage } from '@/components/documentLocale';
 import { useSiteLanguage } from '@/components/useSiteLanguage';
+import { getProductMediaPlacements } from '@/lib/productMedia';
 import { SITE_URL, SOCIAL_IMAGE } from '@/lib/site';
 import s from '@/app/page.module.css';
 import t from '@/app/homeContent.json';
@@ -48,13 +49,12 @@ const LANGS: { code: Lang; label: string }[] = [
   { code: 'pl', label: 'PL' },
 ];
 
-const TASK_META_ICONS = ['clock', 'people', 'reminder'] as const;
-
 const localizedPath = (language: Lang, path: string) =>
   language === 'pl' ? `/pl${path}` : path;
 
 const createSiteSchema = (language: Lang, copy: (typeof t)[Lang]) => {
   const pageUrl = language === 'pl' ? `${SITE_URL}/pl/` : `${SITE_URL}/`;
+  const productMediaPlacements = getProductMediaPlacements(language);
 
   return {
     '@context': 'https://schema.org',
@@ -92,11 +92,9 @@ const createSiteSchema = (language: Lang, copy: (typeof t)[Lang]) => {
         image: SOCIAL_IMAGE.url,
         downloadUrl: [STORE.ios, STORE.android],
         sameAs: [STORE.ios, STORE.android],
-        screenshot: [
-          `${SITE_URL}/images/app/create-menu.png`,
-          `${SITE_URL}/images/app/discover-groups.png`,
-          `${SITE_URL}/images/app/discover-meetings.png`,
-        ],
+        screenshot: productMediaPlacements.hero.map(
+          (media) => `${SITE_URL}${media.path}`,
+        ),
         description: copy.hero.sub,
         publisher: { '@id': `${SITE_URL}/#organization` },
         offers: {
@@ -111,8 +109,8 @@ const createSiteSchema = (language: Lang, copy: (typeof t)[Lang]) => {
         url: pageUrl,
         name:
           language === 'pl'
-            ? 'Shuuty — od pomysłu do działania'
-            : 'Shuuty — From idea to action',
+            ? 'Shuuty - od pomysłu do działania'
+            : 'Shuuty - From idea to action',
         description: copy.hero.sub,
         inLanguage: language,
         isPartOf: { '@id': `${SITE_URL}/#website` },
@@ -242,16 +240,20 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
   const { language: lang, changeLanguage: switchLang } = useSiteLanguage(initialLanguage);
   const [theme, setTheme] = useState<Theme>('dark');
   const [showMobileNav, setShowMobileNav] = useState(false);
-  const [activeHeroPhone, setActiveHeroPhone] = useState(1);
+  const [activeHeroPhone, setActiveHeroPhone] = useState(0);
   const carouselPointerStart = useRef<number | null>(null);
   const carouselDidSwipe = useRef(false);
   const c = t[lang];
+  const productMediaPlacements = getProductMediaPlacements(lang);
 
-  const heroPhones = [
-    { src: '/images/app/profile-settings.png', alt: c.images.settings },
-    { src: '/images/app/create-menu.png', alt: c.images.create, priority: true },
-    { src: '/images/app/discover-groups.png', alt: c.images.groups },
-  ] as const;
+  const mediaAlt = (media: { altKey: string }) =>
+    c.images[media.altKey as keyof typeof c.images];
+
+  const heroPhones = productMediaPlacements.hero.map((media, index) => ({
+    ...media,
+    alt: mediaAlt(media),
+    priority: index === 0,
+  }));
 
   const selectHeroPhone = useCallback((index: number) => {
     setActiveHeroPhone((index + 3) % 3);
@@ -428,6 +430,7 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
               <br />
               <span className={s.gradientText}>{c.hero.accent}</span>
             </h1>
+            <p className={s.relayLine}>{c.hero.relay}</p>
             <p className={s.heroLead}>{c.hero.sub}</p>
             <div className={s.heroActions}>
               <StoreButtons copy={c.store} />
@@ -465,7 +468,7 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
               return (
                 <button
                   type="button"
-                  key={phone.src}
+                  key={phone.id}
                   className={`${s.phone} ${positionClass}`}
                   onClick={() => {
                     if (carouselDidSwipe.current) {
@@ -482,17 +485,14 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
                   aria-pressed={isActive}
                 >
                   <Image
-                    src={phone.src}
+                    src={phone.path}
                     alt={phone.alt}
-                    width={471}
-                    height={1024}
-                    priority={'priority' in phone ? phone.priority : false}
+                    width={phone.width}
+                    height={phone.height}
+                    priority={phone.priority}
                     draggable={false}
                     sizes={isActive ? '(max-width: 720px) 55vw, 290px' : '(max-width: 720px) 34vw, 190px'}
                   />
-                  {isActive && index === 1 && (
-                    <span className={s.phoneHighlight}><Icon name="mic" />{c.hero.voice}</span>
-                  )}
                 </button>
               );
             })}
@@ -504,7 +504,7 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
               {heroPhones.map((phone, index) => (
                 <button
                   type="button"
-                  key={`${phone.src}-dot`}
+                  key={`${phone.id}-dot`}
                   className={`${s.carouselDot} ${index === activeHeroPhone ? s.carouselDotActive : ''}`}
                   onClick={() => {
                     if (carouselDidSwipe.current) {
@@ -521,9 +521,6 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
             <p className={s.srOnly} aria-live="polite">
               {`${activeHeroPhone + 1} / ${heroPhones.length}: ${heroPhones[activeHeroPhone].alt}`}
             </p>
-            <span className={`${s.orbitBadge} ${s.orbitTask}`}><Icon name="task" />{c.nav.tasks}</span>
-            <span className={`${s.orbitBadge} ${s.orbitGroup}`}><Icon name="group" />{c.nav.groups}</span>
-            <span className={`${s.orbitBadge} ${s.orbitMap}`}><Icon name="map" />{c.discover.meetings}</span>
           </div>
         </section>
 
@@ -558,33 +555,31 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
               </ul>
             </div>
 
-            <div className={s.productCanvas}>
-              <div className={s.canvasGlow} aria-hidden />
-              <div className={s.voiceDemo}>
-                <div className={s.demoHeader}>
-                  <span className={s.demoIcon}><Icon name="mic" /></span>
-                  <span>{c.tasks.voiceLabel}</span>
-                  <span className={s.livePill}><i />AI</span>
+            <div className={s.taskProof}>
+              <figure className={s.productScreen}>
+                <div className={`${s.phone} ${s.taskPhone}`}>
+                  <Image
+                    src={productMediaPlacements.voiceInput.path}
+                    alt={mediaAlt(productMediaPlacements.voiceInput)}
+                    width={productMediaPlacements.voiceInput.width}
+                    height={productMediaPlacements.voiceInput.height}
+                    sizes="(max-width: 720px) 52vw, 250px"
+                  />
                 </div>
-                <blockquote>{c.tasks.voicePrompt}</blockquote>
-                <div className={s.voiceWave} aria-hidden>{[10, 18, 12, 28, 20, 34, 14, 24, 11, 20, 8].map((height, index) => <i key={index} style={{ height }} />)}</div>
-                <div className={s.parsedTask}>
-                  <span className={s.parsedLabel}>{c.tasks.parsedLabel}</span>
-                  <div className={s.parsedTitle}><span className={s.taskCheck}><Icon name="task" /></span><strong>{c.tasks.parsedTitle}</strong></div>
-                  <div className={s.metaChips}>
-                    {c.tasks.parsedMeta.map((meta, index) => (
-                      <span key={meta}><Icon name={TASK_META_ICONS[index] ?? 'reminder'} />{meta}</span>
-                    ))}
-                  </div>
-                  <span className={s.delegateDemo}><Icon name="send" />{c.tasks.delegate}</span>
-                  <p className={s.deliveryNote}>{c.tasks.deliveryNote}</p>
-                </div>
+                <figcaption>{mediaAlt(productMediaPlacements.voiceInput)}</figcaption>
+              </figure>
+              <div className={s.mechanismPanel}>
+                <span className={s.modesLabel}>{c.tasks.mechanismLabel}</span>
+                <p>{c.tasks.mechanismLead}</p>
+                <ol className={s.mechanismList}>
+                  {c.tasks.mechanism.map((step, index) => (
+                    <li key={step.title}>
+                      <span>{String(index + 1).padStart(2, '0')}</span>
+                      <div><strong>{step.title}</strong><p>{step.desc}</p></div>
+                    </li>
+                  ))}
+                </ol>
               </div>
-              <ol className={s.miniFlow}>
-                {c.tasks.flow.map((step, index) => (
-                  <li key={step}><span>{String(index + 1).padStart(2, '0')}</span>{step}</li>
-                ))}
-              </ol>
             </div>
           </div>
         </section>
@@ -593,7 +588,13 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
           <div className={`${s.container} ${s.chapterGrid} ${s.reverseGrid}`}>
             <div className={s.groupsVisual}>
               <div className={`${s.phone} ${s.groupPhone}`}>
-                <Image src="/images/app/discover-groups.png" alt={c.images.groups} width={471} height={1024} sizes="(max-width: 960px) 230px, 270px" />
+                <Image
+                  src={productMediaPlacements.groups.path}
+                  alt={mediaAlt(productMediaPlacements.groups)}
+                  width={productMediaPlacements.groups.width}
+                  height={productMediaPlacements.groups.height}
+                  sizes="(max-width: 960px) 230px, 270px"
+                />
               </div>
               <div className={s.groupModes}>
                 <span className={s.modesLabel}>{c.groups.modesLabel}</span>
@@ -603,6 +604,12 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
                     <div><strong>{mode.title}</strong><p>{mode.desc}</p></div>
                   </div>
                 ))}
+                <div className={s.groupModules}>
+                  <strong>{c.groups.modulesLabel}</strong>
+                  <ul>
+                    {c.groups.modules.map((module) => <li key={module}>{module}</li>)}
+                  </ul>
+                </div>
               </div>
             </div>
             <div className={s.chapterCopy}>
@@ -636,14 +643,74 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
             </div>
             <div className={s.mapVisual}>
               <div className={s.mapCaption}><span><Icon name="map" /></span>{c.discover.mapCaption}</div>
-              <figure className={`${s.phone} ${s.mapPhoneLeft}`}>
-                <Image src="/images/app/discover-meetings.png" alt={c.images.meetings} width={471} height={1024} sizes="(max-width: 720px) 48vw, 250px" />
-                <figcaption>{c.discover.meetings}</figcaption>
+              <figure className={s.mapPhoneLeft}>
+                <div className={`${s.phone} ${s.mapPhoneFrame}`}>
+                  <Image
+                    src={productMediaPlacements.bookings.path}
+                    alt={mediaAlt(productMediaPlacements.bookings)}
+                    width={productMediaPlacements.bookings.width}
+                    height={productMediaPlacements.bookings.height}
+                    sizes="(max-width: 720px) 48vw, 250px"
+                  />
+                </div>
+                <figcaption>{mediaAlt(productMediaPlacements.bookings)}</figcaption>
               </figure>
-              <figure className={`${s.phone} ${s.mapPhoneRight}`}>
-                <Image src="/images/app/discover-groups.png" alt={c.images.groups} width={471} height={1024} sizes="(max-width: 720px) 48vw, 250px" />
-                <figcaption>{c.discover.groups}</figcaption>
+              <figure className={s.mapPhoneRight}>
+                <div className={`${s.phone} ${s.mapPhoneFrame}`}>
+                  <Image
+                    src={productMediaPlacements.nearby.path}
+                    alt={mediaAlt(productMediaPlacements.nearby)}
+                    width={productMediaPlacements.nearby.width}
+                    height={productMediaPlacements.nearby.height}
+                    sizes="(max-width: 720px) 48vw, 250px"
+                  />
+                </div>
+                <figcaption>{mediaAlt(productMediaPlacements.nearby)}</figcaption>
               </figure>
+            </div>
+          </div>
+        </section>
+
+        <section id="experience" className={`${s.chapter} ${s.chapterTint} ${s.reveal}`} data-reveal>
+          <div className={`${s.container} ${s.experienceGrid}`}>
+            <figure className={s.experienceVisual}>
+              <div className={s.experienceScreens}>
+                <div className={`${s.phone} ${s.experiencePhone} ${s.experiencePhonePrimary}`}>
+                  <Image
+                    src={productMediaPlacements.groupGallery.path}
+                    alt={mediaAlt(productMediaPlacements.groupGallery)}
+                    width={productMediaPlacements.groupGallery.width}
+                    height={productMediaPlacements.groupGallery.height}
+                    sizes="(max-width: 720px) 48vw, 230px"
+                  />
+                </div>
+                <div className={`${s.phone} ${s.experiencePhone} ${s.experiencePhoneSecondary}`}>
+                  <Image
+                    src={productMediaPlacements.modules.path}
+                    alt={mediaAlt(productMediaPlacements.modules)}
+                    width={productMediaPlacements.modules.width}
+                    height={productMediaPlacements.modules.height}
+                    sizes="(max-width: 720px) 45vw, 215px"
+                  />
+                </div>
+              </div>
+              <figcaption>
+                {c.experience.screenCaption}: {mediaAlt(productMediaPlacements.groupGallery)};{' '}
+                {mediaAlt(productMediaPlacements.modules)}
+              </figcaption>
+            </figure>
+            <div className={s.chapterCopy}>
+              <span className={s.sectionLabel}>{c.experience.label}</span>
+              <h2>{c.experience.heading}</h2>
+              <p className={s.chapterLead}>{c.experience.lead}</p>
+              <div className={s.experienceList}>
+                {c.experience.items.map((item, index) => (
+                  <article key={item.title}>
+                    <span>{String(index + 1).padStart(2, '0')}</span>
+                    <div><h3>{item.title}</h3><p>{item.desc}</p></div>
+                  </article>
+                ))}
+              </div>
             </div>
           </div>
         </section>
