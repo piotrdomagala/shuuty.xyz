@@ -619,8 +619,13 @@ function validateImportedAssets(assets, failures) {
 }
 
 function validateSelectedPlacementSet(setId, placementSet, locale, assetsById, failures) {
-  const expectedFields = Object.keys(placementFieldToSlot).sort();
-  if (!isDeepStrictEqual(Object.keys(placementSet ?? {}).sort(), expectedFields)) {
+  const expectedFields = Object.keys(placementFieldToSlot).sort((left, right) =>
+    left.localeCompare(right),
+  );
+  if (!isDeepStrictEqual(
+    Object.keys(placementSet ?? {}).sort((left, right) => left.localeCompare(right)),
+    expectedFields,
+  )) {
     failures.push(`${setId} must contain exactly the eight ordered website placement fields.`);
   }
   const selectedThemes = new Set();
@@ -678,7 +683,10 @@ function validatePreviewPlacementSets(manifest, placementSets, failures) {
   if (!isDeepStrictEqual(manifest.placementSelection, previewPlacementSelection)) {
     failures.push('Preview placementSelection must use the explicit canonical EN and PL sets.');
   }
-  if (!isDeepStrictEqual(Object.keys(placementSets).sort(), Object.values(previewPlacementSelection).sort())) {
+  if (!isDeepStrictEqual(
+    Object.keys(placementSets).sort((left, right) => left.localeCompare(right)),
+    Object.values(previewPlacementSelection).sort((left, right) => left.localeCompare(right)),
+  )) {
     failures.push('Preview media must expose exactly one canonical placement set per locale.');
   }
 }

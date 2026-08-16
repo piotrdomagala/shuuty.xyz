@@ -43,7 +43,7 @@ export default function TaskSpatialHandoff({
 }: TaskSpatialHandoffProps) {
   const flowId = useId().replaceAll(':', '');
   const [activeStep, setActiveStep] = useState(0);
-  const regionRef = useRef<HTMLDivElement>(null);
+  const regionRef = useRef<HTMLElement>(null);
   const sequenceTimers = useRef<number[]>([]);
   const sequenceStarted = useRef(false);
   const userInteracted = useRef(false);
@@ -109,12 +109,10 @@ export default function TaskSpatialHandoff({
     };
   }, [clearSequence, startSequence]);
 
-  const handleKeyDown = useCallback((event: ReactKeyboardEvent<HTMLDivElement>) => {
+  const handleKeyDown = useCallback((event: ReactKeyboardEvent<HTMLButtonElement>) => {
     if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
     event.preventDefault();
-    const focusedIndex = screenButtons.current.findIndex(
-      (button) => button === document.activeElement,
-    );
+    const focusedIndex = screenButtons.current.indexOf(event.currentTarget);
     const currentIndex = focusedIndex >= 0 ? focusedIndex : activeStep;
     const nextIndex = (
       currentIndex + (event.key === 'ArrowRight' ? 1 : -1) + FLOW_STEP_COUNT
@@ -123,13 +121,13 @@ export default function TaskSpatialHandoff({
     screenButtons.current[nextIndex]?.focus({ preventScroll: true });
   }, [activeStep, selectStep]);
 
-  const handlePointerDown = useCallback((event: ReactPointerEvent<HTMLDivElement>) => {
+  const handlePointerDown = useCallback((event: ReactPointerEvent<HTMLButtonElement>) => {
     if (event.pointerType === 'mouse' || !event.isPrimary) return;
     stopSequence();
     pointerStart.current = event.clientX;
   }, [stopSequence]);
 
-  const handlePointerUp = useCallback((event: ReactPointerEvent<HTMLDivElement>) => {
+  const handlePointerUp = useCallback((event: ReactPointerEvent<HTMLButtonElement>) => {
     if (!event.isPrimary || pointerStart.current === null) return;
 
     const distance = event.clientX - pointerStart.current;
@@ -147,19 +145,11 @@ export default function TaskSpatialHandoff({
   }, []);
 
   return (
-    <div
+    <section
       ref={regionRef}
       className={s.taskFlow}
       data-active={activeStep}
-      role="region"
       aria-label={regionLabel}
-      onKeyDown={handleKeyDown}
-      onPointerDown={handlePointerDown}
-      onPointerUp={handlePointerUp}
-      onPointerCancel={() => {
-        pointerStart.current = null;
-        suppressClick.current = false;
-      }}
     >
       <span id={`${flowId}-action`} className={s.srOnly}>
         {selectLabel}
@@ -192,6 +182,13 @@ export default function TaskSpatialHandoff({
                 aria-labelledby={`${flowId}-action ${titleId}`}
                 aria-describedby={`${descriptionId} ${screenDescriptionId}`}
                 aria-pressed={isActive}
+                onKeyDown={handleKeyDown}
+                onPointerDown={handlePointerDown}
+                onPointerUp={handlePointerUp}
+                onPointerCancel={() => {
+                  pointerStart.current = null;
+                  suppressClick.current = false;
+                }}
                 onMouseEnter={() => selectStep(index)}
                 onFocus={() => selectStep(index)}
                 onClick={() => {
@@ -228,6 +225,6 @@ export default function TaskSpatialHandoff({
           );
         })}
       </ol>
-    </div>
+    </section>
   );
 }

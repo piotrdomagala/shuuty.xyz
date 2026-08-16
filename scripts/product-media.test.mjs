@@ -252,7 +252,8 @@ test('the owner-attested canonical source preview stays explicit and unbound', a
       assert.match(asset.web.sha256, /^[a-f0-9]{64}$/u);
       assert.notEqual(asset.web.sha256, asset.sourceSha256);
       assert.equal(asset.web.sourceSha256, asset.sha256);
-      assert.ok(asset.web.byteLength > 0 && asset.web.byteLength <= 200 * 1024);
+      assert.ok(asset.web.byteLength > 0);
+      assert.ok(asset.web.byteLength <= 200 * 1024);
       assert.equal(asset.web.encoder, 'sharp@0.35.3');
       assert.equal(asset.web.libvips, '8.18.3');
       assert.deepEqual(asset.web.parameters, webParameters);
