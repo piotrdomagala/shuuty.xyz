@@ -183,7 +183,9 @@ Na finalnym lokalnym diffie przeszły:
 
 Poprawki dla Sonar obejmują semantyczny region Tasks, listenery wyłącznie na
 natywnych przyciskach oraz jawne komparatory `localeCompare` we wszystkich
-zgłoszonych sortowaniach. Zdalny Quality Gate jest weryfikowany ponownie po pushu.
+zgłoszonych sortowaniach. Dla commita `faac850` oba zdalne checki Sonar, build i
+automatyczne review przeszły, a `deploy` oraz `IndexNow` zostały pominięte zgodnie
+z zasadami pull requestu.
 
 ## Findings i ich status
 
@@ -232,7 +234,7 @@ jako źródła UI.
 ## Werdykt
 
 Implementacja, asset pipeline, aktualne renderowane dowody i lokalne QA przeszły
-niezależny read-only review bez findingów P0-P3. Ostateczna gotowość PR zależy już
-tylko od zielonego zdalnego Quality Gate na wypchniętym commicie.
+niezależny read-only review bez findingów P0-P3. Zdalny Quality Gate i build są
+zielone. PR jest gotowy do review, bez deploymentu i bez merge.
 
-final result: pending remote quality gate
+final result: ready for review
