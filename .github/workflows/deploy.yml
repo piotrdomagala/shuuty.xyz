@@ -33,6 +33,18 @@ jobs:
       - name: Validate legal documents
         run: npm run validate:legal
 
+      - name: Validate product media
+        run: npm run validate:media
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Test
+        run: npm test
+
       - name: Build Next.js
         run: npm run build
 

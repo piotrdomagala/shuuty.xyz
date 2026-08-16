@@ -53,7 +53,14 @@ The two themes mirror the current mobile application tokens:
 
 The selected theme is stored as `shuuty-theme` and applied before first paint. The language is stored in the `lang` cookie.
 
-Current public screenshots live under `public/images/app/`. Add only approved, anonymised product imagery; do not link to working files in another repository.
+Current public screenshots live under `public/images/app/` and are registered in
+`content/product-media.json`. Add only approved, anonymised product imagery; do
+not link to working files in another repository.
+
+The accepted Golden Relay package will be integrated through the stable media
+manifest after the complete 50-image no-publish artifact passes its ledger and QA
+gates. See `docs/PRODUCT-MEDIA-INTEGRATION.md`. Never import a partial
+`exports/final` directory or recreate a missing product screen.
 
 ## Deployment
 
