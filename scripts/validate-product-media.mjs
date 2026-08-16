@@ -220,23 +220,13 @@ async function validateAssetFile(asset, root, failures) {
   }
 }
 
-export async function validateProductMedia(root = defaultRoot) {
-  const [manifest, runtimeManifest, homeContent] = await Promise.all([
-    readFile(new URL('content/product-media.json', root), 'utf8').then(JSON.parse),
-    readFile(new URL('content/product-media.runtime.json', root), 'utf8').then(JSON.parse),
-    readFile(new URL('app/homeContent.json', root), 'utf8').then(JSON.parse),
-  ]);
-  const failures = [];
+function getLocalizedAltKeys(homeContent) {
   const englishAltKeys = new Set(Object.keys(homeContent.en?.images ?? {}));
   const polishAltKeys = new Set(Object.keys(homeContent.pl?.images ?? {}));
-  const altKeys = new Set(
-    [...englishAltKeys].filter((key) => polishAltKeys.has(key)),
-  );
+  return new Set([...englishAltKeys].filter((key) => polishAltKeys.has(key)));
+}
 
-  if (manifest.schemaVersion !== 1) {
-    failures.push('Product media manifest schemaVersion must be 1.');
-  }
-  const assets = Array.isArray(manifest.assets) ? manifest.assets : [];
+function validateRuntimeManifest(manifest, runtimeManifest, assets, failures) {
   const expectedRuntimeManifest = {
     schemaVersion: manifest.schemaVersion,
     assets: assets.map(({ id, altKey, path, width, height }) => ({
@@ -254,15 +244,20 @@ export async function validateProductMedia(root = defaultRoot) {
       'The runtime media manifest must exactly match the public rendering projection and contain no provenance fields.',
     );
   }
+}
+
+async function validateAssets(assets, root, failures, altKeys) {
   const ids = new Set();
   const paths = new Set();
   for (const asset of assets) {
     validateAssetMetadata(asset, failures, ids, paths, altKeys);
     await validateAssetFile(asset, root, failures);
   }
+  return ids;
+}
 
+function validatePlacementReferences(manifest, assets, ids, failures) {
   const placementSets = manifest.placementSets ?? {};
-  const assetsById = new Map(assets.map((asset) => [asset.id, asset]));
   for (const [setId, placementSet] of Object.entries(placementSets)) {
     for (const field of Object.keys(placementFieldToSlot)) {
       const id = placementSet?.[field];
@@ -273,6 +268,7 @@ export async function validateProductMedia(root = defaultRoot) {
       }
     }
   }
+
   for (const language of Object.keys(placementLocales)) {
     const selectedSetId = manifest.placementSelection?.[language];
     if (typeof selectedSetId !== 'string' || !placementSets[selectedSetId]) {
@@ -280,6 +276,13 @@ export async function validateProductMedia(root = defaultRoot) {
     }
   }
 
+  return {
+    assetsById: new Map(assets.map((asset) => [asset.id, asset])),
+    placementSets,
+  };
+}
+
+function validateFinalArtifactContract(manifest, failures) {
   const contract = manifest.finalArtifactContract ?? {};
   if (contract.requiredImageCount !== 50) {
     failures.push('The final artifact contract must require the complete 50-image package.');
@@ -287,161 +290,236 @@ export async function validateProductMedia(root = defaultRoot) {
   if (JSON.stringify(contract.requiredLocales) !== JSON.stringify(['pl-PL', 'en-US'])) {
     failures.push('The final artifact contract must require PL and EN in that explicit order.');
   }
-  if (
-    !isDeepStrictEqual(contract.semanticSlots, [...semanticSlotPositions.keys()])
-  ) {
+  if (!isDeepStrictEqual(contract.semanticSlots, [...semanticSlotPositions.keys()])) {
     failures.push('The final artifact contract semantic slots must exactly match the ordered website flow.');
   }
+  return contract;
+}
+
+function validateArtifactBindingMetadata(binding, failures) {
+  for (const field of ['artifactRunId', 'artifactHeadSha', 'sourceArtifactName']) {
+    if (typeof binding[field] !== 'string' || !binding[field]) {
+      failures.push(`artifactBinding.${field} is required.`);
+    }
+  }
+  if (!/^[a-f0-9]{40}$/u.test(binding.artifactHeadSha || '')) {
+    failures.push('artifactBinding.artifactHeadSha must be a lowercase 40-character commit SHA.');
+  }
+  if (!/^\d+$/u.test(binding.artifactRunId || '')) {
+    failures.push('artifactBinding.artifactRunId must be a numeric workflow run ID.');
+  }
+
+  if (typeof binding.sourceArtifactName === 'string') {
+    const expectedArtifactName = `shuuty-store-listing-package-${binding.artifactHeadSha}.zip`;
+    const hasExpectedName =
+      basename(binding.sourceArtifactName) === binding.sourceArtifactName &&
+      extname(binding.sourceArtifactName).toLowerCase() === '.zip' &&
+      binding.sourceArtifactName === expectedArtifactName;
+    if (!hasExpectedName) {
+      failures.push(
+        `artifactBinding.sourceArtifactName must be ${expectedArtifactName}, never a draft or local path.`,
+      );
+    }
+  }
+
+  for (const field of ['packageSha256', 'ledgerSha256', 'qaSha256']) {
+    if (!/^[a-f0-9]{64}$/u.test(binding[field] || '')) {
+      failures.push(`artifactBinding.${field} must be a lowercase SHA-256 digest.`);
+    }
+  }
+}
+
+function validateImportedSlotCoverage(assets, contract, failures) {
+  for (const semanticSlot of contract.semanticSlots ?? []) {
+    for (const locale of contract.requiredLocales ?? []) {
+      const matches = assets.filter(
+        (asset) => asset.semanticSlot === semanticSlot && asset.locales?.includes(locale),
+      );
+      if (matches.length !== 1) {
+        failures.push(
+          `Imported media must contain exactly one ${semanticSlot} asset for ${locale}.`,
+        );
+      }
+    }
+  }
+}
+
+function validateImportedAssetSourceEntry(asset, sourceArtifactEntries, failures) {
+  for (const field of ['sourceArtifactEntry', 'platform', 'device', 'theme']) {
+    if (typeof asset[field] !== 'string' || !asset[field]) {
+      failures.push(`${asset.id}.${field} is required for imported product media.`);
+    }
+  }
+
+  if (!isSafeArchiveEntry(asset.sourceArtifactEntry)) {
+    failures.push(`${asset.id}.sourceArtifactEntry must be a canonical relative archive entry.`);
+  } else if (sourceArtifactEntries.has(asset.sourceArtifactEntry)) {
+    failures.push(`${asset.id}.sourceArtifactEntry must be unique across imported product media.`);
+  } else {
+    sourceArtifactEntries.add(asset.sourceArtifactEntry);
+  }
+}
+
+function validateImportedAssetSourceHash(asset, failures) {
+  if (!/^[a-f0-9]{64}$/u.test(asset.sourceSha256 || '')) {
+    failures.push(`${asset.id}.sourceSha256 must be a lowercase SHA-256 digest.`);
+  } else if (asset.sourceSha256 !== asset.sha256) {
+    failures.push(
+      `${asset.id}.sourceSha256 must equal sha256 for a byte-for-byte approved import.`,
+    );
+  }
+}
+
+function validateImportedAssetPlatform(asset, failures) {
+  if (!importedPlatforms.has(asset.platform)) {
+    failures.push(`${asset.id}.platform must be ios or android.`);
+  }
+  if (!importedDevices.has(asset.device)) {
+    failures.push(`${asset.id}.device must be iphone-6.9, ipad-13 or android-phone.`);
+  }
+  const incompatibleDevice =
+    (asset.platform === 'ios' && asset.device === 'android-phone') ||
+    (asset.platform === 'android' && asset.device !== 'android-phone');
+  if (incompatibleDevice) {
+    failures.push(`${asset.id}.device is incompatible with platform ${asset.platform}.`);
+  }
+}
+
+function validateImportedAssetPlacement(asset, failures) {
+  if (!Number.isInteger(asset.storePosition) || asset.storePosition < 1 || asset.storePosition > 8) {
+    failures.push(`${asset.id}.storePosition must be an integer from 1 through 8.`);
+  }
+  const expectedStorePosition = semanticSlotPositions.get(asset.semanticSlot);
+  if (expectedStorePosition && asset.storePosition !== expectedStorePosition) {
+    failures.push(
+      `${asset.id}.storePosition must be ${expectedStorePosition} for ${asset.semanticSlot}.`,
+    );
+  }
+  if (!importedThemes.has(asset.theme)) {
+    failures.push(`${asset.id}.theme must be light or dark.`);
+  }
+}
+
+function validateImportedAssetLocalization(asset, failures) {
+  const expectedAltKey = semanticSlotToAltKey.get(asset.semanticSlot);
+  if (expectedAltKey && asset.altKey !== expectedAltKey) {
+    failures.push(`${asset.id}.altKey must be ${expectedAltKey} for ${asset.semanticSlot}.`);
+  }
+  if (asset.locales?.length !== 1) {
+    failures.push(`${asset.id} must bind to exactly one locale after final import.`);
+  }
+}
+
+function validateImportedAssets(assets, failures) {
+  const sourceArtifactEntries = new Set();
+  for (const asset of assets.filter((candidate) => candidate.semanticSlot)) {
+    validateImportedAssetSourceEntry(asset, sourceArtifactEntries, failures);
+    validateImportedAssetPlatform(asset, failures);
+    validateImportedAssetPlacement(asset, failures);
+    validateImportedAssetSourceHash(asset, failures);
+    validateImportedAssetLocalization(asset, failures);
+  }
+}
+
+function validateSelectedPlacementSet(setId, placementSet, locale, assetsById, failures) {
+  const selectedThemes = new Set();
+  const selectedPlatforms = new Set();
+  for (const [field, semanticSlot] of Object.entries(placementFieldToSlot)) {
+    const asset = assetsById.get(placementSet[field]);
+    if (!asset) continue;
+    selectedThemes.add(asset.theme);
+    selectedPlatforms.add(asset.platform);
+    if (asset.semanticSlot !== semanticSlot) {
+      failures.push(
+        `${setId}.${field} must use semantic slot ${semanticSlot}; received ${asset.semanticSlot || 'none'}.`,
+      );
+    }
+    if (asset.locales?.length !== 1 || asset.locales[0] !== locale) {
+      failures.push(`${setId}.${field} must use exactly locale ${locale}.`);
+    }
+    if (asset.device === 'ipad-13') {
+      failures.push(`${setId}.${field} must use a phone capture that fits the website phone slots.`);
+    }
+  }
+  if (!selectedThemes.has('light') || !selectedThemes.has('dark')) {
+    failures.push(`${setId} must deliberately represent both Light and Dark product UI.`);
+  }
+  if (!selectedPlatforms.has('ios') || !selectedPlatforms.has('android')) {
+    failures.push(`${setId} must deliberately represent both iOS and Android product UI.`);
+  }
+}
+
+function validateBoundPlacementSelections(
+  manifest,
+  placementSets,
+  assetsById,
+  failures,
+) {
+  if (manifest.placementSelection?.en === manifest.placementSelection?.pl) {
+    failures.push('Approved product media must use locale-specific EN and PL placement sets.');
+  }
+  for (const [language, locale] of Object.entries(placementLocales)) {
+    const setId = manifest.placementSelection?.[language];
+    const placementSet = placementSets[setId];
+    if (placementSet) {
+      validateSelectedPlacementSet(setId, placementSet, locale, assetsById, failures);
+    }
+  }
+}
+
+function validateBoundManifest(
+  manifest,
+  assets,
+  contract,
+  placementSets,
+  assetsById,
+  failures,
+) {
+  if (contract.status !== 'approved-no-publish-imported') {
+    failures.push('A bound manifest must use approved-no-publish-imported status.');
+  }
+  validateArtifactBindingMetadata(manifest.artifactBinding ?? {}, failures);
+  validateImportedSlotCoverage(assets, contract, failures);
+  validateImportedAssets(assets, failures);
+  validateBoundPlacementSelections(manifest, placementSets, assetsById, failures);
+}
+
+export async function validateProductMedia(root = defaultRoot) {
+  const [manifest, runtimeManifest, homeContent] = await Promise.all([
+    readFile(new URL('content/product-media.json', root), 'utf8').then(JSON.parse),
+    readFile(new URL('content/product-media.runtime.json', root), 'utf8').then(JSON.parse),
+    readFile(new URL('app/homeContent.json', root), 'utf8').then(JSON.parse),
+  ]);
+  const failures = [];
+  if (manifest.schemaVersion !== 1) {
+    failures.push('Product media manifest schemaVersion must be 1.');
+  }
+
+  const assets = Array.isArray(manifest.assets) ? manifest.assets : [];
+  validateRuntimeManifest(manifest, runtimeManifest, assets, failures);
+  const ids = await validateAssets(assets, root, failures, getLocalizedAltKeys(homeContent));
+  const { assetsById, placementSets } = validatePlacementReferences(
+    manifest,
+    assets,
+    ids,
+    failures,
+  );
+  const contract = validateFinalArtifactContract(manifest, failures);
 
   if (manifest.artifactBinding === null) {
     if (contract.status !== 'awaiting-approved-no-publish-package') {
       failures.push('An unbound manifest must await the approved no-publish package.');
     }
   } else {
-    if (contract.status !== 'approved-no-publish-imported') {
-      failures.push('A bound manifest must use approved-no-publish-imported status.');
-    }
-    const binding = manifest.artifactBinding ?? {};
-    for (const field of ['artifactRunId', 'artifactHeadSha', 'sourceArtifactName']) {
-      if (typeof binding[field] !== 'string' || !binding[field]) {
-        failures.push(`artifactBinding.${field} is required.`);
-      }
-    }
-    if (!/^[a-f0-9]{40}$/u.test(binding.artifactHeadSha || '')) {
-      failures.push('artifactBinding.artifactHeadSha must be a lowercase 40-character commit SHA.');
-    }
-    if (!/^\d+$/u.test(binding.artifactRunId || '')) {
-      failures.push('artifactBinding.artifactRunId must be a numeric workflow run ID.');
-    }
-    if (typeof binding.sourceArtifactName === 'string') {
-      const expectedArtifactName = `shuuty-store-listing-package-${binding.artifactHeadSha}.zip`;
-      if (
-        basename(binding.sourceArtifactName) !== binding.sourceArtifactName ||
-        extname(binding.sourceArtifactName).toLowerCase() !== '.zip' ||
-        binding.sourceArtifactName !== expectedArtifactName
-      ) {
-        failures.push(
-          `artifactBinding.sourceArtifactName must be ${expectedArtifactName}, never a draft or local path.`,
-        );
-      }
-    }
-    for (const field of ['packageSha256', 'ledgerSha256', 'qaSha256']) {
-      if (!/^[a-f0-9]{64}$/u.test(binding[field] || '')) {
-        failures.push(`artifactBinding.${field} must be a lowercase SHA-256 digest.`);
-      }
-    }
-
-    for (const semanticSlot of contract.semanticSlots ?? []) {
-      for (const locale of contract.requiredLocales ?? []) {
-        const matches = assets.filter(
-          (asset) =>
-            asset.semanticSlot === semanticSlot && asset.locales?.includes(locale),
-        );
-        if (matches.length !== 1) {
-          failures.push(
-            `Imported media must contain exactly one ${semanticSlot} asset for ${locale}.`,
-          );
-        }
-      }
-    }
-
-    const sourceArtifactEntries = new Set();
-    for (const asset of assets.filter((candidate) => candidate.semanticSlot)) {
-      for (const field of ['sourceArtifactEntry', 'platform', 'device', 'theme']) {
-        if (typeof asset[field] !== 'string' || !asset[field]) {
-          failures.push(`${asset.id}.${field} is required for imported product media.`);
-        }
-      }
-      if (!isSafeArchiveEntry(asset.sourceArtifactEntry)) {
-        failures.push(`${asset.id}.sourceArtifactEntry must be a canonical relative archive entry.`);
-      } else if (sourceArtifactEntries.has(asset.sourceArtifactEntry)) {
-        failures.push(
-          `${asset.id}.sourceArtifactEntry must be unique across imported product media.`,
-        );
-      } else {
-        sourceArtifactEntries.add(asset.sourceArtifactEntry);
-      }
-      if (!importedPlatforms.has(asset.platform)) {
-        failures.push(`${asset.id}.platform must be ios or android.`);
-      }
-      if (!importedDevices.has(asset.device)) {
-        failures.push(
-          `${asset.id}.device must be iphone-6.9, ipad-13 or android-phone.`,
-        );
-      }
-      if (
-        (asset.platform === 'ios' && asset.device === 'android-phone') ||
-        (asset.platform === 'android' && asset.device !== 'android-phone')
-      ) {
-        failures.push(`${asset.id}.device is incompatible with platform ${asset.platform}.`);
-      }
-      if (!Number.isInteger(asset.storePosition) || asset.storePosition < 1 || asset.storePosition > 8) {
-        failures.push(`${asset.id}.storePosition must be an integer from 1 through 8.`);
-      }
-      const expectedStorePosition = semanticSlotPositions.get(asset.semanticSlot);
-      if (expectedStorePosition && asset.storePosition !== expectedStorePosition) {
-        failures.push(
-          `${asset.id}.storePosition must be ${expectedStorePosition} for ${asset.semanticSlot}.`,
-        );
-      }
-      if (!importedThemes.has(asset.theme)) {
-        failures.push(`${asset.id}.theme must be light or dark.`);
-      }
-      if (!/^[a-f0-9]{64}$/u.test(asset.sourceSha256 || '')) {
-        failures.push(`${asset.id}.sourceSha256 must be a lowercase SHA-256 digest.`);
-      } else if (asset.sourceSha256 !== asset.sha256) {
-        failures.push(
-          `${asset.id}.sourceSha256 must equal sha256 for a byte-for-byte approved import.`,
-        );
-      }
-      const expectedAltKey = semanticSlotToAltKey.get(asset.semanticSlot);
-      if (expectedAltKey && asset.altKey !== expectedAltKey) {
-        failures.push(
-          `${asset.id}.altKey must be ${expectedAltKey} for ${asset.semanticSlot}.`,
-        );
-      }
-      if (asset.locales?.length !== 1) {
-        failures.push(`${asset.id} must bind to exactly one locale after final import.`);
-      }
-    }
-
-    if (manifest.placementSelection?.en === manifest.placementSelection?.pl) {
-      failures.push('Approved product media must use locale-specific EN and PL placement sets.');
-    }
-
-    for (const [language, locale] of Object.entries(placementLocales)) {
-      const setId = manifest.placementSelection?.[language];
-      const placementSet = placementSets[setId];
-      if (!placementSet) continue;
-
-      const selectedThemes = new Set();
-      const selectedPlatforms = new Set();
-      for (const [field, semanticSlot] of Object.entries(placementFieldToSlot)) {
-        const asset = assetsById.get(placementSet[field]);
-        if (!asset) continue;
-        selectedThemes.add(asset.theme);
-        selectedPlatforms.add(asset.platform);
-        if (asset.semanticSlot !== semanticSlot) {
-          failures.push(
-            `${setId}.${field} must use semantic slot ${semanticSlot}; received ${asset.semanticSlot || 'none'}.`,
-          );
-        }
-        if (asset.locales?.length !== 1 || asset.locales[0] !== locale) {
-          failures.push(`${setId}.${field} must use exactly locale ${locale}.`);
-        }
-        if (asset.device === 'ipad-13') {
-          failures.push(`${setId}.${field} must use a phone capture that fits the website phone slots.`);
-        }
-      }
-      if (!selectedThemes.has('light') || !selectedThemes.has('dark')) {
-        failures.push(`${setId} must deliberately represent both Light and Dark product UI.`);
-      }
-      if (!selectedPlatforms.has('ios') || !selectedPlatforms.has('android')) {
-        failures.push(`${setId} must deliberately represent both iOS and Android product UI.`);
-      }
-    }
+    validateBoundManifest(
+      manifest,
+      assets,
+      contract,
+      placementSets,
+      assetsById,
+      failures,
+    );
   }
-
   return failures;
 }
 
