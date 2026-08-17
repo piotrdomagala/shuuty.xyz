@@ -197,7 +197,7 @@ export default function TaskSpatialHandoff({
                 }}
               >
                 <span className={s.taskScreenSlot}>
-                  <span className={`${s.phone} ${s.taskScreenPlane}`}>
+                  <span className={s.taskScreenPlane}>
                     <Image
                       src={screen.path}
                       alt={screen.alt}

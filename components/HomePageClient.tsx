@@ -244,6 +244,9 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
   const [activeHeroPhone, setActiveHeroPhone] = useState(0);
   const carouselPointerStart = useRef<number | null>(null);
   const carouselDidSwipe = useRef(false);
+  const lastScrollY = useRef(0);
+  const mobileNavScrollDelta = useRef(0);
+  const mobileNavHideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const c = t[lang];
   const productMediaPlacements = getProductMediaPlacements(lang);
 
@@ -324,13 +327,45 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
   }, []);
 
   useEffect(() => {
+    const clearMobileNavTimer = () => {
+      if (!mobileNavHideTimer.current) return;
+      clearTimeout(mobileNavHideTimer.current);
+      mobileNavHideTimer.current = null;
+    };
+
     const handler = () => {
+      const currentScrollY = window.scrollY;
+      const scrollDelta = currentScrollY - lastScrollY.current;
       const atBottom = window.innerHeight + window.scrollY >= document.body.scrollHeight - 160;
-      setShowMobileNav(window.scrollY > 640 && !atBottom);
+      const changedDirection =
+        (scrollDelta > 0 && mobileNavScrollDelta.current < 0)
+        || (scrollDelta < 0 && mobileNavScrollDelta.current > 0);
+      mobileNavScrollDelta.current = changedDirection
+        ? scrollDelta
+        : mobileNavScrollDelta.current + scrollDelta;
+
+      if (currentScrollY <= 640 || atBottom || mobileNavScrollDelta.current > 8) {
+        setShowMobileNav(false);
+        mobileNavScrollDelta.current = 0;
+        clearMobileNavTimer();
+      } else if (mobileNavScrollDelta.current < -8) {
+        setShowMobileNav(true);
+        mobileNavScrollDelta.current = 0;
+        clearMobileNavTimer();
+        mobileNavHideTimer.current = setTimeout(() => {
+          setShowMobileNav(false);
+          mobileNavHideTimer.current = null;
+        }, 1200);
+      }
+
+      lastScrollY.current = currentScrollY;
     };
     handler();
     window.addEventListener('scroll', handler, { passive: true });
-    return () => window.removeEventListener('scroll', handler);
+    return () => {
+      window.removeEventListener('scroll', handler);
+      clearMobileNavTimer();
+    };
   }, []);
 
   useEffect(() => {
@@ -588,29 +623,42 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
         <section id="groups" className={`${s.chapter} ${s.chapterTint} ${s.reveal}`} data-reveal>
           <div className={`${s.container} ${s.chapterGrid} ${s.reverseGrid}`}>
             <div className={s.groupsVisual}>
-              <div className={`${s.phone} ${s.groupPhone}`}>
-                <Image
-                  src={productMediaPlacements.groups.path}
-                  alt={mediaAlt(productMediaPlacements.groups)}
-                  width={productMediaPlacements.groups.width}
-                  height={productMediaPlacements.groups.height}
-                  sizes="(max-width: 960px) 230px, 270px"
-                />
+              <div className={s.groupScreenPair}>
+                <figure className={s.groupGalleryScreen}>
+                  <Image
+                    src={productMediaPlacements.groupGallery.path}
+                    alt=""
+                    width={productMediaPlacements.groupGallery.width}
+                    height={productMediaPlacements.groupGallery.height}
+                    sizes="(max-width: 720px) 58vw, (max-width: 960px) 370px, 330px"
+                  />
+                  <figcaption>{mediaAlt(productMediaPlacements.groupGallery)}</figcaption>
+                </figure>
+                <figure className={s.groupListScreen}>
+                  <Image
+                    src={productMediaPlacements.groups.path}
+                    alt=""
+                    width={productMediaPlacements.groups.width}
+                    height={productMediaPlacements.groups.height}
+                    sizes="(max-width: 720px) 34vw, (max-width: 960px) 210px, 190px"
+                  />
+                  <figcaption>{mediaAlt(productMediaPlacements.groups)}</figcaption>
+                </figure>
               </div>
-              <div className={s.groupModes}>
+              <div className={s.groupModeRail}>
                 <span className={s.modesLabel}>{c.groups.modesLabel}</span>
-                {c.groups.modes.map((mode) => (
-                  <div key={mode.title} className={s.groupModeCard}>
-                    <span><Icon name={mode.icon as IconName} /></span>
-                    <div><strong>{mode.title}</strong><p>{mode.desc}</p></div>
-                  </div>
-                ))}
-                <div className={s.groupModules}>
-                  <strong>{c.groups.modulesLabel}</strong>
-                  <ul>
-                    {c.groups.modules.map((module) => <li key={module}>{module}</li>)}
-                  </ul>
-                </div>
+                <ol className={s.groupModeGrid}>
+                  {c.groups.modes.map((mode, index) => (
+                    <li key={mode.title} className={s.groupModeItem}>
+                      <span>{String(index + 1).padStart(2, '0')}</span>
+                      <div><strong>{mode.title}</strong><p>{mode.desc}</p></div>
+                    </li>
+                  ))}
+                </ol>
+                <p className={s.groupModuleLine}>
+                  <strong>{c.groups.modulesLabel}</strong>{' '}
+                  {c.groups.modules.join(' · ')}
+                </p>
               </div>
             </div>
             <div className={s.chapterCopy}>
@@ -645,7 +693,7 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
             <div className={s.mapVisual}>
               <div className={s.mapCaption}><span><Icon name="map" /></span>{c.discover.mapCaption}</div>
               <figure className={s.mapPhoneLeft}>
-                <div className={`${s.phone} ${s.mapPhoneFrame}`}>
+                <div className={s.mapPhoneFrame}>
                   <Image
                     src={productMediaPlacements.bookings.path}
                     alt={mediaAlt(productMediaPlacements.bookings)}
@@ -657,7 +705,7 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
                 <figcaption>{mediaAlt(productMediaPlacements.bookings)}</figcaption>
               </figure>
               <figure className={s.mapPhoneRight}>
-                <div className={`${s.phone} ${s.mapPhoneFrame}`}>
+                <div className={s.mapPhoneFrame}>
                   <Image
                     src={productMediaPlacements.nearby.path}
                     alt={mediaAlt(productMediaPlacements.nearby)}
