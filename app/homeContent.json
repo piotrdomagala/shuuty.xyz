@@ -67,8 +67,8 @@
         "A shared or delegated task can become a focused thinking space. Discussion, replies and all activity stay with the task.",
         "Manual creation keeps the same depth: descriptions, subtasks, priority, reminders, people, location and time tracking."
       ],
-      "mechanismLabel": "A real task. Three decisive moments.",
-      "mechanismLead": "It is one continuous product flow. Before the task moves, you can see who receives it, when it matters and which context stays with it.",
+      "mechanismLabel": "From thought to task - three steps.",
+      "mechanismLead": "Before you send the task, you can see who will receive it, when it is due, and which details and conversations will stay with it.",
       "flowRegionLabel": "From voice to a delegated task",
       "flowSelectLabel": "Show this step",
       "mechanism": [
@@ -181,28 +181,6 @@
         }
       ]
     },
-    "flow": {
-      "label": "From idea to action",
-      "heading": "One natural flow instead of separate tools.",
-      "lead": "Shuuty reduces the number of steps and keeps the context intact, so plans move forward without one person remembering everything for everyone.",
-      "items": [
-        {
-          "icon": "mic",
-          "title": "Capture the thought",
-          "desc": "Speak it or create it manually while it is still fresh."
-        },
-        {
-          "icon": "people",
-          "title": "Choose the next step",
-          "desc": "Create a private, delegated or group task, or set up a separate meeting."
-        },
-        {
-          "icon": "reminder",
-          "title": "Shuuty keeps track of deadlines and context",
-          "desc": "The task, reminder, conversation, calendar and place can stay in one context."
-        }
-      ]
-    },
     "faq": {
       "label": "FAQ",
       "heading": "The useful details",
@@ -216,20 +194,8 @@
           "a": "Yes. If you assign someone while creating the task, they receive it immediately after creation. If their settings require approval, they receive the approval request immediately instead. The due time defines when to act. The reminder defines when to notify them. It never delays delivery."
         },
         {
-          "q": "What makes a group task different?",
-          "a": "It keeps the group context and can also appear in Received for quick access. Members coordinate it alongside the conversation and, when enabled, the group calendar."
-        },
-        {
-          "q": "Is a group only for collaboration?",
-          "a": "No. It can be a private circle, community, workplace, client space, booking system, service offer, sales showcase or information-only group. Its creator chooses the visibility and active modules."
-        },
-        {
-          "q": "What can people see before joining a group?",
-          "a": "The creator decides whether the group and its description are public and which context remains available only to members. A public presentation can include information, gallery images, location and interests."
-        },
-        {
-          "q": "How does the map help?",
-          "a": "It helps you find nearby meetings, public groups, communities, information and groups presenting services, products or local offers. Search by location, needs and interests, then open the full context of the result."
+          "q": "What can a group become, and who can see it?",
+          "a": "It can be a private circle, community, workplace, client space, booking system, service offer, sales showcase or information-only group. Its creator chooses the visibility and active modules. Tasks retain the group context, while a public presentation can include information, gallery images, location and interests."
         },
         {
           "q": "Is Shuuty free?",
@@ -337,8 +303,8 @@
         "Wspólne lub delegowane zadanie może stać się przestrzenią do wspólnego myślenia. Dyskusja, odpowiedzi i cała aktywność zostają przy zadaniu.",
         "Ręczne tworzenie zachowuje tę samą głębię: opis, podzadania, priorytet, przypomnienia, osoby, lokalizację i pomiar czasu."
       ],
-      "mechanismLabel": "Prawdziwe zadanie. Trzy decydujące momenty.",
-      "mechanismLead": "To jeden ciągły przepływ produktu. Zanim zadanie ruszy dalej, widzisz, kto je otrzyma, kiedy jest ważne i jaki kontekst pozostanie razem z nim.",
+      "mechanismLabel": "Od myśli do zadania - trzy kroki.",
+      "mechanismLead": "Zanim wyślesz zadanie, widzisz, kto je otrzyma, do kiedy ma być wykonane oraz jakie informacje i rozmowy pozostaną przy nim.",
       "flowRegionLabel": "Od głosu do delegowanego zadania",
       "flowSelectLabel": "Pokaż ten krok",
       "mechanism": [
@@ -451,28 +417,6 @@
         }
       ]
     },
-    "flow": {
-      "label": "Od pomysłu do działania",
-      "heading": "Jeden naturalny proces zamiast wielu osobnych narzędzi.",
-      "lead": "Shuuty łączy kolejne kroki i zachowuje kontekst, żeby żaden plan nie zależał wyłącznie od czyjejś pamięci.",
-      "items": [
-        {
-          "icon": "mic",
-          "title": "Złap myśl",
-          "desc": "Powiedz ją albo zapisz ręcznie, zanim zniknie z głowy."
-        },
-        {
-          "icon": "people",
-          "title": "Wybierz następny krok",
-          "desc": "Utwórz zadanie prywatne, delegowane lub grupowe albo zaplanuj osobne spotkanie."
-        },
-        {
-          "icon": "reminder",
-          "title": "Shuuty pilnuje terminów i kontekstu",
-          "desc": "Zadanie, przypomnienie, rozmowa, kalendarz i miejsce mogą pozostać w jednym kontekście."
-        }
-      ]
-    },
     "faq": {
       "label": "FAQ",
       "heading": "Konkrety, które warto znać",
@@ -486,20 +430,8 @@
           "a": "Tak. Jeśli przypiszesz osobę podczas tworzenia, otrzyma zadanie od razu po jego utworzeniu. Jeśli jej ustawienia wymagają akceptacji, od razu otrzyma prośbę o przyjęcie zadania. Termin określa czas wykonania. Przypomnienie określa czas powiadomienia. Nigdy nie opóźnia dostarczenia zadania."
         },
         {
-          "q": "Czym różni się zadanie grupowe?",
-          "a": "Zachowuje kontekst grupy i może pojawić się także w Otrzymanych jako szybki dostęp. Członkowie koordynują je obok rozmowy i kalendarza grupy, jeśli jest włączony."
-        },
-        {
-          "q": "Czy grupa służy tylko do współpracy?",
-          "a": "Nie. Może być prywatnym kręgiem, społecznością, miejscem pracy, przestrzenią dla klientów, systemem rezerwacji, ofertą usługową, prezentacją sprzedażową albo grupą wyłącznie informacyjną. Twórca wybiera jej widoczność i aktywne moduły."
-        },
-        {
-          "q": "Co można zobaczyć przed dołączeniem do grupy?",
-          "a": "Twórca decyduje, czy grupa i jej opis są publiczne oraz który kontekst pozostaje dostępny tylko dla członków. Publiczna prezentacja może zawierać informacje, zdjęcia galerii, lokalizację i zainteresowania."
-        },
-        {
-          "q": "W czym pomaga mapa?",
-          "a": "Pomaga znaleźć w pobliżu spotkania, publiczne grupy, społeczności, informacje oraz grupy prezentujące usługi, produkty lub lokalne oferty. Szukasz według miejsca, potrzeb i zainteresowań, a potem otwierasz pełny kontekst wyniku."
+          "q": "Czym może stać się grupa i kto może ją zobaczyć?",
+          "a": "Może być prywatnym kręgiem, społecznością, miejscem pracy, przestrzenią dla klientów, systemem rezerwacji, ofertą usługową, prezentacją sprzedażową albo grupą wyłącznie informacyjną. Twórca wybiera jej widoczność i aktywne moduły. Zadania zachowują kontekst grupy, a publiczna prezentacja może zawierać informacje, zdjęcia galerii, lokalizację i zainteresowania."
         },
         {
           "q": "Czy Shuuty jest darmowe?",

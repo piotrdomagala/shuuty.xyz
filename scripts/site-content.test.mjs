@@ -37,8 +37,12 @@ test('the Golden Relay and flexible group story stay explicit in both languages'
   assert.equal(content.pl.groups.modules.length, 10);
   assert.equal(content.en.tasks.mechanism.length, 3);
   assert.equal(content.pl.tasks.mechanism.length, 3);
+  assert.equal(content.en.tasks.mechanismLabel, 'From thought to task - three steps.');
+  assert.equal(content.pl.tasks.mechanismLabel, 'Od myśli do zadania - trzy kroki.');
   assert.equal(content.en.tasks.mechanism[2].title, 'Delegate now. The task is ready.');
   assert.equal(content.pl.tasks.mechanism[2].title, 'Deleguj teraz. Zadanie jest gotowe.');
+  assert.equal(content.en.faq.items.length, 4);
+  assert.equal(content.pl.faq.items.length, 4);
 
   for (const required of [
     'A place to work',

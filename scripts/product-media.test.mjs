@@ -34,9 +34,12 @@ const webParameters = {
 function runtimeProjection(manifest) {
   return {
     schemaVersion: manifest.schemaVersion,
-    assets: manifest.assets.map(({ id, altKey, web }) => ({
+    assets: manifest.assets.map(({ id, altKey, theme, platform, device, web }) => ({
       id,
       altKey,
+      theme,
+      platform,
+      device,
       path: web?.path,
       width: web?.width,
       height: web?.height,

@@ -115,6 +115,12 @@ The current per-locale preview is deliberately mixed across both platforms:
 | `bookings` | Android phone | `store-listing/assets/source/android/<locale>/booking-calendar-populated-light-<lang>.png` |
 | `nearby` | Android phone | `store-listing/assets/source/android/<locale>/discover-map-light-<lang>.png` |
 
+The hero intentionally uses `voice-input`, `delegated-task` and `nearby`: the
+first two screens keep the voice-to-complete-task hook coherent, while the third
+adds a distinct, verified map view instead of repeating the similar assignee
+capture. The dedicated Tasks chapter still uses `voice-input`, `assignee` and
+`delegated-task` as its complete three-step handoff.
+
 Here `<locale>` is `en-US` or `pl-PL`, `<lang>` is `en` or `pl`, and `<person>`
 is `alex` or `olek`. These are tracked source paths, never paths to a working export
 directory. This mapping preserves the same 1-8 flow, both languages, Dark and Light
@@ -137,11 +143,12 @@ not an artifact binding.
 3. Change `finalArtifactContract.status` to `approved-no-publish-imported` and
    fill `artifactBinding`.
 4. Preserve the separate `en` and `pl` placement sets. The resolver constructs the
-   three-screen hero and interactive task handoff from `voiceInput`, `assignee` and
-   `delegatedTask`; layout components require no rewrite.
+   hero from `voiceInput`, `delegatedTask` and `nearby`, while the task handoff uses
+   `voiceInput`, `assignee` and `delegatedTask`; layout components require no rewrite.
 5. Run `npm run generate:media-derivatives`, then `npm run sync:media-runtime`.
    Commit the deterministic WebP files and runtime projection; never add provenance
-   fields to the runtime file.
+   fields to the runtime file. Public theme, platform and device presentation fields
+   are projected mechanically from the validated source manifest.
 6. Run `npm run validate:media`, `npm test`, `npm run typecheck`, `npm run lint`
    and `npm run build`.
 7. Repeat browser QA for PL/EN, Light/Dark and desktop/tablet/mobile.

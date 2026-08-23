@@ -4,6 +4,9 @@
     {
       "id": "en-voice-input",
       "altKey": "voiceInput",
+      "theme": "dark",
+      "platform": "ios",
+      "device": "iphone-6.9",
       "path": "/images/product/canonical-flow-2026/en-US/01-voice-input.webp",
       "width": 660,
       "height": 1434
@@ -11,6 +14,9 @@
     {
       "id": "en-assignee",
       "altKey": "assignee",
+      "theme": "dark",
+      "platform": "android",
+      "device": "android-phone",
       "path": "/images/product/canonical-flow-2026/en-US/02-assignee.webp",
       "width": 540,
       "height": 1200
@@ -18,6 +24,9 @@
     {
       "id": "en-delegated-task",
       "altKey": "delegatedTask",
+      "theme": "dark",
+      "platform": "ios",
+      "device": "iphone-6.9",
       "path": "/images/product/canonical-flow-2026/en-US/03-delegated-task.webp",
       "width": 660,
       "height": 1434
@@ -25,6 +34,9 @@
     {
       "id": "en-groups",
       "altKey": "groups",
+      "theme": "dark",
+      "platform": "ios",
+      "device": "iphone-6.9",
       "path": "/images/product/canonical-flow-2026/en-US/04-groups.webp",
       "width": 660,
       "height": 1434
@@ -32,6 +44,9 @@
     {
       "id": "en-group-offer-gallery",
       "altKey": "groupGallery",
+      "theme": "dark",
+      "platform": "ios",
+      "device": "ipad-13",
       "path": "/images/product/canonical-flow-2026/en-US/05-group-offer-gallery.webp",
       "width": 1032,
       "height": 1376
@@ -39,6 +54,9 @@
     {
       "id": "en-modules",
       "altKey": "modules",
+      "theme": "light",
+      "platform": "ios",
+      "device": "iphone-6.9",
       "path": "/images/product/canonical-flow-2026/en-US/06-modules.webp",
       "width": 660,
       "height": 1434
@@ -46,6 +64,9 @@
     {
       "id": "en-bookings",
       "altKey": "bookings",
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
       "path": "/images/product/canonical-flow-2026/en-US/07-bookings.webp",
       "width": 540,
       "height": 1200
@@ -53,6 +74,9 @@
     {
       "id": "en-nearby",
       "altKey": "nearby",
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
       "path": "/images/product/canonical-flow-2026/en-US/08-nearby.webp",
       "width": 540,
       "height": 1200
@@ -60,6 +84,9 @@
     {
       "id": "pl-voice-input",
       "altKey": "voiceInput",
+      "theme": "dark",
+      "platform": "ios",
+      "device": "iphone-6.9",
       "path": "/images/product/canonical-flow-2026/pl-PL/01-voice-input.webp",
       "width": 660,
       "height": 1434
@@ -67,6 +94,9 @@
     {
       "id": "pl-assignee",
       "altKey": "assignee",
+      "theme": "dark",
+      "platform": "android",
+      "device": "android-phone",
       "path": "/images/product/canonical-flow-2026/pl-PL/02-assignee.webp",
       "width": 540,
       "height": 1200
@@ -74,6 +104,9 @@
     {
       "id": "pl-delegated-task",
       "altKey": "delegatedTask",
+      "theme": "dark",
+      "platform": "ios",
+      "device": "iphone-6.9",
       "path": "/images/product/canonical-flow-2026/pl-PL/03-delegated-task.webp",
       "width": 660,
       "height": 1434
@@ -81,6 +114,9 @@
     {
       "id": "pl-groups",
       "altKey": "groups",
+      "theme": "dark",
+      "platform": "ios",
+      "device": "iphone-6.9",
       "path": "/images/product/canonical-flow-2026/pl-PL/04-groups.webp",
       "width": 660,
       "height": 1434
@@ -88,6 +124,9 @@
     {
       "id": "pl-group-offer-gallery",
       "altKey": "groupGallery",
+      "theme": "dark",
+      "platform": "ios",
+      "device": "ipad-13",
       "path": "/images/product/canonical-flow-2026/pl-PL/05-group-offer-gallery.webp",
       "width": 1032,
       "height": 1376
@@ -95,6 +134,9 @@
     {
       "id": "pl-modules",
       "altKey": "modules",
+      "theme": "light",
+      "platform": "ios",
+      "device": "iphone-6.9",
       "path": "/images/product/canonical-flow-2026/pl-PL/06-modules.webp",
       "width": 660,
       "height": 1434
@@ -102,6 +144,9 @@
     {
       "id": "pl-bookings",
       "altKey": "bookings",
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
       "path": "/images/product/canonical-flow-2026/pl-PL/07-bookings.webp",
       "width": 540,
       "height": 1200
@@ -109,6 +154,9 @@
     {
       "id": "pl-nearby",
       "altKey": "nearby",
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
       "path": "/images/product/canonical-flow-2026/pl-PL/08-nearby.webp",
       "width": 540,
       "height": 1200

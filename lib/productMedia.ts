@@ -7,6 +7,13 @@ type ProductMediaAsset = (typeof manifest.assets)[number];
 type ProductMediaPlacementSet =
   (typeof manifest.placementSets)[keyof typeof manifest.placementSets];
 
+export type ProductDeviceFrameKind = 'ios-phone' | 'android-phone' | 'ios-tablet';
+export type ProductCaptureTheme = 'light' | 'dark';
+export type ProductMediaPlacement = ProductMediaAsset & Readonly<{
+  frameKind: ProductDeviceFrameKind;
+  captureTheme: ProductCaptureTheme;
+}>;
+
 const mediaById = new Map(
   manifest.assets.map((asset) => [asset.id, asset] as const),
 );
@@ -24,6 +31,20 @@ export function getProductMedia(id: string): ProductMediaAsset {
 const placementSets = manifest.placementSets as Record<string, ProductMediaPlacementSet>;
 const placementSelection = manifest.placementSelection as Record<ProductMediaLanguage, string>;
 
+const withPresentation = (asset: ProductMediaAsset): ProductMediaPlacement => {
+  const frameKind: ProductDeviceFrameKind = asset.platform === 'android'
+    ? 'android-phone'
+    : asset.device.startsWith('ipad')
+      ? 'ios-tablet'
+      : 'ios-phone';
+
+  return {
+    ...asset,
+    frameKind,
+    captureTheme: asset.theme as ProductCaptureTheme,
+  };
+};
+
 export function getProductMediaPlacements(language: ProductMediaLanguage) {
   const setId = placementSelection[language];
   const placementSet = placementSets[setId];
@@ -33,18 +54,18 @@ export function getProductMediaPlacements(language: ProductMediaLanguage) {
   }
 
   const resolved = {
-    voiceInput: getProductMedia(placementSet.voiceInput),
-    assignee: getProductMedia(placementSet.assignee),
-    delegatedTask: getProductMedia(placementSet.delegatedTask),
-    groups: getProductMedia(placementSet.groups),
-    groupGallery: getProductMedia(placementSet.groupGallery),
-    modules: getProductMedia(placementSet.modules),
-    bookings: getProductMedia(placementSet.bookings),
-    nearby: getProductMedia(placementSet.nearby),
+    voiceInput: withPresentation(getProductMedia(placementSet.voiceInput)),
+    assignee: withPresentation(getProductMedia(placementSet.assignee)),
+    delegatedTask: withPresentation(getProductMedia(placementSet.delegatedTask)),
+    groups: withPresentation(getProductMedia(placementSet.groups)),
+    groupGallery: withPresentation(getProductMedia(placementSet.groupGallery)),
+    modules: withPresentation(getProductMedia(placementSet.modules)),
+    bookings: withPresentation(getProductMedia(placementSet.bookings)),
+    nearby: withPresentation(getProductMedia(placementSet.nearby)),
   } as const;
 
   return {
     ...resolved,
-    hero: [resolved.voiceInput, resolved.assignee, resolved.delegatedTask],
+    hero: [resolved.voiceInput, resolved.delegatedTask, resolved.nearby],
   } as const;
 }

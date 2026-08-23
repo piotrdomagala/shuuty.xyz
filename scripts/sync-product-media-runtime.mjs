@@ -13,9 +13,12 @@ for (const asset of manifest.assets) {
 
 const runtimeManifest = {
   schemaVersion: manifest.schemaVersion,
-  assets: manifest.assets.map(({ id, altKey, web }) => ({
+  assets: manifest.assets.map(({ id, altKey, theme, platform, device, web }) => ({
     id,
     altKey,
+    theme,
+    platform,
+    device,
     path: web.path,
     width: web.width,
     height: web.height,

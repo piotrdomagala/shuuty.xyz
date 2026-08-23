@@ -11,12 +11,10 @@ import {
   type PointerEvent as ReactPointerEvent,
 } from 'react';
 import s from '@/app/page.module.css';
+import ProductDeviceFrame from '@/components/ProductDeviceFrame';
+import type { ProductMediaPlacement } from '@/lib/productMedia';
 
-type TaskFlowScreen = Readonly<{
-  id: string;
-  path: string;
-  width: number;
-  height: number;
+type TaskFlowScreen = ProductMediaPlacement & Readonly<{
   alt: string;
 }>;
 
@@ -154,15 +152,25 @@ export default function TaskSpatialHandoff({
       <span id={`${flowId}-action`} className={s.srOnly}>
         {selectLabel}
       </span>
-      <Image
-        className={s.taskRelayAsset}
-        src="/images/brand/golden-relay-flow.png"
-        alt=""
-        width={2048}
-        height={256}
-        sizes="(max-width: 720px) 160vw, 1080px"
-        aria-hidden="true"
-      />
+      <span className={s.taskRelay} aria-hidden="true">
+        <Image
+          className={s.taskRelayAsset}
+          src="/images/brand/golden-relay-flow.png"
+          alt=""
+          width={2048}
+          height={256}
+          sizes="(max-width: 720px) 160vw, 1080px"
+        />
+        <Image
+          key={`relay-${activeStep}`}
+          className={s.taskRelayResonance}
+          src="/images/brand/golden-relay-flow.png"
+          alt=""
+          width={2048}
+          height={256}
+          sizes="(max-width: 720px) 160vw, 1080px"
+        />
+      </span>
       <ol className={s.taskFlowList}>
         {screens.slice(0, FLOW_STEP_COUNT).map((screen, index) => {
           const step = steps[index];
@@ -198,12 +206,9 @@ export default function TaskSpatialHandoff({
               >
                 <span className={s.taskScreenSlot}>
                   <span className={s.taskScreenPlane}>
-                    <Image
-                      src={screen.path}
-                      alt={screen.alt}
-                      width={screen.width}
-                      height={screen.height}
-                      draggable={false}
+                    <ProductDeviceFrame
+                      media={screen}
+                      alt=""
                       sizes="(max-width: 720px) 66vw, (max-width: 1024px) 24vw, 270px"
                     />
                   </span>

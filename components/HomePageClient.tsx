@@ -11,6 +11,7 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 import type { DocumentLanguage } from '@/components/documentLocale';
+import ProductDeviceFrame from '@/components/ProductDeviceFrame';
 import TaskSpatialHandoff from '@/components/TaskSpatialHandoff';
 import { useSiteLanguage } from '@/components/useSiteLanguage';
 import { getProductMediaPlacements } from '@/lib/productMedia';
@@ -244,11 +245,26 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
   const [activeHeroPhone, setActiveHeroPhone] = useState(0);
   const carouselPointerStart = useRef<number | null>(null);
   const carouselDidSwipe = useRef(false);
+  const heroPhoneButtons = useRef<Array<HTMLButtonElement | null>>([]);
   const lastScrollY = useRef(0);
   const mobileNavScrollDelta = useRef(0);
   const mobileNavHideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const c = t[lang];
   const productMediaPlacements = getProductMediaPlacements(lang);
+
+  const clearMobileNavTimer = useCallback(() => {
+    if (!mobileNavHideTimer.current) return;
+    clearTimeout(mobileNavHideTimer.current);
+    mobileNavHideTimer.current = null;
+  }, []);
+
+  const scheduleMobileNavHide = useCallback(() => {
+    clearMobileNavTimer();
+    mobileNavHideTimer.current = setTimeout(() => {
+      setShowMobileNav(false);
+      mobileNavHideTimer.current = null;
+    }, 2200);
+  }, [clearMobileNavTimer]);
 
   const mediaAlt = (media: { altKey: string }) =>
     c.images[media.altKey as keyof typeof c.images];
@@ -256,7 +272,7 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
   const heroPhones = productMediaPlacements.hero.map((media, index) => ({
     ...media,
     alt: mediaAlt(media),
-    priority: index === 0,
+    priority: index === 0 || index === 2,
   }));
   const taskFlowScreens = [
     productMediaPlacements.voiceInput,
@@ -279,13 +295,17 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
     (event: ReactKeyboardEvent<HTMLDivElement>) => {
       if (event.key === 'ArrowLeft') {
         event.preventDefault();
-        rotateHeroPhones(-1);
+        const nextIndex = (activeHeroPhone - 1 + heroPhones.length) % heroPhones.length;
+        selectHeroPhone(nextIndex);
+        heroPhoneButtons.current[nextIndex]?.focus({ preventScroll: true });
       } else if (event.key === 'ArrowRight') {
         event.preventDefault();
-        rotateHeroPhones(1);
+        const nextIndex = (activeHeroPhone + 1) % heroPhones.length;
+        selectHeroPhone(nextIndex);
+        heroPhoneButtons.current[nextIndex]?.focus({ preventScroll: true });
       }
     },
-    [rotateHeroPhones],
+    [activeHeroPhone, heroPhones.length, selectHeroPhone],
   );
 
   const handleCarouselPointerDown = useCallback((event: ReactPointerEvent<HTMLDivElement>) => {
@@ -323,16 +343,12 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
 
   useEffect(() => {
     const current = document.documentElement.dataset.theme;
-    setTheme(current === 'light' ? 'light' : 'dark');
+    const initialTheme = current === 'light' ? 'light' : 'dark';
+    setTheme(initialTheme);
+    if (initialTheme === 'light') setActiveHeroPhone(2);
   }, []);
 
   useEffect(() => {
-    const clearMobileNavTimer = () => {
-      if (!mobileNavHideTimer.current) return;
-      clearTimeout(mobileNavHideTimer.current);
-      mobileNavHideTimer.current = null;
-    };
-
     const handler = () => {
       const currentScrollY = window.scrollY;
       const scrollDelta = currentScrollY - lastScrollY.current;
@@ -351,11 +367,7 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
       } else if (mobileNavScrollDelta.current < -8) {
         setShowMobileNav(true);
         mobileNavScrollDelta.current = 0;
-        clearMobileNavTimer();
-        mobileNavHideTimer.current = setTimeout(() => {
-          setShowMobileNav(false);
-          mobileNavHideTimer.current = null;
-        }, 1200);
+        scheduleMobileNavHide();
       }
 
       lastScrollY.current = currentScrollY;
@@ -366,7 +378,7 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
       window.removeEventListener('scroll', handler);
       clearMobileNavTimer();
     };
-  }, []);
+  }, [clearMobileNavTimer, scheduleMobileNavHide]);
 
   useEffect(() => {
     const sections = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]'));
@@ -393,6 +405,7 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
   const toggleTheme = useCallback(() => {
     setTheme((current) => {
       const next = current === 'dark' ? 'light' : 'dark';
+      setActiveHeroPhone(next === 'light' ? 2 : 0);
       document.documentElement.dataset.theme = next;
       document.documentElement.style.colorScheme = next;
       document.querySelectorAll<HTMLMetaElement>('meta[name="theme-color"]').forEach((meta) => {
@@ -511,6 +524,9 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
 
               return (
                 <button
+                  ref={(element) => {
+                    heroPhoneButtons.current[index] = element;
+                  }}
                   type="button"
                   key={phone.id}
                   className={`${s.phone} ${positionClass}`}
@@ -528,13 +544,10 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
                   }`}
                   aria-pressed={isActive}
                 >
-                  <Image
-                    src={phone.path}
+                  <ProductDeviceFrame
+                    media={phone}
                     alt={phone.alt}
-                    width={phone.width}
-                    height={phone.height}
                     priority={phone.priority}
-                    draggable={false}
                     sizes={isActive ? '(max-width: 720px) 55vw, 290px' : '(max-width: 720px) 34vw, 190px'}
                   />
                 </button>
@@ -625,21 +638,17 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
             <div className={s.groupsVisual}>
               <div className={s.groupScreenPair}>
                 <figure className={s.groupGalleryScreen}>
-                  <Image
-                    src={productMediaPlacements.groupGallery.path}
+                  <ProductDeviceFrame
+                    media={productMediaPlacements.groupGallery}
                     alt=""
-                    width={productMediaPlacements.groupGallery.width}
-                    height={productMediaPlacements.groupGallery.height}
                     sizes="(max-width: 720px) 58vw, (max-width: 960px) 370px, 330px"
                   />
                   <figcaption>{mediaAlt(productMediaPlacements.groupGallery)}</figcaption>
                 </figure>
                 <figure className={s.groupListScreen}>
-                  <Image
-                    src={productMediaPlacements.groups.path}
+                  <ProductDeviceFrame
+                    media={productMediaPlacements.groups}
                     alt=""
-                    width={productMediaPlacements.groups.width}
-                    height={productMediaPlacements.groups.height}
                     sizes="(max-width: 720px) 34vw, (max-width: 960px) 210px, 190px"
                   />
                   <figcaption>{mediaAlt(productMediaPlacements.groups)}</figcaption>
@@ -694,11 +703,9 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
               <div className={s.mapCaption}><span><Icon name="map" /></span>{c.discover.mapCaption}</div>
               <figure className={s.mapPhoneLeft}>
                 <div className={s.mapPhoneFrame}>
-                  <Image
-                    src={productMediaPlacements.bookings.path}
-                    alt={mediaAlt(productMediaPlacements.bookings)}
-                    width={productMediaPlacements.bookings.width}
-                    height={productMediaPlacements.bookings.height}
+                  <ProductDeviceFrame
+                    media={productMediaPlacements.bookings}
+                    alt=""
                     sizes="(max-width: 720px) 48vw, 250px"
                   />
                 </div>
@@ -706,11 +713,9 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
               </figure>
               <figure className={s.mapPhoneRight}>
                 <div className={s.mapPhoneFrame}>
-                  <Image
-                    src={productMediaPlacements.nearby.path}
-                    alt={mediaAlt(productMediaPlacements.nearby)}
-                    width={productMediaPlacements.nearby.width}
-                    height={productMediaPlacements.nearby.height}
+                  <ProductDeviceFrame
+                    media={productMediaPlacements.nearby}
+                    alt=""
                     sizes="(max-width: 720px) 48vw, 250px"
                   />
                 </div>
@@ -724,21 +729,17 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
           <div className={`${s.container} ${s.experienceGrid}`}>
             <figure className={s.experienceVisual}>
               <div className={s.experienceScreens}>
-                <div className={`${s.phone} ${s.experienceDevice} ${s.experienceTabletPrimary}`}>
-                  <Image
-                    src={productMediaPlacements.groupGallery.path}
-                    alt={mediaAlt(productMediaPlacements.groupGallery)}
-                    width={productMediaPlacements.groupGallery.width}
-                    height={productMediaPlacements.groupGallery.height}
+                <div className={`${s.experienceDevice} ${s.experienceTabletPrimary}`}>
+                  <ProductDeviceFrame
+                    media={productMediaPlacements.groupGallery}
+                    alt=""
                     sizes="(max-width: 720px) 72vw, 390px"
                   />
                 </div>
-                <div className={`${s.phone} ${s.experienceDevice} ${s.experiencePhoneSecondary}`}>
-                  <Image
-                    src={productMediaPlacements.modules.path}
-                    alt={mediaAlt(productMediaPlacements.modules)}
-                    width={productMediaPlacements.modules.width}
-                    height={productMediaPlacements.modules.height}
+                <div className={`${s.experienceDevice} ${s.experiencePhoneSecondary}`}>
+                  <ProductDeviceFrame
+                    media={productMediaPlacements.modules}
+                    alt=""
                     sizes="(max-width: 720px) 45vw, 215px"
                   />
                 </div>
@@ -760,27 +761,6 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
                   </article>
                 ))}
               </div>
-            </div>
-          </div>
-        </section>
-
-        <section className={`${s.section} ${s.flowSection} ${s.reveal}`} data-reveal>
-          <div className={s.container}>
-            <div className={s.sectionIntro}>
-              <span className={s.sectionLabel}>{c.flow.label}</span>
-              <h2>{c.flow.heading}</h2>
-              <p>{c.flow.lead}</p>
-            </div>
-            <div className={s.flowGrid}>
-              {c.flow.items.map((item, index) => (
-                <div key={item.title} className={s.flowCard}>
-                  <span className={s.flowNumber}>{String(index + 1).padStart(2, '0')}</span>
-                  <span className={s.flowIcon}><Icon name={item.icon as IconName} /></span>
-                  <h3>{item.title}</h3>
-                  <p>{item.desc}</p>
-                  {index < c.flow.items.length - 1 && <span className={s.flowArrow}><Icon name="arrow" /></span>}
-                </div>
-              ))}
             </div>
           </div>
         </section>
@@ -835,11 +815,25 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
         </div>
       </footer>
 
-      <nav className={`${s.mobileNav} ${showMobileNav ? s.mobileNavVisible : ''}`} aria-label={c.a11y.mainNav}>
-        <a href="#tasks" aria-label={c.nav.tasks}><Icon name="task" /></a>
-        <a href="#groups" aria-label={c.nav.groups}><Icon name="group" /></a>
-        <a href="#discover" aria-label={c.nav.discover}><Icon name="map" /></a>
-        <a href="#download" className={s.mobileDownload} aria-label={c.nav.download}><Icon name="download" /></a>
+      <nav
+        className={`${s.mobileNav} ${showMobileNav ? s.mobileNavVisible : ''}`}
+        aria-label={c.a11y.mainNav}
+        onFocusCapture={() => {
+          clearMobileNavTimer();
+          setShowMobileNav(true);
+        }}
+        onBlurCapture={(event) => {
+          if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+            scheduleMobileNavHide();
+          }
+        }}
+        onPointerEnter={clearMobileNavTimer}
+        onPointerLeave={scheduleMobileNavHide}
+      >
+        <a href="#tasks" onClick={() => { clearMobileNavTimer(); setShowMobileNav(false); }} aria-label={c.nav.tasks}><Icon name="task" /></a>
+        <a href="#groups" onClick={() => { clearMobileNavTimer(); setShowMobileNav(false); }} aria-label={c.nav.groups}><Icon name="group" /></a>
+        <a href="#discover" onClick={() => { clearMobileNavTimer(); setShowMobileNav(false); }} aria-label={c.nav.discover}><Icon name="map" /></a>
+        <a href="#download" onClick={() => { clearMobileNavTimer(); setShowMobileNav(false); }} className={s.mobileDownload} aria-label={c.nav.download}><Icon name="download" /></a>
       </nav>
     </div>
   );

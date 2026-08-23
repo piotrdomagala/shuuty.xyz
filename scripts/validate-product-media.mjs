@@ -385,9 +385,12 @@ function getLocalizedAltKeys(homeContent) {
 function validateRuntimeManifest(manifest, runtimeManifest, assets, failures) {
   const expectedRuntimeManifest = {
     schemaVersion: manifest.schemaVersion,
-    assets: assets.map(({ id, altKey, web }) => ({
+    assets: assets.map(({ id, altKey, theme, platform, device, web }) => ({
       id,
       altKey,
+      theme,
+      platform,
+      device,
       path: web?.path,
       width: web?.width,
       height: web?.height,
