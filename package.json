@@ -10,7 +10,7 @@
     "dev": "next dev",
     "prebuild": "npm run validate:legal && npm run validate:media",
     "build": "next build",
-    "postbuild": "node scripts/localize-static-html.mjs && node scripts/validate-static-export.mjs",
+    "postbuild": "node scripts/localize-static-html.mjs && node scripts/normalize-static-segment-paths.mjs && node scripts/validate-static-export.mjs",
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit --incremental false",
