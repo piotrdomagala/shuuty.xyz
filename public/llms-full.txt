@@ -22,7 +22,7 @@ Shuuty is designed around one flow from an idea to action. Tasks, conversations,
 
 ### Groups
 
-A Shuuty group can be adapted to different purposes. Publicly described examples include:
+A Shuuty group can become a place to work, a community, a service offer or a sales showcase. Publicly described examples include:
 
 - a private circle for a couple, family, or close friends;
 - an open community around people, interests, or recurring activities;
@@ -30,7 +30,7 @@ A Shuuty group can be adapted to different purposes. Publicly described examples
 - a reservation space with availability, fixed times, or flexible booking ranges;
 - a listing, offer, catalogue, service, product showcase, or information-only space.
 
-The creator chooses who can see a group and which modules it needs. Depending on its purpose, a group can use chat, threads, tasks, calendars, bookings, and time logs. A public group can include a location so people can discover the group and what it presents on the map.
+The creator chooses whether the group and its description are public, what remains visible only to members, and which modules it needs. A public presentation can include gallery images, a location and interests. Depending on its purpose, a group can use tasks, conversations, calendars, bookings, projects, plans and per-person time records. A public group can include a location so people can discover the group and what it presents on the map.
 
 ### Meetings and map discovery
 
@@ -73,7 +73,7 @@ Shuuty łączy zadania, rozmowy, kalendarze, ludzi i miejsca w jeden proces od p
 
 ### Grupy
 
-Grupa w Shuuty może służyć różnym celom. Publiczny opis produktu wymienia między innymi:
+Grupa w Shuuty może stać się miejscem pracy, społecznością, ofertą usługową albo prezentacją sprzedażową. Publiczny opis produktu wymienia między innymi:
 
 - prywatny krąg dla pary, rodziny albo bliskich znajomych;
 - otwartą społeczność wokół ludzi, zainteresowań i powtarzalnych aktywności;
@@ -81,7 +81,7 @@ Grupa w Shuuty może służyć różnym celom. Publiczny opis produktu wymienia 
 - rezerwacje oparte na dostępności, stałych terminach lub elastycznych przedziałach;
 - ogłoszenie, ofertę, katalog, prezentację usług lub produktów albo przestrzeń wyłącznie informacyjną.
 
-Twórca grupy wybiera jej widoczność i potrzebne moduły. Zależnie od celu grupa może korzystać z czatu, wątków, zadań, kalendarza, rezerwacji i ewidencji czasu. Publiczna grupa może mieć lokalizację, dzięki której użytkownicy znajdą ją i prezentowaną przez nią ofertę na mapie.
+Twórca grupy wybiera, czy grupa i jej opis są publiczne, co pozostaje widoczne tylko dla członków oraz których modułów potrzebuje. Publiczna prezentacja może zawierać zdjęcia galerii, lokalizację i zainteresowania. Zależnie od celu grupa może korzystać z zadań, rozmów, kalendarzy, rezerwacji, projektów, planów i ewidencji czasu każdej osoby. Publiczna grupa może mieć lokalizację, dzięki której użytkownicy znajdą ją i prezentowaną przez nią ofertę na mapie.
 
 ### Spotkania i odkrywanie na mapie
 

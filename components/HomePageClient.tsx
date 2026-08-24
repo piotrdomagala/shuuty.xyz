@@ -11,7 +11,10 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 import type { DocumentLanguage } from '@/components/documentLocale';
+import ProductDeviceFrame from '@/components/ProductDeviceFrame';
+import TaskSpatialHandoff from '@/components/TaskSpatialHandoff';
 import { useSiteLanguage } from '@/components/useSiteLanguage';
+import { getProductMediaPlacements } from '@/lib/productMedia';
 import { SITE_URL, SOCIAL_IMAGE } from '@/lib/site';
 import s from '@/app/page.module.css';
 import t from '@/app/homeContent.json';
@@ -48,13 +51,12 @@ const LANGS: { code: Lang; label: string }[] = [
   { code: 'pl', label: 'PL' },
 ];
 
-const TASK_META_ICONS = ['clock', 'people', 'reminder'] as const;
-
 const localizedPath = (language: Lang, path: string) =>
   language === 'pl' ? `/pl${path}` : path;
 
 const createSiteSchema = (language: Lang, copy: (typeof t)[Lang]) => {
   const pageUrl = language === 'pl' ? `${SITE_URL}/pl/` : `${SITE_URL}/`;
+  const productMediaPlacements = getProductMediaPlacements(language);
 
   return {
     '@context': 'https://schema.org',
@@ -92,11 +94,9 @@ const createSiteSchema = (language: Lang, copy: (typeof t)[Lang]) => {
         image: SOCIAL_IMAGE.url,
         downloadUrl: [STORE.ios, STORE.android],
         sameAs: [STORE.ios, STORE.android],
-        screenshot: [
-          `${SITE_URL}/images/app/create-menu.png`,
-          `${SITE_URL}/images/app/discover-groups.png`,
-          `${SITE_URL}/images/app/discover-meetings.png`,
-        ],
+        screenshot: productMediaPlacements.hero.map(
+          (media) => `${SITE_URL}${media.path}`,
+        ),
         description: copy.hero.sub,
         publisher: { '@id': `${SITE_URL}/#organization` },
         offers: {
@@ -111,8 +111,8 @@ const createSiteSchema = (language: Lang, copy: (typeof t)[Lang]) => {
         url: pageUrl,
         name:
           language === 'pl'
-            ? 'Shuuty — od pomysłu do działania'
-            : 'Shuuty — From idea to action',
+            ? 'Shuuty - od pomysłu do działania'
+            : 'Shuuty - From idea to action',
         description: copy.hero.sub,
         inLanguage: language,
         isPartOf: { '@id': `${SITE_URL}/#website` },
@@ -242,16 +242,46 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
   const { language: lang, changeLanguage: switchLang } = useSiteLanguage(initialLanguage);
   const [theme, setTheme] = useState<Theme>('dark');
   const [showMobileNav, setShowMobileNav] = useState(false);
-  const [activeHeroPhone, setActiveHeroPhone] = useState(1);
+  const [activeHeroPhone, setActiveHeroPhone] = useState(0);
   const carouselPointerStart = useRef<number | null>(null);
   const carouselDidSwipe = useRef(false);
+  const heroPhoneButtons = useRef<Array<HTMLButtonElement | null>>([]);
+  const lastScrollY = useRef(0);
+  const mobileNavScrollDelta = useRef(0);
+  const mobileNavHideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const c = t[lang];
+  const productMediaPlacements = getProductMediaPlacements(lang);
 
-  const heroPhones = [
-    { src: '/images/app/profile-settings.png', alt: c.images.settings },
-    { src: '/images/app/create-menu.png', alt: c.images.create, priority: true },
-    { src: '/images/app/discover-groups.png', alt: c.images.groups },
-  ] as const;
+  const clearMobileNavTimer = useCallback(() => {
+    if (!mobileNavHideTimer.current) return;
+    clearTimeout(mobileNavHideTimer.current);
+    mobileNavHideTimer.current = null;
+  }, []);
+
+  const scheduleMobileNavHide = useCallback(() => {
+    clearMobileNavTimer();
+    mobileNavHideTimer.current = setTimeout(() => {
+      setShowMobileNav(false);
+      mobileNavHideTimer.current = null;
+    }, 2200);
+  }, [clearMobileNavTimer]);
+
+  const mediaAlt = (media: { altKey: string }) =>
+    c.images[media.altKey as keyof typeof c.images];
+
+  const heroPhones = productMediaPlacements.hero.map((media, index) => ({
+    ...media,
+    alt: mediaAlt(media),
+    priority: index === 0 || index === 2,
+  }));
+  const taskFlowScreens = [
+    productMediaPlacements.voiceInput,
+    productMediaPlacements.assignee,
+    productMediaPlacements.delegatedTask,
+  ].map((media) => ({
+    ...media,
+    alt: mediaAlt(media),
+  }));
 
   const selectHeroPhone = useCallback((index: number) => {
     setActiveHeroPhone((index + 3) % 3);
@@ -265,13 +295,17 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
     (event: ReactKeyboardEvent<HTMLDivElement>) => {
       if (event.key === 'ArrowLeft') {
         event.preventDefault();
-        rotateHeroPhones(-1);
+        const nextIndex = (activeHeroPhone - 1 + heroPhones.length) % heroPhones.length;
+        selectHeroPhone(nextIndex);
+        heroPhoneButtons.current[nextIndex]?.focus({ preventScroll: true });
       } else if (event.key === 'ArrowRight') {
         event.preventDefault();
-        rotateHeroPhones(1);
+        const nextIndex = (activeHeroPhone + 1) % heroPhones.length;
+        selectHeroPhone(nextIndex);
+        heroPhoneButtons.current[nextIndex]?.focus({ preventScroll: true });
       }
     },
-    [rotateHeroPhones],
+    [activeHeroPhone, heroPhones.length, selectHeroPhone],
   );
 
   const handleCarouselPointerDown = useCallback((event: ReactPointerEvent<HTMLDivElement>) => {
@@ -309,18 +343,42 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
 
   useEffect(() => {
     const current = document.documentElement.dataset.theme;
-    setTheme(current === 'light' ? 'light' : 'dark');
+    const initialTheme = current === 'light' ? 'light' : 'dark';
+    setTheme(initialTheme);
+    if (initialTheme === 'light') setActiveHeroPhone(2);
   }, []);
 
   useEffect(() => {
     const handler = () => {
+      const currentScrollY = window.scrollY;
+      const scrollDelta = currentScrollY - lastScrollY.current;
       const atBottom = window.innerHeight + window.scrollY >= document.body.scrollHeight - 160;
-      setShowMobileNav(window.scrollY > 640 && !atBottom);
+      const changedDirection =
+        (scrollDelta > 0 && mobileNavScrollDelta.current < 0)
+        || (scrollDelta < 0 && mobileNavScrollDelta.current > 0);
+      mobileNavScrollDelta.current = changedDirection
+        ? scrollDelta
+        : mobileNavScrollDelta.current + scrollDelta;
+
+      if (currentScrollY <= 640 || atBottom || mobileNavScrollDelta.current > 8) {
+        setShowMobileNav(false);
+        mobileNavScrollDelta.current = 0;
+        clearMobileNavTimer();
+      } else if (mobileNavScrollDelta.current < -8) {
+        setShowMobileNav(true);
+        mobileNavScrollDelta.current = 0;
+        scheduleMobileNavHide();
+      }
+
+      lastScrollY.current = currentScrollY;
     };
     handler();
     window.addEventListener('scroll', handler, { passive: true });
-    return () => window.removeEventListener('scroll', handler);
-  }, []);
+    return () => {
+      window.removeEventListener('scroll', handler);
+      clearMobileNavTimer();
+    };
+  }, [clearMobileNavTimer, scheduleMobileNavHide]);
 
   useEffect(() => {
     const sections = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]'));
@@ -347,6 +405,7 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
   const toggleTheme = useCallback(() => {
     setTheme((current) => {
       const next = current === 'dark' ? 'light' : 'dark';
+      setActiveHeroPhone(next === 'light' ? 2 : 0);
       document.documentElement.dataset.theme = next;
       document.documentElement.style.colorScheme = next;
       document.querySelectorAll<HTMLMetaElement>('meta[name="theme-color"]').forEach((meta) => {
@@ -428,6 +487,7 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
               <br />
               <span className={s.gradientText}>{c.hero.accent}</span>
             </h1>
+            <p className={s.relayLine}>{c.hero.relay}</p>
             <p className={s.heroLead}>{c.hero.sub}</p>
             <div className={s.heroActions}>
               <StoreButtons copy={c.store} />
@@ -464,8 +524,11 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
 
               return (
                 <button
+                  ref={(element) => {
+                    heroPhoneButtons.current[index] = element;
+                  }}
                   type="button"
-                  key={phone.src}
+                  key={phone.id}
                   className={`${s.phone} ${positionClass}`}
                   onClick={() => {
                     if (carouselDidSwipe.current) {
@@ -481,18 +544,12 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
                   }`}
                   aria-pressed={isActive}
                 >
-                  <Image
-                    src={phone.src}
+                  <ProductDeviceFrame
+                    media={phone}
                     alt={phone.alt}
-                    width={471}
-                    height={1024}
-                    priority={'priority' in phone ? phone.priority : false}
-                    draggable={false}
+                    priority={phone.priority}
                     sizes={isActive ? '(max-width: 720px) 55vw, 290px' : '(max-width: 720px) 34vw, 190px'}
                   />
-                  {isActive && index === 1 && (
-                    <span className={s.phoneHighlight}><Icon name="mic" />{c.hero.voice}</span>
-                  )}
                 </button>
               );
             })}
@@ -504,7 +561,7 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
               {heroPhones.map((phone, index) => (
                 <button
                   type="button"
-                  key={`${phone.src}-dot`}
+                  key={`${phone.id}-dot`}
                   className={`${s.carouselDot} ${index === activeHeroPhone ? s.carouselDotActive : ''}`}
                   onClick={() => {
                     if (carouselDidSwipe.current) {
@@ -521,9 +578,6 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
             <p className={s.srOnly} aria-live="polite">
               {`${activeHeroPhone + 1} / ${heroPhones.length}: ${heroPhones[activeHeroPhone].alt}`}
             </p>
-            <span className={`${s.orbitBadge} ${s.orbitTask}`}><Icon name="task" />{c.nav.tasks}</span>
-            <span className={`${s.orbitBadge} ${s.orbitGroup}`}><Icon name="group" />{c.nav.groups}</span>
-            <span className={`${s.orbitBadge} ${s.orbitMap}`}><Icon name="map" />{c.discover.meetings}</span>
           </div>
         </section>
 
@@ -547,62 +601,73 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
           </div>
         </section>
 
-        <section id="tasks" className={`${s.chapter} ${s.reveal}`} data-reveal>
-          <div className={`${s.container} ${s.chapterGrid}`}>
-            <div className={s.chapterCopy}>
-              <span className={s.sectionLabel}>{c.tasks.label}</span>
-              <h2>{c.tasks.heading}</h2>
-              <p className={s.chapterLead}>{c.tasks.lead}</p>
-              <ul className={s.bulletList}>
-                {c.tasks.bullets.map((bullet) => <li key={bullet}><span><Icon name="check" /></span>{bullet}</li>)}
-              </ul>
+        <section id="tasks" className={`${s.chapter} ${s.taskChapter} ${s.reveal}`} data-reveal>
+          <div className={s.container}>
+            <div className={s.taskIntro}>
+              <div>
+                <span className={s.sectionLabel}>{c.tasks.label}</span>
+                <h2>{c.tasks.heading}</h2>
+              </div>
+              <div className={s.taskIntroLead}>
+                <span>{c.tasks.mechanismLabel}</span>
+                <p>{c.tasks.lead}</p>
+                <p>{c.tasks.mechanismLead}</p>
+              </div>
             </div>
 
-            <div className={s.productCanvas}>
-              <div className={s.canvasGlow} aria-hidden />
-              <div className={s.voiceDemo}>
-                <div className={s.demoHeader}>
-                  <span className={s.demoIcon}><Icon name="mic" /></span>
-                  <span>{c.tasks.voiceLabel}</span>
-                  <span className={s.livePill}><i />AI</span>
-                </div>
-                <blockquote>{c.tasks.voicePrompt}</blockquote>
-                <div className={s.voiceWave} aria-hidden>{[10, 18, 12, 28, 20, 34, 14, 24, 11, 20, 8].map((height, index) => <i key={index} style={{ height }} />)}</div>
-                <div className={s.parsedTask}>
-                  <span className={s.parsedLabel}>{c.tasks.parsedLabel}</span>
-                  <div className={s.parsedTitle}><span className={s.taskCheck}><Icon name="task" /></span><strong>{c.tasks.parsedTitle}</strong></div>
-                  <div className={s.metaChips}>
-                    {c.tasks.parsedMeta.map((meta, index) => (
-                      <span key={meta}><Icon name={TASK_META_ICONS[index] ?? 'reminder'} />{meta}</span>
-                    ))}
-                  </div>
-                  <span className={s.delegateDemo}><Icon name="send" />{c.tasks.delegate}</span>
-                  <p className={s.deliveryNote}>{c.tasks.deliveryNote}</p>
-                </div>
-              </div>
-              <ol className={s.miniFlow}>
-                {c.tasks.flow.map((step, index) => (
-                  <li key={step}><span>{String(index + 1).padStart(2, '0')}</span>{step}</li>
-                ))}
-              </ol>
-            </div>
+            <TaskSpatialHandoff
+              regionLabel={c.tasks.flowRegionLabel}
+              selectLabel={c.tasks.flowSelectLabel}
+              screens={taskFlowScreens}
+              steps={c.tasks.mechanism}
+            />
+
+            <ul className={s.taskDepthList}>
+              {c.tasks.bullets.map((bullet, index) => (
+                <li key={bullet}>
+                  <span>{String(index + 1).padStart(2, '0')}</span>
+                  <p>{bullet}</p>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 
         <section id="groups" className={`${s.chapter} ${s.chapterTint} ${s.reveal}`} data-reveal>
           <div className={`${s.container} ${s.chapterGrid} ${s.reverseGrid}`}>
             <div className={s.groupsVisual}>
-              <div className={`${s.phone} ${s.groupPhone}`}>
-                <Image src="/images/app/discover-groups.png" alt={c.images.groups} width={471} height={1024} sizes="(max-width: 960px) 230px, 270px" />
+              <div className={s.groupScreenPair}>
+                <figure className={s.groupGalleryScreen}>
+                  <ProductDeviceFrame
+                    media={productMediaPlacements.groupGallery}
+                    alt=""
+                    sizes="(max-width: 720px) 58vw, (max-width: 960px) 370px, 330px"
+                  />
+                  <figcaption>{mediaAlt(productMediaPlacements.groupGallery)}</figcaption>
+                </figure>
+                <figure className={s.groupListScreen}>
+                  <ProductDeviceFrame
+                    media={productMediaPlacements.groups}
+                    alt=""
+                    sizes="(max-width: 720px) 34vw, (max-width: 960px) 210px, 190px"
+                  />
+                  <figcaption>{mediaAlt(productMediaPlacements.groups)}</figcaption>
+                </figure>
               </div>
-              <div className={s.groupModes}>
+              <div className={s.groupModeRail}>
                 <span className={s.modesLabel}>{c.groups.modesLabel}</span>
-                {c.groups.modes.map((mode) => (
-                  <div key={mode.title} className={s.groupModeCard}>
-                    <span><Icon name={mode.icon as IconName} /></span>
-                    <div><strong>{mode.title}</strong><p>{mode.desc}</p></div>
-                  </div>
-                ))}
+                <ol className={s.groupModeGrid}>
+                  {c.groups.modes.map((mode, index) => (
+                    <li key={mode.title} className={s.groupModeItem}>
+                      <span>{String(index + 1).padStart(2, '0')}</span>
+                      <div><strong>{mode.title}</strong><p>{mode.desc}</p></div>
+                    </li>
+                  ))}
+                </ol>
+                <p className={s.groupModuleLine}>
+                  <strong>{c.groups.modulesLabel}</strong>{' '}
+                  {c.groups.modules.join(' · ')}
+                </p>
               </div>
             </div>
             <div className={s.chapterCopy}>
@@ -636,35 +701,66 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
             </div>
             <div className={s.mapVisual}>
               <div className={s.mapCaption}><span><Icon name="map" /></span>{c.discover.mapCaption}</div>
-              <figure className={`${s.phone} ${s.mapPhoneLeft}`}>
-                <Image src="/images/app/discover-meetings.png" alt={c.images.meetings} width={471} height={1024} sizes="(max-width: 720px) 48vw, 250px" />
-                <figcaption>{c.discover.meetings}</figcaption>
+              <figure className={s.mapPhoneLeft}>
+                <div className={s.mapPhoneFrame}>
+                  <ProductDeviceFrame
+                    media={productMediaPlacements.bookings}
+                    alt=""
+                    sizes="(max-width: 720px) 48vw, 250px"
+                  />
+                </div>
+                <figcaption>{mediaAlt(productMediaPlacements.bookings)}</figcaption>
               </figure>
-              <figure className={`${s.phone} ${s.mapPhoneRight}`}>
-                <Image src="/images/app/discover-groups.png" alt={c.images.groups} width={471} height={1024} sizes="(max-width: 720px) 48vw, 250px" />
-                <figcaption>{c.discover.groups}</figcaption>
+              <figure className={s.mapPhoneRight}>
+                <div className={s.mapPhoneFrame}>
+                  <ProductDeviceFrame
+                    media={productMediaPlacements.nearby}
+                    alt=""
+                    sizes="(max-width: 720px) 48vw, 250px"
+                  />
+                </div>
+                <figcaption>{mediaAlt(productMediaPlacements.nearby)}</figcaption>
               </figure>
             </div>
           </div>
         </section>
 
-        <section className={`${s.section} ${s.flowSection} ${s.reveal}`} data-reveal>
-          <div className={s.container}>
-            <div className={s.sectionIntro}>
-              <span className={s.sectionLabel}>{c.flow.label}</span>
-              <h2>{c.flow.heading}</h2>
-              <p>{c.flow.lead}</p>
-            </div>
-            <div className={s.flowGrid}>
-              {c.flow.items.map((item, index) => (
-                <div key={item.title} className={s.flowCard}>
-                  <span className={s.flowNumber}>{String(index + 1).padStart(2, '0')}</span>
-                  <span className={s.flowIcon}><Icon name={item.icon as IconName} /></span>
-                  <h3>{item.title}</h3>
-                  <p>{item.desc}</p>
-                  {index < c.flow.items.length - 1 && <span className={s.flowArrow}><Icon name="arrow" /></span>}
+        <section id="experience" className={`${s.chapter} ${s.chapterTint} ${s.reveal}`} data-reveal>
+          <div className={`${s.container} ${s.experienceGrid}`}>
+            <figure className={s.experienceVisual}>
+              <div className={s.experienceScreens}>
+                <div className={`${s.experienceDevice} ${s.experienceTabletPrimary}`}>
+                  <ProductDeviceFrame
+                    media={productMediaPlacements.groupGallery}
+                    alt=""
+                    sizes="(max-width: 720px) 72vw, 390px"
+                  />
                 </div>
-              ))}
+                <div className={`${s.experienceDevice} ${s.experiencePhoneSecondary}`}>
+                  <ProductDeviceFrame
+                    media={productMediaPlacements.modules}
+                    alt=""
+                    sizes="(max-width: 720px) 45vw, 215px"
+                  />
+                </div>
+              </div>
+              <figcaption>
+                {c.experience.screenCaption}: {mediaAlt(productMediaPlacements.groupGallery)};{' '}
+                {mediaAlt(productMediaPlacements.modules)}
+              </figcaption>
+            </figure>
+            <div className={s.chapterCopy}>
+              <span className={s.sectionLabel}>{c.experience.label}</span>
+              <h2>{c.experience.heading}</h2>
+              <p className={s.chapterLead}>{c.experience.lead}</p>
+              <div className={s.experienceList}>
+                {c.experience.items.map((item, index) => (
+                  <article key={item.title}>
+                    <span>{String(index + 1).padStart(2, '0')}</span>
+                    <div><h3>{item.title}</h3><p>{item.desc}</p></div>
+                  </article>
+                ))}
+              </div>
             </div>
           </div>
         </section>
@@ -719,11 +815,25 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
         </div>
       </footer>
 
-      <nav className={`${s.mobileNav} ${showMobileNav ? s.mobileNavVisible : ''}`} aria-label={c.a11y.mainNav}>
-        <a href="#tasks" aria-label={c.nav.tasks}><Icon name="task" /></a>
-        <a href="#groups" aria-label={c.nav.groups}><Icon name="group" /></a>
-        <a href="#discover" aria-label={c.nav.discover}><Icon name="map" /></a>
-        <a href="#download" className={s.mobileDownload} aria-label={c.nav.download}><Icon name="download" /></a>
+      <nav
+        className={`${s.mobileNav} ${showMobileNav ? s.mobileNavVisible : ''}`}
+        aria-label={c.a11y.mainNav}
+        onFocusCapture={() => {
+          clearMobileNavTimer();
+          setShowMobileNav(true);
+        }}
+        onBlurCapture={(event) => {
+          if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+            scheduleMobileNavHide();
+          }
+        }}
+        onPointerEnter={clearMobileNavTimer}
+        onPointerLeave={scheduleMobileNavHide}
+      >
+        <a href="#tasks" onClick={() => { clearMobileNavTimer(); setShowMobileNav(false); }} aria-label={c.nav.tasks}><Icon name="task" /></a>
+        <a href="#groups" onClick={() => { clearMobileNavTimer(); setShowMobileNav(false); }} aria-label={c.nav.groups}><Icon name="group" /></a>
+        <a href="#discover" onClick={() => { clearMobileNavTimer(); setShowMobileNav(false); }} aria-label={c.nav.discover}><Icon name="map" /></a>
+        <a href="#download" onClick={() => { clearMobileNavTimer(); setShowMobileNav(false); }} className={s.mobileDownload} aria-label={c.nav.download}><Icon name="download" /></a>
       </nav>
     </div>
   );

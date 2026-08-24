@@ -8,10 +8,10 @@ const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || 'https://shuuty.com').repla
 );
 const escapedSiteUrl = siteUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const openGraphImagePattern = new RegExp(
-  `<meta property="og:image" content="${escapedSiteUrl}/opengraph-image\\.png(?:\\?[^\"]+)?"`,
+  `<meta(?=[^>]*\\bproperty="og:image")(?=[^>]*\\bcontent="${escapedSiteUrl}/opengraph-image\\.png(?:\\?[^\"]+)?")[^>]*>`,
 );
 const twitterImagePattern = new RegExp(
-  `<meta name="twitter:image" content="${escapedSiteUrl}/opengraph-image\\.png"`,
+  `<meta(?=[^>]*\\bname="twitter:image")(?=[^>]*\\bcontent="${escapedSiteUrl}/opengraph-image\\.png")[^>]*>`,
 );
 
 const pages = {
@@ -20,9 +20,16 @@ const pages = {
     route: '/',
     required: [
       'From idea',
-      'Say it. Delegate it now. Remind at the right time.',
-      'Alex receives the task now.',
-      'One group. Any purpose.',
+      'Say it. Delegate it. Get it done.',
+      'Say it. Choose a person or group. The task is ready.',
+      'From thought to task - three steps.',
+      'Your group can become its own world.',
+      'A place to work',
+      'A service offer',
+      'A sales showcase',
+      'Gallery',
+      'Projects',
+      'Start simple. Add structure when it helps.',
       'Map · Discovery',
       'SoftwareApplication',
       'WebSite',
@@ -33,10 +40,15 @@ const pages = {
       'android-chrome-192x192.png',
       'opengraph-image.png',
       '/images/brand/shuuty-app-icon.png',
-      '/images/app/create-menu.png',
-      '/images/app/discover-groups.png',
-      '/images/app/discover-meetings.png',
-      '/images/app/profile-settings.png',
+      '/images/brand/golden-relay-flow.png',
+      '/images/product/canonical-flow-2026/en-US/01-voice-input.webp',
+      '/images/product/canonical-flow-2026/en-US/02-assignee.webp',
+      '/images/product/canonical-flow-2026/en-US/03-delegated-task.webp',
+      '/images/product/canonical-flow-2026/en-US/04-groups.webp',
+      '/images/product/canonical-flow-2026/en-US/05-group-offer-gallery.webp',
+      '/images/product/canonical-flow-2026/en-US/06-modules.webp',
+      '/images/product/canonical-flow-2026/en-US/07-bookings.webp',
+      '/images/product/canonical-flow-2026/en-US/08-nearby.webp',
       'https://play.google.com/store/apps/details?id=com.shuuty.app',
       'Switch to light mode',
     ],
@@ -44,11 +56,17 @@ const pages = {
       /<h1[^>]*>/,
       /<script type="application\/ld\+json">/,
       /<details[^>]*open=""/,
-      /<title>Shuuty — Voice Tasks, Groups &amp; Nearby Discovery<\/title>/,
+      /<title>Shuuty - Voice Tasks, Flexible Groups &amp; Meetings<\/title>/,
       openGraphImagePattern,
       twitterImagePattern,
     ],
-    forbiddenPatterns: [/\/images\/image[1-5]\.webp/],
+    forbiddenPatterns: [
+      /\/images\/image[1-5]\.webp/,
+      /\/images\/app\/(?:create-menu|discover-groups|discover-meetings|profile-settings)\.(?:jpe?g|png)/,
+      /\/images\/product\/canonical-flow-2026\/pl-PL\//,
+      /\/images\/product\/canonical-flow-2026\/[^"' )]+\.png/,
+      /exports\/final/,
+    ],
     routeMetadata: false,
     language: 'en',
     alternateRoute: '/pl/',
@@ -58,14 +76,30 @@ const pages = {
     route: '/pl/',
     required: [
       'Od pomysłu',
-      'Powiedz. Deleguj od razu. Przypomnij na czas.',
-      'Ola otrzymuje zadanie teraz.',
-      'Jedna grupa. Dowolny cel.',
+      'Powiedz. Deleguj. Działajcie.',
+      'Powiedz. Wybierz osobę lub grupę. Zadanie jest gotowe.',
+      'Od myśli do zadania - trzy kroki.',
+      'Twoja grupa może stać się własnym światem.',
+      'Miejsce pracy',
+      'Oferta usługowa',
+      'Oferta sprzedażowa',
+      'Galeria',
+      'Projekty',
+      'Zacznij prosto. Dodaj strukturę, gdy pomaga.',
       'FAQPage',
       'Co Shuuty rozumie z zadania głosowego?',
       '/pl/support/',
       '/pl/privacy/',
       '/pl/terms/',
+      '/images/brand/golden-relay-flow.png',
+      '/images/product/canonical-flow-2026/pl-PL/01-voice-input.webp',
+      '/images/product/canonical-flow-2026/pl-PL/02-assignee.webp',
+      '/images/product/canonical-flow-2026/pl-PL/03-delegated-task.webp',
+      '/images/product/canonical-flow-2026/pl-PL/04-groups.webp',
+      '/images/product/canonical-flow-2026/pl-PL/05-group-offer-gallery.webp',
+      '/images/product/canonical-flow-2026/pl-PL/06-modules.webp',
+      '/images/product/canonical-flow-2026/pl-PL/07-bookings.webp',
+      '/images/product/canonical-flow-2026/pl-PL/08-nearby.webp',
     ],
     requiredPatterns: [
       /<h1[^>]*>/,
@@ -74,6 +108,12 @@ const pages = {
       /<title>Zadania głosowe, grupy i spotkania \| Shuuty<\/title>/,
       openGraphImagePattern,
       twitterImagePattern,
+    ],
+    forbiddenPatterns: [
+      /\/images\/app\/(?:create-menu|discover-groups|discover-meetings|profile-settings)\.(?:jpe?g|png)/,
+      /\/images\/product\/canonical-flow-2026\/en-US\//,
+      /\/images\/product\/canonical-flow-2026\/[^"' )]+\.png/,
+      /exports\/final/,
     ],
     language: 'pl',
     alternateRoute: '/',
@@ -205,7 +245,14 @@ for (const [name, page] of Object.entries(pages)) {
   }
 
   if (!openGraphImagePattern.test(html) || !twitterImagePattern.test(html)) {
-    failures.push(`${name} static HTML is missing the shared social preview image`);
+    const detectedSocialImageTags = html.match(
+      /<meta[^>]*(?:property="og:image"|name="twitter:image")[^>]*>/g,
+    ) ?? [];
+    failures.push(
+      `${name} static HTML is missing the shared social preview image; detected tags: ${
+        detectedSocialImageTags.join(' | ') || 'none'
+      }`,
+    );
   }
 
   if (page.routeMetadata !== false && !/<title>[^<]+\| Shuuty<\/title>/.test(html)) {

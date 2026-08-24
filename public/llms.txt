@@ -6,8 +6,8 @@ Shuuty brings tasks, conversations, calendars, people, and places into one conne
 
 ## Official pages
 
-- [Shuuty — English](https://shuuty.com/): Product overview in English.
-- [Shuuty — Polski](https://shuuty.com/pl/): Opis produktu w języku polskim.
+- [Shuuty - English](https://shuuty.com/): Product overview in English.
+- [Shuuty - Polski](https://shuuty.com/pl/): Opis produktu w języku polskim.
 - [Support](https://shuuty.com/support/): English support page.
 - [Pomoc](https://shuuty.com/pl/support/): Polska strona pomocy.
 - [Privacy Policy](https://shuuty.com/privacy/): Privacy information in English.

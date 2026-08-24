@@ -1,16 +1,21 @@
 {
   "name": "shuuty-app",
   "version": "2.0.0",
-  "description": "Shuuty — voice tasks, flexible groups, meetings and nearby discovery.",
+  "description": "Shuuty - voice tasks, flexible groups, meetings and nearby discovery.",
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "node scripts/validate-legal-documents.mjs",
+    "prebuild": "npm run validate:legal && npm run validate:media",
     "build": "next build",
     "postbuild": "node scripts/localize-static-html.mjs && node scripts/validate-static-export.mjs",
     "start": "next start",
     "lint": "next lint",
+    "typecheck": "tsc --noEmit --incremental false",
+    "test": "node --test scripts/*.test.mjs",
+    "generate:media-derivatives": "node scripts/generate-product-media-derivatives.mjs",
+    "sync:media-runtime": "node scripts/sync-product-media-runtime.mjs",
     "validate:legal": "node scripts/validate-legal-documents.mjs",
+    "validate:media": "node scripts/validate-product-media.mjs",
     "validate:static": "node scripts/validate-static-export.mjs",
     "generate:favicon": "node scripts/generate-favicon.mjs",
     "submit:indexnow": "node scripts/submit-indexnow.mjs"
@@ -28,6 +33,7 @@
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.2.33",
+    "sharp": "0.35.3",
     "typescript": "^5"
   }
 }
