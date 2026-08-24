@@ -2420,7 +2420,7 @@
     box-shadow: 0 16px 42px rgba(0, 0, 0, 0.28);
     backdrop-filter: blur(22px) saturate(1.2);
     opacity: 0;
-    visibility: hidden;
+    /* Keep the dock in sequential keyboard navigation; focus reveals it below. */
     pointer-events: none;
     transform: translateX(-50%) translateY(90px);
     transition: opacity 0.3s ease, transform 0.4s var(--ease-out);

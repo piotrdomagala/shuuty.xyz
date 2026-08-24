@@ -105,3 +105,19 @@ test('new marketing prose follows the short-hyphen convention', async () => {
 
   assert.equal(/[—–]/u.test(combined), false);
 });
+
+test('the hidden mobile dock stays reachable through sequential keyboard navigation', async () => {
+  const css = await readFile(new URL('app/page.module.css', root), 'utf8');
+  const component = await readFile(new URL('components/HomePageClient.tsx', root), 'utf8');
+  const ruleStart = css.lastIndexOf('  .mobileNav {');
+  const ruleEnd = css.indexOf('\n  }', ruleStart);
+
+  assert.notEqual(ruleStart, -1, 'Mobile dock rule is missing');
+  assert.notEqual(ruleEnd, -1, 'Mobile dock rule is incomplete');
+
+  const hiddenDockRule = css.slice(ruleStart, ruleEnd);
+  assert.doesNotMatch(hiddenDockRule, /visibility:\s*hidden/);
+  assert.match(hiddenDockRule, /pointer-events:\s*none/);
+  assert.match(css, /\.mobileNav:focus-within\s*\{/);
+  assert.match(component, /onFocusCapture=/);
+});

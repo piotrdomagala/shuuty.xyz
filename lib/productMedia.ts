@@ -32,11 +32,13 @@ const placementSets = manifest.placementSets as Record<string, ProductMediaPlace
 const placementSelection = manifest.placementSelection as Record<ProductMediaLanguage, string>;
 
 const withPresentation = (asset: ProductMediaAsset): ProductMediaPlacement => {
-  const frameKind: ProductDeviceFrameKind = asset.platform === 'android'
-    ? 'android-phone'
-    : asset.device.startsWith('ipad')
-      ? 'ios-tablet'
-      : 'ios-phone';
+  let frameKind: ProductDeviceFrameKind = 'ios-phone';
+
+  if (asset.platform === 'android') {
+    frameKind = 'android-phone';
+  } else if (asset.device.startsWith('ipad')) {
+    frameKind = 'ios-tablet';
+  }
 
   return {
     ...asset,

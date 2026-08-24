@@ -29,7 +29,8 @@ Independent final review status: **READY - no open P1-P3 findings**.
 - Language switching preserves the same semantic section and viewport offset.
   The restore is instant even though normal anchor navigation remains smooth.
 - Mobile dock targets use one 92 px sticky-header offset, keep 46 x 46 px targets,
-  stay visible during keyboard focus or pointer interaction, and hide after a
+  stay reachable in sequential keyboard navigation while visually hidden,
+  reveal on keyboard focus, stay visible during pointer interaction, and hide after a
   completed navigation.
 - Hash targets skip the reveal transform so first-time anchor navigation does
   not drift by 28 px after the reveal finishes.
@@ -68,7 +69,7 @@ export at `http://127.0.0.1:4174`.
 | PL / EN switch | Semantic anchor delta 0 px at 200 ms and 1.2 s |
 | Hash preservation | Path, hash, language and theme preserved |
 | Mobile dock | `#groups` lands at 91.7 px; all targets 46 x 46 px |
-| Mobile dock focus | Remains visible and interactive after 2.8 s of focus |
+| Mobile dock focus | Hidden dock enters the Tab order as `#tasks`, `#groups`, `#discover`, `#download`, then reveals and stays interactive |
 | Hero keyboard | ArrowLeft / ArrowRight change state and move focus |
 | Tasks keyboard | Arrow keys change the active task step and move focus |
 | Golden Relay | Retriggers on hover, focus and selection; mobile clip aligned |
@@ -93,7 +94,7 @@ Representative final evidence:
 
 - `npm run lint` - pass, no warnings
 - `npm run typecheck` - pass
-- `npm test` - pass, 11/11
+- `npm test` - pass, 12/12, including hidden mobile dock keyboard reachability
 - `npm run validate:legal` - pass
 - `npm run validate:media` - pass
 - `npm run build` - pass, 17/17 static pages
