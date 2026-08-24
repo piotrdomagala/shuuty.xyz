@@ -1891,6 +1891,12 @@
   .taskRelayResonance {
     animation: none !important;
   }
+
+  .taskFlowList,
+  .taskScreenPlane,
+  .taskStepCopy {
+    transition: none !important;
+  }
 }
 
 @media (max-width: 1120px) {

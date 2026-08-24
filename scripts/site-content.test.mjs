@@ -122,3 +122,21 @@ test('the hidden mobile dock stays reachable through sequential keyboard navigat
   assert.match(css, /\.mobileNav:focus-within\s*\{/);
   assert.match(component, /onFocusCapture=/);
 });
+
+test('reduced motion explicitly removes task-flow transform transitions', async () => {
+  const css = await readFile(new URL('app/page.module.css', root), 'utf8');
+  const mediaStart = css.indexOf('@media (prefers-reduced-motion: reduce)');
+  const mediaEnd = css.indexOf('@media (max-width: 1120px)', mediaStart);
+
+  assert.notEqual(mediaStart, -1, 'Reduced-motion media query is missing');
+  assert.notEqual(mediaEnd, -1, 'Reduced-motion media query is incomplete');
+
+  const reducedMotionRules = css.slice(mediaStart, mediaEnd);
+  for (const selector of ['.taskFlowList', '.taskScreenPlane', '.taskStepCopy']) {
+    assert.ok(
+      reducedMotionRules.includes(selector),
+      `${selector} is missing reduced-motion handling`,
+    );
+  }
+  assert.match(reducedMotionRules, /transition:\s*none\s*!important/);
+});

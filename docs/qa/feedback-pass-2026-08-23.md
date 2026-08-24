@@ -76,7 +76,7 @@ export at `http://127.0.0.1:4174`.
 | Hero keyboard | ArrowLeft / ArrowRight change state and move focus |
 | Tasks keyboard | Arrow keys change the active task step and move focus |
 | Golden Relay | Retriggers on hover, focus and selection; mobile clip aligned |
-| Reduced motion | Automatic sequence and resonance animation disabled |
+| Reduced motion | Automatic sequence, resonance and task list/screen/copy transitions disabled |
 | FAQ | Keyboard operation passes; glyph centre delta 0 px |
 | Product images | All load; 12 framed placements per locale; no crop or overflow |
 | Console | No page errors or console errors in the final interaction pass |
@@ -97,7 +97,8 @@ Representative final evidence:
 
 - `npm run lint` - pass, no warnings
 - `npm run typecheck` - pass
-- `npm test` - pass, 12/12, including hidden mobile dock keyboard reachability
+- `npm test` - pass, 13/13, including mobile dock keyboard reachability
+  and reduced-motion task flow
 - `npm run validate:legal` - pass
 - `npm run validate:media` - pass
 - `npm run build` - pass, 16/16 static pages plus the public social preview asset
