@@ -8,10 +8,10 @@ const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || 'https://shuuty.com').repla
 );
 const escapedSiteUrl = siteUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const openGraphImagePattern = new RegExp(
-  `<meta property="og:image" content="${escapedSiteUrl}/opengraph-image\\.png(?:\\?[^\"]+)?"`,
+  `<meta(?=[^>]*\\bproperty="og:image")(?=[^>]*\\bcontent="${escapedSiteUrl}/opengraph-image\\.png(?:\\?[^\"]+)?")[^>]*>`,
 );
 const twitterImagePattern = new RegExp(
-  `<meta name="twitter:image" content="${escapedSiteUrl}/opengraph-image\\.png"`,
+  `<meta(?=[^>]*\\bname="twitter:image")(?=[^>]*\\bcontent="${escapedSiteUrl}/opengraph-image\\.png")[^>]*>`,
 );
 
 const pages = {
