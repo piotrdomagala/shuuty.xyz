@@ -4,8 +4,8 @@ Public marketing, legal, support, and app hand-off website for the Shuuty mobile
 
 ## Stack
 
-- Next.js 14 App Router with static export
-- React 18 and TypeScript
+- Next.js 16 App Router with static export
+- React 19 and TypeScript
 - CSS Modules with semantic light/dark design tokens
 - Outfit and Plus Jakarta Sans
 - English and Polish UI copy with cookie persistence
@@ -21,6 +21,8 @@ Public marketing, legal, support, and app hand-off website for the Shuuty mobile
 The product implementation and business rules live in the separate `S-` repository. This website only describes those capabilities.
 
 ## Local development
+
+Use Node.js 20.9 or newer.
 
 ```bash
 npm install
@@ -39,6 +41,8 @@ npm run build
 ```
 
 `npm run build` validates the legal documents, produces the static site in `out/`, and verifies that the exported landing, support, privacy, and terms pages contain their required content.
+
+The postbuild step also normalizes Next.js segment cache filenames when a static export is built on Windows. This is a removable compatibility guard for the open upstream [Next.js fix #92340](https://github.com/vercel/next.js/pull/92340); on Linux it is a no-op.
 
 Because the project uses `output: 'export'`, preview the generated `out/` directory with a static file server rather than `next start`, for example:
 

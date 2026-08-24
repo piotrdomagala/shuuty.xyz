@@ -1,6 +1,9 @@
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
+import { join, relative, sep } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const root = new URL('../', import.meta.url);
+const outputPath = fileURLToPath(new URL('out/', root));
 const supportEmail = 'shuuty.app@gmail.com';
 const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || 'https://shuuty.com').replace(
   /\/+$/,
@@ -171,6 +174,47 @@ const pages = {
 };
 
 const failures = [];
+
+async function findRouteDirectories(directory) {
+  const routeDirectories = [];
+  const entries = await readdir(directory, { withFileTypes: true });
+
+  if (entries.some((entry) => entry.isFile() && entry.name === '__next._tree.txt')) {
+    routeDirectories.push(directory);
+  }
+
+  for (const entry of entries) {
+    if (!entry.isDirectory() || entry.name.startsWith('__next.')) continue;
+    routeDirectories.push(...(await findRouteDirectories(join(directory, entry.name))));
+  }
+
+  return routeDirectories;
+}
+
+for (const routeDirectory of await findRouteDirectories(outputPath)) {
+  const routeSegments = relative(outputPath, routeDirectory).split(sep).filter(Boolean);
+  const expectedPageSegment = [
+    '__next',
+    ...routeSegments,
+    '__PAGE__',
+    'txt',
+  ].join('.');
+  const entries = await readdir(routeDirectory, { withFileTypes: true });
+
+  for (const entry of entries) {
+    if (entry.isDirectory() && entry.name.startsWith('__next.')) {
+      failures.push(
+        `${relative(outputPath, join(routeDirectory, entry.name))} is a non-portable nested segment cache path`,
+      );
+    }
+  }
+
+  if (!entries.some((entry) => entry.isFile() && entry.name === expectedPageSegment)) {
+    failures.push(
+      `${relative(outputPath, routeDirectory) || '/'} is missing portable segment cache file: ${expectedPageSegment}`,
+    );
+  }
+}
 
 for (const [name, page] of Object.entries(pages)) {
   const html = await readFile(new URL(page.path, root), 'utf8');
