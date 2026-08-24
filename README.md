@@ -4,8 +4,8 @@ Public marketing, legal, support, and app hand-off website for the Shuuty mobile
 
 ## Stack
 
-- Next.js 14 App Router with static export
-- React 18 and TypeScript
+- Next.js 16 App Router with static export
+- React 19 and TypeScript
 - CSS Modules with semantic light/dark design tokens
 - Outfit and Plus Jakarta Sans
 - English and Polish UI copy with cookie persistence
@@ -21,6 +21,8 @@ Public marketing, legal, support, and app hand-off website for the Shuuty mobile
 The product implementation and business rules live in the separate `S-` repository. This website only describes those capabilities.
 
 ## Local development
+
+Use Node.js 20.9 or newer.
 
 ```bash
 npm install
