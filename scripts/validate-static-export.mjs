@@ -245,7 +245,14 @@ for (const [name, page] of Object.entries(pages)) {
   }
 
   if (!openGraphImagePattern.test(html) || !twitterImagePattern.test(html)) {
-    failures.push(`${name} static HTML is missing the shared social preview image`);
+    const detectedSocialImageTags = html.match(
+      /<meta[^>]*(?:property="og:image"|name="twitter:image")[^>]*>/g,
+    ) ?? [];
+    failures.push(
+      `${name} static HTML is missing the shared social preview image; detected tags: ${
+        detectedSocialImageTags.join(' | ') || 'none'
+      }`,
+    );
   }
 
   if (page.routeMetadata !== false && !/<title>[^<]+\| Shuuty<\/title>/.test(html)) {
