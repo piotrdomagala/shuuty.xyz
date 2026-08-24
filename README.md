@@ -79,6 +79,9 @@ directory or recreate a missing product screen.
 
 ## Deployment
 
-The repository is configured for static hosting, including the existing GitHub Pages workflow.
+The repository is configured for static hosting. GitHub Pages and Vercel both
+publish the validated `out/` directory produced by the complete npm build
+lifecycle. The versioned `vercel.json` keeps Vercel from publishing an earlier
+Next.js adapter snapshot before the postbuild localization and validation steps.
 
 © 2026 Shuuty. All rights reserved.
