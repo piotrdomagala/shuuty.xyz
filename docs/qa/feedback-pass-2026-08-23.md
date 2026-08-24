@@ -34,6 +34,9 @@ Independent final review status: **READY - no open P1-P3 findings**.
   completed navigation.
 - Hash targets skip the reveal transform so first-time anchor navigation does
   not drift by 28 px after the reveal finishes.
+- The social preview stays a byte-identical public asset, while its canonical
+  Open Graph and Twitter URLs remain fixed to `https://shuuty.com` in Vercel
+  preview and production builds.
 
 ## Routes
 
@@ -97,7 +100,7 @@ Representative final evidence:
 - `npm test` - pass, 12/12, including hidden mobile dock keyboard reachability
 - `npm run validate:legal` - pass
 - `npm run validate:media` - pass
-- `npm run build` - pass, 17/17 static pages
+- `npm run build` - pass, 16/16 static pages plus the public social preview asset
 - postbuild localization and static export validation - pass
 - `git diff --check` - pass
 
@@ -107,6 +110,9 @@ notice. It does not affect the build result.
 ## Asset inventory and provenance
 
 No product raster was generated, recoloured or reconstructed in this pass.
+The existing social preview PNG was relocated byte-for-byte from file-based
+Next metadata to `public/opengraph-image.png` so preview builds cannot replace
+its canonical production URL with a branch URL.
 
 The page uses eight verified semantic captures in each locale through
 `content/product-media.json` and its public runtime projection:

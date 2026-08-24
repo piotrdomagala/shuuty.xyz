@@ -94,6 +94,7 @@ test('new marketing prose follows the short-hyphen convention', async () => {
   const paths = [
     'app/homeContent.json',
     'components/HomePageClient.tsx',
+    'lib/site.ts',
     'app/layout.tsx',
     'app/pl/page.tsx',
     'public/llms.txt',
