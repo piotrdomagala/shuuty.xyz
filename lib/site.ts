@@ -104,3 +104,37 @@ export function createNoIndexMetadata({
     },
   };
 }
+
+export function createLegacyAliasMetadata({
+  title,
+  description,
+  canonicalPath,
+  englishCanonicalPath,
+  polishCanonicalPath,
+}: {
+  title: string;
+  description: string;
+  canonicalPath: `/${string}`;
+  englishCanonicalPath: `/${string}`;
+  polishCanonicalPath: `/${string}`;
+}): Metadata {
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: canonicalPath,
+      languages: createLanguageAlternates(
+        englishCanonicalPath,
+        polishCanonicalPath,
+      ),
+    },
+    robots: {
+      index: false,
+      follow: true,
+      googleBot: {
+        index: false,
+        follow: true,
+      },
+    },
+  };
+}

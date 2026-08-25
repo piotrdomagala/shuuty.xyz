@@ -809,6 +809,9 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
           <span className={s.footerCopy}>{c.footer.copyright}</span>
           <nav className={s.footerLinks} aria-label={c.a11y.footerNav}>
             <Link href={localizedPath(lang, '/support/')}>{c.footer.support}</Link>
+            <Link href={localizedPath(lang, '/account-deletion/')}>
+              {c.footer.accountDeletion}
+            </Link>
             <Link href={localizedPath(lang, '/privacy/')}>{c.footer.privacy}</Link>
             <Link href={localizedPath(lang, '/terms/')}>{c.footer.terms}</Link>
           </nav>

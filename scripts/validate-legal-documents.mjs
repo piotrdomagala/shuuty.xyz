@@ -7,6 +7,8 @@ const files = {
   termsEn: 'public/documents/terms_en.md',
   privacyPl: 'public/documents/privacy.md',
   privacyEn: 'public/documents/privacy_en.md',
+  accountDeletionPl: 'public/documents/account_deletion.md',
+  accountDeletionEn: 'public/documents/account_deletion_en.md',
 };
 
 const documents = Object.fromEntries(
@@ -87,9 +89,30 @@ const companyIdentifiers = [
   supportEmail,
 ];
 
-for (const key of Object.keys(documents)) {
+for (const key of ['termsPl', 'termsEn', 'privacyPl', 'privacyEn']) {
   requireText(key, companyIdentifiers);
 }
+
+requireText('accountDeletionPl', [
+  supportEmail,
+  'Profil',
+  'Usuń konto',
+  'Nigdy nie przesyłaj nam hasła',
+  'Polityka prywatności',
+  'App Store',
+  'Google Play',
+  'nie anuluje automatycznie subskrypcji',
+]);
+requireText('accountDeletionEn', [
+  supportEmail,
+  'Profile',
+  'Delete account',
+  'Never send us your password',
+  'Privacy Policy',
+  'App Store',
+  'Google Play',
+  'does not automatically cancel a subscription',
+]);
 
 const sharedTerms = ['Free', 'Pro', 'Teams', 'App Store', 'Google Play'];
 requireText('termsPl', [
