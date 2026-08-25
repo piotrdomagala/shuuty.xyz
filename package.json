@@ -1,33 +1,46 @@
 {
   "name": "shuuty-app",
   "version": "2.0.0",
-  "description": "Shuuty — voice tasks, flexible groups, meetings and nearby discovery.",
+  "description": "Shuuty - voice tasks, flexible groups, meetings and nearby discovery.",
   "private": true,
+  "engines": {
+    "node": ">=20.9.0"
+  },
   "scripts": {
     "dev": "next dev",
-    "prebuild": "node scripts/validate-legal-documents.mjs",
+    "prebuild": "npm run validate:legal && npm run validate:media",
     "build": "next build",
-    "postbuild": "node scripts/localize-static-html.mjs && node scripts/validate-static-export.mjs",
+    "postbuild": "node scripts/localize-static-html.mjs && node scripts/normalize-static-segment-paths.mjs && node scripts/validate-static-export.mjs",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit --incremental false",
+    "test": "node --test scripts/*.test.mjs",
+    "generate:media-derivatives": "node scripts/generate-product-media-derivatives.mjs",
+    "sync:media-runtime": "node scripts/sync-product-media-runtime.mjs",
     "validate:legal": "node scripts/validate-legal-documents.mjs",
+    "validate:media": "node scripts/validate-product-media.mjs",
     "validate:static": "node scripts/validate-static-export.mjs",
     "generate:favicon": "node scripts/generate-favicon.mjs",
     "submit:indexnow": "node scripts/submit-indexnow.mjs"
   },
   "dependencies": {
     "js-cookie": "^3.0.8",
-    "next": "^14.2.28",
-    "react": "^18",
-    "react-dom": "^18"
+    "next": "16.3.2",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
   },
   "devDependencies": {
     "@types/js-cookie": "^3.0.6",
     "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.33",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.5",
+    "eslint": "9.39.5",
+    "eslint-config-next": "16.3.2",
+    "sharp": "0.35.3",
     "typescript": "^5"
+  },
+  "overrides": {
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.5"
   }
 }

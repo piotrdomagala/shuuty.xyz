@@ -23,7 +23,7 @@ export const SOCIAL_IMAGE = {
   url: `${SITE_URL}/opengraph-image.png`,
   width: 1200,
   height: 630,
-  alt: 'Shuuty mobile app — turn ideas into action with voice tasks, flexible groups and discovery.',
+  alt: 'Shuuty mobile app - turn ideas into action with voice tasks, flexible groups and discovery.',
 } as const;
 
 interface PageMetadataOptions {
