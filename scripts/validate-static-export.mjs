@@ -204,6 +204,11 @@ const pages = {
     required: ['Privacy Policy of the Shuuty Mobile Application', supportEmail],
     language: 'en',
     noindex: true,
+    languageAlternates: {
+      en: '/privacy/',
+      pl: '/pl/privacy/',
+      'x-default': '/privacy/',
+    },
   },
   legacyPrivacyPl: {
     path: 'out/pl/documents/privacy/index.html',
@@ -212,6 +217,11 @@ const pages = {
     required: ['Polityka prywatności aplikacji mobilnej Shuuty', supportEmail],
     language: 'pl',
     noindex: true,
+    languageAlternates: {
+      en: '/privacy/',
+      pl: '/pl/privacy/',
+      'x-default': '/privacy/',
+    },
   },
   legacyTerms: {
     path: 'out/documents/terms/index.html',
@@ -220,6 +230,11 @@ const pages = {
     required: ['Shuuty Mobile Application Terms and Conditions', supportEmail],
     language: 'en',
     noindex: true,
+    languageAlternates: {
+      en: '/terms/',
+      pl: '/pl/terms/',
+      'x-default': '/terms/',
+    },
   },
   legacyTermsPl: {
     path: 'out/pl/documents/terms/index.html',
@@ -228,6 +243,11 @@ const pages = {
     required: ['Regulamin aplikacji mobilnej Shuuty', supportEmail],
     language: 'pl',
     noindex: true,
+    languageAlternates: {
+      en: '/terms/',
+      pl: '/pl/terms/',
+      'x-default': '/terms/',
+    },
   },
   legacySupport: {
     path: 'out/documents/support/index.html',
@@ -236,6 +256,11 @@ const pages = {
     required: ['Contact Support', supportEmail],
     language: 'en',
     noindex: true,
+    languageAlternates: {
+      en: '/support/',
+      pl: '/pl/support/',
+      'x-default': '/support/',
+    },
   },
   legacySupportPl: {
     path: 'out/pl/documents/support/index.html',
@@ -244,6 +269,11 @@ const pages = {
     required: ['Pomoc i kontakt', supportEmail],
     language: 'pl',
     noindex: true,
+    languageAlternates: {
+      en: '/support/',
+      pl: '/pl/support/',
+      'x-default': '/support/',
+    },
   },
 };
 
@@ -324,14 +354,17 @@ for (const [name, page] of Object.entries(pages)) {
     failures.push(`${name} static HTML is missing canonical URL: ${canonicalUrl}`);
   }
 
-  if (page.alternateRoute) {
+  if (page.alternateRoute || page.languageAlternates) {
     const englishRoute = page.language === 'pl' ? page.alternateRoute : page.route;
     const polishRoute = page.language === 'pl' ? page.route : page.alternateRoute;
-    const expectedAlternates = {
-      en: `${siteUrl}${englishRoute}`,
-      pl: `${siteUrl}${polishRoute}`,
-      'x-default': `${siteUrl}${englishRoute}`,
+    const alternateRoutes = page.languageAlternates ?? {
+      en: englishRoute,
+      pl: polishRoute,
+      'x-default': englishRoute,
     };
+    const expectedAlternates = Object.fromEntries(
+      Object.entries(alternateRoutes).map(([language, route]) => [language, `${siteUrl}${route}`]),
+    );
 
     for (const [language, url] of Object.entries(expectedAlternates)) {
       const alternatePattern = new RegExp(

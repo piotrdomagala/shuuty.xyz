@@ -4,6 +4,8 @@ export const metadata = createLegacyAliasMetadata({
   title: 'Polityka prywatności',
   description: 'Starszy adres Polityki prywatności Shuuty.',
   canonicalPath: '/pl/privacy/',
+  englishCanonicalPath: '/privacy/',
+  polishCanonicalPath: '/pl/privacy/',
 });
 
 export { default } from '@/app/pl/privacy/page';
