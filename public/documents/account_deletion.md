@@ -15,7 +15,7 @@ Jeśli nie masz dostępu do aplikacji, napisz na [shuuty.app@gmail.com](mailto:s
 
 ## Co usuwamy lub zachowujemy
 
-Usunięcie konta usuwa albo anonimizuje powiązane z nim dane konta i treści użytkownika, z wyjątkiem informacji, które muszą zostać zachowane ze względu na obowiązki prawne, zapobieganie nadużyciom, bezpieczeństwo lub ustalenie, dochodzenie albo obronę roszczeń. Ograniczone kopie mogą pozostać do czasu nadpisania w zwykłym cyklu kopii zapasowych. Szczegóły opisuje [Polityka prywatności](/pl/privacy/).
+Usunięcie konta Shuuty jest nieodwracalne i powoduje utratę dostępu do konta. Bezpieczne usuwanie części zapisanych mediów i danych dostawców może zakończyć się w tle. Niektóre informacje musimy zachować ze względu na obowiązki prawne, zapobieganie nadużyciom, bezpieczeństwo lub ustalenie, dochodzenie albo obronę roszczeń. Ograniczone kopie mogą pozostać do czasu nadpisania w zwykłym cyklu kopii zapasowych. Szczegóły opisuje [Polityka prywatności](/pl/privacy/).
 
 ## Subskrypcje App Store i Google Play
 

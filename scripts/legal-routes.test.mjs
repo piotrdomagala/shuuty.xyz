@@ -26,26 +26,20 @@ test('legacy document aliases use real Next.js routes with canonical language al
     assert.match(source, /createLegacyAliasMetadata/);
     assert.match(
       source,
-      new RegExp(
-        `englishCanonicalPath:\\s*["']${escapeRegex(englishCanonicalPath)}["']`,
-      ),
+      new RegExp(`englishCanonicalPath:\\s*["']${escapeRegex(englishCanonicalPath)}["']`),
     );
     assert.match(
       source,
-      new RegExp(
-        `polishCanonicalPath:\\s*["']${escapeRegex(polishCanonicalPath)}["']`,
-      ),
+      new RegExp(`polishCanonicalPath:\\s*["']${escapeRegex(polishCanonicalPath)}["']`),
     );
   }
 });
 
-test('legacy .html compatibility files retain canonical redirects', async () => {
+test('legacy .html compatibility pages expose canonical links without client-side refresh', async () => {
   for (const [name, canonicalPath] of compatibilityFiles) {
     const source = await readFile(new URL(`public/documents/${name}`, root), 'utf8');
-    assert.match(
-      source,
-      new RegExp(`http-equiv="refresh" content="0; url=${escapeRegex(canonicalPath)}"`),
-    );
+    assert.doesNotMatch(source, /http-equiv=["']refresh["']/i);
+    assert.match(source, new RegExp(`href=["']${escapeRegex(canonicalPath)}["']`));
     assert.match(
       source,
       new RegExp(`rel="canonical" href="https://shuuty\\.com${escapeRegex(canonicalPath)}"`),

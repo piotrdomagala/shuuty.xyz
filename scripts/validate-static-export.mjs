@@ -5,10 +5,7 @@ import { fileURLToPath } from 'node:url';
 const root = new URL('../', import.meta.url);
 const outputPath = fileURLToPath(new URL('out/', root));
 const supportEmail = 'shuuty.app@gmail.com';
-const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || 'https://shuuty.com').replace(
-  /\/+$/,
-  '',
-);
+const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || 'https://shuuty.com').replace(/\/+$/, '');
 const escapedSiteUrl = siteUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const openGraphImagePattern = new RegExp(
   `<meta(?=[^>]*\\bproperty="og:image")(?=[^>]*\\bcontent="${escapedSiteUrl}/opengraph-image\\.png(?:\\?[^\"]+)?")[^>]*>`,
@@ -297,25 +294,25 @@ async function findRouteDirectories(directory) {
 
 for (const routeDirectory of await findRouteDirectories(outputPath)) {
   const routeSegments = relative(outputPath, routeDirectory).split(sep).filter(Boolean);
-  const expectedPageSegment = [
-    '__next',
-    ...routeSegments,
-    '__PAGE__',
-    'txt',
-  ].join('.');
+  const expectedPageSegment = ['__next', ...routeSegments, '__PAGE__', 'txt'].join('.');
   const entries = await readdir(routeDirectory, { withFileTypes: true });
 
   for (const entry of entries) {
     if (entry.isDirectory() && entry.name.startsWith('__next.')) {
       failures.push(
-        `${relative(outputPath, join(routeDirectory, entry.name))} is a non-portable nested segment cache path`,
+        `${relative(
+          outputPath,
+          join(routeDirectory, entry.name),
+        )} is a non-portable nested segment cache path`,
       );
     }
   }
 
   if (!entries.some((entry) => entry.isFile() && entry.name === expectedPageSegment)) {
     failures.push(
-      `${relative(outputPath, routeDirectory) || '/'} is missing portable segment cache file: ${expectedPageSegment}`,
+      `${
+        relative(outputPath, routeDirectory) || '/'
+      } is missing portable segment cache file: ${expectedPageSegment}`,
     );
   }
 }
@@ -396,9 +393,8 @@ for (const [name, page] of Object.entries(pages)) {
   }
 
   if (!openGraphImagePattern.test(html) || !twitterImagePattern.test(html)) {
-    const detectedSocialImageTags = html.match(
-      /<meta[^>]*(?:property="og:image"|name="twitter:image")[^>]*>/g,
-    ) ?? [];
+    const detectedSocialImageTags =
+      html.match(/<meta[^>]*(?:property="og:image"|name="twitter:image")[^>]*>/g) ?? [];
     failures.push(
       `${name} static HTML is missing the shared social preview image; detected tags: ${
         detectedSocialImageTags.join(' | ') || 'none'
@@ -421,11 +417,14 @@ for (const [name, canonicalRoute] of Object.entries({
   'support.html': '/support/',
 })) {
   const html = await readFile(new URL(`out/documents/${name}`, root), 'utf8');
-  if (!html.includes(`http-equiv="refresh" content="0; url=${canonicalRoute}"`)) {
-    failures.push(`${name} is missing its canonical refresh target`);
+  if (/http-equiv=["']refresh["']/i.test(html)) {
+    failures.push(`${name} must not use a client-side meta refresh`);
   }
   if (!html.includes(`<link rel="canonical" href="${siteUrl}${canonicalRoute}"`)) {
     failures.push(`${name} is missing its canonical URL`);
+  }
+  if (!html.includes(`href="${canonicalRoute}"`)) {
+    failures.push(`${name} is missing its visible canonical fallback link`);
   }
   if (!html.includes('<meta name="robots" content="noindex, follow"')) {
     failures.push(`${name} is missing noindex, follow`);
@@ -506,7 +505,11 @@ for (const route of [
     failures.push(`sitemap.xml is missing: ${siteUrl}${route}`);
   }
 }
-for (const [language, route] of Object.entries({ en: '/', pl: '/pl/', 'x-default': '/' })) {
+for (const [language, route] of Object.entries({
+  en: '/',
+  pl: '/pl/',
+  'x-default': '/',
+})) {
   if (!sitemap.includes(`hreflang="${language}" href="${siteUrl}${route}"`)) {
     failures.push(`sitemap.xml is missing ${language} language alternate`);
   }
@@ -539,7 +542,12 @@ if (indexNowKeyFile.trim() !== indexNowKey) {
 }
 
 const manifest = JSON.parse(await readFile(new URL('out/site.webmanifest', root), 'utf8'));
-for (const [field, expected] of Object.entries({ id: '/', start_url: '/', scope: '/', lang: 'en' })) {
+for (const [field, expected] of Object.entries({
+  id: '/',
+  start_url: '/',
+  scope: '/',
+  lang: 'en',
+})) {
   if (manifest[field] !== expected) {
     failures.push(`site.webmanifest should set ${field} to ${expected}`);
   }
