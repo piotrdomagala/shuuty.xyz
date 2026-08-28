@@ -1,4 +1,4 @@
-import { readFile, readdir } from 'node:fs/promises';
+import { access, readFile, readdir } from 'node:fs/promises';
 import { join, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -411,23 +411,19 @@ for (const [name, page] of Object.entries(pages)) {
   }
 }
 
-for (const [name, canonicalRoute] of Object.entries({
-  'privacy.html': '/privacy/',
-  'terms.html': '/terms/',
-  'support.html': '/support/',
-})) {
-  const html = await readFile(new URL(`out/documents/${name}`, root), 'utf8');
-  if (/http-equiv=["']refresh["']/i.test(html)) {
-    failures.push(`${name} must not use a client-side meta refresh`);
-  }
-  if (!html.includes(`<link rel="canonical" href="${siteUrl}${canonicalRoute}"`)) {
-    failures.push(`${name} is missing its canonical URL`);
-  }
-  if (!html.includes(`href="${canonicalRoute}"`)) {
-    failures.push(`${name} is missing its visible canonical fallback link`);
-  }
-  if (!html.includes('<meta name="robots" content="noindex, follow"')) {
-    failures.push(`${name} is missing noindex, follow`);
+for (const name of ['privacy.html', 'terms.html', 'support.html']) {
+  try {
+    await access(new URL(`out/documents/${name}`, root));
+    failures.push(
+      `${name} must not be exported; GitHub Pages serves it for /documents/${name.replace(
+        /\.html$/,
+        '',
+      )} and shadows the Next alias`,
+    );
+  } catch (error) {
+    if (error?.code !== 'ENOENT') {
+      throw error;
+    }
   }
 }
 

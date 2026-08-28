@@ -15,7 +15,7 @@ If you cannot access the app, email [shuuty.app@gmail.com](mailto:shuuty.app@gma
 
 ## What is deleted or retained
 
-Deleting a Shuuty account is irreversible and removes access to the account. Secure deletion of some stored media and provider records may finish in the background. Some information must be retained for legal obligations, abuse prevention, security, or the establishment, exercise, or defence of legal claims. Limited copies may remain until they are overwritten during the normal backup cycle. Details are provided in the [Privacy Policy](/privacy/).
+Deleting a Shuuty account is irreversible and removes access to the account. Secure deletion of some stored media and provider records may finish in the background. Some information must be retained for legal obligations, abuse prevention, security, or the establishment, exercise, or defence of legal claims. Limited copies may remain until they are overwritten during the normal backup cycle. Details are provided in the [Privacy Policy](https://shuuty.com/privacy/).
 
 ## App Store and Google Play subscriptions
 
