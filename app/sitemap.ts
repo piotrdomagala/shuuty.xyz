@@ -13,6 +13,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 0.5,
     },
+    {
+      english: '/child-safety/',
+      polish: '/pl/child-safety/',
+      changeFrequency: 'monthly',
+      priority: 0.5,
+    },
     { english: '/privacy/', polish: '/pl/privacy/', changeFrequency: 'monthly', priority: 0.4 },
     { english: '/terms/', polish: '/pl/terms/', changeFrequency: 'monthly', priority: 0.4 },
   ] as const;
