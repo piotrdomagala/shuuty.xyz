@@ -112,6 +112,7 @@ export default function SupportPageClient({ initialLanguage = 'en' }: SupportPag
       tagline={translations.footerTagline}
       supportLabel={translations.support}
       accountDeletionLabel={translations.accountDeletion}
+      childSafetyLabel={translations.childSafety}
       privacyLabel={translations.privacy}
       termsLabel={translations.terms}
     >

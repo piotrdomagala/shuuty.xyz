@@ -812,6 +812,7 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
             <Link href={localizedPath(lang, '/account-deletion/')}>
               {c.footer.accountDeletion}
             </Link>
+            <Link href={localizedPath(lang, '/child-safety/')}>{c.footer.childSafety}</Link>
             <Link href={localizedPath(lang, '/privacy/')}>{c.footer.privacy}</Link>
             <Link href={localizedPath(lang, '/terms/')}>{c.footer.terms}</Link>
           </nav>

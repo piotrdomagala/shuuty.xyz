@@ -161,6 +161,7 @@ interface DocumentFooterProps {
   tagline: string;
   supportLabel: string;
   accountDeletionLabel: string;
+  childSafetyLabel: string;
   privacyLabel: string;
   termsLabel: string;
   language: DocumentLanguage;
@@ -170,6 +171,7 @@ export function DocumentFooter({
   tagline,
   supportLabel,
   accountDeletionLabel,
+  childSafetyLabel,
   privacyLabel,
   termsLabel,
   language,
@@ -190,6 +192,12 @@ export function DocumentFooter({
             className={styles.footerLink}
           >
             {accountDeletionLabel}
+          </Link>
+          <Link
+            href={localizedPath(language, '/child-safety/')}
+            className={styles.footerLink}
+          >
+            {childSafetyLabel}
           </Link>
           <Link href={localizedPath(language, '/privacy/')} className={styles.footerLink}>
             {privacyLabel}
@@ -212,6 +220,7 @@ interface DocumentShellProps {
   tagline: string;
   supportLabel: string;
   accountDeletionLabel: string;
+  childSafetyLabel: string;
   privacyLabel: string;
   termsLabel: string;
   children: ReactNode;
@@ -226,6 +235,7 @@ export function DocumentShell({
   tagline,
   supportLabel,
   accountDeletionLabel,
+  childSafetyLabel,
   privacyLabel,
   termsLabel,
   children,
@@ -253,6 +263,7 @@ export function DocumentShell({
         tagline={tagline}
         supportLabel={supportLabel}
         accountDeletionLabel={accountDeletionLabel}
+        childSafetyLabel={childSafetyLabel}
         privacyLabel={privacyLabel}
         termsLabel={termsLabel}
         language={language}

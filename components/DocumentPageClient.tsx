@@ -36,6 +36,7 @@ export default function DocumentPageClient({
       tagline={translations.footerTagline}
       supportLabel={translations.support}
       accountDeletionLabel={translations.accountDeletion}
+      childSafetyLabel={translations.childSafety}
       privacyLabel={translations.privacy}
       termsLabel={translations.terms}
     >

@@ -9,6 +9,8 @@ const files = {
   privacyEn: 'public/documents/privacy_en.md',
   accountDeletionPl: 'public/documents/account_deletion.md',
   accountDeletionEn: 'public/documents/account_deletion_en.md',
+  childSafetyPl: 'public/documents/child_safety.md',
+  childSafetyEn: 'public/documents/child_safety_en.md',
 };
 
 const documents = Object.fromEntries(
@@ -114,6 +116,22 @@ requireText('accountDeletionEn', [
   'App Store',
   'Google Play',
   'does not automatically cancel a subscription',
+]);
+requireText('childSafetyPl', [
+  'Shuuty Prosta Spółka Akcyjna',
+  'Child Sexual Abuse and Exploitation - CSAE',
+  'Child Sexual Abuse Material - CSAM',
+  'Zgłoś problem dotyczący bezpieczeństwa dzieci',
+  'National Center for Missing & Exploited Children (NCMEC)',
+  supportEmail,
+]);
+requireText('childSafetyEn', [
+  'Shuuty Prosta Spółka Akcyjna',
+  'child sexual abuse and exploitation (CSAE)',
+  'child sexual abuse material (CSAM)',
+  'Report a child safety concern',
+  'National Center for Missing & Exploited Children (NCMEC)',
+  supportEmail,
 ]);
 
 const sharedTerms = ['Free', 'Pro', 'Teams', 'App Store', 'Google Play'];
