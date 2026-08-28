@@ -50,12 +50,17 @@ test('public standards cover Google child-safety requirements in both languages'
   assert.match(polish, /poniżej 18\. roku życia/u);
 });
 
-test('child-safety pages are discoverable from the footer and sitemap', async () => {
-  const [footer, sitemap] = await Promise.all([
+test('child-safety pages are discoverable from the landing and document footers and sitemap', async () => {
+  const [documentFooter, landingFooter, homeContent, sitemap] = await Promise.all([
     readFile(new URL('components/DocumentChrome.tsx', root), 'utf8'),
+    readFile(new URL('components/HomePageClient.tsx', root), 'utf8'),
+    readFile(new URL('app/homeContent.json', root), 'utf8').then(JSON.parse),
     readFile(new URL('app/sitemap.ts', root), 'utf8'),
   ]);
-  assert.match(footer, /localizedPath\(language, '\/child-safety\/'\)/u);
+  assert.match(documentFooter, /localizedPath\(language, '\/child-safety\/'\)/u);
+  assert.match(landingFooter, /localizedPath\(lang, '\/child-safety\/'\)/u);
+  assert.equal(homeContent.en.footer.childSafety, 'Child safety');
+  assert.equal(homeContent.pl.footer.childSafety, 'Bezpieczeństwo dzieci');
   assert.match(sitemap, /english: '\/child-safety\/'/u);
   assert.match(sitemap, /polish: '\/pl\/child-safety\/'/u);
 });
