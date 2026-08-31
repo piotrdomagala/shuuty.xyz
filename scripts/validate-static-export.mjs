@@ -1,4 +1,5 @@
 import { access, readFile, readdir } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import { join, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -305,6 +306,35 @@ const pages = {
 };
 
 const failures = [];
+const fgsEvidenceDirectory = new URL(
+  'out/google-play/foreground-service/microphone/',
+  root,
+);
+const fgsEvidencePage = await readFile(
+  new URL('index.html', fgsEvidenceDirectory),
+  'utf8',
+);
+const fgsEvidenceVideo = await readFile(
+  new URL('voice-task-fgs-demo-redacted-v6.mp4', fgsEvidenceDirectory),
+);
+const fgsEvidenceSha256 = createHash('sha256').update(fgsEvidenceVideo).digest('hex');
+
+if (!fgsEvidencePage.includes('<meta name="robots" content="noindex, nofollow, noarchive" />')) {
+  failures.push('FGS evidence page is missing noindex, nofollow, noarchive');
+}
+if (
+  !fgsEvidencePage.includes(
+    '<source src="./voice-task-fgs-demo-redacted-v6.mp4" type="video/mp4" />',
+  )
+) {
+  failures.push('FGS evidence page is missing the exact hosted v6 video source');
+}
+if (fgsEvidenceVideo.length !== 1_228_536) {
+  failures.push(`FGS evidence video has unexpected size: ${fgsEvidenceVideo.length}`);
+}
+if (fgsEvidenceSha256 !== 'f3b376db323c79f5f79a062be96c442770701cedb19a7d2a5b5662630e518fc4') {
+  failures.push(`FGS evidence video has unexpected SHA-256: ${fgsEvidenceSha256}`);
+}
 
 async function findRouteDirectories(directory) {
   const routeDirectories = [];
