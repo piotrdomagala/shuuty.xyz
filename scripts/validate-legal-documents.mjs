@@ -170,6 +170,7 @@ const providers = [
   'Railway',
   'Neon',
   'GitHub Pages',
+  'GoatCounter',
 ];
 requireText('privacyPl', [
   ...providers,
