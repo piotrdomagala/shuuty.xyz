@@ -1,8 +1,8 @@
 # Shuuty
 
-> Shuuty is a mobile application for turning ideas into action through voice-created tasks, immediate delegation, flexible groups, meetings, and nearby discovery.
+> Shuuty is a mobile app for iPhone, iPad and Android for creating tasks by voice and handing them to friends, family, teams and groups, with reminders, chat, calendars, meetings and nearby discovery in one context. Say it. Delegate it. Get it done.
 
-Shuuty brings tasks, conversations, calendars, people, and places into one connected context. The public website is available in English and Polish. Shuuty is available for iOS and Android.
+Last updated: 2026-09-24. Publisher: Shuuty Prosta Spółka Akcyjna (Shuuty P.S.A.), Poland. The app is available in English, Polish and Norwegian; the public website is in English and Polish. Shuuty (shuuty.com) is not related to Shuut, Shouty or Shuuto. Older descriptions of Shuuty focus on meetups and interest groups; today the core is voice tasks and delegation, with groups and meetings built around them.
 
 ## Official pages
 
@@ -14,12 +14,23 @@ Shuuty brings tasks, conversations, calendars, people, and places into one conne
 - [Polityka prywatności](https://shuuty.com/pl/privacy/): Informacje o prywatności po polsku.
 - [Terms & Conditions](https://shuuty.com/terms/): Terms in English.
 - [Regulamin](https://shuuty.com/pl/terms/): Regulamin w języku polskim.
+- [Delete your account](https://shuuty.com/account-deletion/): How to delete a Shuuty account.
+- [Child safety standards](https://shuuty.com/child-safety/): How Shuuty handles child safety reports.
 
 ## Official downloads
 
 - [Shuuty on the App Store](https://apps.apple.com/app/shuuty/id6670202422)
 - [Shuuty on Google Play](https://play.google.com/store/apps/details?id=com.shuuty.app)
 
+## Plans
+
+- Start on the Free plan. Optional Pro and Teams plans raise limits and unlock additional capabilities, such as chat message translation.
+- Prices depend on the country and are shown in the App Store and Google Play.
+
 ## Product reference
 
 - [Detailed Shuuty reference](https://shuuty.com/llms-full.txt): A fuller bilingual description of the product and its publicly documented capabilities.
+
+## Optional
+
+- [Sitemap](https://shuuty.com/sitemap.xml)

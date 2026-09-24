@@ -13,14 +13,18 @@ User-agent: Bingbot
 Allow: /
 Content-Signal: search=yes, ai-input=yes, ai-train=no
 
+# Google-Extended is a single token for both Gemini training and grounding of
+# answers in the Gemini app; Google does not let the two be separated. It is
+# allowed so Gemini can find and cite Shuuty. It does not affect Google Search,
+# AI Overviews or AI Mode, which use Googlebot.
+User-agent: Google-Extended
+Allow: /
+
 # Crawlers whose documented purpose includes model training are not permitted.
 User-agent: GPTBot
 Disallow: /
 
 User-agent: ClaudeBot
-Disallow: /
-
-User-agent: Google-Extended
 Disallow: /
 
 User-agent: Applebot-Extended

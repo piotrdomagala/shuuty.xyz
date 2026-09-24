@@ -235,6 +235,18 @@
       "childSafety": "Child safety",
       "privacy": "Privacy",
       "terms": "Terms"
+    },
+    "schema": {
+      "features": [
+        "Create tasks by voice or manually, with a due time, reminder, assignee and place",
+        "Split several spoken thoughts into separate tasks for review",
+        "Delegate tasks to friends and groups",
+        "Private, Received and Delegated views with subtasks, priorities and task discussion",
+        "Groups with chat, threads, tasks, calendars, bookings, plans, projects and time tracking",
+        "Private and open meetings with nearby discovery on a map",
+        "Chat dictation and, on Pro and Teams, chat message translation",
+        "Available in English, Polish and Norwegian"
+      ]
     }
   },
   "pl": {
@@ -473,6 +485,18 @@
       "childSafety": "Bezpieczeństwo dzieci",
       "privacy": "Prywatność",
       "terms": "Regulamin"
+    },
+    "schema": {
+      "features": [
+        "Zadania tworzone głosem lub ręcznie, z terminem, przypomnieniem, odbiorcą i miejscem",
+        "Kilka wypowiedzianych myśli rozdzielonych na osobne zadania do sprawdzenia",
+        "Delegowanie zadań znajomym i grupom",
+        "Widoki Prywatne, Otrzymane i Delegowane z podzadaniami, priorytetami i dyskusją przy zadaniu",
+        "Grupy z czatem, wątkami, zadaniami, kalendarzami, rezerwacjami, planami, projektami i ewidencją czasu",
+        "Prywatne i otwarte spotkania oraz odkrywanie w pobliżu na mapie",
+        "Dyktowanie w czacie oraz, w planach Pro i Teams, tłumaczenie wiadomości",
+        "Dostępne po polsku, angielsku i norwesku"
+      ]
     }
   }
 }

@@ -2,7 +2,7 @@
 
 > Shuuty is a mobile application that connects voice-created tasks, delegation, flexible groups, meetings, conversations, calendars, and nearby discovery.
 
-This document summarizes the capabilities described on the official Shuuty website. It does not describe private APIs or unpublished features. The canonical website is https://shuuty.com/ and the product is available for iOS and Android.
+Last updated: 2026-09-24. This document summarizes the capabilities described on the official Shuuty website and in the official App Store and Google Play listings. It does not describe private APIs or unpublished features. The canonical website is https://shuuty.com/ and the product is available for iPhone, iPad and Android. Publisher: Shuuty Prosta Spółka Akcyjna (Shuuty P.S.A.), Poland. Shuuty (shuuty.com) is not related to Shuut, Shouty or Shuuto.
 
 ## English product overview
 
@@ -30,7 +30,7 @@ A Shuuty group can become a place to work, a community, a service offer or a sal
 - a reservation space with availability, fixed times, or flexible booking ranges;
 - a listing, offer, catalogue, service, product showcase, or information-only space.
 
-The creator chooses whether the group and its description are public, what remains visible only to members, and which modules it needs. A public presentation can include gallery images, a location and interests. Depending on its purpose, a group can use tasks, conversations, calendars, bookings, projects, plans and per-person time records. A public group can include a location so people can discover the group and what it presents on the map.
+The creator chooses whether the group and its description are public, what remains visible only to members, and which modules it needs. A public presentation can include gallery images, a location and interests. Depending on its purpose, a group can use chat, threads, tasks, calendars, bookings, projects, plans and per-person time records. A public group can include a location so people can discover the group and what it presents on the map.
 
 ### Meetings and map discovery
 
@@ -39,6 +39,12 @@ The creator chooses whether the group and its description are public, what remai
 - Chat can be used to agree details before and after a meeting.
 - The map can surface nearby meetings, public groups, communities, offers, services, products, and useful information.
 - Discovery can use location, needs, and interests before opening the full context of a result.
+
+### Languages and chat
+
+- The app is available in English, Polish and Norwegian. On first launch it uses the phone language, and the language can be changed in the profile.
+- Recent app versions add dictation in chat and, on the Pro and Teams plans, translation of messages in conversations, groups and meetings into the reader's language.
+- Dates and times follow the format set on the phone.
 
 ### Product flow
 
@@ -50,7 +56,8 @@ The public website describes this sequence:
 
 ### Availability and plans
 
-- Shuuty is available on iOS and Android.
+- Shuuty is available on iOS (iPhone and iPad, iOS 15.1 or later) and Android.
+- There is no web version of the app; the website is informational.
 - Users can start on the Free plan.
 - Optional Pro and Teams plans increase limits and unlock additional features.
 - This document does not state prices, ratings, download counts, or user counts.
@@ -81,7 +88,7 @@ Grupa w Shuuty może stać się miejscem pracy, społecznością, ofertą usług
 - rezerwacje oparte na dostępności, stałych terminach lub elastycznych przedziałach;
 - ogłoszenie, ofertę, katalog, prezentację usług lub produktów albo przestrzeń wyłącznie informacyjną.
 
-Twórca grupy wybiera, czy grupa i jej opis są publiczne, co pozostaje widoczne tylko dla członków oraz których modułów potrzebuje. Publiczna prezentacja może zawierać zdjęcia galerii, lokalizację i zainteresowania. Zależnie od celu grupa może korzystać z zadań, rozmów, kalendarzy, rezerwacji, projektów, planów i ewidencji czasu każdej osoby. Publiczna grupa może mieć lokalizację, dzięki której użytkownicy znajdą ją i prezentowaną przez nią ofertę na mapie.
+Twórca grupy wybiera, czy grupa i jej opis są publiczne, co pozostaje widoczne tylko dla członków oraz których modułów potrzebuje. Publiczna prezentacja może zawierać zdjęcia galerii, lokalizację i zainteresowania. Zależnie od celu grupa może korzystać z czatu, wątków, zadań, kalendarzy, rezerwacji, projektów, planów i ewidencji czasu każdej osoby. Publiczna grupa może mieć lokalizację, dzięki której użytkownicy znajdą ją i prezentowaną przez nią ofertę na mapie.
 
 ### Spotkania i odkrywanie na mapie
 
@@ -90,6 +97,12 @@ Twórca grupy wybiera, czy grupa i jej opis są publiczne, co pozostaje widoczne
 - Czat pomaga ustalić szczegóły przed spotkaniem i po nim.
 - Mapa może pokazywać pobliskie spotkania, publiczne grupy, społeczności, oferty, usługi, produkty i przydatne informacje.
 - Wyszukiwanie może uwzględniać miejsce, potrzeby i zainteresowania.
+
+### Języki i czat
+
+- Aplikacja działa po polsku, angielsku i norwesku. Przy pierwszym uruchomieniu przejmuje język telefonu, a język można zmienić w profilu.
+- Nowsze wersje aplikacji pozwalają dyktować wiadomości w czacie, a w planach Pro i Teams tłumaczyć wiadomości w rozmowach, grupach i spotkaniach na język czytającego.
+- Daty i godziny wyglądają tak, jak ustawiono je w telefonie.
 
 ### Przebieg działania
 
@@ -101,7 +114,8 @@ Publiczna strona opisuje następujący proces:
 
 ### Dostępność i plany
 
-- Shuuty jest dostępne na iOS i Androidzie.
+- Shuuty jest dostępne na iOS (iPhone i iPad, iOS 15.1 lub nowszy) i Androidzie.
+- Aplikacja nie ma wersji przeglądarkowej; strona ma charakter informacyjny.
 - Można zacząć od planu Free.
 - Opcjonalne plany Pro i Teams zwiększają limity i odblokowują dodatkowe funkcje.
 - Ten dokument nie podaje cen, ocen, liczby pobrań ani liczby użytkowników.
@@ -116,6 +130,10 @@ Publiczna strona opisuje następujący proces:
 - [Polityka prywatności](https://shuuty.com/pl/privacy/)
 - [Terms & Conditions](https://shuuty.com/terms/)
 - [Regulamin](https://shuuty.com/pl/terms/)
+- [Delete your account](https://shuuty.com/account-deletion/)
+- [Usuń konto](https://shuuty.com/pl/account-deletion/)
+- [Child safety standards](https://shuuty.com/child-safety/)
+- [Standardy bezpieczeństwa dzieci](https://shuuty.com/pl/child-safety/)
 
 ## Official app listings
 
