@@ -2,6 +2,7 @@ import { access, readFile, readdir } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { join, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { languageSwitchPath, LEGACY_ALIASES, NORWEGIAN_PATHS } from '../lib/sitePaths.mjs';
 
 const root = new URL('../', import.meta.url);
 const outputPath = fileURLToPath(new URL('out/', root));
@@ -725,6 +726,41 @@ for (const htmlPath of await listHtmlFiles(outputPath)) {
     && !html.includes(`data-goatcounter="https://${goatCounterCode}.goatcounter.com/count"`)
   ) {
     failures.push(`${displayPath} is missing the configured GoatCounter script`);
+  }
+}
+
+// Every language button must lead to a real page in that language. A switch
+// that keeps the visitor on the same address (for example a legacy alias)
+// would only change the language in memory until the next reload.
+const languageButtonPattern = /<button[^>]*aria-pressed="(true|false)"[^>]*>(EN|PL|NB)<\/button>/g;
+for (const htmlPath of await listHtmlFiles(outputPath)) {
+  const displayPath = relative(outputPath, htmlPath).split(sep).join('/');
+  if (!displayPath.endsWith('index.html')) continue;
+
+  const html = await readFile(htmlPath, 'utf8');
+  const route = `/${displayPath.slice(0, -'index.html'.length)}`;
+  for (const [, pressed, label] of html.matchAll(languageButtonPattern)) {
+    const language = label.toLowerCase();
+    const target = languageSwitchPath(route, language);
+    const targetFile = join(outputPath, ...target.split('/').filter(Boolean), 'index.html');
+    let targetHtml;
+    try {
+      targetHtml = await readFile(targetFile, 'utf8');
+    } catch {
+      failures.push(`${route} ${label} button leads to a missing page: ${target}`);
+      continue;
+    }
+    if (pressed === 'false' && target === route) {
+      failures.push(`${route} ${label} button would switch the language without leaving ${route}`);
+    }
+    // NB may fall back to English only where no Norwegian version exists.
+    const targetLanguage = targetHtml.match(/<html[^>]+lang="([^"]+)"/i)?.[1];
+    const canonicalTarget = LEGACY_ALIASES[target] ?? target;
+    const englishFallback =
+      language === 'nb' && targetLanguage === 'en' && !NORWEGIAN_PATHS.includes(canonicalTarget);
+    if (targetLanguage !== language && !englishFallback) {
+      failures.push(`${route} ${label} button opens ${target} in lang="${targetLanguage}"`);
+    }
   }
 }
 

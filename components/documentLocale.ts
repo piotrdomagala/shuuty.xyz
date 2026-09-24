@@ -4,13 +4,7 @@ export type DocumentLanguage = 'en' | 'pl';
 // and Polish, so Norwegian visitors are sent to the English versions.
 export type SiteLanguage = DocumentLanguage | 'nb';
 
-const NORWEGIAN_PATHS: readonly string[] = ['/', '/support/'];
-
-export const localizedSitePath = (language: SiteLanguage, path: string) => {
-  if (language === 'pl') return `/pl${path}`;
-  if (language === 'nb' && NORWEGIAN_PATHS.includes(path)) return `/nb${path}`;
-  return path;
-};
+export { languageSwitchPath, localizedSitePath } from '@/lib/sitePaths.mjs';
 
 export const documentTranslations = {
   en: {

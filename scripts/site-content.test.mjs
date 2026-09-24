@@ -1,8 +1,33 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFile } from 'node:fs/promises';
+import { languageSwitchPath, localizedSitePath } from '../lib/sitePaths.mjs';
 
 const root = new URL('../', import.meta.url);
+
+test('language paths keep Norwegian to the landing and support pages', () => {
+  assert.equal(localizedSitePath('nb', '/'), '/nb/');
+  assert.equal(localizedSitePath('nb', '/support/'), '/nb/support/');
+  assert.equal(localizedSitePath('nb', '/privacy/'), '/privacy/');
+  assert.equal(localizedSitePath('nb', '/account-deletion/'), '/account-deletion/');
+  assert.equal(localizedSitePath('pl', '/terms/'), '/pl/terms/');
+  assert.equal(localizedSitePath('en', '/child-safety/'), '/child-safety/');
+});
+
+test('the language switcher resolves legacy aliases to canonical pages', () => {
+  // Choosing NB on an old support address must open the real Norwegian page,
+  // not keep the alias and change the language only in memory.
+  assert.equal(languageSwitchPath('/documents/support/', 'nb'), '/nb/support/');
+  assert.equal(languageSwitchPath('/pl/documents/support/', 'nb'), '/nb/support/');
+  assert.equal(languageSwitchPath('/documents/support/', 'pl'), '/pl/support/');
+  assert.equal(languageSwitchPath('/pl/documents/support/', 'en'), '/support/');
+  assert.equal(languageSwitchPath('/documents/privacy/', 'pl'), '/pl/privacy/');
+  assert.equal(languageSwitchPath('/pl/documents/terms/', 'en'), '/terms/');
+  assert.equal(languageSwitchPath('/nb/support/', 'en'), '/support/');
+  assert.equal(languageSwitchPath('/nb/', 'pl'), '/pl/');
+  assert.equal(languageSwitchPath('/nb/', 'nb'), '/nb/');
+  assert.equal(languageSwitchPath('/pl', 'nb'), '/nb/');
+});
 
 function contentShape(value) {
   if (Array.isArray(value)) return value.map(contentShape);

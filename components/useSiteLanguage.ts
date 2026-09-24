@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
-import { localizedSitePath, type SiteLanguage } from '@/components/documentLocale';
+import { languageSwitchPath, type SiteLanguage } from '@/components/documentLocale';
 
 const LANGUAGE_SCROLL_KEY = 'shuuty-language-scroll';
 
@@ -42,11 +42,6 @@ const persistLanguage = (language: SiteLanguage) => {
   document.documentElement.lang = language;
 };
 
-const getLocalizedPath = (pathname: string, language: SiteLanguage) => {
-  const englishPath = pathname.replace(/^\/(?:pl|nb)(?=\/|$)/, '') || '/';
-
-  return localizedSitePath(language, englishPath);
-};
 
 export function useSiteLanguage(initialLanguage: SiteLanguage = 'en') {
   const [language, setLanguage] = useState<SiteLanguage>(initialLanguage);
@@ -100,7 +95,7 @@ export function useSiteLanguage(initialLanguage: SiteLanguage = 'en') {
     setLanguage(nextLanguage);
     persistLanguage(nextLanguage);
 
-    const targetPath = getLocalizedPath(window.location.pathname, nextLanguage);
+    const targetPath = languageSwitchPath(window.location.pathname, nextLanguage);
     if (targetPath !== window.location.pathname) {
       try {
         window.sessionStorage.setItem(LANGUAGE_SCROLL_KEY, JSON.stringify({
