@@ -1,6 +1,6 @@
 # Polityka prywatności aplikacji mobilnej Shuuty
 
-Ostatnia aktualizacja: 30 lipca 2026 r.
+Ostatnia aktualizacja: 24 września 2026 r.
 
 ## 1. Administrator i dane kontaktowe
 Administratorem danych osobowych jest **Shuuty Prosta Spółka Akcyjna**, ul. Południowa 13, 32-353 Trzyciąż, Polska, wpisana do Krajowego Rejestru Sądowego pod numerem **KRS 0000947279**, NIP **6372215912**, REGON **52098153800000** (dalej „Shuuty”, „my” lub „Administrator”).
@@ -50,7 +50,7 @@ Dane przekazujemy wyłącznie w zakresie potrzebnym do danego celu:
 - **Brevo** w celu wysyłania wiadomości transakcyjnych, takich jak weryfikacja adresu e-mail i reset hasła;
 - **Geoapify** i **Google Maps** w celu wyszukiwania miejsc, geokodowania i wyświetlania map, gdy użytkownik korzysta z funkcji lokalizacyjnych;
 - **Cloudflare R2** i **Cloudinary** w celu przechowywania, przetwarzania i dostarczania zdjęć oraz innych multimediów;
-- dostawcom infrastruktury, w tym **Railway** dla backendu, **Neon** dla bazy danych i **Vercel** dla publicznej strony Shuuty;
+- dostawcom infrastruktury, w tym **Railway** dla backendu, **Neon** dla bazy danych i **GitHub Pages** dla publicznej strony Shuuty;
 - profesjonalnym doradcom, organom publicznym, sądom lub organom ścigania, gdy jest to niezbędne do ochrony praw albo wymagane przez prawo.
 
 Zależnie od usługi i przepisów dostawca może działać jako podmiot przetwarzający dane na zlecenie Shuuty albo jako odrębny administrator zgodnie ze swoją polityką prywatności.
@@ -98,7 +98,7 @@ Stosujemy środki organizacyjne i techniczne odpowiednie do ryzyka, w tym kontro
 Aplikacja jest przeznaczona dla osób, które ukończyły 16 lat. Świadomie nie umożliwiamy rejestracji dzieci poniżej tego wieku. W przypadku podejrzenia, że takie konto zostało utworzone, prosimy o kontakt.
 
 ## 12. Pliki cookie i linki zewnętrzne
-Aplikacja mobilna nie używa przeglądarkowych plików cookie jako podstawowego mechanizmu działania. Publiczna strona Shuuty zapisuje techniczny plik cookie „lang”, aby zapamiętać wybrany język. Zewnętrzne strony, w tym App Store i Google Play, stosują własne zasady dotyczące plików cookie i prywatności.
+Aplikacja mobilna nie używa przeglądarkowych plików cookie jako podstawowego mechanizmu działania. Publiczna strona Shuuty zapisuje techniczny plik cookie „lang”, aby zapamiętać wybrany język, oraz wybrany motyw (jasny lub ciemny) w pamięci przeglądarki (localStorage). Zewnętrzne strony, w tym App Store i Google Play, stosują własne zasady dotyczące plików cookie i prywatności.
 
 ## 13. Zmiany Polityki
 Aktualna wersja i data ostatniej aktualizacji są publikowane na tej stronie. O istotnych zmianach możemy również poinformować w Aplikacji lub e-mailem, a jeśli wymaga tego prawo - poprosić o zgodę.

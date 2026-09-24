@@ -169,10 +169,11 @@ const providers = [
   'Cloudinary',
   'Railway',
   'Neon',
-  'Vercel',
+  'GitHub Pages',
 ];
 requireText('privacyPl', [
   ...providers,
+  'wybrany motyw (jasny lub ciemny) w pamięci przeglądarki (localStorage)',
   'art. 6 ust. 1 lit. b RODO',
   'art. 6 ust. 1 lit. f RODO',
   'standardowe klauzule umowne',
@@ -194,6 +195,7 @@ requireText('privacyPl', [
 ]);
 requireText('privacyEn', [
   ...providers,
+  'the selected theme (light or dark) in browser storage (localStorage)',
   'Article 6(1)(b) GDPR',
   'Article 6(1)(f) GDPR',
   'Standard Contractual Clauses',
