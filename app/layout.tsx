@@ -111,6 +111,7 @@ export const metadata: Metadata = {
     url: '/',
     type: 'website',
     locale: 'en_US',
+    alternateLocale: ['pl_PL', 'nb_NO'],
     siteName: 'Shuuty',
     images: [SOCIAL_IMAGE],
   },

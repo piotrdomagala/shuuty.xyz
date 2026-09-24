@@ -646,6 +646,27 @@ for (const [language, homePath] of Object.entries({
     failures.push(`${homePath} contactPoint.url should be ${siteUrl}${supportRoute}`);
   }
 
+  // Open Graph mirrors hreflang: the page's own locale plus the other two.
+  const openGraphLocales = { en: 'en_US', pl: 'pl_PL', nb: 'nb_NO' };
+  const ownLocale = html.match(/<meta property="og:locale" content="([^"]+)"/)?.[1];
+  const alternateLocales = [
+    ...html.matchAll(/<meta property="og:locale:alternate" content="([^"]+)"/g),
+  ].map((match) => match[1]).sort();
+  const expectedAlternates = Object.entries(openGraphLocales)
+    .filter(([siteLanguage]) => siteLanguage !== language)
+    .map(([, locale]) => locale)
+    .sort();
+  if (ownLocale !== openGraphLocales[language]) {
+    failures.push(`${homePath} og:locale should be ${openGraphLocales[language]}, found ${ownLocale}`);
+  }
+  if (JSON.stringify(alternateLocales) !== JSON.stringify(expectedAlternates)) {
+    failures.push(
+      `${homePath} og:locale:alternate should be ${expectedAlternates.join(', ')}, found ${
+        alternateLocales.join(', ') || 'none'
+      }`,
+    );
+  }
+
   // React also emits a matching <link rel="preload" fetchPriority="high">; only
   // the <img> elements are counted here.
   const highPriorityImages = html.match(/<img[^>]*\bfetchPriority="high"[^>]*>/gi) ?? [];
