@@ -1,6 +1,6 @@
 # Privacy Policy of the Shuuty Mobile Application
 
-Last updated: July 30, 2026
+Last updated: September 24, 2026
 
 ## 1. Controller and contact details
 The personal data controller is **Shuuty Prosta Spółka Akcyjna**, ul. Południowa 13, 32-353 Trzyciąż, Poland, entered in the National Court Register under **KRS 0000947279**, tax identification number (NIP) **6372215912**, and statistical number (REGON) **52098153800000** (hereinafter “Shuuty,” “we,” or the “Controller”).
@@ -50,7 +50,7 @@ We disclose data only to the extent required for the relevant purpose:
 - **Brevo** to send transactional messages such as email verification and password resets;
 - **Geoapify** and **Google Maps** for place search, geocoding, and map display when the user uses location features;
 - **Cloudflare R2** and **Cloudinary** to store, process, and deliver photos and other media;
-- infrastructure providers, including **Railway** for the backend, **Neon** for the database, and **Vercel** for the public Shuuty website;
+- infrastructure providers, including **Railway** for the backend, **Neon** for the database, and **GitHub Pages** for the public Shuuty website;
 - professional advisers, public authorities, courts, or law enforcement where required to protect rights or comply with law.
 
 Depending on the service and applicable law, a provider may act as a processor on Shuuty's behalf or as a separate controller under its own privacy notice.
@@ -98,7 +98,7 @@ We use organizational and technical measures appropriate to the risk, including 
 The Application is intended for persons who are at least 16 years old. We do not knowingly allow children below that age to register. If such an account may have been created, please contact us.
 
 ## 12. Cookies and external links
-The mobile Application does not use browser cookies as its primary operating mechanism. The public Shuuty website stores a technical “lang” cookie to remember the selected language. External websites, including the App Store and Google Play, apply their own cookie and privacy policies.
+The mobile Application does not use browser cookies as its primary operating mechanism. The public Shuuty website stores a technical “lang” cookie to remember the selected language and the selected theme (light or dark) in browser storage (localStorage). External websites, including the App Store and Google Play, apply their own cookie and privacy policies.
 
 ## 13. Changes to this Policy
 The current version and last-updated date are published on this page. We may also communicate material changes in the Application or by email and, where required by law, request consent.
