@@ -625,6 +625,27 @@ for (const [language, homePath] of Object.entries({
   ) {
     failures.push(`${homePath} structured data must keep clean store URLs`);
   }
+
+  // Every site language must be declared consistently, and the contact point
+  // must link to the support page in the page's own language.
+  const siteLanguages = ['en', 'pl', 'nb'];
+  const structuredData = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
+  const graph = structuredData ? JSON.parse(structuredData[1])['@graph'] ?? [] : [];
+  const webSite = graph.find((node) => node['@type'] === 'WebSite');
+  const contactPoint = graph.find((node) => node['@type'] === 'Organization')?.contactPoint;
+  const supportRoute = language === 'en' ? '/support/' : `/${language}/support/`;
+  for (const [label, languages] of [
+    ['WebSite.inLanguage', webSite?.inLanguage],
+    ['Organization.contactPoint.availableLanguage', contactPoint?.availableLanguage],
+  ]) {
+    if (siteLanguages.some((siteLanguage) => !languages?.includes(siteLanguage))) {
+      failures.push(`${homePath} ${label} must list ${siteLanguages.join(', ')}`);
+    }
+  }
+  if (contactPoint?.url !== `${siteUrl}${supportRoute}`) {
+    failures.push(`${homePath} contactPoint.url should be ${siteUrl}${supportRoute}`);
+  }
+
   // React also emits a matching <link rel="preload" fetchPriority="high">; only
   // the <img> elements are counted here.
   const highPriorityImages = html.match(/<img[^>]*\bfetchPriority="high"[^>]*>/gi) ?? [];

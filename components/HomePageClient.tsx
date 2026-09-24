@@ -142,7 +142,7 @@ const createSiteSchema = (language: Lang, copy: (typeof t)[Lang]) => {
           contactType: 'customer support',
           email: 'shuuty.app@gmail.com',
           url: supportUrl,
-          availableLanguage: ['en', 'pl'],
+          availableLanguage: ['en', 'pl', 'nb'],
         },
         sameAs: [APP_STORE_DEVELOPER_URL, GOOGLE_PLAY_DEVELOPER_URL],
       },
