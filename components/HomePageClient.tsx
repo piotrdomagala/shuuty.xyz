@@ -15,7 +15,15 @@ import ProductDeviceFrame from '@/components/ProductDeviceFrame';
 import TaskSpatialHandoff from '@/components/TaskSpatialHandoff';
 import { useSiteLanguage } from '@/components/useSiteLanguage';
 import { getProductMediaPlacements } from '@/lib/productMedia';
-import { SITE_URL, SOCIAL_IMAGE } from '@/lib/site';
+import {
+  APP_STORE_DEVELOPER_URL,
+  APP_STORE_URL,
+  createStoreLinks,
+  GOOGLE_PLAY_DEVELOPER_URL,
+  GOOGLE_PLAY_URL,
+  SITE_URL,
+  SOCIAL_IMAGE,
+} from '@/lib/site';
 import s from '@/app/page.module.css';
 import t from '@/app/homeContent.json';
 
@@ -41,10 +49,7 @@ type IconName =
   | 'task'
   | 'work';
 
-const STORE = {
-  android: 'https://play.google.com/store/apps/details?id=com.shuuty.app',
-  ios: 'https://apps.apple.com/app/shuuty/id6670202422',
-};
+type StorePlacement = 'hero' | 'download';
 
 const LANGS: { code: Lang; label: string }[] = [
   { code: 'en', label: 'EN' },
@@ -56,6 +61,7 @@ const localizedPath = (language: Lang, path: string) =>
 
 const createSiteSchema = (language: Lang, copy: (typeof t)[Lang]) => {
   const pageUrl = language === 'pl' ? `${SITE_URL}/pl/` : `${SITE_URL}/`;
+  const supportUrl = `${SITE_URL}${localizedPath(language, '/support/')}`;
   const productMediaPlacements = getProductMediaPlacements(language);
 
   return {
@@ -83,21 +89,35 @@ const createSiteSchema = (language: Lang, copy: (typeof t)[Lang]) => {
           height: 512,
         },
         email: 'shuuty.app@gmail.com',
+        address: { '@type': 'PostalAddress', addressCountry: 'PL' },
+        contactPoint: {
+          '@type': 'ContactPoint',
+          contactType: 'customer support',
+          email: 'shuuty.app@gmail.com',
+          url: supportUrl,
+          availableLanguage: ['en', 'pl'],
+        },
+        sameAs: [APP_STORE_DEVELOPER_URL, GOOGLE_PLAY_DEVELOPER_URL],
       },
       {
         '@type': ['SoftwareApplication', 'MobileApplication'],
         '@id': `${SITE_URL}/#mobile-app`,
         name: 'Shuuty',
+        alternateName: 'Shuuty App',
         applicationCategory: 'LifestyleApplication',
-        operatingSystem: 'iOS, Android',
+        applicationSubCategory: 'Productivity',
+        operatingSystem: 'iOS 15.1 or later, Android',
+        inLanguage: ['en', 'pl', 'nb'],
         url: `${SITE_URL}/`,
         image: SOCIAL_IMAGE.url,
-        downloadUrl: [STORE.ios, STORE.android],
-        sameAs: [STORE.ios, STORE.android],
+        downloadUrl: [APP_STORE_URL, GOOGLE_PLAY_URL],
+        sameAs: [APP_STORE_URL, GOOGLE_PLAY_URL],
         screenshot: productMediaPlacements.hero.map(
           (media) => `${SITE_URL}${media.path}`,
         ),
         description: copy.hero.sub,
+        featureList: copy.schema.features,
+        softwareHelp: { '@type': 'CreativeWork', url: supportUrl },
         publisher: { '@id': `${SITE_URL}/#organization` },
         offers: {
           '@type': 'Offer',
@@ -212,14 +232,22 @@ function StoreButton({
   label,
   prefix,
   href,
+  clickEvent,
 }: Readonly<{
   platform: 'apple' | 'google';
   label: string;
   prefix: string;
   href: string;
+  clickEvent: string;
 }>) {
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer" className={s.storeBtn}>
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={s.storeBtn}
+      data-goatcounter-click={clickEvent}
+    >
       {platform === 'apple' ? <AppleIcon /> : <PlayIcon />}
       <span className={s.storeBtnText}>
         <span className={s.storeBtnSmall}>{prefix}</span>
@@ -229,11 +257,34 @@ function StoreButton({
   );
 }
 
-function StoreButtons({ copy }: Readonly<{ copy: (typeof t)['en']['store'] | (typeof t)['pl']['store'] }>) {
+function StoreButtons({
+  copy,
+  language,
+  placement,
+}: Readonly<{
+  copy: (typeof t)['en']['store'] | (typeof t)['pl']['store'];
+  language: Lang;
+  placement: StorePlacement;
+}>) {
+  const campaign = `web-home-${placement}-${language}`;
+  const links = createStoreLinks(campaign);
+
   return (
     <div className={s.storeRow}>
-      <StoreButton platform="apple" label={copy.apple} prefix={copy.applePrefix} href={STORE.ios} />
-      <StoreButton platform="google" label={copy.google} prefix={copy.googlePrefix} href={STORE.android} />
+      <StoreButton
+        platform="apple"
+        label={copy.apple}
+        prefix={copy.applePrefix}
+        href={links.ios}
+        clickEvent={`store-ios-${placement}-${language}`}
+      />
+      <StoreButton
+        platform="google"
+        label={copy.google}
+        prefix={copy.googlePrefix}
+        href={links.android}
+        clickEvent={`store-android-${placement}-${language}`}
+      />
     </div>
   );
 }
@@ -272,7 +323,10 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
   const heroPhones = productMediaPlacements.hero.map((media, index) => ({
     ...media,
     alt: mediaAlt(media),
-    priority: index === 0 || index === 2,
+    // Index 0 is the dark-theme front screen and the LCP image; index 2 comes to
+    // the front for light-theme visitors, so both load eagerly.
+    loading: index === 1 ? ('lazy' as const) : ('eager' as const),
+    fetchPriority: index === 0 ? ('high' as const) : undefined,
   }));
   const taskFlowScreens = [
     productMediaPlacements.voiceInput,
@@ -437,7 +491,7 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
         <nav className={s.nav} aria-label={c.a11y.mainNav}>
           <a href="#top" className={s.brand} aria-label="Shuuty">
             <span className={s.brandMark} aria-hidden="true">
-              <Image src="/images/brand/shuuty-app-icon.png" alt="" width={40} height={40} priority />
+              <Image src="/images/brand/shuuty-app-icon.png" alt="" width={40} height={40} loading="eager" />
             </span>
             <span className={s.brandName}>Shuuty</span>
           </a>
@@ -490,7 +544,7 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
             <p className={s.relayLine}>{c.hero.relay}</p>
             <p className={s.heroLead}>{c.hero.sub}</p>
             <div className={s.heroActions}>
-              <StoreButtons copy={c.store} />
+              <StoreButtons copy={c.store} language={lang} placement="hero" />
               <a href="#overview" className={s.textCta}>
                 {c.hero.secondaryCta}<Icon name="arrow" />
               </a>
@@ -547,7 +601,8 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
                   <ProductDeviceFrame
                     media={phone}
                     alt={phone.alt}
-                    priority={phone.priority}
+                    loading={phone.loading}
+                    fetchPriority={phone.fetchPriority}
                     sizes={isActive ? '(max-width: 720px) 55vw, 290px' : '(max-width: 720px) 34vw, 190px'}
                   />
                 </button>
@@ -793,7 +848,7 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
             <span className={s.sectionLabel}>{c.cta.eyebrow}</span>
             <h2>{c.cta.heading}</h2>
             <p>{c.cta.sub}</p>
-            <StoreButtons copy={c.store} />
+            <StoreButtons copy={c.store} language={lang} placement="download" />
           </div>
         </section>
       </main>

@@ -126,7 +126,9 @@ const pages = {
     route: '/support/',
     required: ['Contact Support', supportEmail, 'Copy email address', '/account-deletion/'],
     requiredPatterns: [
-      /<button[^>]+aria-label="Copy email address: shuuty\.app@gmail\.com"/,
+      // The visible text is the accessible name, so it cannot drift from what
+      // speech-input users see (WCAG 2.5.3 Label in Name).
+      /<button[^>]*><span>shuuty\.app@gmail\.com<\/span><span[^>]*>Copy email address<\/span><\/button>/,
       /aria-live="polite"/,
     ],
     language: 'en',
@@ -137,7 +139,7 @@ const pages = {
     route: '/pl/support/',
     required: ['Pomoc i kontakt', supportEmail, 'Kopiuj adres e-mail', '/pl/account-deletion/'],
     requiredPatterns: [
-      /<button[^>]+aria-label="Kopiuj adres e-mail: shuuty\.app@gmail\.com"/,
+      /<button[^>]*><span>shuuty\.app@gmail\.com<\/span><span[^>]*>Kopiuj adres e-mail<\/span><\/button>/,
       /aria-live="polite"/,
     ],
     language: 'pl',
@@ -523,6 +525,91 @@ for (const page of handOffPages) {
   }
 }
 
+// Measurement: tagged store buttons, click events, Smart App Banner and opt-in
+// analytics. Public build settings mirror lib/site.ts.
+const goatCounterCode = /^[a-z0-9-]{2,50}$/.test(process.env.NEXT_PUBLIC_GOATCOUNTER_CODE?.trim() ?? '')
+  ? process.env.NEXT_PUBLIC_GOATCOUNTER_CODE.trim()
+  : null;
+const appStoreProviderToken = /^\d{4,12}$/.test(
+  process.env.NEXT_PUBLIC_APP_STORE_PROVIDER_TOKEN?.trim() ?? '',
+)
+  ? process.env.NEXT_PUBLIC_APP_STORE_PROVIDER_TOKEN.trim()
+  : null;
+
+for (const [language, homePath] of Object.entries({ en: 'out/index.html', pl: 'out/pl/index.html' })) {
+  const html = await readFile(new URL(homePath, root), 'utf8');
+
+  if (!html.includes('<meta name="apple-itunes-app" content="app-id=6670202422"/>')) {
+    failures.push(`${homePath} is missing the iOS Smart App Banner`);
+  }
+  if (
+    !html.includes(
+      '"downloadUrl":["https://apps.apple.com/app/shuuty/id6670202422","https://play.google.com/store/apps/details?id=com.shuuty.app"]',
+    )
+  ) {
+    failures.push(`${homePath} structured data must keep clean store URLs`);
+  }
+  // React also emits a matching <link rel="preload" fetchPriority="high">; only
+  // the <img> elements are counted here.
+  const highPriorityImages = html.match(/<img[^>]*\bfetchPriority="high"[^>]*>/gi) ?? [];
+  if (
+    highPriorityImages.length !== 1
+    || !highPriorityImages[0].includes('/01-voice-input.webp"')
+  ) {
+    failures.push(`${homePath} should give exactly one image, the LCP hero, high fetch priority`);
+  }
+
+  for (const placement of ['hero', 'download']) {
+    const campaign = `web-home-${placement}-${language}`;
+    const playReferrer = `referrer=utm_source%3Dshuuty.com%26utm_medium%3Dwebsite%26utm_campaign%3D${campaign}`;
+    if (!html.includes(playReferrer)) {
+      failures.push(`${homePath} is missing the Google Play referrer for ${campaign}`);
+    }
+    for (const platform of ['ios', 'android']) {
+      const clickEvent = `data-goatcounter-click="store-${platform}-${placement}-${language}"`;
+      if (!html.includes(clickEvent)) {
+        failures.push(`${homePath} is missing ${clickEvent}`);
+      }
+    }
+    const appStoreCampaign = `pt=${appStoreProviderToken}&amp;ct=${campaign}&amp;mt=8`;
+    if (appStoreProviderToken && !html.includes(appStoreCampaign)) {
+      failures.push(`${homePath} is missing the App Store campaign link for ${campaign}`);
+    }
+  }
+  if (!appStoreProviderToken && /apps\.apple\.com[^"]*[?&](?:amp;)?pt=/.test(html)) {
+    failures.push(`${homePath} has an App Store provider token without a configured value`);
+  }
+}
+
+const listHtmlFiles = async (directory) => {
+  const entries = await readdir(directory, { withFileTypes: true });
+  const files = await Promise.all(
+    entries.map((entry) => {
+      const path = join(directory, entry.name);
+      if (entry.isDirectory()) return entry.name === '_next' ? [] : listHtmlFiles(path);
+      return entry.name.endsWith('.html') ? [path] : [];
+    }),
+  );
+  return files.flat();
+};
+
+for (const htmlPath of await listHtmlFiles(outputPath)) {
+  const html = await readFile(htmlPath, 'utf8');
+  const hasAnalytics = html.includes('gc.zgo.at/count.js');
+  const displayPath = relative(outputPath, htmlPath).split(sep).join('/');
+  if (!goatCounterCode && hasAnalytics) {
+    failures.push(`${displayPath} loads analytics although NEXT_PUBLIC_GOATCOUNTER_CODE is not set`);
+  }
+  if (
+    goatCounterCode
+    && displayPath.endsWith('index.html')
+    && !displayPath.startsWith('google-play/')
+    && !html.includes(`data-goatcounter="https://${goatCounterCode}.goatcounter.com/count"`)
+  ) {
+    failures.push(`${displayPath} is missing the configured GoatCounter script`);
+  }
+}
+
 const robots = await readFile(new URL('out/robots.txt', root), 'utf8');
 if (!robots.includes(`Sitemap: ${siteUrl}/sitemap.xml`)) {
   failures.push('robots.txt is missing the canonical sitemap URL');
@@ -537,7 +624,8 @@ for (const expectedDirective of [
   'User-agent: PerplexityBot',
   'User-agent: GPTBot\nDisallow: /',
   'User-agent: ClaudeBot\nDisallow: /',
-  'User-agent: Google-Extended\nDisallow: /',
+  'User-agent: CCBot\nDisallow: /',
+  'User-agent: Google-Extended\nAllow: /',
 ]) {
   if (!robots.includes(expectedDirective)) {
     failures.push(`robots.txt is missing: ${expectedDirective}`);

@@ -1,6 +1,12 @@
 import type { Metadata, Viewport } from 'next';
 import { Outfit, Plus_Jakarta_Sans } from 'next/font/google';
-import { createLanguageAlternates, SITE_URL, SOCIAL_IMAGE } from '@/lib/site';
+import {
+  APP_STORE_ID,
+  createLanguageAlternates,
+  GOATCOUNTER_CODE,
+  SITE_URL,
+  SOCIAL_IMAGE,
+} from '@/lib/site';
 import './globals.css';
 
 const outfit = Outfit({
@@ -46,6 +52,12 @@ const themeScript = `
   })();
 `;
 
+const goatCounterSettingsScript = `
+  window.goatcounter = {
+    no_onload: /^\\/(?:verify|auth)(?:\\/|$)/.test(window.location.pathname),
+  };
+`;
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
@@ -53,9 +65,9 @@ export const metadata: Metadata = {
     template: '%s | Shuuty',
   },
   description:
-    'Turn ideas into action with Shuuty: create and delegate complete tasks by voice, shape groups for work, communities, services and sales, organise meetings, bookings and nearby discovery.',
+    'Create tasks by voice and hand them to friends or groups. Shuuty keeps reminders, chat, calendars and meetings together - on iOS and Android.',
   applicationName: 'Shuuty',
-  category: 'Lifestyle',
+  category: 'Productivity',
   keywords: [
     'Shuuty',
     'voice tasks',
@@ -117,6 +129,9 @@ export const metadata: Metadata = {
     apple: '/apple-touch-icon.png',
   },
   manifest: '/site.webmanifest',
+  itunes: {
+    appId: APP_STORE_ID,
+  },
   appleWebApp: {
     capable: true,
     title: 'Shuuty',
@@ -150,6 +165,17 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        {GOATCOUNTER_CODE ? (
+          <>
+            {/* Hand-off routes carry one-time tokens in the URL; never count them. */}
+            <script dangerouslySetInnerHTML={{ __html: goatCounterSettingsScript }} />
+            <script
+              data-goatcounter={`https://${GOATCOUNTER_CODE}.goatcounter.com/count`}
+              async
+              src="https://gc.zgo.at/count.js"
+            />
+          </>
+        ) : null}
       </head>
       <body>{children}</body>
     </html>

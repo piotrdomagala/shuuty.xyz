@@ -136,7 +136,6 @@ export default function SupportPageClient({ initialLanguage = 'en' }: SupportPag
           type="button"
           className={styles.supportEmailButton}
           onClick={copySupportAddress}
-          aria-label={`${translations.copyAddress}: ${SUPPORT_EMAIL}`}
         >
           <span>{SUPPORT_EMAIL}</span>
           <span className={styles.copyAction}>{translations.copyAddress}</span>

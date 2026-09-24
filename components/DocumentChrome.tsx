@@ -118,7 +118,7 @@ export function DocumentHeader({
             width={40}
             height={40}
             className={styles.logo}
-            priority
+            loading="eager"
           />
           <p className={styles.headerTitle}>{title}</p>
         </div>
@@ -180,7 +180,7 @@ export function DocumentFooter({
     <footer className={styles.footer}>
       <div className={styles.footerContent}>
         <div className={styles.footerBrand}>
-          <h3>Shuuty</h3>
+          <p className={styles.footerBrandName}>Shuuty</p>
           <p>{tagline}</p>
         </div>
         <nav className={styles.footerLinks}>

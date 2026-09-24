@@ -19,6 +19,60 @@ function resolveSiteUrl(value: string | undefined): string {
 
 export const SITE_URL = resolveSiteUrl(process.env.NEXT_PUBLIC_SITE_URL);
 
+export const APP_STORE_ID = '6670202422';
+export const APP_STORE_URL = `https://apps.apple.com/app/shuuty/id${APP_STORE_ID}`;
+export const GOOGLE_PLAY_URL = 'https://play.google.com/store/apps/details?id=com.shuuty.app';
+export const APP_STORE_DEVELOPER_URL = 'https://apps.apple.com/us/developer/shuuty/id1765294634';
+export const GOOGLE_PLAY_DEVELOPER_URL = 'https://play.google.com/store/apps/developer?id=Shuuty';
+
+// Public, non-secret build settings. Each one stays off until the owner sets the
+// matching GitHub Actions variable, so local builds never report analytics.
+function readPublicSetting(value: string | undefined, pattern: RegExp): string | null {
+  const trimmed = value?.trim();
+  return trimmed && pattern.test(trimmed) ? trimmed : null;
+}
+
+export const GOATCOUNTER_CODE = readPublicSetting(
+  process.env.NEXT_PUBLIC_GOATCOUNTER_CODE,
+  /^[a-z0-9-]{2,50}$/,
+);
+
+const APP_STORE_PROVIDER_TOKEN = readPublicSetting(
+  process.env.NEXT_PUBLIC_APP_STORE_PROVIDER_TOKEN,
+  /^\d{4,12}$/,
+);
+
+const CAMPAIGN_PATTERN = /^[a-z0-9-]{1,30}$/;
+
+// Tagged store links for buttons. Google Play reads `referrer` in its UTM
+// acquisition report; App Store campaign links need the provider token `pt`.
+// Structured data and llms.txt keep the clean URLs above.
+export function createStoreLinks(campaign: string) {
+  if (!CAMPAIGN_PATTERN.test(campaign)) {
+    throw new Error(`Invalid store campaign name: ${campaign}`);
+  }
+
+  const android = new URL(GOOGLE_PLAY_URL);
+  android.searchParams.set(
+    'referrer',
+    new URLSearchParams({
+      utm_source: 'shuuty.com',
+      utm_medium: 'website',
+      utm_campaign: campaign,
+    }).toString(),
+  );
+
+  if (!APP_STORE_PROVIDER_TOKEN) {
+    return { android: android.toString(), ios: APP_STORE_URL };
+  }
+
+  const ios = new URL(APP_STORE_URL);
+  ios.searchParams.set('pt', APP_STORE_PROVIDER_TOKEN);
+  ios.searchParams.set('ct', campaign);
+  ios.searchParams.set('mt', '8');
+  return { android: android.toString(), ios: ios.toString() };
+}
+
 export const SOCIAL_IMAGE = {
   url: `${SITE_URL}/opengraph-image.png`,
   width: 1200,

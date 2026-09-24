@@ -427,7 +427,7 @@
   text-align: center;
 }
 
-.footerBrand h3 {
+.footerBrand .footerBrandName {
   font-family: var(--font-display);
   font-size: 1rem;
   font-weight: 700;

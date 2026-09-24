@@ -6,7 +6,8 @@ type ProductDeviceFrameProps = Readonly<{
   media: ProductMediaPlacement;
   alt: string;
   sizes: string;
-  priority?: boolean;
+  loading?: 'eager' | 'lazy';
+  fetchPriority?: 'high' | 'low' | 'auto';
   className?: string;
 }>;
 
@@ -20,7 +21,8 @@ export default function ProductDeviceFrame({
   media,
   alt,
   sizes,
-  priority = false,
+  loading = 'lazy',
+  fetchPriority,
   className = '',
 }: ProductDeviceFrameProps) {
   return (
@@ -34,7 +36,8 @@ export default function ProductDeviceFrame({
           alt={alt}
           width={media.width}
           height={media.height}
-          priority={priority}
+          loading={loading}
+          fetchPriority={fetchPriority}
           draggable={false}
           sizes={sizes}
         />

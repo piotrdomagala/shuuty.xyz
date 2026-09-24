@@ -47,6 +47,11 @@ jobs:
 
       - name: Build Next.js
         run: npm run build
+        env:
+          # Public, optional repository variables (Settings > Secrets and variables >
+          # Actions > Variables). Unset means no analytics and untagged App Store links.
+          NEXT_PUBLIC_GOATCOUNTER_CODE: ${{ vars.GOATCOUNTER_CODE }}
+          NEXT_PUBLIC_APP_STORE_PROVIDER_TOKEN: ${{ vars.APP_STORE_PROVIDER_TOKEN }}
 
       - name: Upload artifact
         if: github.event_name != 'pull_request'

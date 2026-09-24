@@ -2,7 +2,7 @@ import HomePageClient from '@/components/HomePageClient';
 import { createPublicPageMetadata } from '@/lib/site';
 
 const description =
-  'Zamieniaj pomysły w działanie z Shuuty: twórz i deleguj kompletne zadania głosem, buduj grupy do pracy, społeczności, usług i sprzedaży, organizuj spotkania, rezerwacje i odkrywaj to, czego potrzebujesz w pobliżu.';
+  'Twórz zadania głosem i przekazuj je znajomym lub grupom. Shuuty trzyma razem przypomnienia, czat, kalendarz i spotkania - na iOS i Androidzie.';
 
 export const metadata = createPublicPageMetadata({
   title: 'Zadania głosowe, grupy i spotkania',
