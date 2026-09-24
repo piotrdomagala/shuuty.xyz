@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
-import type { DocumentLanguage } from '@/components/documentLocale';
+import { localizedSitePath, type SiteLanguage } from '@/components/documentLocale';
 
 const LANGUAGE_SCROLL_KEY = 'shuuty-language-scroll';
 
@@ -37,20 +37,19 @@ const getViewportAnchor = () => {
   return { anchorId: anchor.id, anchorTop: getLayoutTop(anchor) - window.scrollY };
 };
 
-const persistLanguage = (language: DocumentLanguage) => {
+const persistLanguage = (language: SiteLanguage) => {
   Cookies.set('lang', language, { expires: 365, sameSite: 'lax' });
   document.documentElement.lang = language;
 };
 
-const getLocalizedPath = (pathname: string, language: DocumentLanguage) => {
-  const englishPath = pathname.replace(/^\/pl(?=\/|$)/, '') || '/';
+const getLocalizedPath = (pathname: string, language: SiteLanguage) => {
+  const englishPath = pathname.replace(/^\/(?:pl|nb)(?=\/|$)/, '') || '/';
 
-  if (language === 'en') return englishPath;
-  return englishPath === '/' ? '/pl/' : `/pl${englishPath}`;
+  return localizedSitePath(language, englishPath);
 };
 
-export function useSiteLanguage(initialLanguage: DocumentLanguage = 'en') {
-  const [language, setLanguage] = useState<DocumentLanguage>(initialLanguage);
+export function useSiteLanguage(initialLanguage: SiteLanguage = 'en') {
+  const [language, setLanguage] = useState<SiteLanguage>(initialLanguage);
 
   useEffect(() => {
     persistLanguage(initialLanguage);
@@ -97,7 +96,7 @@ export function useSiteLanguage(initialLanguage: DocumentLanguage = 'en') {
     };
   }, [initialLanguage]);
 
-  const changeLanguage = useCallback((nextLanguage: DocumentLanguage) => {
+  const changeLanguage = useCallback((nextLanguage: SiteLanguage) => {
     setLanguage(nextLanguage);
     persistLanguage(nextLanguage);
 

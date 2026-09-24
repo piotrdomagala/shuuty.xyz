@@ -11,6 +11,7 @@ export const metadata = createPublicPageMetadata({
   language: 'pl',
   englishPath: '/',
   polishPath: '/pl/',
+  norwegianPath: '/nb/',
 });
 
 export default function PolishHomePage() {

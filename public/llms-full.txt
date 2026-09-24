@@ -126,6 +126,8 @@ Publiczna strona opisuje następujący proces:
 - [Polska strona produktu](https://shuuty.com/pl/)
 - [English support](https://shuuty.com/support/)
 - [Pomoc po polsku](https://shuuty.com/pl/support/)
+- [Norsk produktside](https://shuuty.com/nb/)
+- [Hjelp på norsk](https://shuuty.com/nb/support/)
 - [Privacy Policy](https://shuuty.com/privacy/)
 - [Polityka prywatności](https://shuuty.com/pl/privacy/)
 - [Terms & Conditions](https://shuuty.com/terms/)

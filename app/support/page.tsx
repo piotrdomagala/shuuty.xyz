@@ -10,6 +10,7 @@ export const metadata = createPublicPageMetadata({
   path: '/support/',
   englishPath: '/support/',
   polishPath: '/pl/support/',
+  norwegianPath: '/nb/support/',
 });
 
 export default function SupportPage() {

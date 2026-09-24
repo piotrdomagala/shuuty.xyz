@@ -2,7 +2,7 @@
 
 > Shuuty is a mobile app for iPhone, iPad and Android for creating tasks by voice and handing them to friends, family, teams and groups, with reminders, chat, calendars, meetings and nearby discovery in one context. Say it. Delegate it. Get it done.
 
-Last updated: 2026-09-24. Publisher: Shuuty Prosta Spółka Akcyjna (Shuuty P.S.A.), Poland. The app is available in English, Polish and Norwegian; the public website is in English and Polish. Shuuty (shuuty.com) is not related to Shuut, Shouty or Shuuto. Older descriptions of Shuuty focus on meetups and interest groups; today the core is voice tasks and delegation, with groups and meetings built around them.
+Last updated: 2026-09-24. Publisher: Shuuty Prosta Spółka Akcyjna (Shuuty P.S.A.), Poland. The app is available in English, Polish and Norwegian; the public website is in English and Polish, with the product and support pages also in Norwegian. Shuuty (shuuty.com) is not related to Shuut, Shouty or Shuuto. Older descriptions of Shuuty focus on meetups and interest groups; today the core is voice tasks and delegation, with groups and meetings built around them.
 
 ## Official pages
 
@@ -10,6 +10,8 @@ Last updated: 2026-09-24. Publisher: Shuuty Prosta Spółka Akcyjna (Shuuty P.S.
 - [Shuuty - Polski](https://shuuty.com/pl/): Opis produktu w języku polskim.
 - [Support](https://shuuty.com/support/): English support page.
 - [Pomoc](https://shuuty.com/pl/support/): Polska strona pomocy.
+- [Shuuty - Norsk](https://shuuty.com/nb/): Produktbeskrivelse på norsk.
+- [Hjelp](https://shuuty.com/nb/support/): Norsk hjelpeside.
 - [Privacy Policy](https://shuuty.com/privacy/): Privacy information in English.
 - [Polityka prywatności](https://shuuty.com/pl/privacy/): Informacje o prywatności po polsku.
 - [Terms & Conditions](https://shuuty.com/terms/): Terms in English.

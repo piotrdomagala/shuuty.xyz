@@ -10,7 +10,7 @@ import {
 } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import type { DocumentLanguage } from '@/components/documentLocale';
+import { localizedSitePath, type SiteLanguage } from '@/components/documentLocale';
 import ProductDeviceFrame from '@/components/ProductDeviceFrame';
 import TaskSpatialHandoff from '@/components/TaskSpatialHandoff';
 import { useSiteLanguage } from '@/components/useSiteLanguage';
@@ -27,7 +27,7 @@ import {
 import s from '@/app/page.module.css';
 import t from '@/app/homeContent.json';
 
-type Lang = DocumentLanguage;
+type Lang = SiteLanguage;
 type Theme = 'light' | 'dark';
 type IconName =
   | 'arrow'
@@ -54,15 +54,62 @@ type StorePlacement = 'hero' | 'download';
 const LANGS: { code: Lang; label: string }[] = [
   { code: 'en', label: 'EN' },
   { code: 'pl', label: 'PL' },
+  { code: 'nb', label: 'NB' },
 ];
 
-const localizedPath = (language: Lang, path: string) =>
-  language === 'pl' ? `/pl${path}` : path;
+const localizedPath = localizedSitePath;
+
+// Canonical captures exist in English and Polish only; the Norwegian page shows
+// the English set until Norwegian captures are approved.
+const mediaLanguage = (language: Lang) => (language === 'pl' ? 'pl' : 'en');
+
+const pageNames: Record<Lang, string> = {
+  en: 'Shuuty - From idea to action',
+  pl: 'Shuuty - od pomysłu do działania',
+  nb: 'Shuuty - fra idé til handling',
+};
+
+const carouselLabels: Record<
+  Lang,
+  Readonly<{
+    roleDescription: string;
+    region: string;
+    active: string;
+    bringToFront: string;
+    choose: string;
+    preview: string;
+  }>
+> = {
+  en: {
+    roleDescription: 'carousel',
+    region: 'Shuuty app previews',
+    active: 'Active view',
+    bringToFront: 'Bring to front',
+    choose: 'Choose a preview',
+    preview: 'Preview',
+  },
+  pl: {
+    roleDescription: 'karuzela',
+    region: 'Podglądy aplikacji Shuuty',
+    active: 'Widok aktywny',
+    bringToFront: 'Pokaż na pierwszym planie',
+    choose: 'Wybierz podgląd',
+    preview: 'Podgląd',
+  },
+  nb: {
+    roleDescription: 'karusell',
+    region: 'Forhåndsvisninger av Shuuty-appen',
+    active: 'Aktiv visning',
+    bringToFront: 'Flytt fremst',
+    choose: 'Velg forhåndsvisning',
+    preview: 'Forhåndsvisning',
+  },
+};
 
 const createSiteSchema = (language: Lang, copy: (typeof t)[Lang]) => {
-  const pageUrl = language === 'pl' ? `${SITE_URL}/pl/` : `${SITE_URL}/`;
+  const pageUrl = `${SITE_URL}${localizedPath(language, '/')}`;
   const supportUrl = `${SITE_URL}${localizedPath(language, '/support/')}`;
-  const productMediaPlacements = getProductMediaPlacements(language);
+  const productMediaPlacements = getProductMediaPlacements(mediaLanguage(language));
 
   return {
     '@context': 'https://schema.org',
@@ -73,7 +120,7 @@ const createSiteSchema = (language: Lang, copy: (typeof t)[Lang]) => {
         url: `${SITE_URL}/`,
         name: 'Shuuty',
         alternateName: 'Shuuty App',
-        inLanguage: ['en', 'pl'],
+        inLanguage: ['en', 'pl', 'nb'],
         publisher: { '@id': `${SITE_URL}/#organization` },
       },
       {
@@ -129,10 +176,7 @@ const createSiteSchema = (language: Lang, copy: (typeof t)[Lang]) => {
         '@type': 'WebPage',
         '@id': `${pageUrl}#webpage`,
         url: pageUrl,
-        name:
-          language === 'pl'
-            ? 'Shuuty - od pomysłu do działania'
-            : 'Shuuty - From idea to action',
+        name: pageNames[language],
         description: copy.hero.sub,
         inLanguage: language,
         isPartOf: { '@id': `${SITE_URL}/#website` },
@@ -262,7 +306,7 @@ function StoreButtons({
   language,
   placement,
 }: Readonly<{
-  copy: (typeof t)['en']['store'] | (typeof t)['pl']['store'];
+  copy: (typeof t)[Lang]['store'];
   language: Lang;
   placement: StorePlacement;
 }>) {
@@ -301,7 +345,8 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
   const mobileNavScrollDelta = useRef(0);
   const mobileNavHideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const c = t[lang];
-  const productMediaPlacements = getProductMediaPlacements(lang);
+  const productMediaPlacements = getProductMediaPlacements(mediaLanguage(lang));
+  const carousel = carouselLabels[lang];
 
   const clearMobileNavTimer = useCallback(() => {
     if (!mobileNavHideTimer.current) return;
@@ -557,8 +602,8 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
           <div
             className={s.heroVisual}
             role="region"
-            aria-roledescription={lang === 'pl' ? 'karuzela' : 'carousel'}
-            aria-label={lang === 'pl' ? 'Podglądy aplikacji Shuuty' : 'Shuuty app previews'}
+            aria-roledescription={carousel.roleDescription}
+            aria-label={carousel.region}
             onKeyDown={handleCarouselKeyDown}
             onPointerDown={handleCarouselPointerDown}
             onPointerUp={handleCarouselPointerUp}
@@ -593,8 +638,8 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
                   }}
                   aria-label={`${phone.alt}. ${
                     isActive
-                      ? (lang === 'pl' ? 'Widok aktywny' : 'Active view')
-                      : (lang === 'pl' ? 'Pokaż na pierwszym planie' : 'Bring to front')
+                      ? carousel.active
+                      : carousel.bringToFront
                   }`}
                   aria-pressed={isActive}
                 >
@@ -611,7 +656,7 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
             <div
               className={s.carouselDots}
               role="group"
-              aria-label={lang === 'pl' ? 'Wybierz podgląd' : 'Choose a preview'}
+              aria-label={carousel.choose}
             >
               {heroPhones.map((phone, index) => (
                 <button
@@ -625,7 +670,7 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
                     }
                     selectHeroPhone(index);
                   }}
-                  aria-label={`${lang === 'pl' ? 'Podgląd' : 'Preview'} ${index + 1}: ${phone.alt}`}
+                  aria-label={`${carousel.preview} ${index + 1}: ${phone.alt}`}
                   aria-pressed={index === activeHeroPhone}
                 />
               ))}

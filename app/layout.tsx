@@ -27,7 +27,9 @@ const themeScript = `
   (function () {
     var theme = 'dark';
     var path = window.location.pathname;
-    document.documentElement.lang = path === '/pl' || path.indexOf('/pl/') === 0 ? 'pl' : 'en';
+    document.documentElement.lang = path === '/pl' || path.indexOf('/pl/') === 0
+      ? 'pl'
+      : path === '/nb' || path.indexOf('/nb/') === 0 ? 'nb' : 'en';
     try {
       var stored = window.localStorage.getItem('shuuty-theme');
       if (stored === 'light' || stored === 'dark') {
@@ -89,7 +91,7 @@ export const metadata: Metadata = {
   publisher: 'Shuuty',
   alternates: {
     canonical: '/',
-    languages: createLanguageAlternates('/', '/pl/'),
+    languages: createLanguageAlternates('/', '/pl/', '/nb/'),
   },
   robots: {
     index: true,

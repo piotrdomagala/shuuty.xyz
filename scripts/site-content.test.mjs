@@ -24,6 +24,19 @@ test('English and Polish landing content have the same structure', async () => {
   assert.deepEqual(contentShape(content.en), contentShape(content.pl));
 });
 
+test('Norwegian landing content has the same structure and story', async () => {
+  const content = JSON.parse(
+    await readFile(new URL('app/homeContent.json', root), 'utf8'),
+  );
+
+  assert.deepEqual(contentShape(content.en), contentShape(content.nb));
+  assert.equal(content.nb.hero.relay, 'Si det. Deleger det. Få det gjort.');
+  assert.equal(content.nb.tasks.mechanism.length, 3);
+  assert.equal(content.nb.groups.modes.length, 4);
+  assert.equal(content.nb.groups.modules.length, 10);
+  assert.equal(content.nb.faq.items.length, 4);
+});
+
 test('the Golden Relay and flexible group story stay explicit in both languages', async () => {
   const content = JSON.parse(
     await readFile(new URL('app/homeContent.json', root), 'utf8'),
@@ -97,6 +110,10 @@ test('new marketing prose follows the short-hyphen convention', async () => {
     'lib/site.ts',
     'app/layout.tsx',
     'app/pl/page.tsx',
+    'app/nb/page.tsx',
+    'app/nb/support/page.tsx',
+    'components/documentLocale.ts',
+    'components/SupportPageClient.tsx',
     'public/llms.txt',
     'public/llms-full.txt',
   ];

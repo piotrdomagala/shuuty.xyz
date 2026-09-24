@@ -84,20 +84,25 @@ interface PageMetadataOptions {
   title: string;
   description: string;
   path: `/${string}`;
-  language?: 'en' | 'pl';
+  language?: 'en' | 'pl' | 'nb';
   englishPath?: `/${string}`;
   polishPath?: `/${string}`;
+  norwegianPath?: `/${string}`;
 }
+
+const OPEN_GRAPH_LOCALES = { en: 'en_US', pl: 'pl_PL', nb: 'nb_NO' } as const;
 
 export function createLanguageAlternates(
   englishPath: `/${string}`,
   polishPath: `/${string}`,
+  norwegianPath?: `/${string}`,
 ) {
   return {
     en: englishPath,
     pl: polishPath,
+    ...(norwegianPath ? { nb: norwegianPath } : {}),
     'x-default': englishPath,
-  } as const;
+  };
 }
 
 export function createPublicPageMetadata({
@@ -107,11 +112,18 @@ export function createPublicPageMetadata({
   language = 'en',
   englishPath = path,
   polishPath,
+  norwegianPath,
 }: PageMetadataOptions): Metadata {
   const socialTitle = `${title} | Shuuty`;
   const languageAlternates = polishPath
-    ? createLanguageAlternates(englishPath, polishPath)
+    ? createLanguageAlternates(englishPath, polishPath, norwegianPath)
     : undefined;
+  const siteLocales: Array<keyof typeof OPEN_GRAPH_LOCALES> = norwegianPath
+    ? ['en', 'pl', 'nb']
+    : ['en', 'pl'];
+  const availableLocales = siteLocales
+    .filter((locale) => locale !== language)
+    .map((locale) => OPEN_GRAPH_LOCALES[locale]);
 
   return {
     title,
@@ -125,8 +137,8 @@ export function createPublicPageMetadata({
       description,
       url: path,
       type: 'website',
-      locale: language === 'pl' ? 'pl_PL' : 'en_US',
-      alternateLocale: [language === 'pl' ? 'en_US' : 'pl_PL'],
+      locale: OPEN_GRAPH_LOCALES[language],
+      alternateLocale: availableLocales,
       siteName: 'Shuuty',
       images: [SOCIAL_IMAGE],
     },
