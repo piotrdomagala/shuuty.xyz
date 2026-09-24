@@ -3,10 +3,26 @@ import { SITE_URL } from '@/lib/site';
 
 export const dynamic = 'force-static';
 
+type RouteGroup = Readonly<{
+  english: string;
+  polish: string;
+  norwegian?: string;
+  changeFrequency: 'weekly' | 'monthly';
+  priority: number;
+}>;
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const routePairs = [
-    { english: '/', polish: '/pl/', changeFrequency: 'weekly', priority: 1 },
-    { english: '/support/', polish: '/pl/support/', changeFrequency: 'monthly', priority: 0.6 },
+  // Norwegian exists for the landing and support pages; legal documents stay
+  // English and Polish.
+  const routeGroups: readonly RouteGroup[] = [
+    { english: '/', polish: '/pl/', norwegian: '/nb/', changeFrequency: 'weekly', priority: 1 },
+    {
+      english: '/support/',
+      polish: '/pl/support/',
+      norwegian: '/nb/support/',
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    },
     {
       english: '/account-deletion/',
       polish: '/pl/account-deletion/',
@@ -21,28 +37,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     { english: '/privacy/', polish: '/pl/privacy/', changeFrequency: 'monthly', priority: 0.4 },
     { english: '/terms/', polish: '/pl/terms/', changeFrequency: 'monthly', priority: 0.4 },
-  ] as const;
+  ];
 
-  return routePairs.flatMap(({ english, polish, changeFrequency, priority }) => {
+  return routeGroups.flatMap(({ english, polish, norwegian, changeFrequency, priority }) => {
     const languages = {
       en: `${SITE_URL}${english}`,
       pl: `${SITE_URL}${polish}`,
+      ...(norwegian ? { nb: `${SITE_URL}${norwegian}` } : {}),
       'x-default': `${SITE_URL}${english}`,
     };
 
-    return [
-      {
-        url: `${SITE_URL}${english}`,
-        changeFrequency,
-        priority,
-        alternates: { languages },
-      },
-      {
-        url: `${SITE_URL}${polish}`,
-        changeFrequency,
-        priority,
-        alternates: { languages },
-      },
-    ];
+    return [english, polish, ...(norwegian ? [norwegian] : [])].map((route) => ({
+      url: `${SITE_URL}${route}`,
+      changeFrequency,
+      priority,
+      alternates: { languages },
+    }));
   });
 }

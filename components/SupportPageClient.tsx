@@ -3,10 +3,13 @@
 import { useCallback, useState } from 'react';
 import Link from 'next/link';
 import { DocumentShell } from '@/components/DocumentChrome';
-import { documentTranslations } from '@/components/documentLocale';
+import {
+  documentTranslations,
+  localizedSitePath,
+  type SiteLanguage,
+} from '@/components/documentLocale';
 import { useSiteLanguage } from '@/components/useSiteLanguage';
 import styles from '@/app/documents.module.css';
-import type { DocumentLanguage } from '@/components/documentLocale';
 
 const SUPPORT_EMAIL = 'shuuty.app@gmail.com';
 
@@ -41,7 +44,24 @@ const supportTranslations = {
     accountDeletionHint: 'Chcesz usunąć konto albo wysłać prośbę o jego usunięcie?',
     accountDeletionAction: 'Usuń konto',
   },
+  nb: {
+    ...documentTranslations.nb,
+    pageTitle: 'Hjelp og kontakt',
+    contactTitle: 'Hvordan kan vi hjelpe?',
+    contactDescription:
+      'Skriv til oss om kontoen, appen eller abonnementet ditt. Oppgi gjerne telefonmodell, systemversjon og appversjon hvis det kan hjelpe oss å finne feilen.',
+    emailAction: 'Åpne e-postappen',
+    emailHint: 'Hvis knappen ikke åpner e-postappen, kan du kopiere adressen:',
+    emailSubject: 'Hjelp med Shuuty',
+    copyAddress: 'Kopier e-postadressen',
+    copied: 'E-postadressen er kopiert.',
+    copyFailed: 'Kunne ikke kopiere adressen. Marker den og kopier den selv.',
+    accountDeletionHint: 'Vil du slette kontoen eller sende en forespørsel om sletting?',
+    accountDeletionAction: 'Slett kontoen',
+  },
 } as const;
+
+const SUPPORT_LANGUAGES = ['en', 'pl', 'nb'] as const;
 
 type CopyStatus = 'idle' | 'copied' | 'failed';
 
@@ -67,7 +87,7 @@ const MailIcon = ({ strokeWidth }: { strokeWidth: string }) => (
 );
 
 interface SupportPageClientProps {
-  initialLanguage?: DocumentLanguage;
+  initialLanguage?: SiteLanguage;
 }
 
 export default function SupportPageClient({ initialLanguage = 'en' }: SupportPageClientProps) {
@@ -88,7 +108,7 @@ export default function SupportPageClient({ initialLanguage = 'en' }: SupportPag
   }, []);
 
   const handleLanguageChange = useCallback(
-    (nextLanguage: 'en' | 'pl') => {
+    (nextLanguage: SiteLanguage) => {
       setCopyStatus('idle');
       changeLanguage(nextLanguage);
     },
@@ -108,6 +128,7 @@ export default function SupportPageClient({ initialLanguage = 'en' }: SupportPag
       backTitle={translations.backTitle}
       languageSwitcherLabel={translations.languageSwitcher}
       language={language}
+      languages={SUPPORT_LANGUAGES}
       onLanguageChange={handleLanguageChange}
       tagline={translations.footerTagline}
       supportLabel={translations.support}
@@ -138,6 +159,8 @@ export default function SupportPageClient({ initialLanguage = 'en' }: SupportPag
           onClick={copySupportAddress}
         >
           <span>{SUPPORT_EMAIL}</span>
+          {/* Keeps the accessible name readable: "address, Copy email address". */}
+          <span className={styles.srOnly}>, </span>
           <span className={styles.copyAction}>{translations.copyAddress}</span>
         </button>
         <p className={styles.copyStatus} role="status" aria-live="polite">
@@ -146,7 +169,7 @@ export default function SupportPageClient({ initialLanguage = 'en' }: SupportPag
 
         <p className={styles.supportHint}>{translations.accountDeletionHint}</p>
         <Link
-          href={language === 'pl' ? '/pl/account-deletion/' : '/account-deletion/'}
+          href={localizedSitePath(language, '/account-deletion/')}
           className={styles.supportMailButton}
         >
           <span>{translations.accountDeletionAction}</span>

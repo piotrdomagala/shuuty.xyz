@@ -2,6 +2,7 @@ import { access, readFile, readdir } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { join, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { languageSwitchPath, LEGACY_ALIASES, NORWEGIAN_PATHS } from '../lib/sitePaths.mjs';
 
 const root = new URL('../', import.meta.url);
 const outputPath = fileURLToPath(new URL('out/', root));
@@ -14,6 +15,19 @@ const openGraphImagePattern = new RegExp(
 const twitterImagePattern = new RegExp(
   `<meta(?=[^>]*\\bname="twitter:image")(?=[^>]*\\bcontent="${escapedSiteUrl}/opengraph-image\\.png")[^>]*>`,
 );
+
+// Norwegian covers the landing and support pages only.
+const homeAlternates = { en: '/', pl: '/pl/', nb: '/nb/', 'x-default': '/' };
+const supportAlternates = {
+  en: '/support/',
+  pl: '/pl/support/',
+  nb: '/nb/support/',
+  'x-default': '/support/',
+};
+const copyButtonPattern = (actionLabel) =>
+  new RegExp(
+    `<button[^>]*><span>shuuty\\.app@gmail\\.com</span><span[^>]*>, </span><span[^>]*>${actionLabel}</span></button>`,
+  );
 
 const pages = {
   home: {
@@ -72,6 +86,7 @@ const pages = {
     routeMetadata: false,
     language: 'en',
     alternateRoute: '/pl/',
+    languageAlternates: homeAlternates,
   },
   homePl: {
     path: 'out/pl/index.html',
@@ -120,6 +135,49 @@ const pages = {
     ],
     language: 'pl',
     alternateRoute: '/',
+    languageAlternates: homeAlternates,
+  },
+  homeNb: {
+    path: 'out/nb/index.html',
+    route: '/nb/',
+    required: [
+      'Fra idé',
+      'Si det. Deleger det. Få det gjort.',
+      'Si det. Velg en person eller gruppe. Oppgaven er klar.',
+      'Fra tanke til oppgave - tre steg.',
+      'Gruppen din kan bli en egen verden.',
+      'Et arbeidssted',
+      'Et tjenestetilbud',
+      'Et utstillingsvindu',
+      'FAQPage',
+      'Hva forstår Shuuty av en oppgave du sier høyt?',
+      '/nb/support/',
+      '/account-deletion/',
+      '/privacy/',
+      '/terms/',
+      '/images/product/canonical-flow-2026/en-US/01-voice-input.webp',
+      '/images/product/canonical-flow-2026/en-US/02-assignee.webp',
+      '/images/product/canonical-flow-2026/en-US/03-delegated-task.webp',
+      '/images/product/canonical-flow-2026/en-US/08-nearby.webp',
+      'og:locale" content="nb_NO"',
+    ],
+    requiredPatterns: [
+      /<h1[^>]*>/,
+      /<script type="application\/ld\+json">/,
+      /<details[^>]*open=""/,
+      /<title>Huskeliste med stemmen, grupper og møter \| Shuuty<\/title>/,
+      openGraphImagePattern,
+      twitterImagePattern,
+    ],
+    forbiddenPatterns: [
+      /\/images\/product\/canonical-flow-2026\/pl-PL\//,
+      /\/images\/product\/canonical-flow-2026\/[^"' )]+\.png/,
+      // Legal documents have no Norwegian version; links must go to English.
+      /href="\/nb\/(?:privacy|terms|account-deletion|child-safety)\//,
+      /exports\/final/,
+    ],
+    language: 'nb',
+    languageAlternates: homeAlternates,
   },
   support: {
     path: 'out/support/index.html',
@@ -127,23 +185,38 @@ const pages = {
     required: ['Contact Support', supportEmail, 'Copy email address', '/account-deletion/'],
     requiredPatterns: [
       // The visible text is the accessible name, so it cannot drift from what
-      // speech-input users see (WCAG 2.5.3 Label in Name).
-      /<button[^>]*><span>shuuty\.app@gmail\.com<\/span><span[^>]*>Copy email address<\/span><\/button>/,
+      // speech-input users see (WCAG 2.5.3 Label in Name). A visually hidden
+      // comma keeps the address and the action apart when read aloud.
+      copyButtonPattern('Copy email address'),
       /aria-live="polite"/,
     ],
     language: 'en',
     alternateRoute: '/pl/support/',
+    languageAlternates: supportAlternates,
   },
   supportPl: {
     path: 'out/pl/support/index.html',
     route: '/pl/support/',
     required: ['Pomoc i kontakt', supportEmail, 'Kopiuj adres e-mail', '/pl/account-deletion/'],
-    requiredPatterns: [
-      /<button[^>]*><span>shuuty\.app@gmail\.com<\/span><span[^>]*>Kopiuj adres e-mail<\/span><\/button>/,
-      /aria-live="polite"/,
-    ],
+    requiredPatterns: [copyButtonPattern('Kopiuj adres e-mail'), /aria-live="polite"/],
     language: 'pl',
     alternateRoute: '/support/',
+    languageAlternates: supportAlternates,
+  },
+  supportNb: {
+    path: 'out/nb/support/index.html',
+    route: '/nb/support/',
+    required: [
+      'Hjelp og kontakt',
+      supportEmail,
+      'Kopier e-postadressen',
+      'href="/account-deletion/"',
+      'og:locale" content="nb_NO"',
+    ],
+    requiredPatterns: [copyButtonPattern('Kopier e-postadressen'), /aria-live="polite"/],
+    forbiddenPatterns: [/href="\/nb\/(?:privacy|terms|account-deletion|child-safety)\//],
+    language: 'nb',
+    languageAlternates: supportAlternates,
   },
   accountDeletion: {
     path: 'out/account-deletion/index.html',
@@ -536,7 +609,11 @@ const appStoreProviderToken = /^\d{4,12}$/.test(
   ? process.env.NEXT_PUBLIC_APP_STORE_PROVIDER_TOKEN.trim()
   : null;
 
-for (const [language, homePath] of Object.entries({ en: 'out/index.html', pl: 'out/pl/index.html' })) {
+for (const [language, homePath] of Object.entries({
+  en: 'out/index.html',
+  pl: 'out/pl/index.html',
+  nb: 'out/nb/index.html',
+})) {
   const html = await readFile(new URL(homePath, root), 'utf8');
 
   if (!html.includes('<meta name="apple-itunes-app" content="app-id=6670202422"/>')) {
@@ -549,6 +626,48 @@ for (const [language, homePath] of Object.entries({ en: 'out/index.html', pl: 'o
   ) {
     failures.push(`${homePath} structured data must keep clean store URLs`);
   }
+
+  // Every site language must be declared consistently, and the contact point
+  // must link to the support page in the page's own language.
+  const siteLanguages = ['en', 'pl', 'nb'];
+  const structuredData = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
+  const graph = structuredData ? JSON.parse(structuredData[1])['@graph'] ?? [] : [];
+  const webSite = graph.find((node) => node['@type'] === 'WebSite');
+  const contactPoint = graph.find((node) => node['@type'] === 'Organization')?.contactPoint;
+  const supportRoute = language === 'en' ? '/support/' : `/${language}/support/`;
+  for (const [label, languages] of [
+    ['WebSite.inLanguage', webSite?.inLanguage],
+    ['Organization.contactPoint.availableLanguage', contactPoint?.availableLanguage],
+  ]) {
+    if (siteLanguages.some((siteLanguage) => !languages?.includes(siteLanguage))) {
+      failures.push(`${homePath} ${label} must list ${siteLanguages.join(', ')}`);
+    }
+  }
+  if (contactPoint?.url !== `${siteUrl}${supportRoute}`) {
+    failures.push(`${homePath} contactPoint.url should be ${siteUrl}${supportRoute}`);
+  }
+
+  // Open Graph mirrors hreflang: the page's own locale plus the other two.
+  const openGraphLocales = { en: 'en_US', pl: 'pl_PL', nb: 'nb_NO' };
+  const ownLocale = html.match(/<meta property="og:locale" content="([^"]+)"/)?.[1];
+  const alternateLocales = [
+    ...html.matchAll(/<meta property="og:locale:alternate" content="([^"]+)"/g),
+  ].map((match) => match[1]).sort();
+  const expectedAlternates = Object.entries(openGraphLocales)
+    .filter(([siteLanguage]) => siteLanguage !== language)
+    .map(([, locale]) => locale)
+    .sort();
+  if (ownLocale !== openGraphLocales[language]) {
+    failures.push(`${homePath} og:locale should be ${openGraphLocales[language]}, found ${ownLocale}`);
+  }
+  if (JSON.stringify(alternateLocales) !== JSON.stringify(expectedAlternates)) {
+    failures.push(
+      `${homePath} og:locale:alternate should be ${expectedAlternates.join(', ')}, found ${
+        alternateLocales.join(', ') || 'none'
+      }`,
+    );
+  }
+
   // React also emits a matching <link rel="preload" fetchPriority="high">; only
   // the <img> elements are counted here.
   const highPriorityImages = html.match(/<img[^>]*\bfetchPriority="high"[^>]*>/gi) ?? [];
@@ -610,6 +729,41 @@ for (const htmlPath of await listHtmlFiles(outputPath)) {
   }
 }
 
+// Every language button must lead to a real page in that language. A switch
+// that keeps the visitor on the same address (for example a legacy alias)
+// would only change the language in memory until the next reload.
+const languageButtonPattern = /<button[^>]*aria-pressed="(true|false)"[^>]*>(EN|PL|NB)<\/button>/g;
+for (const htmlPath of await listHtmlFiles(outputPath)) {
+  const displayPath = relative(outputPath, htmlPath).split(sep).join('/');
+  if (!displayPath.endsWith('index.html')) continue;
+
+  const html = await readFile(htmlPath, 'utf8');
+  const route = `/${displayPath.slice(0, -'index.html'.length)}`;
+  for (const [, pressed, label] of html.matchAll(languageButtonPattern)) {
+    const language = label.toLowerCase();
+    const target = languageSwitchPath(route, language);
+    const targetFile = join(outputPath, ...target.split('/').filter(Boolean), 'index.html');
+    let targetHtml;
+    try {
+      targetHtml = await readFile(targetFile, 'utf8');
+    } catch {
+      failures.push(`${route} ${label} button leads to a missing page: ${target}`);
+      continue;
+    }
+    if (pressed === 'false' && target === route) {
+      failures.push(`${route} ${label} button would switch the language without leaving ${route}`);
+    }
+    // NB may fall back to English only where no Norwegian version exists.
+    const targetLanguage = targetHtml.match(/<html[^>]+lang="([^"]+)"/i)?.[1];
+    const canonicalTarget = LEGACY_ALIASES[target] ?? target;
+    const englishFallback =
+      language === 'nb' && targetLanguage === 'en' && !NORWEGIAN_PATHS.includes(canonicalTarget);
+    if (targetLanguage !== language && !englishFallback) {
+      failures.push(`${route} ${label} button opens ${target} in lang="${targetLanguage}"`);
+    }
+  }
+}
+
 const robots = await readFile(new URL('out/robots.txt', root), 'utf8');
 if (!robots.includes(`Sitemap: ${siteUrl}/sitemap.xml`)) {
   failures.push('robots.txt is missing the canonical sitemap URL');
@@ -646,18 +800,23 @@ for (const route of [
   '/pl/privacy/',
   '/terms/',
   '/pl/terms/',
+  '/nb/',
+  '/nb/support/',
 ]) {
   if (!sitemap.includes(`<loc>${siteUrl}${route}</loc>`)) {
     failures.push(`sitemap.xml is missing: ${siteUrl}${route}`);
   }
 }
-for (const [language, route] of Object.entries({
-  en: '/',
-  pl: '/pl/',
-  'x-default': '/',
-})) {
-  if (!sitemap.includes(`hreflang="${language}" href="${siteUrl}${route}"`)) {
-    failures.push(`sitemap.xml is missing ${language} language alternate`);
+for (const alternates of [homeAlternates, supportAlternates]) {
+  for (const [language, route] of Object.entries(alternates)) {
+    if (!sitemap.includes(`hreflang="${language}" href="${siteUrl}${route}"`)) {
+      failures.push(`sitemap.xml is missing ${language} language alternate for ${route}`);
+    }
+  }
+}
+for (const route of ['/nb/privacy/', '/nb/terms/', '/nb/account-deletion/', '/nb/child-safety/']) {
+  if (sitemap.includes(`${siteUrl}${route}`)) {
+    failures.push(`sitemap.xml lists a Norwegian legal page that does not exist: ${route}`);
   }
 }
 
@@ -665,6 +824,7 @@ const llms = await readFile(new URL('out/llms.txt', root), 'utf8');
 for (const expectedText of [
   '# Shuuty',
   `${siteUrl}/pl/`,
+  `${siteUrl}/nb/`,
   `${siteUrl}/llms-full.txt`,
   'Shuuty on the App Store',
   'Shuuty on Google Play',

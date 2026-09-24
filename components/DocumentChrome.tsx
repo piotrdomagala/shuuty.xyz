@@ -3,16 +3,20 @@
 import { useCallback, useEffect, useState, type ReactNode } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import type { DocumentLanguage } from '@/components/documentLocale';
+import {
+  documentTranslations,
+  localizedSitePath,
+  type SiteLanguage,
+} from '@/components/documentLocale';
 import styles from '@/app/documents.module.css';
 
-const languageOptions: { code: DocumentLanguage; label: string }[] = [
-  { code: 'en', label: 'EN' },
-  { code: 'pl', label: 'PL' },
-];
+const languageLabels: Record<SiteLanguage, string> = { en: 'EN', pl: 'PL', nb: 'NB' };
 
-const localizedPath = (language: DocumentLanguage, path: string) =>
-  language === 'pl' ? `/pl${path}` : path;
+// Legal documents exist in English and Polish only; pages with a Norwegian
+// version pass all three languages.
+const DEFAULT_LANGUAGES: readonly SiteLanguage[] = ['en', 'pl'];
+
+const localizedPath = localizedSitePath;
 
 type Theme = 'light' | 'dark';
 
@@ -42,8 +46,9 @@ interface DocumentHeaderProps {
   title: string;
   backTitle: string;
   languageSwitcherLabel: string;
-  language: DocumentLanguage;
-  onLanguageChange: (language: DocumentLanguage) => void;
+  language: SiteLanguage;
+  languages?: readonly SiteLanguage[];
+  onLanguageChange: (language: SiteLanguage) => void;
 }
 
 export function DocumentHeader({
@@ -51,6 +56,7 @@ export function DocumentHeader({
   backTitle,
   languageSwitcherLabel,
   language,
+  languages = DEFAULT_LANGUAGES,
   onLanguageChange,
 }: DocumentHeaderProps) {
   const [theme, setTheme] = useState<Theme>('dark');
@@ -79,13 +85,9 @@ export function DocumentHeader({
   }, []);
 
   const themeToggleLabel =
-    language === 'pl'
-      ? theme === 'dark'
-        ? 'Włącz jasny motyw'
-        : 'Włącz ciemny motyw'
-      : theme === 'dark'
-        ? 'Switch to light mode'
-        : 'Switch to dark mode';
+    theme === 'dark'
+      ? documentTranslations[language].themeToLight
+      : documentTranslations[language].themeToDark;
 
   return (
     <header className={styles.header}>
@@ -137,17 +139,17 @@ export function DocumentHeader({
             role="group"
             aria-label={languageSwitcherLabel}
           >
-            {languageOptions.map((option) => (
+            {languages.map((code) => (
               <button
-                key={option.code}
+                key={code}
                 type="button"
                 className={`${styles.languageButton} ${
-                  language === option.code ? styles.languageButtonActive : ''
+                  language === code ? styles.languageButtonActive : ''
                 }`}
-                onClick={() => onLanguageChange(option.code)}
-                aria-pressed={language === option.code}
+                onClick={() => onLanguageChange(code)}
+                aria-pressed={language === code}
               >
-                {option.label}
+                {languageLabels[code]}
               </button>
             ))}
           </div>
@@ -164,7 +166,7 @@ interface DocumentFooterProps {
   childSafetyLabel: string;
   privacyLabel: string;
   termsLabel: string;
-  language: DocumentLanguage;
+  language: SiteLanguage;
 }
 
 export function DocumentFooter({
@@ -215,8 +217,9 @@ interface DocumentShellProps {
   title: string;
   backTitle: string;
   languageSwitcherLabel: string;
-  language: DocumentLanguage;
-  onLanguageChange: (language: DocumentLanguage) => void;
+  language: SiteLanguage;
+  languages?: readonly SiteLanguage[];
+  onLanguageChange: (language: SiteLanguage) => void;
   tagline: string;
   supportLabel: string;
   accountDeletionLabel: string;
@@ -231,6 +234,7 @@ export function DocumentShell({
   backTitle,
   languageSwitcherLabel,
   language,
+  languages,
   onLanguageChange,
   tagline,
   supportLabel,
@@ -252,6 +256,7 @@ export function DocumentShell({
         backTitle={backTitle}
         languageSwitcherLabel={languageSwitcherLabel}
         language={language}
+        languages={languages}
         onLanguageChange={onLanguageChange}
       />
 

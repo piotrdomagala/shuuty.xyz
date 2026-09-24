@@ -1,8 +1,33 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFile } from 'node:fs/promises';
+import { languageSwitchPath, localizedSitePath } from '../lib/sitePaths.mjs';
 
 const root = new URL('../', import.meta.url);
+
+test('language paths keep Norwegian to the landing and support pages', () => {
+  assert.equal(localizedSitePath('nb', '/'), '/nb/');
+  assert.equal(localizedSitePath('nb', '/support/'), '/nb/support/');
+  assert.equal(localizedSitePath('nb', '/privacy/'), '/privacy/');
+  assert.equal(localizedSitePath('nb', '/account-deletion/'), '/account-deletion/');
+  assert.equal(localizedSitePath('pl', '/terms/'), '/pl/terms/');
+  assert.equal(localizedSitePath('en', '/child-safety/'), '/child-safety/');
+});
+
+test('the language switcher resolves legacy aliases to canonical pages', () => {
+  // Choosing NB on an old support address must open the real Norwegian page,
+  // not keep the alias and change the language only in memory.
+  assert.equal(languageSwitchPath('/documents/support/', 'nb'), '/nb/support/');
+  assert.equal(languageSwitchPath('/pl/documents/support/', 'nb'), '/nb/support/');
+  assert.equal(languageSwitchPath('/documents/support/', 'pl'), '/pl/support/');
+  assert.equal(languageSwitchPath('/pl/documents/support/', 'en'), '/support/');
+  assert.equal(languageSwitchPath('/documents/privacy/', 'pl'), '/pl/privacy/');
+  assert.equal(languageSwitchPath('/pl/documents/terms/', 'en'), '/terms/');
+  assert.equal(languageSwitchPath('/nb/support/', 'en'), '/support/');
+  assert.equal(languageSwitchPath('/nb/', 'pl'), '/pl/');
+  assert.equal(languageSwitchPath('/nb/', 'nb'), '/nb/');
+  assert.equal(languageSwitchPath('/pl', 'nb'), '/nb/');
+});
 
 function contentShape(value) {
   if (Array.isArray(value)) return value.map(contentShape);
@@ -22,6 +47,19 @@ test('English and Polish landing content have the same structure', async () => {
   );
 
   assert.deepEqual(contentShape(content.en), contentShape(content.pl));
+});
+
+test('Norwegian landing content has the same structure and story', async () => {
+  const content = JSON.parse(
+    await readFile(new URL('app/homeContent.json', root), 'utf8'),
+  );
+
+  assert.deepEqual(contentShape(content.en), contentShape(content.nb));
+  assert.equal(content.nb.hero.relay, 'Si det. Deleger det. Få det gjort.');
+  assert.equal(content.nb.tasks.mechanism.length, 3);
+  assert.equal(content.nb.groups.modes.length, 4);
+  assert.equal(content.nb.groups.modules.length, 10);
+  assert.equal(content.nb.faq.items.length, 4);
 });
 
 test('the Golden Relay and flexible group story stay explicit in both languages', async () => {
@@ -97,6 +135,10 @@ test('new marketing prose follows the short-hyphen convention', async () => {
     'lib/site.ts',
     'app/layout.tsx',
     'app/pl/page.tsx',
+    'app/nb/page.tsx',
+    'app/nb/support/page.tsx',
+    'components/documentLocale.ts',
+    'components/SupportPageClient.tsx',
     'public/llms.txt',
     'public/llms-full.txt',
   ];

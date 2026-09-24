@@ -498,5 +498,255 @@
         "Dostępne po polsku, angielsku i norwesku"
       ]
     }
+  },
+  "nb": {
+    "a11y": {
+      "skip": "Gå til innholdet",
+      "language": "Velg språk",
+      "themeToLight": "Bytt til lyst tema",
+      "themeToDark": "Bytt til mørkt tema",
+      "mainNav": "Hovednavigasjon",
+      "footerNav": "Navigasjon i bunnteksten"
+    },
+    "nav": {
+      "overview": "Hva er Shuuty",
+      "tasks": "Oppgaver",
+      "groups": "Grupper",
+      "discover": "Møter / Kart",
+      "download": "Last ned appen"
+    },
+    "hero": {
+      "badge": "Tilgjengelig for iOS og Android",
+      "title": "Fra idé",
+      "accent": "til handling.",
+      "relay": "Si det. Deleger det. Få det gjort.",
+      "sub": "Si en tanke høyt og gjør den om til en ferdig oppgave for en person eller en gruppe. Bygg deretter grupper for jobb, fellesskap, tjenester, salg, bestillinger eller det du trenger senere.",
+      "secondaryCta": "Se hvordan det fungerer",
+      "signals": [
+        "Tale eller manuell registrering",
+        "En person eller en gruppe",
+        "Én komplett oppgave"
+      ],
+      "visualLabel": "Ekte skjermbilder fra Shuuty"
+    },
+    "overview": {
+      "label": "Ett sammenhengende økosystem",
+      "heading": "Hverdagen skjer ikke i separate apper.",
+      "lead": "Oppgaver, samtaler, kalendere, mennesker og steder hører til samme flyt. Shuuty holder sammenhengen fra den første tanken til det øyeblikket noe blir gjort.",
+      "items": [
+        {
+          "icon": "task",
+          "kicker": "01",
+          "title": "Oppgaver som ikke blir liggende",
+          "desc": "Opprett med stemmen, motta, deleger, diskuter, få påminnelser og fullfør.",
+          "href": "#tasks"
+        },
+        {
+          "icon": "group",
+          "kicker": "02",
+          "title": "Grupper formet etter formålet",
+          "desc": "En privat krets, et fellesskap, et team, et sted for bestillinger, en annonse eller et lokalt tilbud.",
+          "href": "#groups"
+        },
+        {
+          "icon": "map",
+          "kicker": "03",
+          "title": "Møter med et formål",
+          "desc": "Møt venner eller nye mennesker, mens kartet hjelper deg å finne relevante grupper, tilbud og aktiviteter.",
+          "href": "#discover"
+        }
+      ]
+    },
+    "tasks": {
+      "label": "01 · Oppgaver",
+      "heading": "Si det. Velg en person eller gruppe. Oppgaven er klar.",
+      "lead": "Si: «Alex skal sende tilbudet i morgen kl. 9. Minn Alex på det 30 minutter før.» Shuuty klargjør tittel, beskrivelse, mottaker, frist og påminnelse, slik at du kan se over dem. Opprett oppgaven, og Alex får den med en gang - eller en forespørsel om godkjenning hvis innstillingene til Alex krever det.",
+      "bullets": [
+        "Private, mottatte og delegerte oppgaver har egne, oversiktlige visninger.",
+        "En delegert oppgave leveres så snart den er opprettet. Fristen sier når den skal gjøres. Påminnelsen sier når mottakeren varsles.",
+        "En delt eller delegert oppgave kan bli et eget sted for å tenke sammen. Diskusjon, svar og all aktivitet følger oppgaven.",
+        "Manuell registrering gir samme dybde: beskrivelse, deloppgaver, prioritet, påminnelser, personer, sted og tidsregistrering."
+      ],
+      "mechanismLabel": "Fra tanke til oppgave - tre steg.",
+      "mechanismLead": "Før du sender oppgaven, ser du hvem som får den, når fristen er, og hvilke detaljer og samtaler som følger med.",
+      "flowRegionLabel": "Fra stemme til delegert oppgave",
+      "flowSelectLabel": "Vis dette steget",
+      "mechanism": [
+        {
+          "kicker": "Opptak",
+          "title": "Si det.",
+          "desc": "Snakk naturlig eller skriv. Shuuty holder tittel, detaljer, tidspunkt og påminnelse samlet."
+        },
+        {
+          "kicker": "Kontekst",
+          "title": "Velg en person eller gruppe.",
+          "desc": "Hold den privat, gi den til en person eller legg den rett i riktig gruppe."
+        },
+        {
+          "kicker": "Overlevering",
+          "title": "Deleger nå. Oppgaven er klar.",
+          "desc": "Se over den ferdige oppgaven, og send den med diskusjon, aktivitet og tid samlet på ett sted."
+        }
+      ]
+    },
+    "groups": {
+      "label": "02 · Grupper",
+      "heading": "Gruppen din kan bli en egen verden.",
+      "lead": "Som oppretter bestemmer du hva gruppen skal være, hva folk utenfor kan se og hvilke moduler som er aktive. Hold den privat, åpne den for alle, eller la offentligheten finne tilbudet mens medlemmene ser arbeidskonteksten.",
+      "bullets": [
+        "Lag en offentlig beskrivelse med galleri, sted og interesser, eller forbehold utvalgte detaljer for medlemmer.",
+        "Presenter tjenester, produkter eller kunngjøringer: en klinikk, et verksted, lokale råvarer, kjøretøy, maskiner eller spesialisttjenester.",
+        "Hold gruppen kun til informasjon, eller koble til oppgaver, samtaler, kalendere, bestillinger, prosjekter, planer og tidsregistrering etter hvert som formålet vokser."
+      ],
+      "modesLabel": "Fire utgangspunkt. Ingen fast mal.",
+      "modes": [
+        {
+          "icon": "work",
+          "title": "Et arbeidssted",
+          "desc": "Et team, kunder, prosjekter, planer, delegerte oppgaver og tid per person."
+        },
+        {
+          "icon": "community",
+          "title": "Et fellesskap",
+          "desc": "Private eller åpne grupper, interesser, informasjon og faste aktiviteter."
+        },
+        {
+          "icon": "calendar",
+          "title": "Et tjenestetilbud",
+          "desc": "En klinikk, et verksted eller en spesialist med offentlige eller begrensede bestillinger."
+        },
+        {
+          "icon": "offer",
+          "title": "Et utstillingsvindu",
+          "desc": "Produkter, kjøretøy, maskiner, lokale varer, kunngjøringer eller en katalog."
+        }
+      ],
+      "modulesLabel": "Sett den sammen med modulene du trenger",
+      "modules": [
+        "Galleri",
+        "Sted",
+        "Interesser",
+        "Oppgaver",
+        "Kalendere",
+        "Bestillinger",
+        "Prosjekter",
+        "Planer",
+        "Tidsregistrering",
+        "Samtaler"
+      ]
+    },
+    "discover": {
+      "label": "03 · Møter",
+      "heading": "Møt hverandre med et klart formål.",
+      "lead": "Lag et privat treff med venner eller et åpent møte for nye mennesker. Bestem sted og tid, inviter deltakere og hold detaljene samlet i én felles kontekst.",
+      "bullets": [
+        "Møt venner privat, eller åpne planen for folk du ikke har møtt ennå.",
+        "Hold sted, tid, deltakere og samtale samlet.",
+        "Bruk chatten til å avtale detaljene før og etter møtet."
+      ],
+      "map": {
+        "label": "Kart · Utforsk",
+        "heading": "Finn det du trenger i nærheten.",
+        "lead": "Bruk kartet til å finne relevante møter, offentlige grupper og fellesskap, og grupper som presenterer lokale tilbud, tjenester, produkter eller nyttig informasjon.",
+        "bullets": [
+          "Søk etter sted, behov og interesser.",
+          "Åpne et møte, en gruppe eller et tilbud, og ta kontakt med dem som står bak."
+        ]
+      },
+      "meetings": "Møter",
+      "groups": "Grupper og tilbud",
+      "mapCaption": "Møter, grupper, tilbud og informasjon rundt deg"
+    },
+    "experience": {
+      "label": "Produktdybde",
+      "heading": "Start enkelt. Legg til struktur når det hjelper.",
+      "lead": "Shuuty kan være et raskt sted for én tanke eller den felles arbeidskonteksten for en lengre plan. Det samme produktet tilpasser seg uten å tvinge alle moduler på alle grupper.",
+      "screenCaption": "Ekte skjermbilder fra produktet",
+      "items": [
+        {
+          "title": "Lyst og mørkt",
+          "desc": "Velg utseendet som passer øyeblikket, uten at produktet fungerer annerledes."
+        },
+        {
+          "title": "Prosjekter og planer",
+          "desc": "Knytt lengre arbeid til oppgavene, menneskene og gruppen som allerede har konteksten."
+        },
+        {
+          "title": "Kalendere og bestillinger",
+          "desc": "Koordiner felles datoer, eller tilby bestillinger til et bredt eller begrenset publikum."
+        },
+        {
+          "title": "Tid og samtaler",
+          "desc": "Hold tidsregistrering per person, beslutninger og diskusjon nær arbeidet."
+        }
+      ]
+    },
+    "faq": {
+      "label": "FAQ",
+      "heading": "Nyttige detaljer",
+      "items": [
+        {
+          "q": "Hva forstår Shuuty av en oppgave du sier høyt?",
+          "a": "Den kan lage tittel og beskrivelse, finne dato og klokkeslett, sette en påminnelse, kjenne igjen mottaker og sted, og dele flere tanker opp i separate oppgaver du kan se over."
+        },
+        {
+          "q": "Kan jeg delegere en oppgave mens jeg oppretter den?",
+          "a": "Ja. Hvis du gir oppgaven til noen mens du oppretter den, får mottakeren den med en gang. Hvis innstillingene til mottakeren krever godkjenning, får mottakeren i stedet en forespørsel om godkjenning med en gang. Fristen sier når noe skal gjøres. Påminnelsen sier når mottakeren varsles. Den forsinker aldri leveringen."
+        },
+        {
+          "q": "Hva kan en gruppe bli, og hvem kan se den?",
+          "a": "Den kan være en privat krets, et fellesskap, en arbeidsplass, et sted for kunder, et bestillingssystem, et tjenestetilbud, et utstillingsvindu eller en ren informasjonsgruppe. Den som oppretter gruppen, velger synlighet og aktive moduler. Oppgaver beholder gruppens kontekst, og en offentlig presentasjon kan inneholde informasjon, galleribilder, sted og interesser."
+        },
+        {
+          "q": "Er Shuuty gratis?",
+          "a": "Du kan starte med Free-planen. De valgfrie planene Pro og Teams gir høyere grenser og flere muligheter."
+        }
+      ]
+    },
+    "cta": {
+      "eyebrow": "Den neste ideen din kan starte nå",
+      "heading": "Gjør den om til handling.",
+      "sub": "Last ned Shuuty og organiser oppgaver, mennesker, samtaler, kalendere og steder i én app."
+    },
+    "images": {
+      "create": "Opprett-menyen i Shuuty med oppgave, tale, møte og gruppe",
+      "settings": "Innstillinger i Shuuty med lyst tema og språkvalg",
+      "groups": "Chat i Shuuty med samtaler og aktivitet i grupper",
+      "meetings": "Kart i Shuuty som viser et møte",
+      "voiceInput": "Innspilling av en oppgave med stemmen i Shuuty",
+      "assignee": "Valg av mottaker for en oppgave i Shuuty",
+      "delegatedTask": "En ferdig delegert oppgave i Shuuty",
+      "groupGallery": "En gruppepresentasjon i Shuuty med ekte produktgalleri",
+      "modules": "Modulinnstillinger for en gruppe i Shuuty",
+      "bookings": "En full bestillingskalender i Shuuty",
+      "nearby": "Utforsk-kartet i Shuuty med resultater i nærheten"
+    },
+    "store": {
+      "apple": "App Store",
+      "google": "Google Play",
+      "applePrefix": "Last ned fra",
+      "googlePrefix": "Tilgjengelig på"
+    },
+    "footer": {
+      "tagline": "Fra idé til handling.",
+      "copyright": "© 2026 Shuuty. Med enerett.",
+      "support": "Hjelp",
+      "accountDeletion": "Slett konto",
+      "childSafety": "Barnesikkerhet",
+      "privacy": "Personvern",
+      "terms": "Vilkår"
+    },
+    "schema": {
+      "features": [
+        "Oppgaver med stemmen eller manuelt, med frist, påminnelse, mottaker og sted",
+        "Flere tanker du sier høyt, delt opp i separate oppgaver du kan se over",
+        "Deleger oppgaver til venner og grupper",
+        "Visningene Private, Mottatte og Delegerte med deloppgaver, prioriteter og diskusjon",
+        "Grupper med chat, tråder, oppgaver, kalendere, bestillinger, planer, prosjekter og tidsregistrering",
+        "Private og åpne møter og utforsking i nærheten på kartet",
+        "Diktering i chatten og, med Pro og Teams, oversetting av meldinger",
+        "Tilgjengelig på norsk, engelsk og polsk"
+      ]
+    }
   }
 }
