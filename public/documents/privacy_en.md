@@ -51,6 +51,7 @@ We disclose data only to the extent required for the relevant purpose:
 - **Geoapify** and **Google Maps** for place search, geocoding, and map display when the user uses location features;
 - **Cloudflare R2** and **Cloudinary** to store, process, and deliver photos and other media;
 - infrastructure providers, including **Railway** for the backend, **Neon** for the database, and **GitHub Pages** for the public Shuuty website;
+- **GoatCounter** to keep aggregate visit statistics for the public Shuuty website, based on Shuuty's legitimate interest in understanding where visitors come from and whether the website helps them find the Application (Article 6(1)(f) GDPR). GoatCounter does not use cookies and stores nothing on the device; it receives the visited page address, the referring page address, campaign parameters, browser and system type, browser language, screen width, and a country derived from the IP address, which is not stored. Data is kept only in aggregate form, on servers in the European Union. Account verification and password reset pages are not counted;
 - professional advisers, public authorities, courts, or law enforcement where required to protect rights or comply with law.
 
 Depending on the service and applicable law, a provider may act as a processor on Shuuty's behalf or as a separate controller under its own privacy notice.
@@ -98,7 +99,7 @@ We use organizational and technical measures appropriate to the risk, including 
 The Application is intended for persons who are at least 16 years old. We do not knowingly allow children below that age to register. If such an account may have been created, please contact us.
 
 ## 12. Cookies and external links
-The mobile Application does not use browser cookies as its primary operating mechanism. The public Shuuty website stores a technical “lang” cookie to remember the selected language and the selected theme (light or dark) in browser storage (localStorage). External websites, including the App Store and Google Play, apply their own cookie and privacy policies.
+The mobile Application does not use browser cookies as its primary operating mechanism. The public Shuuty website stores a technical “lang” cookie to remember the selected language and the selected theme (light or dark) in browser storage (localStorage). Website visit statistics are kept without cookies and without storing data on the device (GoatCounter, section 4). External websites, including the App Store and Google Play, apply their own cookie and privacy policies.
 
 ## 13. Changes to this Policy
 The current version and last-updated date are published on this page. We may also communicate material changes in the Application or by email and, where required by law, request consent.

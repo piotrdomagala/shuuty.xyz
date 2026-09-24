@@ -51,6 +51,7 @@ Dane przekazujemy wyłącznie w zakresie potrzebnym do danego celu:
 - **Geoapify** i **Google Maps** w celu wyszukiwania miejsc, geokodowania i wyświetlania map, gdy użytkownik korzysta z funkcji lokalizacyjnych;
 - **Cloudflare R2** i **Cloudinary** w celu przechowywania, przetwarzania i dostarczania zdjęć oraz innych multimediów;
 - dostawcom infrastruktury, w tym **Railway** dla backendu, **Neon** dla bazy danych i **GitHub Pages** dla publicznej strony Shuuty;
+- **GoatCounter** w celu prowadzenia zbiorczych statystyk odwiedzin publicznej strony Shuuty, na podstawie prawnie uzasadnionego interesu Shuuty w ocenie, skąd przychodzą odwiedzający i czy strona pomaga im znaleźć Aplikację (art. 6 ust. 1 lit. f RODO). GoatCounter nie używa plików cookie i nie zapisuje niczego na urządzeniu; otrzymuje adres odwiedzanej strony, adres strony odsyłającej, parametry kampanii, typ przeglądarki i systemu, język przeglądarki, szerokość ekranu oraz kraj ustalony z adresu IP, który nie jest przechowywany. Dane są przechowywane wyłącznie w postaci zbiorczej, na serwerach w Unii Europejskiej. Strony służące do weryfikacji konta i resetu hasła nie są zliczane;
 - profesjonalnym doradcom, organom publicznym, sądom lub organom ścigania, gdy jest to niezbędne do ochrony praw albo wymagane przez prawo.
 
 Zależnie od usługi i przepisów dostawca może działać jako podmiot przetwarzający dane na zlecenie Shuuty albo jako odrębny administrator zgodnie ze swoją polityką prywatności.
@@ -98,7 +99,7 @@ Stosujemy środki organizacyjne i techniczne odpowiednie do ryzyka, w tym kontro
 Aplikacja jest przeznaczona dla osób, które ukończyły 16 lat. Świadomie nie umożliwiamy rejestracji dzieci poniżej tego wieku. W przypadku podejrzenia, że takie konto zostało utworzone, prosimy o kontakt.
 
 ## 12. Pliki cookie i linki zewnętrzne
-Aplikacja mobilna nie używa przeglądarkowych plików cookie jako podstawowego mechanizmu działania. Publiczna strona Shuuty zapisuje techniczny plik cookie „lang”, aby zapamiętać wybrany język, oraz wybrany motyw (jasny lub ciemny) w pamięci przeglądarki (localStorage). Zewnętrzne strony, w tym App Store i Google Play, stosują własne zasady dotyczące plików cookie i prywatności.
+Aplikacja mobilna nie używa przeglądarkowych plików cookie jako podstawowego mechanizmu działania. Publiczna strona Shuuty zapisuje techniczny plik cookie „lang”, aby zapamiętać wybrany język, oraz wybrany motyw (jasny lub ciemny) w pamięci przeglądarki (localStorage). Statystyki odwiedzin strony prowadzimy bez plików cookie i bez zapisywania danych na urządzeniu (GoatCounter, sekcja 4). Zewnętrzne strony, w tym App Store i Google Play, stosują własne zasady dotyczące plików cookie i prywatności.
 
 ## 13. Zmiany Polityki
 Aktualna wersja i data ostatniej aktualizacji są publikowane na tej stronie. O istotnych zmianach możemy również poinformować w Aplikacji lub e-mailem, a jeśli wymaga tego prawo - poprosić o zgodę.
