@@ -34,7 +34,7 @@ function contentShape(value) {
   if (value && typeof value === 'object') {
     return Object.fromEntries(
       Object.keys(value)
-        .sort()
+        .sort((left, right) => left.localeCompare(right))
         .map((key) => [key, contentShape(value[key])]),
     );
   }

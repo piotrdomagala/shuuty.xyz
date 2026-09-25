@@ -396,6 +396,24 @@ function validateRuntimeManifest(manifest, runtimeManifest, assets, failures) {
   }
 }
 
+function validateLocaleBudget(assets, spec, failures) {
+  const localeBytes = new Map();
+  for (const asset of assets) {
+    const locale = asset.locales?.[0];
+    const byteLength = asset[spec.key]?.byteLength;
+    if (locale && Number.isInteger(byteLength)) {
+      localeBytes.set(locale, (localeBytes.get(locale) ?? 0) + byteLength);
+    }
+  }
+  for (const [locale, byteLength] of localeBytes) {
+    if (byteLength > spec.maxLocaleBytes) {
+      failures.push(
+        `${locale} ${spec.key} derivatives exceed the ${spec.maxLocaleBytes}-byte locale budget.`,
+      );
+    }
+  }
+}
+
 async function validateAssets(assets, root, failures, altKeys) {
   const ids = new Set();
   const paths = new Set();
@@ -410,21 +428,7 @@ async function validateAssets(assets, root, failures, altKeys) {
     }
   }
   for (const spec of WEB_DERIVATIVES) {
-    const localeBytes = new Map();
-    for (const asset of assets) {
-      const locale = asset.locales?.[0];
-      const byteLength = asset[spec.key]?.byteLength;
-      if (locale && Number.isInteger(byteLength)) {
-        localeBytes.set(locale, (localeBytes.get(locale) ?? 0) + byteLength);
-      }
-    }
-    for (const [locale, byteLength] of localeBytes) {
-      if (byteLength > spec.maxLocaleBytes) {
-        failures.push(
-          `${locale} ${spec.key} derivatives exceed the ${spec.maxLocaleBytes}-byte locale budget.`,
-        );
-      }
-    }
+    validateLocaleBudget(assets, spec, failures);
   }
   return ids;
 }

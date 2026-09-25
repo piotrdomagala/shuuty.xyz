@@ -40,7 +40,7 @@ const supportAlternates = {
 };
 const copyButtonPattern = (actionLabel) =>
   new RegExp(
-    `<button[^>]*><span>shuuty\\.app@gmail\\.com</span><span[^>]*>, </span><span[^>]*>${actionLabel}</span></button>`,
+    String.raw`<button[^>]*><span>shuuty\.app@gmail\.com</span><span[^>]*>, </span><span[^>]*>${actionLabel}</span></button>`,
   );
 
 const pages = {
@@ -664,11 +664,11 @@ for (const [language, homePath] of Object.entries({
   const ownLocale = html.match(/<meta property="og:locale" content="([^"]+)"/)?.[1];
   const alternateLocales = [
     ...html.matchAll(/<meta property="og:locale:alternate" content="([^"]+)"/g),
-  ].map((match) => match[1]).sort();
+  ].map((match) => match[1]).sort((left, right) => left.localeCompare(right));
   const expectedAlternates = Object.entries(openGraphLocales)
     .filter(([siteLanguage]) => siteLanguage !== language)
     .map(([, locale]) => locale)
-    .sort();
+    .sort((left, right) => left.localeCompare(right));
   if (ownLocale !== openGraphLocales[language]) {
     failures.push(`${homePath} og:locale should be ${openGraphLocales[language]}, found ${ownLocale}`);
   }

@@ -11,7 +11,7 @@
 import { createHash } from 'node:crypto';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { isAbsolute, join, relative, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import sharp from 'sharp';
 
 const root = new URL('../', import.meta.url);
@@ -32,7 +32,7 @@ const colors = {
 
 const sha256 = (buffer) => createHash('sha256').update(buffer).digest('hex');
 const escapeMarkup = (text) =>
-  text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  text.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
 
 async function readVerified(relativePath, expectedSha256, label) {
   const buffer = await readFile(join(rootPath, relativePath));
@@ -125,6 +125,22 @@ function placePhones(phones, area) {
   throw new Error(`Unsupported number of captures: ${phones.length}`);
 }
 
+// Captures keep their preferred heights when they fit the area side by side;
+// otherwise all of them shrink together until the group fits.
+async function placeCapturesInArea(captures, heights, area) {
+  for (let scale = 1; scale >= 0.6; scale -= 0.04) {
+    const phones = await Promise.all(
+      captures.map((capture, index) => renderPhone(capture, Math.round(heights[index] * scale))),
+    );
+    const placements = placePhones(phones, area);
+    const fits = placements.every(
+      ({ phone, left }) => left >= area.x && left + phone.width <= area.x + area.width,
+    );
+    if (fits) return placements;
+  }
+  throw new Error('The captures do not fit the card even at 60% of their size.');
+}
+
 function backgroundSvg({ width, height }, placements, shadowBlur) {
   const shadows = placements
     .map(
@@ -183,10 +199,7 @@ async function composeCard(size, content, captures, assets) {
   const heights = captures.length === 3
     ? [phoneArea.height * 0.84, phoneArea.height, phoneArea.height * 0.84]
     : [phoneArea.height * 0.94, phoneArea.height * 0.86];
-  const phones = await Promise.all(
-    captures.map((capture, index) => renderPhone(capture, Math.round(heights[index]))),
-  );
-  const placements = placePhones(phones, phoneArea);
+  const placements = await placeCapturesInArea(captures, heights, phoneArea);
 
   const text = (value, options) => renderText(value, { fontfile: assets.fontPath, ...options });
   const fit = (value, maxSize, minSize) =>
@@ -215,28 +228,72 @@ async function composeCard(size, content, captures, assets) {
 
   const iconTop = px(58);
   const headlineTop = px(190);
-  const layers = [
-    { input: icon, left: margin, top: iconTop },
+  const footerTop = size.height - px(58) - footer.height;
+  const domainTop = footerTop - px(10) - domain.height;
+  const textLayers = [
+    { name: 'icon', input: icon, width: px(72), height: px(72), left: margin, top: iconTop },
     {
-      input: wordmark.input,
+      name: 'wordmark',
+      ...wordmark,
       left: margin + px(72) + px(18),
       top: iconTop + Math.round((px(72) - wordmark.height) / 2),
     },
-    { input: line1.input, left: margin, top: headlineTop },
-    { input: line2.input, left: margin, top: headlineTop + line1.height + px(4) },
+    { name: 'headline line 1', ...line1, left: margin, top: headlineTop },
+    { name: 'headline line 2', ...line2, left: margin, top: headlineTop + line1.height + px(4) },
     {
-      input: tagline.input,
+      name: 'tagline',
+      ...tagline,
       left: margin,
       top: headlineTop + line1.height + line2.height + px(30),
     },
-    { input: domain.input, left: margin, top: size.height - px(58) - footer.height - px(10) - domain.height },
-    { input: footer.input, left: margin, top: size.height - px(58) - footer.height },
-    ...placements.map(({ phone, left, top }) => ({ input: phone.input, left, top })),
+    { name: 'domain', ...domain, left: margin, top: domainTop },
+    { name: 'footer', ...footer, left: margin, top: footerTop },
   ];
+  const phoneLayers = placements.map(({ phone, left, top }, index) => ({
+    name: `capture ${index + 1}`,
+    input: phone.input,
+    width: phone.width,
+    height: phone.height,
+    left,
+    top,
+  }));
+  assertLayout(size, { textLayers, phoneLayers, textRight: margin + textWidth, domainTop });
 
   return sharp(backgroundSvg(size, placements, px(16)))
-    .composite(layers)
+    .composite([...textLayers, ...phoneLayers].map(({ input, left, top }) => ({ input, left, top })))
     .toColourspace('srgb');
+}
+
+// A card is written only when nothing is cut off by its edges, no text runs
+// into the captures and the tagline stays clear of the domain line; a copy
+// change that breaks this fails here instead of shipping a clipped preview.
+export function assertLayout(size, { textLayers, phoneLayers, textRight, domainTop }) {
+  const problems = [];
+  for (const layer of [...textLayers, ...phoneLayers]) {
+    if (
+      layer.left < 0 ||
+      layer.top < 0 ||
+      layer.left + layer.width > size.width ||
+      layer.top + layer.height > size.height
+    ) {
+      problems.push(`${layer.name} leaves the ${size.width}x${size.height} card`);
+    }
+  }
+  for (const layer of textLayers) {
+    if (layer.left + layer.width > textRight) {
+      problems.push(`${layer.name} runs past the text column into the captures`);
+    }
+  }
+  if (Math.min(...phoneLayers.map((layer) => layer.left)) < textRight) {
+    problems.push('a capture overlaps the text column');
+  }
+  const tagline = textLayers.find((layer) => layer.name === 'tagline');
+  if (tagline.top + tagline.height > domainTop) {
+    problems.push('the tagline overlaps the domain line');
+  }
+  if (problems.length > 0) {
+    throw new Error(`Card layout check failed: ${problems.join('; ')}.`);
+  }
 }
 
 async function loadInputs() {
@@ -332,11 +389,14 @@ async function generateProductHuntGallery(directory) {
   await writeFile(join(target, 'product-hunt-gallery.json'), `${JSON.stringify(record, null, 2)}\n`);
 }
 
-const productHuntIndex = process.argv.indexOf('--product-hunt');
-if (productHuntIndex > 0) {
-  const directory = process.argv[productHuntIndex + 1];
-  if (!directory) throw new Error('Pass the target directory after --product-hunt.');
-  await generateProductHuntGallery(directory);
-} else {
-  await generateSiteCards();
+const invokedPath = process.argv[1] ? pathToFileURL(resolve(process.argv[1])).href : '';
+if (import.meta.url === invokedPath) {
+  const productHuntIndex = process.argv.indexOf('--product-hunt');
+  if (productHuntIndex > 0) {
+    const directory = process.argv[productHuntIndex + 1];
+    if (!directory) throw new Error('Pass the target directory after --product-hunt.');
+    await generateProductHuntGallery(directory);
+  } else {
+    await generateSiteCards();
+  }
 }

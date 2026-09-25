@@ -37,8 +37,8 @@
         "mediaType": "image/jpeg",
         "width": 1200,
         "height": 630,
-        "byteLength": 72833,
-        "sha256": "3161bc96476c3f66a897ea533c9b8b525fca65fa0289d319d2ce55a7fc8af500"
+        "byteLength": 70071,
+        "sha256": "28f54ba11d8d7e59d48a76068dc9efea27a607b0379f93044e4133628ce2a650"
       }
     },
     "pl": {
@@ -64,8 +64,8 @@
         "mediaType": "image/jpeg",
         "width": 1200,
         "height": 630,
-        "byteLength": 73070,
-        "sha256": "f011ddd28acef407a3df22a3372c9066a9abfce9eaa5ba975911146d5df7b343"
+        "byteLength": 70556,
+        "sha256": "6e74012cd9d88c81ed861eb2193641cc6a8e330fc5fd240746b9502a4e3ecae0"
       }
     },
     "nb": {
@@ -91,8 +91,8 @@
         "mediaType": "image/jpeg",
         "width": 1200,
         "height": 630,
-        "byteLength": 72659,
-        "sha256": "603d31da96f8ee166fb350a042e6de8c2937418498e04e20fa6a3beaf1bbd6a2"
+        "byteLength": 69873,
+        "sha256": "d2ffd45b6abfb88eea262bdc8373d90f66e37572d047c933662be1d16e40e609"
       }
     }
   },

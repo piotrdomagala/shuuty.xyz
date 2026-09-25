@@ -90,6 +90,92 @@ async function checkCardImage(language, card, root, failures) {
   }
 }
 
+function checkHeadline(label, headline, failures) {
+  if (!Array.isArray(headline) || headline.length !== 2) {
+    failures.push(`${label}.headline must have two lines.`);
+    return false;
+  }
+  headline.forEach((line, index) => checkText(`${label}.headline[${index}]`, line, failures));
+  return true;
+}
+
+function checkRenderer(config, failures) {
+  if (config.schemaVersion !== 1) {
+    failures.push('Social card schemaVersion must be 1.');
+  }
+  const renderer = config.renderer ?? {};
+  if (renderer.encoder !== DERIVATIVE_ENCODER || renderer.libvips !== DERIVATIVE_LIBVIPS) {
+    failures.push(`Social cards must be rendered with ${DERIVATIVE_ENCODER} and libvips ${DERIVATIVE_LIBVIPS}.`);
+  }
+  for (const field of ['fontSha256', 'iconSha256']) {
+    if (!/^[a-f0-9]{64}$/u.test(renderer[field] || '')) {
+      failures.push(`renderer.${field} must be a lowercase SHA-256 digest.`);
+    }
+  }
+}
+
+// A card is stale once any capture it was rendered from has changed.
+function checkCardSources(label, card, mediaById, failures) {
+  const sources = card.sources ?? {};
+  if (JSON.stringify(Object.keys(sources)) !== JSON.stringify(card.screens ?? [])) {
+    failures.push(`${label}.sources must record exactly the listed captures.`);
+  }
+  for (const [id, sourceSha256] of Object.entries(sources)) {
+    const asset = mediaById.get(id);
+    if (asset && asset.sha256 !== sourceSha256) {
+      failures.push(`${label} was rendered from an older ${id}; regenerate the social cards.`);
+    }
+  }
+}
+
+async function checkCard(language, card, { homeContent, mediaById, root }, failures) {
+  const label = `cards.${language}`;
+  if (
+    checkHeadline(label, card.headline, failures) &&
+    card.headline.join(' ') !== homeContent[language]?.hero?.relay
+  ) {
+    failures.push(`${label}.headline must read exactly like the ${language} hero relay.`);
+  }
+  checkText(`${label}.tagline`, card.tagline, failures);
+  checkText(`${label}.footer`, card.footer, failures);
+  checkText(`${label}.alt`, card.alt, failures, { rendered: false });
+  checkCaptures(label, card.screens, captureLocaleForCard[language], mediaById, failures);
+  checkCardSources(label, card, mediaById, failures);
+  await checkCardImage(language, card, root, failures);
+}
+
+async function checkSocialDirectory(root, failures) {
+  const expectedFiles = new Set(cardLanguages.map((language) => `shuuty-${language}.jpg`));
+  let socialFiles = [];
+  try {
+    socialFiles = await readdir(new URL('public/images/social/', root));
+  } catch {
+    // Missing card files are reported per card.
+  }
+  for (const file of socialFiles) {
+    if (!expectedFiles.has(file)) {
+      failures.push(`public/images/social/${file} is not a recorded social card.`);
+    }
+  }
+}
+
+function checkProductHuntGallery(gallery, mediaById, failures) {
+  if (!Array.isArray(gallery) || gallery.length === 0) {
+    failures.push('productHuntGallery must list the Product Hunt images.');
+    return;
+  }
+  for (const [index, image] of gallery.entries()) {
+    const label = `productHuntGallery[${index}]`;
+    if (!/^\d{2}-[a-z-]+$/u.test(image.id || '')) {
+      failures.push(`${label}.id must look like 01-name.`);
+    }
+    checkHeadline(label, image.headline, failures);
+    checkText(`${label}.tagline`, image.tagline, failures);
+    checkText(`${label}.footer`, image.footer, failures);
+    checkCaptures(label, image.screens, 'en-US', mediaById, failures);
+  }
+}
+
 export async function validateSocialCards(root = defaultRoot) {
   const [config, media, homeContent] = await Promise.all([
     readFile(new URL('content/social-cards.json', root), 'utf8').then(JSON.parse),
@@ -99,88 +185,16 @@ export async function validateSocialCards(root = defaultRoot) {
   const failures = [];
   const mediaById = new Map(media.assets.map((asset) => [asset.id, asset]));
 
-  if (config.schemaVersion !== 1) {
-    failures.push('Social card schemaVersion must be 1.');
-  }
-  if (config.renderer?.encoder !== DERIVATIVE_ENCODER || config.renderer?.libvips !== DERIVATIVE_LIBVIPS) {
-    failures.push(`Social cards must be rendered with ${DERIVATIVE_ENCODER} and libvips ${DERIVATIVE_LIBVIPS}.`);
-  }
-  for (const field of ['fontSha256', 'iconSha256']) {
-    if (!/^[a-f0-9]{64}$/u.test(config.renderer?.[field] || '')) {
-      failures.push(`renderer.${field} must be a lowercase SHA-256 digest.`);
-    }
-  }
-
-  const languages = Object.keys(config.cards ?? {});
-  if (JSON.stringify(languages) !== JSON.stringify(cardLanguages)) {
+  checkRenderer(config, failures);
+  if (JSON.stringify(Object.keys(config.cards ?? {})) !== JSON.stringify(cardLanguages)) {
     failures.push(`Social cards must cover exactly ${cardLanguages.join(', ')}.`);
   }
-
   for (const language of cardLanguages) {
     const card = config.cards?.[language];
-    if (!card) continue;
-    const label = `cards.${language}`;
-
-    if (!Array.isArray(card.headline) || card.headline.length !== 2) {
-      failures.push(`${label}.headline must have two lines.`);
-    } else {
-      card.headline.forEach((line, index) => checkText(`${label}.headline[${index}]`, line, failures));
-      if (card.headline.join(' ') !== homeContent[language]?.hero?.relay) {
-        failures.push(`${label}.headline must read exactly like the ${language} hero relay.`);
-      }
-    }
-    checkText(`${label}.tagline`, card.tagline, failures);
-    checkText(`${label}.footer`, card.footer, failures);
-    checkText(`${label}.alt`, card.alt, failures, { rendered: false });
-
-    checkCaptures(label, card.screens, captureLocaleForCard[language], mediaById, failures);
-    const sources = card.sources ?? {};
-    if (JSON.stringify(Object.keys(sources)) !== JSON.stringify(card.screens ?? [])) {
-      failures.push(`${label}.sources must record exactly the listed captures.`);
-    }
-    for (const [id, sourceSha256] of Object.entries(sources)) {
-      const asset = mediaById.get(id);
-      if (asset && asset.sha256 !== sourceSha256) {
-        failures.push(`${label} was rendered from an older ${id}; regenerate the social cards.`);
-      }
-    }
-
-    await checkCardImage(language, card, root, failures);
+    if (card) await checkCard(language, card, { homeContent, mediaById, root }, failures);
   }
-
-  const expectedFiles = cardLanguages.map((language) => `shuuty-${language}.jpg`).sort();
-  let socialFiles = [];
-  try {
-    socialFiles = (await readdir(new URL('public/images/social/', root))).sort();
-  } catch {
-    // Missing card files are reported per card above.
-  }
-  for (const file of socialFiles) {
-    if (!expectedFiles.includes(file)) {
-      failures.push(`public/images/social/${file} is not a recorded social card.`);
-    }
-  }
-
-  const gallery = config.productHuntGallery;
-  if (!Array.isArray(gallery) || gallery.length === 0) {
-    failures.push('productHuntGallery must list the Product Hunt images.');
-  } else {
-    for (const [index, image] of gallery.entries()) {
-      const label = `productHuntGallery[${index}]`;
-      if (!/^\d{2}-[a-z-]+$/u.test(image.id || '')) {
-        failures.push(`${label}.id must look like 01-name.`);
-      }
-      if (!Array.isArray(image.headline) || image.headline.length !== 2) {
-        failures.push(`${label}.headline must have two lines.`);
-      } else {
-        image.headline.forEach((line, lineIndex) =>
-          checkText(`${label}.headline[${lineIndex}]`, line, failures));
-      }
-      checkText(`${label}.tagline`, image.tagline, failures);
-      checkText(`${label}.footer`, image.footer, failures);
-      checkCaptures(label, image.screens, 'en-US', mediaById, failures);
-    }
-  }
+  await checkSocialDirectory(root, failures);
+  checkProductHuntGallery(config.productHuntGallery, mediaById, failures);
 
   return failures;
 }

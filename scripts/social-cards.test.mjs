@@ -4,6 +4,7 @@ import { cp, mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { assertLayout } from './generate-social-cards.mjs';
 import { validateSocialCards } from './validate-social-cards.mjs';
 
 const root = new URL('../', import.meta.url);
@@ -42,6 +43,36 @@ test('every site language has a card rendered from its own captures', async () =
   assert.ok(config.cards.en.screens.every((id) => id.startsWith('en-')));
   for (const card of Object.values(config.cards)) {
     assert.ok(card.image.byteLength <= 250 * 1024);
+  }
+});
+
+test('the card generator refuses a layout that would clip or overlap', () => {
+  const size = { width: 1200, height: 630 };
+  const layout = (overrides = {}) => ({
+    textRight: 580,
+    domainTop: 500,
+    textLayers: [
+      { name: 'headline line 1', left: 64, top: 190, width: 500, height: 70 },
+      { name: 'tagline', left: 64, top: 300, width: 460, height: 36 },
+    ],
+    phoneLayers: [{ name: 'capture 1', left: 620, top: 50, width: 300, height: 530 }],
+    ...overrides,
+  });
+
+  assert.doesNotThrow(() => assertLayout(size, layout()));
+  const cases = [
+    [{ textLayers: [{ name: 'headline line 1', left: -6, top: 190, width: 500, height: 70 }, layout().textLayers[1]] },
+      /headline line 1 leaves the 1200x630 card/],
+    [{ textLayers: [{ name: 'headline line 1', left: 64, top: 190, width: 540, height: 70 }, layout().textLayers[1]] },
+      /headline line 1 runs past the text column into the captures/],
+    [{ phoneLayers: [{ name: 'capture 1', left: 1000, top: 50, width: 300, height: 530 }] },
+      /capture 1 leaves the 1200x630 card/],
+    [{ phoneLayers: [{ name: 'capture 1', left: 560, top: 50, width: 300, height: 530 }] },
+      /a capture overlaps the text column/],
+    [{ domainTop: 320 }, /the tagline overlaps the domain line/],
+  ];
+  for (const [overrides, expected] of cases) {
+    assert.throws(() => assertLayout(size, layout(overrides)), expected);
   }
 });
 

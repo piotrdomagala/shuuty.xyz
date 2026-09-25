@@ -235,7 +235,7 @@ test('the owner-attested canonical source preview stays explicit and unbound', a
     const platforms = new Set();
 
     assert.deepEqual(
-      Object.keys(placementSet).sort(),
+      Object.keys(placementSet).sort((left, right) => left.localeCompare(right)),
       ['assignee', 'bookings', 'delegatedTask', 'groupGallery', 'groups', 'modules', 'nearby', 'voiceInput'],
     );
 
