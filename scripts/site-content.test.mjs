@@ -5,9 +5,12 @@ import { languageSwitchPath, localizedSitePath } from '../lib/sitePaths.mjs';
 
 const root = new URL('../', import.meta.url);
 
-test('language paths keep Norwegian to the landing and support pages', () => {
+test('language paths keep Norwegian to the landing, support and facts pages', () => {
   assert.equal(localizedSitePath('nb', '/'), '/nb/');
   assert.equal(localizedSitePath('nb', '/support/'), '/nb/support/');
+  assert.equal(localizedSitePath('nb', '/facts/'), '/nb/facts/');
+  assert.equal(languageSwitchPath('/pl/facts/', 'nb'), '/nb/facts/');
+  assert.equal(languageSwitchPath('/nb/facts/', 'en'), '/facts/');
   assert.equal(localizedSitePath('nb', '/privacy/'), '/privacy/');
   assert.equal(localizedSitePath('nb', '/account-deletion/'), '/account-deletion/');
   assert.equal(localizedSitePath('pl', '/terms/'), '/pl/terms/');
@@ -47,6 +50,30 @@ test('English and Polish landing content have the same structure', async () => {
   );
 
   assert.deepEqual(contentShape(content.en), contentShape(content.pl));
+});
+
+test('facts content has the same structure, sections and ten questions in every language', async () => {
+  const facts = JSON.parse(await readFile(new URL('content/facts.json', root), 'utf8'));
+  const languages = Object.keys(facts.pages);
+
+  assert.deepEqual(languages, ['en', 'pl', 'nb']);
+  for (const language of languages) {
+    const page = facts.pages[language];
+    // Platform labels exist only on some items, so compare section ids and counts
+    // instead of the full key shape.
+    assert.deepEqual(
+      page.sections.map((section) => [section.id, section.items.length]),
+      facts.pages.en.sections.map((section) => [section.id, section.items.length]),
+      `${language} sections differ from English`,
+    );
+    assert.equal(page.faq.length, 10, `${language} should have 10 FAQ entries`);
+    assert.equal(page.path, language === 'en' ? '/facts/' : `/${language}/facts/`);
+    for (const entry of page.faq) {
+      assert.ok(entry.question.length > 0 && entry.answer.length > 0);
+    }
+  }
+  // Source tags stay in the verification folder; the site ships text only.
+  assert.equal(JSON.stringify(facts).includes('"source"'), false);
 });
 
 test('Norwegian landing content has the same structure and story', async () => {
@@ -139,6 +166,9 @@ test('new marketing prose follows the short-hyphen convention', async () => {
     'app/nb/support/page.tsx',
     'components/documentLocale.ts',
     'components/SupportPageClient.tsx',
+    'components/FactsPageClient.tsx',
+    'content/facts.json',
+    'app/nb/facts/page.tsx',
     'public/llms.txt',
     'public/llms-full.txt',
   ];

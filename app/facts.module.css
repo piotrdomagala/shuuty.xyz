@@ -1,0 +1,57 @@
+/* Facts page: checked-on label, FAQ disclosure list and the directory badge.
+   Headings, lists and paragraphs come from documents.module.css (.markdown). */
+
+.checked {
+  margin: calc(-1 * var(--s-md)) 0 var(--s-xl);
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.faqItem {
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: var(--s-sm) var(--s-md);
+  margin-bottom: var(--s-sm);
+  background: var(--bg-soft);
+}
+
+.faqItem summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--text);
+  padding: var(--s-xs) 0;
+}
+
+.faqItem summary:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 2px;
+  border-radius: var(--r-sm);
+}
+
+.faqItem p {
+  margin: var(--s-sm) 0 var(--s-xs);
+}
+
+.listedOn {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-md);
+}
+
+.listedOn a {
+  display: inline-flex;
+  border-radius: 13px;
+}
+
+.listedOn a:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 3px;
+}
+
+.listedOn img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}

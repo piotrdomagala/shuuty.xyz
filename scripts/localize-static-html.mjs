@@ -7,13 +7,14 @@ const localizedPages = {
     'out/pl/privacy/index.html',
     'out/pl/terms/index.html',
     'out/pl/support/index.html',
+    'out/pl/facts/index.html',
     'out/pl/account-deletion/index.html',
     'out/pl/child-safety/index.html',
     'out/pl/documents/privacy/index.html',
     'out/pl/documents/terms/index.html',
     'out/pl/documents/support/index.html',
   ],
-  nb: ['out/nb/index.html', 'out/nb/support/index.html'],
+  nb: ['out/nb/index.html', 'out/nb/support/index.html', 'out/nb/facts/index.html'],
 };
 
 for (const [language, pagePaths] of Object.entries(localizedPages)) {

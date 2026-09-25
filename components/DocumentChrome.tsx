@@ -189,6 +189,9 @@ export function DocumentFooter({
           <Link href={localizedPath(language, '/support/')} className={styles.footerLink}>
             {supportLabel}
           </Link>
+          <Link href={localizedPath(language, '/facts/')} className={styles.footerLink}>
+            {documentTranslations[language].facts}
+          </Link>
           <Link
             href={localizedPath(language, '/account-deletion/')}
             className={styles.footerLink}
