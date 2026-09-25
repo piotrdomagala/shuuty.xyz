@@ -1,4 +1,5 @@
 import { readFile, writeFile } from 'node:fs/promises';
+import { WEB_DERIVATIVES, runtimeAsset } from './product-media-derivatives.mjs';
 
 const root = new URL('../', import.meta.url);
 const manifest = JSON.parse(
@@ -6,23 +7,16 @@ const manifest = JSON.parse(
 );
 
 for (const asset of manifest.assets) {
-  if (!asset.web) {
-    throw new Error(`${asset.id} has no validated website derivative.`);
+  for (const spec of WEB_DERIVATIVES) {
+    if (!asset[spec.key]) {
+      throw new Error(`${asset.id} has no validated ${spec.key} website derivative.`);
+    }
   }
 }
 
 const runtimeManifest = {
   schemaVersion: manifest.schemaVersion,
-  assets: manifest.assets.map(({ id, altKey, theme, platform, device, web }) => ({
-    id,
-    altKey,
-    theme,
-    platform,
-    device,
-    path: web.path,
-    width: web.width,
-    height: web.height,
-  })),
+  assets: manifest.assets.map(runtimeAsset),
   placementSets: manifest.placementSets,
   placementSelection: manifest.placementSelection,
 };

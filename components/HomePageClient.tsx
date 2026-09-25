@@ -22,7 +22,7 @@ import {
   GOOGLE_PLAY_DEVELOPER_URL,
   GOOGLE_PLAY_URL,
   SITE_URL,
-  SOCIAL_IMAGE,
+  socialImage,
 } from '@/lib/site';
 import s from '@/app/page.module.css';
 import t from '@/app/homeContent.json';
@@ -156,7 +156,7 @@ const createSiteSchema = (language: Lang, copy: (typeof t)[Lang]) => {
         operatingSystem: 'iOS 15.1 or later, Android',
         inLanguage: ['en', 'pl', 'nb'],
         url: `${SITE_URL}/`,
-        image: SOCIAL_IMAGE.url,
+        image: socialImage(language).url,
         downloadUrl: [APP_STORE_URL, GOOGLE_PLAY_URL],
         sameAs: [APP_STORE_URL, GOOGLE_PLAY_URL],
         screenshot: productMediaPlacements.hero.map(

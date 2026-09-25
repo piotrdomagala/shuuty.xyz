@@ -5,7 +5,7 @@ import {
   createLanguageAlternates,
   GOATCOUNTER_CODE,
   SITE_URL,
-  SOCIAL_IMAGE,
+  socialImage,
 } from '@/lib/site';
 import './globals.css';
 
@@ -113,14 +113,14 @@ export const metadata: Metadata = {
     locale: 'en_US',
     alternateLocale: ['pl_PL', 'nb_NO'],
     siteName: 'Shuuty',
-    images: [SOCIAL_IMAGE],
+    images: [socialImage('en')],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Shuuty - From Idea to Action',
     description:
       'Say it. Delegate it. Get it done. Shape groups for work, community, services, sales and bookings.',
-    images: [SOCIAL_IMAGE.url],
+    images: [{ url: socialImage('en').url, alt: socialImage('en').alt }],
   },
   icons: {
     icon: [

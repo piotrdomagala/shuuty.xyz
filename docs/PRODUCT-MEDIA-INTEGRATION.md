@@ -33,14 +33,18 @@ public/images/product/canonical-flow-2026/en-US/01-voice-input.png ... 08-nearby
 public/images/product/canonical-flow-2026/pl-PL/01-voice-input.png ... 08-nearby.png
 public/images/product/canonical-flow-2026/en-US/01-voice-input.webp ... 08-nearby.webp
 public/images/product/canonical-flow-2026/pl-PL/01-voice-input.webp ... 08-nearby.webp
+public/images/product/canonical-flow-2026/en-US/01-voice-input-compact.webp ... 08-nearby-compact.webp
+public/images/product/canonical-flow-2026/pl-PL/01-voice-input-compact.webp ... 08-nearby-compact.webp
 ```
 
 `content/product-media.json` schema 2 records every source path, source SHA-256,
 dimensions, locale, theme, platform, device and semantic slot. The PNG copies are
 exact - no crop, compression, generated UI or content change was made. Each source
-also owns a deterministic WebP record with its source SHA-256, output SHA-256,
-byte length, half-size dimensions and pinned Sharp/libvips pipeline. Only WebP
-paths enter the runtime manifest and static HTML.
+also owns two deterministic WebP records, `web` (half size) and `compact` (a third),
+with source SHA-256, output SHA-256, byte length, dimensions and the pinned
+Sharp/libvips pipeline defined once in `scripts/product-media-derivatives.mjs`.
+Only WebP paths enter the runtime manifest and static HTML, where each capture
+lists both files in `srcset` so small phone frames load the compact one.
 The Golden Relay line used by the interactive task flow is also an exact copy of
 `store-listing/assets/brand/golden-relay-transparent-2048x256.png`, SHA-256
 `4e49a0b5b2f07f5cb934321d573173463e5ab10d986c29acf64593548956ce15`.
@@ -145,8 +149,9 @@ not an artifact binding.
 4. Preserve the separate `en` and `pl` placement sets. The resolver constructs the
    hero from `voiceInput`, `delegatedTask` and `nearby`, while the task handoff uses
    `voiceInput`, `assignee` and `delegatedTask`; layout components require no rewrite.
-5. Run `npm run generate:media-derivatives`, then `npm run sync:media-runtime`.
-   Commit the deterministic WebP files and runtime projection; never add provenance
+5. Run `npm run generate:media-derivatives`, `npm run sync:media-runtime` and
+   `npm run generate:social-cards`, and review the three cards by eye.
+   Commit the deterministic WebP files, cards and runtime projection; never add provenance
    fields to the runtime file. Public theme, platform and device presentation fields
    are projected mechanically from the validated source manifest.
 6. Run `npm run validate:media`, `npm test`, `npm run typecheck`, `npm run lint`
@@ -156,15 +161,21 @@ not an artifact binding.
 Schema 2 validates each selected import as an exact byte-for-byte source copy:
 `sourceSha256` must equal the PNG `sha256`, every `sourceArtifactEntry` must be safe
 and unique, and every semantic slot must use its matching localized alt key. Its
-WebP must preserve the locale and filename stem, reproduce with Sharp 0.35.3 and
-libvips 8.18.3, match its declared output hash and byte length, and remain at or
-below 200 KiB. A complete locale must remain at or below 600 KiB. Missing screens
-must never be generated or reconstructed.
+WebP files must preserve the locale and filename stem, reproduce with Sharp 0.35.3
+and libvips 8.18.3 and match their declared output hash and byte length. A `web`
+file stays at or below 200 KiB and a complete locale at or below 600 KiB; a
+`compact` file stays at or below 112 KiB and a locale at or below 360 KiB. Missing
+screens must never be generated or reconstructed.
 
-The current derivative totals are 494,680 bytes for `en-US` and 489,762 bytes for
-`pl-PL`; the largest single WebP is 160,510 bytes. A normal production build only
-validates these checked-in bytes. Regeneration is deliberate and fails before
-publishing files if source provenance, the pinned pipeline or either budget drifts.
+The current `web` totals are 494,680 bytes for `en-US` and 489,762 bytes for
+`pl-PL` (largest file 160,510 bytes); the `compact` totals are 290,658 and 289,564
+bytes (largest file 89,222 bytes). A normal production build only validates these
+checked-in bytes. Regeneration is deliberate and fails before publishing files if
+source provenance, the pinned pipeline or any budget drifts.
+
+The link preview cards in `public/images/social/` are built from these captures by
+`npm run generate:social-cards` and record the capture hashes they used, so a new
+capture makes `npm run validate:social` fail until the cards are regenerated.
 
 PR #9 remains an archive. Its raster files and ignored `exports` directories are
 not inputs to this contract. Only its semantic slot vocabulary informed the

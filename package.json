@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "next dev",
-    "prebuild": "npm run validate:legal && npm run validate:media",
+    "prebuild": "npm run validate:legal && npm run validate:media && npm run validate:social",
     "build": "next build",
     "postbuild": "node scripts/localize-static-html.mjs && node scripts/normalize-static-segment-paths.mjs && node scripts/validate-static-export.mjs",
     "start": "next start",
@@ -16,9 +16,11 @@
     "typecheck": "tsc --noEmit --incremental false",
     "test": "node --test scripts/*.test.mjs",
     "generate:media-derivatives": "node scripts/generate-product-media-derivatives.mjs",
+    "generate:social-cards": "node scripts/generate-social-cards.mjs",
     "sync:media-runtime": "node scripts/sync-product-media-runtime.mjs",
     "validate:legal": "node scripts/validate-legal-documents.mjs",
     "validate:media": "node scripts/validate-product-media.mjs",
+    "validate:social": "node scripts/validate-social-cards.mjs",
     "validate:static": "node scripts/validate-static-export.mjs",
     "generate:favicon": "node scripts/generate-favicon.mjs",
     "submit:indexnow": "node scripts/submit-indexnow.mjs"

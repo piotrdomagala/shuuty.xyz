@@ -6,6 +6,13 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import sharp from 'sharp';
+import {
+  WEB_DERIVATIVES,
+  derivativePath,
+  derivativeSize,
+  encodeDerivative,
+  runtimeAsset,
+} from './product-media-derivatives.mjs';
 import { validateProductMedia } from './validate-product-media.mjs';
 
 const root = new URL('../', import.meta.url);
@@ -20,8 +27,9 @@ const placementFields = [
   ['nearby', 'nearby'],
 ];
 
-const webParameters = {
-  scale: 0.5,
+// Written out here on purpose: the test checks the pipeline contract against
+// literal values, not against the module the pipeline itself reads.
+const encoderParameters = {
   fit: 'fill',
   kernel: 'lanczos3',
   colourspace: 'srgb',
@@ -34,38 +42,27 @@ const webParameters = {
 function runtimeProjection(manifest) {
   return {
     schemaVersion: manifest.schemaVersion,
-    assets: manifest.assets.map(({ id, altKey, theme, platform, device, web }) => ({
-      id,
-      altKey,
-      theme,
-      platform,
-      device,
-      path: web?.path,
-      width: web?.width,
-      height: web?.height,
-    })),
+    assets: manifest.assets.map(runtimeAsset),
     placementSets: manifest.placementSets,
     placementSelection: manifest.placementSelection,
   };
 }
 
+const sha256Of = (buffer) => createHash('sha256').update(buffer).digest('hex');
+
 async function createBoundFixture() {
   const fixturePath = await mkdtemp(join(tmpdir(), 'shuuty-product-media-'));
   const fixtureRoot = pathToFileURL(`${fixturePath}/`);
   const sourceBuffer = await readFile(new URL('public/images/app/create-menu.jpg', root));
-  const sha256 = createHash('sha256').update(sourceBuffer).digest('hex');
-  const webWidth = 236;
-  const webHeight = 512;
-  const webBuffer = await sharp(sourceBuffer)
-    .resize(webWidth, webHeight, { fit: 'fill', kernel: sharp.kernel.lanczos3 })
-    .toColourspace('srgb')
-    .webp({
-      quality: webParameters.quality,
-      effort: webParameters.effort,
-      smartSubsample: webParameters.smartSubsample,
-    })
-    .toBuffer();
-  const webSha256 = createHash('sha256').update(webBuffer).digest('hex');
+  const sha256 = sha256Of(sourceBuffer);
+  const sourceWidth = 471;
+  const sourceHeight = 1024;
+  const derivatives = [];
+  for (const spec of WEB_DERIVATIVES) {
+    const { width, height } = derivativeSize(spec, sourceWidth, sourceHeight);
+    const buffer = await encodeDerivative(sharp, sourceBuffer, spec, width, height);
+    derivatives.push({ spec, width, height, buffer, sha256: sha256Of(buffer) });
+  }
   const homeContent = JSON.parse(
     await readFile(new URL('app/homeContent.json', root), 'utf8'),
   );
@@ -82,17 +79,16 @@ async function createBoundFixture() {
       const device = platform === 'ios' ? 'iphone-6.9' : 'android-phone';
       const theme = position <= 5 ? 'dark' : 'light';
       const assetPath = `/images/product/${locale}/${position}.jpg`;
-      const webPath = `/images/product/${locale}/${position}.webp`;
       const sourceArtifactEntry = platform === 'ios'
         ? `assets/source/ios/${device}/${locale}/screen-${theme}-${language}-${position}.png`
         : `assets/source/android/${locale}/screen-${theme}-${language}-${position}.png`;
-      assets.push({
+      const asset = {
         id,
         altKey: field,
         path: assetPath,
         mediaType: 'image/jpeg',
-        width: 471,
-        height: 1024,
+        width: sourceWidth,
+        height: sourceHeight,
         sha256,
         locales: [locale],
         theme,
@@ -102,28 +98,32 @@ async function createBoundFixture() {
         platform,
         device,
         storePosition: position,
-        web: {
-          path: webPath,
-          mediaType: 'image/webp',
-          width: webWidth,
-          height: webHeight,
-          byteLength: webBuffer.length,
-          sha256: webSha256,
-          sourceSha256: sha256,
-          encoder: 'sharp@0.35.3',
-          libvips: '8.18.3',
-          parameters: webParameters,
-        },
-      });
+      };
+      assets.push(asset);
       placementSets[language][field] = id;
 
       const publicFile = join(fixturePath, 'public', ...assetPath.split('/').filter(Boolean));
       await mkdir(join(publicFile, '..'), { recursive: true });
       await writeFile(publicFile, sourceBuffer);
-      await writeFile(
-        join(fixturePath, 'public', ...webPath.split('/').filter(Boolean)),
-        webBuffer,
-      );
+      for (const derivative of derivatives) {
+        const path = derivativePath(derivative.spec, assetPath);
+        asset[derivative.spec.key] = {
+          path,
+          mediaType: 'image/webp',
+          width: derivative.width,
+          height: derivative.height,
+          byteLength: derivative.buffer.length,
+          sha256: derivative.sha256,
+          sourceSha256: sha256,
+          encoder: 'sharp@0.35.3',
+          libvips: '8.18.3',
+          parameters: { ...derivative.spec.parameters },
+        };
+        await writeFile(
+          join(fixturePath, 'public', ...path.split('/').filter(Boolean)),
+          derivative.buffer,
+        );
+      }
     }
   }
 
@@ -259,7 +259,16 @@ test('the owner-attested canonical source preview stays explicit and unbound', a
       assert.ok(asset.web.byteLength <= 200 * 1024);
       assert.equal(asset.web.encoder, 'sharp@0.35.3');
       assert.equal(asset.web.libvips, '8.18.3');
-      assert.deepEqual(asset.web.parameters, webParameters);
+      assert.deepEqual(asset.web.parameters, { scale: 0.5, ...encoderParameters });
+      assert.equal(asset.compact.mediaType, 'image/webp');
+      assert.equal(asset.compact.path, asset.web.path.replace(/\.webp$/u, '-compact.webp'));
+      assert.equal(asset.compact.width, Math.round(asset.width / 3));
+      assert.equal(asset.compact.height, Math.round(asset.height / 3));
+      assert.equal(asset.compact.sourceSha256, asset.sha256);
+      assert.ok(asset.compact.byteLength > 0);
+      assert.ok(asset.compact.byteLength < asset.web.byteLength);
+      assert.ok(asset.compact.byteLength <= 112 * 1024);
+      assert.deepEqual(asset.compact.parameters, { scale: 1 / 3, ...encoderParameters });
       themes.add(asset.theme);
       platforms.add(asset.platform);
     }
@@ -434,6 +443,58 @@ test('the bound package gate rejects provenance, locale, flow and runtime drift'
           delete manifest.assets.find((asset) => asset.id === 'en-voice-input').web;
         },
       },
+      {
+        expected: 'en-voice-input.compact must declare the deterministic website derivative.',
+        mutate(manifest) {
+          delete manifest.assets.find((asset) => asset.id === 'en-voice-input').compact;
+        },
+      },
+      {
+        expected: 'en-voice-input.compact must be the deterministic third-size 157x341 derivative.',
+        mutate(manifest) {
+          manifest.assets.find((asset) => asset.id === 'en-voice-input').compact.width = 236;
+        },
+      },
+      {
+        expected: 'en-voice-input.compact.path must preserve the source locale and filename stem.',
+        mutate(manifest) {
+          manifest.assets.find((asset) => asset.id === 'en-voice-input').compact.path =
+            '/images/product/en-US/1-small.webp';
+        },
+      },
+      {
+        expected: 'en-voice-input.compact.parameters must match the deterministic encoder contract.',
+        mutate(manifest) {
+          const compact = manifest.assets.find((asset) => asset.id === 'en-voice-input').compact;
+          compact.parameters = { ...compact.parameters, quality: 70 };
+        },
+      },
+      {
+        expected: `en-voice-input.compact exceeds the ${112 * 1024}-byte asset budget.`,
+        mutate(manifest) {
+          manifest.assets.find((asset) => asset.id === 'en-voice-input').compact.byteLength =
+            112 * 1024 + 1;
+        },
+      },
+      {
+        expected: `en-US compact derivatives exceed the ${360 * 1024}-byte locale budget.`,
+        mutate(manifest) {
+          for (const asset of manifest.assets.filter(
+            (candidate) => candidate.locales[0] === 'en-US',
+          )) {
+            asset.compact.byteLength = 50 * 1024;
+          }
+        },
+      },
+      {
+        expected: `en-voice-input.compact SHA-256 is ${
+          fixture.manifest.assets.find((asset) => asset.id === 'en-voice-input').compact.sha256
+        }; expected ${'e'.repeat(64)}.`,
+        mutate(manifest) {
+          manifest.assets.find((asset) => asset.id === 'en-voice-input').compact.sha256 =
+            'e'.repeat(64);
+        },
+      },
     ];
 
     for (const { expected, mutate } of cases) {
@@ -443,13 +504,26 @@ test('the bound package gate rejects provenance, locale, flow and runtime drift'
       assert.ok(failures.includes(expected), `${expected}\nReceived:\n${failures.join('\n')}`);
     }
 
-    const runtime = runtimeProjection(fixture.manifest);
-    runtime.assets[0].path = '/images/unapproved.jpg';
-    assert.ok(
-      (await fixture.validate(fixture.manifest, runtime)).includes(
-        'The runtime media manifest must exactly match the public rendering projection and contain no provenance fields.',
-      ),
-    );
+    const runtimeDrift = [
+      (runtime) => {
+        runtime.assets[0].path = '/images/unapproved.jpg';
+      },
+      (runtime) => {
+        runtime.assets[0].compact.path = '/images/unapproved-compact.webp';
+      },
+      (runtime) => {
+        delete runtime.assets[0].compact;
+      },
+    ];
+    for (const drift of runtimeDrift) {
+      const runtime = runtimeProjection(fixture.manifest);
+      drift(runtime);
+      assert.ok(
+        (await fixture.validate(fixture.manifest, runtime)).includes(
+          'The runtime media manifest must exactly match the public rendering projection and contain no provenance fields.',
+        ),
+      );
+    }
   } finally {
     await rm(fixture.fixturePath, { recursive: true, force: true });
   }
@@ -466,21 +540,22 @@ test('checked-in WebP files reproduce byte-for-byte with the pinned pipeline', a
 
   for (const asset of manifest.assets) {
     const source = await readFile(new URL(`public${asset.path}`, root));
-    const output = await sharp(source, { failOn: 'error' })
-      .resize(asset.web.width, asset.web.height, {
-        fit: webParameters.fit,
-        kernel: sharp.kernel.lanczos3,
-      })
-      .toColourspace(webParameters.colourspace)
-      .webp({
-        quality: webParameters.quality,
-        effort: webParameters.effort,
-        smartSubsample: webParameters.smartSubsample,
-      })
-      .toBuffer();
+    for (const spec of WEB_DERIVATIVES) {
+      const derivative = asset[spec.key];
+      const output = await encodeDerivative(
+        sharp,
+        source,
+        spec,
+        derivative.width,
+        derivative.height,
+      );
+      const label = `${asset.id}.${spec.key}`;
 
-    assert.equal(output.length, asset.web.byteLength, asset.id);
-    assert.equal(createHash('sha256').update(output).digest('hex'), asset.web.sha256, asset.id);
+      assert.equal(output.length, derivative.byteLength, label);
+      assert.equal(sha256Of(output), derivative.sha256, label);
+      const checkedIn = await readFile(new URL(`public${derivative.path}`, root));
+      assert.ok(checkedIn.equals(output), `${label} differs from the checked-in file`);
+    }
   }
 });
 
