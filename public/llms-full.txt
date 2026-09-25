@@ -122,16 +122,22 @@ Publiczna strona opisuje następujący proces:
 
 ## Norsk produktbeskrivelse
 
-Shuuty er en huskeliste du lager med stemmen: si hva som må gjøres, så fyller AI ut tittel, frist, påminnelse, mottaker og sted. Gi oppgaven til en venn eller en gruppe - den kommer fram med en gang, og du ser hva som venter, hva som er i gang og hva som er gjort.
+Shuuty er en app for oppgaver, grupper og møter med menneskene rundt deg. Si hva som må gjøres, så fyller AI ut tittel, frist, påminnelse, mottaker og sted. Gi oppgaven til én venn, flere personer samtidig eller en hel gruppe.
 
 - Spill inn en oppgave med egne ord. Shuuty lager tittel og beskrivelse, kjenner igjen frist, påminnelse, person og sted, og deler flere tanker opp i separate oppgaver du kan se gjennom.
 - Når du delegerer den, får mottakeren den med en gang - eller først en forespørsel om godkjenning, hvis innstillingene til mottakeren krever det.
 - Bruk en gruppe som arbeidsrom for et team, et fellesskap, et samarbeidssted med kunder, et tjenestetilbud eller en presentasjon av et produkt som er til salgs.
 - Slå bare på modulene du trenger: chat, tråder, oppgaver, felles kalender, bestillinger, planer, prosjekter og tidsregistrering.
-- Planlegg sted, tid og deltakere for et møte. Utforsk møter, offentlige grupper og lokale tilbud i nærheten på kartet.
+- En gruppe kan også være ditt eget tilbud - for eksempel en bil til salgs, med fullstendig beskrivelse og bilder. Med Pro og Teams får du plass til lengre beskrivelser og flere bilder.
+- Private grupper og møter er bare tilgjengelige via invitasjon. Andre krever godkjenning eller har åpen tilgang, og kan være synlige for venner eller for alle.
+- Planlegg sted, tid og deltakere for et møte. Utforsk møter, offentlige grupper og lokale tilbud i nærheten på kartet. Et møte kan være et engangstreff eller gjentas regelmessig.
+- iPhone og iPad: App Store, iOS 15.1 eller nyere. Android: Google Play, Android 7.0 eller nyere. Appen finnes ikke som nettversjon - nettstedet er bare til informasjon.
 - På Android finnes appen på norsk, polsk og engelsk. Med Pro og Teams oversetter du meldinger i samtaler, grupper og møter til ditt språk, slik at alle i en flerspråklig gruppe leser på sitt eget.
 - På iPhone og iPad er den nåværende versjonen i App Store på engelsk og polsk.
-- Kom i gang gratis. De valgfrie planene Pro og Teams gir høyere grenser og flere muligheter.
+- Kom i gang gratis. De valgfrie planene Pro og Teams gir høyere grenser og flere muligheter. Prisene avhenger av landet og vises i App Store og Google Play.
+- Du kan starte slettingen i Shuuty-appen under Profil > Konto > Slett konto, eller be om sletting på e-post til shuuty.app@gmail.com fra adressen som er knyttet til kontoen. Sletting av Shuuty-kontoen avslutter ikke automatisk et abonnement som administreres av Apple eller Google.
+- Utgiver: Shuuty Prosta Spółka Akcyjna (Shuuty P.S.A.), Polen. Hjelp: https://shuuty.com/nb/support/ og shuuty.app@gmail.com.
+- Kontrollerte fakta på norsk: https://shuuty.com/nb/facts/
 
 ## Canonical pages
 
