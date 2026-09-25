@@ -882,6 +882,16 @@ for (const expectedText of ['Tasks and voice input', 'Zadania i obsługa głosu'
   }
 }
 
+// Bing Webmaster Tools verifies site ownership with this public meta tag, so
+// every public page must carry it exactly as the panel shows it.
+const bingVerificationTag = '<meta name="msvalidate.01" content="46DDA7EE77C302D25066B78BD86697EB"/>';
+for (const [name, page] of Object.entries(pages)) {
+  const html = await readFile(new URL(page.path, root), 'utf8');
+  if (!html.includes(bingVerificationTag)) {
+    failures.push(`${name} static HTML is missing the Bing site verification tag`);
+  }
+}
+
 const indexNowKey = '82c89256cd2a7441fe790b5d949d58fedac21a8a5c3a0faf';
 const indexNowKeyFile = await readFile(new URL(`out/${indexNowKey}.txt`, root), 'utf8');
 if (indexNowKeyFile.trim() !== indexNowKey) {

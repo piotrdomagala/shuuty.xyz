@@ -70,6 +70,10 @@ export const metadata: Metadata = {
     'Create tasks by voice and hand them to friends or groups. Shuuty keeps reminders, chat, calendars and meetings together - on iOS and Android.',
   applicationName: 'Shuuty',
   category: 'Productivity',
+  // Public site-ownership tag from Bing Webmaster Tools; it is meant to be visible.
+  verification: {
+    other: { 'msvalidate.01': '46DDA7EE77C302D25066B78BD86697EB' },
+  },
   keywords: [
     'Shuuty',
     'voice tasks',
