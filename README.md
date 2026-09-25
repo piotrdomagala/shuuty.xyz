@@ -62,14 +62,25 @@ The selected theme is stored as `shuuty-theme` and applied before first paint. T
 Current product captures live under `public/images/product/canonical-flow-2026/`
 and are registered with source hashes in `content/product-media.json`. The PNG
 files are byte-for-byte canonical PL/EN captures selected for the website - never
-generated or reconstructed UI. The browser receives deterministic half-size WebP
-derivatives whose output hash, byte length, encoder and source hash are recorded
-separately. The complete EN set is 494,680 bytes and the PL set is 489,762 bytes.
+generated or reconstructed UI. The browser receives two deterministic WebP
+derivatives of each capture - `web` (half size) and `compact` (a third, listed
+first in `srcset` for small phone frames) - whose output hash, byte length,
+encoder and source hash are recorded separately. The `web` sets are 494,680 bytes
+(EN) and 489,762 bytes (PL); the `compact` sets are 290,658 and 289,564 bytes.
 
 `npm run generate:media-derivatives` is an explicit asset-maintenance step. A
 normal build never regenerates product media; it validates checked-in source and
-derivative bytes, provenance, locale isolation and the 200 KiB per-asset / 600 KiB
-per-locale budgets.
+derivative bytes, provenance, locale isolation and the budgets: 200 KiB per asset
+and 600 KiB per locale for `web`, 112 KiB and 360 KiB for `compact`.
+
+Link previews use one card per site language, `public/images/social/shuuty-<en|pl|nb>.jpg`
+(1200x630, under 250 KiB), composed by `npm run generate:social-cards` from the
+canonical captures: each capture is only scaled and framed, never edited. The
+card copy reuses the hero relay and page titles, and `content/social-cards.json`
+records the exact capture hashes each card was rendered from, so `npm run
+validate:social` (part of every build) fails once a capture changes and the card
+is stale. `node scripts/generate-social-cards.mjs --product-hunt <dir>` renders
+the Product Hunt gallery into a directory outside the site.
 
 They remain an explicitly unbound preview. The accepted Golden Relay package will
 be integrated through the stable media manifest after the complete 50-image

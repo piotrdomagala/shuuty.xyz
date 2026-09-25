@@ -36,6 +36,9 @@ jobs:
       - name: Validate product media
         run: npm run validate:media
 
+      - name: Validate social cards
+        run: npm run validate:social
+
       - name: Lint
         run: npm run lint
 

@@ -1,0 +1,141 @@
+{
+  "schemaVersion": 1,
+  "renderer": {
+    "encoder": "sharp@0.35.3",
+    "libvips": "8.18.3",
+    "font": "node_modules/next/dist/compiled/@vercel/og/Geist-Regular.ttf",
+    "fontSha256": "bde046ddd9f20be35b0bd56cc79eb752b967fb6661a3fe76cb067bb09f871d76",
+    "icon": "public/android-chrome-512x512.png",
+    "iconSha256": "f182e514f5d09e0076209f3f14f9a5a46de15a4204f5d49bf013a07d194db40e",
+    "jpeg": {
+      "quality": 84,
+      "chromaSubsampling": "4:4:4",
+      "mozjpeg": true
+    }
+  },
+  "cards": {
+    "en": {
+      "headline": [
+        "Say it. Delegate it.",
+        "Get it done."
+      ],
+      "tagline": "Voice tasks, flexible groups and meetings",
+      "footer": "Available on iOS and Android",
+      "alt": "Shuuty - voice tasks, flexible groups and meetings. Real Shuuty product views.",
+      "screens": [
+        "en-delegated-task",
+        "en-voice-input",
+        "en-groups"
+      ],
+      "sources": {
+        "en-delegated-task": "b1da13fa5cdf7238558dbf648ab5aa8d2513158037824b1f278b69ea66caa8d7",
+        "en-voice-input": "0e1cf4ae22b6cd8e6050731077f462aac7cb79bb798f83d6f7dda726d07cbdfb",
+        "en-groups": "6380ecb85dfaf76f1c713de118cd5075e49c874939a68fccb0786e86b3bd1ff0"
+      },
+      "image": {
+        "path": "/images/social/shuuty-en.jpg",
+        "mediaType": "image/jpeg",
+        "width": 1200,
+        "height": 630,
+        "byteLength": 70071,
+        "sha256": "28f54ba11d8d7e59d48a76068dc9efea27a607b0379f93044e4133628ce2a650"
+      }
+    },
+    "pl": {
+      "headline": [
+        "Powiedz. Deleguj.",
+        "Działajcie."
+      ],
+      "tagline": "Zadania głosowe, grupy i spotkania",
+      "footer": "Dostępne na iOS i Android",
+      "alt": "Shuuty - zadania głosowe, grupy i spotkania. Prawdziwe widoki produktu Shuuty.",
+      "screens": [
+        "pl-delegated-task",
+        "pl-voice-input",
+        "pl-groups"
+      ],
+      "sources": {
+        "pl-delegated-task": "d97ab18439e7c1f1a0c752c3f0bf5943ef4a9cd30a4c7543c7fea9648750afdb",
+        "pl-voice-input": "3b3743d0270acc67df872da217652f1aea830628591efdd54934fc0bc4d1a770",
+        "pl-groups": "bd36b35d0ea567a2d467fe14b15d70fe50f72b1c9d73098a8157b211241836ee"
+      },
+      "image": {
+        "path": "/images/social/shuuty-pl.jpg",
+        "mediaType": "image/jpeg",
+        "width": 1200,
+        "height": 630,
+        "byteLength": 70556,
+        "sha256": "6e74012cd9d88c81ed861eb2193641cc6a8e330fc5fd240746b9502a4e3ecae0"
+      }
+    },
+    "nb": {
+      "headline": [
+        "Si det. Deleger det.",
+        "Få det gjort."
+      ],
+      "tagline": "Huskeliste med stemmen, grupper og møter",
+      "footer": "Tilgjengelig for iOS og Android",
+      "alt": "Shuuty - huskeliste med stemmen, grupper og møter. Ekte skjermbilder fra Shuuty.",
+      "screens": [
+        "en-delegated-task",
+        "en-voice-input",
+        "en-groups"
+      ],
+      "sources": {
+        "en-delegated-task": "b1da13fa5cdf7238558dbf648ab5aa8d2513158037824b1f278b69ea66caa8d7",
+        "en-voice-input": "0e1cf4ae22b6cd8e6050731077f462aac7cb79bb798f83d6f7dda726d07cbdfb",
+        "en-groups": "6380ecb85dfaf76f1c713de118cd5075e49c874939a68fccb0786e86b3bd1ff0"
+      },
+      "image": {
+        "path": "/images/social/shuuty-nb.jpg",
+        "mediaType": "image/jpeg",
+        "width": 1200,
+        "height": 630,
+        "byteLength": 69873,
+        "sha256": "d2ffd45b6abfb88eea262bdc8373d90f66e37572d047c933662be1d16e40e609"
+      }
+    }
+  },
+  "productHuntGallery": [
+    {
+      "id": "01-overview",
+      "headline": [
+        "Say it. Delegate it.",
+        "Get it done."
+      ],
+      "tagline": "A voice to-do list for friends, family and small teams",
+      "footer": "Available on iOS and Android",
+      "screens": [
+        "en-delegated-task",
+        "en-voice-input",
+        "en-groups"
+      ]
+    },
+    {
+      "id": "02-voice-to-task",
+      "headline": [
+        "Say a task in",
+        "your own words."
+      ],
+      "tagline": "Shuuty prepares the title, due time, reminder and assignee. Hand the task to a friend or a group.",
+      "footer": "Available on iOS and Android",
+      "screens": [
+        "en-voice-input",
+        "en-delegated-task"
+      ]
+    },
+    {
+      "id": "03-groups",
+      "headline": [
+        "One group,",
+        "many roles."
+      ],
+      "tagline": "Chat, threads, a shared calendar, bookings and time tracking - turn on only the modules the group needs.",
+      "footer": "Available on iOS and Android",
+      "screens": [
+        "en-groups",
+        "en-modules"
+      ]
+    }
+  ]
+}

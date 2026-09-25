@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import socialCards from '@/content/social-cards.json';
 
 const DEFAULT_SITE_URL = 'https://shuuty.com';
 
@@ -73,12 +74,57 @@ export function createStoreLinks(campaign: string) {
   return { android: android.toString(), ios: ios.toString() };
 }
 
-export const SOCIAL_IMAGE = {
-  url: `${SITE_URL}/opengraph-image.png`,
-  width: 1200,
-  height: 630,
-  alt: 'Shuuty mobile app - turn ideas into action with voice tasks, flexible groups and discovery.',
-} as const;
+type SocialCardLanguage = keyof typeof socialCards.cards;
+
+// One preview card per site language, generated from the canonical captures
+// by scripts/generate-social-cards.mjs and checked by validate-social-cards.
+export function socialImage(language: SocialCardLanguage) {
+  const card = socialCards.cards[language];
+  return {
+    url: `${SITE_URL}${card.image.path}`,
+    width: card.image.width,
+    height: card.image.height,
+    alt: card.alt,
+    type: card.image.mediaType,
+  };
+}
+
+function socialMetadata({
+  title,
+  description,
+  path,
+  language,
+  alternateLanguages,
+}: {
+  title: string;
+  description: string;
+  path: `/${string}`;
+  language: SocialCardLanguage;
+  alternateLanguages: SocialCardLanguage[];
+}): Pick<Metadata, 'openGraph' | 'twitter'> {
+  const socialTitle = `${title} | Shuuty`;
+  const image = socialImage(language);
+  return {
+    openGraph: {
+      title: socialTitle,
+      description,
+      url: path,
+      type: 'website',
+      locale: OPEN_GRAPH_LOCALES[language],
+      alternateLocale: alternateLanguages
+        .filter((locale) => locale !== language)
+        .map((locale) => OPEN_GRAPH_LOCALES[locale]),
+      siteName: 'Shuuty',
+      images: [image],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: socialTitle,
+      description,
+      images: [{ url: image.url, alt: image.alt }],
+    },
+  };
+}
 
 interface PageMetadataOptions {
   title: string;
@@ -114,16 +160,9 @@ export function createPublicPageMetadata({
   polishPath,
   norwegianPath,
 }: PageMetadataOptions): Metadata {
-  const socialTitle = `${title} | Shuuty`;
   const languageAlternates = polishPath
     ? createLanguageAlternates(englishPath, polishPath, norwegianPath)
     : undefined;
-  const siteLocales: Array<keyof typeof OPEN_GRAPH_LOCALES> = norwegianPath
-    ? ['en', 'pl', 'nb']
-    : ['en', 'pl'];
-  const availableLocales = siteLocales
-    .filter((locale) => locale !== language)
-    .map((locale) => OPEN_GRAPH_LOCALES[locale]);
 
   return {
     title,
@@ -132,22 +171,13 @@ export function createPublicPageMetadata({
       canonical: path,
       ...(languageAlternates ? { languages: languageAlternates } : {}),
     },
-    openGraph: {
-      title: socialTitle,
+    ...socialMetadata({
+      title,
       description,
-      url: path,
-      type: 'website',
-      locale: OPEN_GRAPH_LOCALES[language],
-      alternateLocale: availableLocales,
-      siteName: 'Shuuty',
-      images: [SOCIAL_IMAGE],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: socialTitle,
-      description,
-      images: [SOCIAL_IMAGE.url],
-    },
+      path,
+      language,
+      alternateLanguages: norwegianPath ? ['en', 'pl', 'nb'] : ['en', 'pl'],
+    }),
   };
 }
 
@@ -194,6 +224,14 @@ export function createLegacyAliasMetadata({
         polishCanonicalPath,
       ),
     },
+    // An old address shares like the page it stands for, in that page's language.
+    ...socialMetadata({
+      title,
+      description,
+      path: canonicalPath,
+      language: canonicalPath === polishCanonicalPath ? 'pl' : 'en',
+      alternateLanguages: ['en', 'pl'],
+    }),
     robots: {
       index: false,
       follow: true,

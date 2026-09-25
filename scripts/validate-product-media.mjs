@@ -4,6 +4,14 @@ import { basename, extname, isAbsolute, relative, resolve, sep, posix } from 'no
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { isDeepStrictEqual } from 'node:util';
 import sharp from 'sharp';
+import {
+  DERIVATIVE_ENCODER,
+  DERIVATIVE_LIBVIPS,
+  WEB_DERIVATIVES,
+  derivativePath,
+  derivativeSize,
+  runtimeAsset,
+} from './product-media-derivatives.mjs';
 
 const defaultRoot = new URL('../', import.meta.url);
 const placementFieldToSlot = {
@@ -26,20 +34,6 @@ const placementLocales = { en: 'en-US', pl: 'pl-PL' };
 const importedPlatforms = new Set(['ios', 'android']);
 const importedDevices = new Set(['iphone-6.9', 'ipad-13', 'android-phone']);
 const importedThemes = new Set(['light', 'dark']);
-const webDerivativeEncoder = 'sharp@0.35.3';
-const webDerivativeLibvips = '8.18.3';
-const maxWebAssetBytes = 200 * 1024;
-const maxWebLocaleBytes = 600 * 1024;
-const webDerivativeParameters = {
-  scale: 0.5,
-  fit: 'fill',
-  kernel: 'lanczos3',
-  colourspace: 'srgb',
-  stripMetadata: true,
-  quality: 88,
-  effort: 6,
-  smartSubsample: true,
-};
 const previewSource = {
   repository: 'piotrdomagala/S-',
   commit: '20a14889e2397514b7c7bcd73269508f24c8004f',
@@ -190,61 +184,66 @@ function validateAssetMetadata(asset, failures, ids, paths, altKeys) {
   }
 }
 
-function validateWebDerivativeMetadata(asset, failures, paths) {
-  const web = asset.web;
+function expectedDerivativePath(spec, sourcePath) {
+  try {
+    return derivativePath(spec, sourcePath || '');
+  } catch {
+    return null;
+  }
+}
+
+function validateDerivativeMetadata(asset, spec, failures, paths) {
+  const field = `${asset.id}.${spec.key}`;
+  const web = asset[spec.key];
   if (!web || typeof web !== 'object' || Array.isArray(web)) {
-    failures.push(`${asset.id}.web must declare the deterministic website derivative.`);
+    failures.push(`${field} must declare the deterministic website derivative.`);
     return;
   }
 
   if (!isSafePublicImagePath(web.path)) {
-    failures.push(`${asset.id}.web.path must be a canonical path below /images/ without traversal.`);
+    failures.push(`${field}.path must be a canonical path below /images/ without traversal.`);
   } else if (paths.has(web.path)) {
     failures.push(`Duplicate product media path: ${web.path}`);
   }
   paths.add(web.path);
 
   if (web.path?.includes('exports/final')) {
-    failures.push(`${asset.id}.web.path must not reference a working exports/final directory.`);
+    failures.push(`${field}.path must not reference a working exports/final directory.`);
   }
   if (web.mediaType !== 'image/webp' || extname(web.path || '') !== '.webp') {
-    failures.push(`${asset.id}.web must use image/webp with a .webp extension.`);
+    failures.push(`${field} must use image/webp with a .webp extension.`);
   }
 
-  const sourceExtension = extname(asset.path || '');
-  const expectedPath = sourceExtension
-    ? `${asset.path.slice(0, -sourceExtension.length)}.webp`
-    : null;
+  const expectedPath = extname(asset.path || '') ? expectedDerivativePath(spec, asset.path) : null;
   if (web.path !== expectedPath || web.path === asset.path) {
-    failures.push(`${asset.id}.web.path must preserve the source locale and filename stem.`);
+    failures.push(`${field}.path must preserve the source locale and filename stem.`);
   }
 
-  const expectedWidth = Math.max(1, Math.round(asset.width / 2));
-  const expectedHeight = Math.max(1, Math.round(asset.height / 2));
-  if (web.width !== expectedWidth || web.height !== expectedHeight) {
+  const expected = derivativeSize(spec, asset.width, asset.height);
+  if (web.width !== expected.width || web.height !== expected.height) {
     failures.push(
-      `${asset.id}.web must be the deterministic half-size ${expectedWidth}x${expectedHeight} derivative.`,
+      `${field} must be the deterministic ${spec.sizeLabel} ${expected.width}x${expected.height} derivative.`,
     );
   }
   if (!/^[a-f0-9]{64}$/u.test(web.sha256 || '')) {
-    failures.push(`${asset.id}.web.sha256 must be a lowercase SHA-256 digest.`);
+    failures.push(`${field}.sha256 must be a lowercase SHA-256 digest.`);
   }
   if (web.sourceSha256 !== asset.sha256) {
-    failures.push(`${asset.id}.web.sourceSha256 must match the canonical source SHA-256.`);
+    failures.push(`${field}.sourceSha256 must match the canonical source SHA-256.`);
   }
   if (!Number.isInteger(web.byteLength) || web.byteLength < 1) {
-    failures.push(`${asset.id}.web.byteLength must be a positive integer.`);
-  } else if (web.byteLength > maxWebAssetBytes) {
-    failures.push(`${asset.id}.web exceeds the ${maxWebAssetBytes}-byte asset budget.`);
+    failures.push(`${field}.byteLength must be a positive integer.`);
+  } else if (web.byteLength > spec.maxAssetBytes) {
+    failures.push(`${field} exceeds the ${spec.maxAssetBytes}-byte asset budget.`);
   }
-  if (web.encoder !== webDerivativeEncoder) {
-    failures.push(`${asset.id}.web.encoder must be ${webDerivativeEncoder}.`);
+  if (web.encoder !== DERIVATIVE_ENCODER) {
+    failures.push(`${field}.encoder must be ${DERIVATIVE_ENCODER}.`);
   }
-  if (web.libvips !== webDerivativeLibvips) {
-    failures.push(`${asset.id}.web.libvips must be ${webDerivativeLibvips}.`);
+  if (web.libvips !== DERIVATIVE_LIBVIPS) {
+    failures.push(`${field}.libvips must be ${DERIVATIVE_LIBVIPS}.`);
   }
-  if (!isDeepStrictEqual(web.parameters, webDerivativeParameters)) {
-    failures.push(`${asset.id}.web.parameters must match the deterministic encoder contract.`);
+  if (!isDeepStrictEqual(web.parameters, { ...spec.parameters })) {
+    failures.push(`${field}.parameters must match the deterministic encoder contract.`);
   }
 }
 
@@ -309,8 +308,9 @@ async function validateAssetFile(asset, root, failures) {
   }
 }
 
-async function validateWebDerivativeFile(asset, root, failures) {
-  const web = asset.web;
+async function validateDerivativeFile(asset, spec, root, failures) {
+  const field = `${asset.id}.${spec.key}`;
+  const web = asset[spec.key];
   if (!web || !isSafePublicImagePath(web.path)) return;
 
   const repositoryRoot = fileURLToPath(root);
@@ -318,7 +318,7 @@ async function validateWebDerivativeFile(asset, root, failures) {
   const imagesRoot = resolve(publicRoot, 'images');
   const filePath = resolve(publicRoot, `.${web.path}`);
   if (!isContainedPath(imagesRoot, filePath)) {
-    failures.push(`${asset.id}.web resolves outside public/images.`);
+    failures.push(`${field} resolves outside public/images.`);
     return;
   }
 
@@ -330,7 +330,7 @@ async function validateWebDerivativeFile(asset, root, failures) {
       currentPath = resolve(currentPath, segment);
       const currentStat = await lstat(currentPath);
       if (currentStat.isSymbolicLink()) {
-        failures.push(`${asset.id}.web must not resolve through a symbolic link.`);
+        failures.push(`${field} must not resolve through a symbolic link.`);
         return;
       }
     }
@@ -341,38 +341,38 @@ async function validateWebDerivativeFile(asset, root, failures) {
       lstat(filePath),
     ]);
     if (!isContainedPath(realImagesRoot, realFilePath)) {
-      failures.push(`${asset.id}.web resolves outside the real public/images directory.`);
+      failures.push(`${field} resolves outside the real public/images directory.`);
       return;
     }
     if (!fileStat.isFile()) {
-      failures.push(`${asset.id}.web must resolve to a regular file.`);
+      failures.push(`${field} must resolve to a regular file.`);
       return;
     }
     buffer = await readFile(realFilePath);
   } catch {
-    failures.push(`${asset.id}.web is missing at public${web.path}.`);
+    failures.push(`${field} is missing at public${web.path}.`);
     return;
   }
 
   const digest = createHash('sha256').update(buffer).digest('hex');
   if (digest !== web.sha256) {
-    failures.push(`${asset.id}.web SHA-256 is ${digest}; expected ${web.sha256}.`);
+    failures.push(`${field} SHA-256 is ${digest}; expected ${web.sha256}.`);
   }
   if (buffer.length !== web.byteLength) {
-    failures.push(`${asset.id}.web is ${buffer.length} bytes; expected ${web.byteLength}.`);
+    failures.push(`${field} is ${buffer.length} bytes; expected ${web.byteLength}.`);
   }
 
   try {
     const metadata = await sharp(buffer, { failOn: 'error' }).metadata();
     if (metadata.format !== 'webp') {
-      failures.push(`${asset.id}.web magic bytes do not match image/webp.`);
+      failures.push(`${field} magic bytes do not match image/webp.`);
     } else if (metadata.width !== web.width || metadata.height !== web.height) {
       failures.push(
-        `${asset.id}.web is ${metadata.width}x${metadata.height}; expected ${web.width}x${web.height}.`,
+        `${field} is ${metadata.width}x${metadata.height}; expected ${web.width}x${web.height}.`,
       );
     }
   } catch {
-    failures.push(`${asset.id}.web magic bytes do not match image/webp.`);
+    failures.push(`${field} magic bytes do not match image/webp.`);
   }
 }
 
@@ -385,16 +385,7 @@ function getLocalizedAltKeys(homeContent) {
 function validateRuntimeManifest(manifest, runtimeManifest, assets, failures) {
   const expectedRuntimeManifest = {
     schemaVersion: manifest.schemaVersion,
-    assets: assets.map(({ id, altKey, theme, platform, device, web }) => ({
-      id,
-      altKey,
-      theme,
-      platform,
-      device,
-      path: web?.path,
-      width: web?.width,
-      height: web?.height,
-    })),
+    assets: assets.map(runtimeAsset),
     placementSets: manifest.placementSets,
     placementSelection: manifest.placementSelection,
   };
@@ -405,26 +396,39 @@ function validateRuntimeManifest(manifest, runtimeManifest, assets, failures) {
   }
 }
 
+function validateLocaleBudget(assets, spec, failures) {
+  const localeBytes = new Map();
+  for (const asset of assets) {
+    const locale = asset.locales?.[0];
+    const byteLength = asset[spec.key]?.byteLength;
+    if (locale && Number.isInteger(byteLength)) {
+      localeBytes.set(locale, (localeBytes.get(locale) ?? 0) + byteLength);
+    }
+  }
+  for (const [locale, byteLength] of localeBytes) {
+    if (byteLength > spec.maxLocaleBytes) {
+      failures.push(
+        `${locale} ${spec.key} derivatives exceed the ${spec.maxLocaleBytes}-byte locale budget.`,
+      );
+    }
+  }
+}
+
 async function validateAssets(assets, root, failures, altKeys) {
   const ids = new Set();
   const paths = new Set();
   for (const asset of assets) {
     validateAssetMetadata(asset, failures, ids, paths, altKeys);
-    validateWebDerivativeMetadata(asset, failures, paths);
+    for (const spec of WEB_DERIVATIVES) {
+      validateDerivativeMetadata(asset, spec, failures, paths);
+    }
     await validateAssetFile(asset, root, failures);
-    await validateWebDerivativeFile(asset, root, failures);
-  }
-  const localeBytes = new Map();
-  for (const asset of assets) {
-    const locale = asset.locales?.[0];
-    if (locale && Number.isInteger(asset.web?.byteLength)) {
-      localeBytes.set(locale, (localeBytes.get(locale) ?? 0) + asset.web.byteLength);
+    for (const spec of WEB_DERIVATIVES) {
+      await validateDerivativeFile(asset, spec, root, failures);
     }
   }
-  for (const [locale, byteLength] of localeBytes) {
-    if (byteLength > maxWebLocaleBytes) {
-      failures.push(`${locale} web derivatives exceed the ${maxWebLocaleBytes}-byte locale budget.`);
-    }
+  for (const spec of WEB_DERIVATIVES) {
+    validateLocaleBudget(assets, spec, failures);
   }
   return ids;
 }

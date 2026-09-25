@@ -46,6 +46,27 @@
           "effort": 6,
           "smartSubsample": true
         }
+      },
+      "compact": {
+        "path": "/images/product/canonical-flow-2026/en-US/01-voice-input-compact.webp",
+        "mediaType": "image/webp",
+        "width": 440,
+        "height": 956,
+        "byteLength": 22358,
+        "sha256": "f3e18ee075b857add542c62ec492c32d75efd6dc50cff94d47df30b02b167647",
+        "sourceSha256": "0e1cf4ae22b6cd8e6050731077f462aac7cb79bb798f83d6f7dda726d07cbdfb",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.3333333333333333,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
       }
     },
     {
@@ -78,6 +99,27 @@
         "libvips": "8.18.3",
         "parameters": {
           "scale": 0.5,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      },
+      "compact": {
+        "path": "/images/product/canonical-flow-2026/en-US/02-assignee-compact.webp",
+        "mediaType": "image/webp",
+        "width": 360,
+        "height": 800,
+        "byteLength": 18392,
+        "sha256": "73b1590e2b9d66526a0009fc363acc6eac37d70cb42ac83b4cdecd5eae52dd99",
+        "sourceSha256": "8c367e089779458a2dcc83801fb0400ee3a07e64f2c6993a94758e6e99c57565",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.3333333333333333,
           "fit": "fill",
           "kernel": "lanczos3",
           "colourspace": "srgb",
@@ -126,6 +168,27 @@
           "effort": 6,
           "smartSubsample": true
         }
+      },
+      "compact": {
+        "path": "/images/product/canonical-flow-2026/en-US/03-delegated-task-compact.webp",
+        "mediaType": "image/webp",
+        "width": 440,
+        "height": 956,
+        "byteLength": 29762,
+        "sha256": "38b960afda3f41a83a41a3de6df10a6b9f2f4c4da3bf1f231dee9831d204ef75",
+        "sourceSha256": "b1da13fa5cdf7238558dbf648ab5aa8d2513158037824b1f278b69ea66caa8d7",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.3333333333333333,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
       }
     },
     {
@@ -158,6 +221,27 @@
         "libvips": "8.18.3",
         "parameters": {
           "scale": 0.5,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      },
+      "compact": {
+        "path": "/images/product/canonical-flow-2026/en-US/04-groups-compact.webp",
+        "mediaType": "image/webp",
+        "width": 440,
+        "height": 956,
+        "byteLength": 35888,
+        "sha256": "c6cb56b5182dc09b5c04341473d2c5a61e2ef6d12bc46250fb02440087644475",
+        "sourceSha256": "6380ecb85dfaf76f1c713de118cd5075e49c874939a68fccb0786e86b3bd1ff0",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.3333333333333333,
           "fit": "fill",
           "kernel": "lanczos3",
           "colourspace": "srgb",
@@ -206,6 +290,27 @@
           "effort": 6,
           "smartSubsample": true
         }
+      },
+      "compact": {
+        "path": "/images/product/canonical-flow-2026/en-US/05-group-offer-gallery-compact.webp",
+        "mediaType": "image/webp",
+        "width": 688,
+        "height": 917,
+        "byteLength": 39242,
+        "sha256": "fb7ed35c7362aeefca30d8b2556372ffc64717ef232459cf68c5b5231fce1678",
+        "sourceSha256": "a9b0661e00ae53e8135983e0671949250b7a5ef84462fe2d7e3b1a6063ba9e97",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.3333333333333333,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
       }
     },
     {
@@ -238,6 +343,27 @@
         "libvips": "8.18.3",
         "parameters": {
           "scale": 0.5,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      },
+      "compact": {
+        "path": "/images/product/canonical-flow-2026/en-US/06-modules-compact.webp",
+        "mediaType": "image/webp",
+        "width": 440,
+        "height": 956,
+        "byteLength": 40444,
+        "sha256": "4f2bdb681ea7659de0ad95b31290807a2b0b765c36987e48d8cb7f75c4dd16ba",
+        "sourceSha256": "0959a7e6ac6ece9eaf23afd1cd33574f52e48630fad73b2f4d53c1564b310341",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.3333333333333333,
           "fit": "fill",
           "kernel": "lanczos3",
           "colourspace": "srgb",
@@ -286,6 +412,27 @@
           "effort": 6,
           "smartSubsample": true
         }
+      },
+      "compact": {
+        "path": "/images/product/canonical-flow-2026/en-US/07-bookings-compact.webp",
+        "mediaType": "image/webp",
+        "width": 360,
+        "height": 800,
+        "byteLength": 15350,
+        "sha256": "56c5cf97b01de4b395a1a48cb0a54e5b5e5e4641440b78d2dad23577287905ba",
+        "sourceSha256": "6990018013536b0f3084124f7fb479a3e0ee382d69e8a123225cfb67be7cdc88",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.3333333333333333,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
       }
     },
     {
@@ -318,6 +465,27 @@
         "libvips": "8.18.3",
         "parameters": {
           "scale": 0.5,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      },
+      "compact": {
+        "path": "/images/product/canonical-flow-2026/en-US/08-nearby-compact.webp",
+        "mediaType": "image/webp",
+        "width": 360,
+        "height": 800,
+        "byteLength": 89222,
+        "sha256": "4eb02041f16e6aa03312684fb7afa068d2ce7d7e6b2af142b33d605451406791",
+        "sourceSha256": "2a983bea1cf6e42ecac8261a286901101c5cca50ddc5c35a89bc6c3cfdd96de9",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.3333333333333333,
           "fit": "fill",
           "kernel": "lanczos3",
           "colourspace": "srgb",
@@ -366,6 +534,27 @@
           "effort": 6,
           "smartSubsample": true
         }
+      },
+      "compact": {
+        "path": "/images/product/canonical-flow-2026/pl-PL/01-voice-input-compact.webp",
+        "mediaType": "image/webp",
+        "width": 440,
+        "height": 956,
+        "byteLength": 22902,
+        "sha256": "a83445eb0ffe13ca2056f39e233b25ba64227ae5570691a3be9a64680d4956aa",
+        "sourceSha256": "3b3743d0270acc67df872da217652f1aea830628591efdd54934fc0bc4d1a770",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.3333333333333333,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
       }
     },
     {
@@ -398,6 +587,27 @@
         "libvips": "8.18.3",
         "parameters": {
           "scale": 0.5,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      },
+      "compact": {
+        "path": "/images/product/canonical-flow-2026/pl-PL/02-assignee-compact.webp",
+        "mediaType": "image/webp",
+        "width": 360,
+        "height": 800,
+        "byteLength": 18860,
+        "sha256": "3cf838e0e5a54adb0cf0b74d2d5e8d36e4d7acec719a3986440f0c9a472e0559",
+        "sourceSha256": "ab5cf806941776f0d252536cd9078fff168482d4b50e9b5f9052c5cc8cef8d79",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.3333333333333333,
           "fit": "fill",
           "kernel": "lanczos3",
           "colourspace": "srgb",
@@ -446,6 +656,27 @@
           "effort": 6,
           "smartSubsample": true
         }
+      },
+      "compact": {
+        "path": "/images/product/canonical-flow-2026/pl-PL/03-delegated-task-compact.webp",
+        "mediaType": "image/webp",
+        "width": 440,
+        "height": 956,
+        "byteLength": 31174,
+        "sha256": "cca572b44c73317e9e638d4a044efb28aaf214fb2aac78b32f87dec10f507beb",
+        "sourceSha256": "d97ab18439e7c1f1a0c752c3f0bf5943ef4a9cd30a4c7543c7fea9648750afdb",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.3333333333333333,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
       }
     },
     {
@@ -478,6 +709,27 @@
         "libvips": "8.18.3",
         "parameters": {
           "scale": 0.5,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      },
+      "compact": {
+        "path": "/images/product/canonical-flow-2026/pl-PL/04-groups-compact.webp",
+        "mediaType": "image/webp",
+        "width": 440,
+        "height": 956,
+        "byteLength": 38142,
+        "sha256": "1abb9943bf7e27be0ee54af48d2524d1d20dc5c41e4645d589b3e52550e08853",
+        "sourceSha256": "bd36b35d0ea567a2d467fe14b15d70fe50f72b1c9d73098a8157b211241836ee",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.3333333333333333,
           "fit": "fill",
           "kernel": "lanczos3",
           "colourspace": "srgb",
@@ -526,6 +778,27 @@
           "effort": 6,
           "smartSubsample": true
         }
+      },
+      "compact": {
+        "path": "/images/product/canonical-flow-2026/pl-PL/05-group-offer-gallery-compact.webp",
+        "mediaType": "image/webp",
+        "width": 688,
+        "height": 917,
+        "byteLength": 39484,
+        "sha256": "92ac08de0f73f1134380faf4ab38e5b48b6776eae995612541404b57acecd39b",
+        "sourceSha256": "e344cc6dee94f0aba9369a10611e65978f5c2a2f7da540f5f23171aa09e8dc0b",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.3333333333333333,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
       }
     },
     {
@@ -558,6 +831,27 @@
         "libvips": "8.18.3",
         "parameters": {
           "scale": 0.5,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      },
+      "compact": {
+        "path": "/images/product/canonical-flow-2026/pl-PL/06-modules-compact.webp",
+        "mediaType": "image/webp",
+        "width": 440,
+        "height": 956,
+        "byteLength": 40380,
+        "sha256": "3c8e05ca9ac34989d504349249350bb8b9e39c24ca1b21d8a0aef49b61b3d256",
+        "sourceSha256": "0a4d28c3220b791d2449afa4bc48c712c676d5ce997f8374266f599723870977",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.3333333333333333,
           "fit": "fill",
           "kernel": "lanczos3",
           "colourspace": "srgb",
@@ -606,6 +900,27 @@
           "effort": 6,
           "smartSubsample": true
         }
+      },
+      "compact": {
+        "path": "/images/product/canonical-flow-2026/pl-PL/07-bookings-compact.webp",
+        "mediaType": "image/webp",
+        "width": 360,
+        "height": 800,
+        "byteLength": 15964,
+        "sha256": "6b527fe270db81c3115c9a8e2f4e4a66bee5a488699fbc7c1cf5dedce9a93bc8",
+        "sourceSha256": "5e0e8cb00272aa9d45b4d0540416cf624e4d0fa31e55d9671bfc5d66242ea602",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.3333333333333333,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
       }
     },
     {
@@ -638,6 +953,27 @@
         "libvips": "8.18.3",
         "parameters": {
           "scale": 0.5,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      },
+      "compact": {
+        "path": "/images/product/canonical-flow-2026/pl-PL/08-nearby-compact.webp",
+        "mediaType": "image/webp",
+        "width": 360,
+        "height": 800,
+        "byteLength": 82658,
+        "sha256": "9ff9dbe48361166c57497991e415d33f038bffded7609f40226f1b87363acd36",
+        "sourceSha256": "e7bfe8c9cc82e8e80c5ed99f46d31848da1c012f490b335c519f8600a86c139b",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.3333333333333333,
           "fit": "fill",
           "kernel": "lanczos3",
           "colourspace": "srgb",

@@ -1,27 +1,21 @@
 import { createHash } from 'node:crypto';
 import { lstat, mkdir, readFile, realpath, rename, rm, writeFile } from 'node:fs/promises';
-import { dirname, extname, isAbsolute, relative, resolve, sep } from 'node:path';
+import { dirname, isAbsolute, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
+import {
+  DERIVATIVE_ENCODER as encoder,
+  DERIVATIVE_LIBVIPS as libvips,
+  WEB_DERIVATIVES,
+  derivativePath,
+  derivativeSize,
+  encodeDerivative,
+} from './product-media-derivatives.mjs';
 
 const root = new URL('../', import.meta.url);
 const manifestUrl = new URL('content/product-media.json', root);
 const publicRoot = resolve(fileURLToPath(new URL('public', root)));
 const imagesRoot = resolve(publicRoot, 'images');
-const encoder = 'sharp@0.35.3';
-const libvips = '8.18.3';
-const maxAssetBytes = 200 * 1024;
-const maxLocaleBytes = 600 * 1024;
-const parameters = {
-  scale: 0.5,
-  fit: 'fill',
-  kernel: 'lanczos3',
-  colourspace: 'srgb',
-  stripMetadata: true,
-  quality: 88,
-  effort: 6,
-  smartSubsample: true,
-};
 
 function isContainedPath(parent, candidate) {
   const relativePath = relative(parent, candidate);
@@ -68,12 +62,6 @@ async function readCanonicalSource(asset, sourceFile) {
   return readFile(realSourceFile);
 }
 
-function webPathFor(sourcePath) {
-  const extension = extname(sourcePath);
-  if (!extension) throw new Error(`Product media path has no extension: ${sourcePath}`);
-  return `${sourcePath.slice(0, -extension.length)}.webp`;
-}
-
 function digest(buffer) {
   return createHash('sha256').update(buffer).digest('hex');
 }
@@ -89,16 +77,12 @@ sharp.cache(false);
 
 const manifest = JSON.parse(await readFile(manifestUrl, 'utf8'));
 const generated = [];
-const localeBytes = new Map();
+const localeBytes = new Map(WEB_DERIVATIVES.map((spec) => [spec.key, new Map()]));
+const derivativeBytes = new Map(WEB_DERIVATIVES.map((spec) => [spec.key, 0]));
 let totalSourceBytes = 0;
-let totalWebBytes = 0;
 
 for (const asset of manifest.assets) {
   const sourceFile = resolvePublicImage(asset.path);
-  const webPath = webPathFor(asset.path);
-  const webFile = resolvePublicImage(webPath);
-  const width = Math.max(1, Math.round(asset.width * parameters.scale));
-  const height = Math.max(1, Math.round(asset.height * parameters.scale));
   const source = await readCanonicalSource(asset, sourceFile);
   const sourceMetadata = await sharp(source, { failOn: 'error' }).metadata();
   const expectedFormat = asset.mediaType === 'image/png' ? 'png' : 'jpeg';
@@ -112,59 +96,61 @@ for (const asset of manifest.assets) {
   ) {
     throw new Error(`Source provenance validation failed before generation for ${asset.id}.`);
   }
-
-  const output = await sharp(source, { failOn: 'error' })
-    .resize(width, height, {
-      fit: parameters.fit,
-      kernel: sharp.kernel.lanczos3,
-    })
-    .toColourspace(parameters.colourspace)
-    .webp({
-      quality: parameters.quality,
-      effort: parameters.effort,
-      smartSubsample: parameters.smartSubsample,
-    })
-    .toBuffer();
-  const outputMetadata = await sharp(output, { failOn: 'error' }).metadata();
-
-  if (
-    outputMetadata.format !== 'webp' ||
-    outputMetadata.width !== width ||
-    outputMetadata.height !== height
-  ) {
-    throw new Error(`Generated derivative metadata is invalid for ${asset.id}.`);
-  }
-  if (output.length > maxAssetBytes) {
-    throw new Error(`${asset.id} derivative exceeds the ${maxAssetBytes}-byte asset budget.`);
-  }
-
-  const locale = asset.locales?.[0];
-  localeBytes.set(locale, (localeBytes.get(locale) ?? 0) + output.length);
-  generated.push({
-    asset,
-    output,
-    webFile,
-    tempFile: `${webFile}.tmp-${process.pid}`,
-    metadata: {
-      path: webPath,
-      mediaType: 'image/webp',
-      width,
-      height,
-      byteLength: output.length,
-      sha256: digest(output),
-      sourceSha256: asset.sha256,
-      encoder,
-      libvips,
-      parameters,
-    },
-  });
   totalSourceBytes += source.length;
-  totalWebBytes += output.length;
+
+  for (const spec of WEB_DERIVATIVES) {
+    const webPath = derivativePath(spec, asset.path);
+    const webFile = resolvePublicImage(webPath);
+    const { width, height } = derivativeSize(spec, asset.width, asset.height);
+    const output = await encodeDerivative(sharp, source, spec, width, height);
+    const outputMetadata = await sharp(output, { failOn: 'error' }).metadata();
+
+    if (
+      outputMetadata.format !== 'webp' ||
+      outputMetadata.width !== width ||
+      outputMetadata.height !== height
+    ) {
+      throw new Error(`Generated ${spec.key} derivative metadata is invalid for ${asset.id}.`);
+    }
+    if (output.length > spec.maxAssetBytes) {
+      throw new Error(
+        `${asset.id} ${spec.key} derivative exceeds the ${spec.maxAssetBytes}-byte asset budget.`,
+      );
+    }
+
+    const locale = asset.locales?.[0];
+    const specLocaleBytes = localeBytes.get(spec.key);
+    specLocaleBytes.set(locale, (specLocaleBytes.get(locale) ?? 0) + output.length);
+    derivativeBytes.set(spec.key, derivativeBytes.get(spec.key) + output.length);
+    generated.push({
+      asset,
+      key: spec.key,
+      output,
+      webFile,
+      tempFile: `${webFile}.tmp-${process.pid}`,
+      metadata: {
+        path: webPath,
+        mediaType: 'image/webp',
+        width,
+        height,
+        byteLength: output.length,
+        sha256: digest(output),
+        sourceSha256: asset.sha256,
+        encoder,
+        libvips,
+        parameters: spec.parameters,
+      },
+    });
+  }
 }
 
-for (const [locale, byteLength] of localeBytes) {
-  if (byteLength > maxLocaleBytes) {
-    throw new Error(`${locale} derivatives exceed the ${maxLocaleBytes}-byte locale budget.`);
+for (const spec of WEB_DERIVATIVES) {
+  for (const [locale, byteLength] of localeBytes.get(spec.key)) {
+    if (byteLength > spec.maxLocaleBytes) {
+      throw new Error(
+        `${locale} ${spec.key} derivatives exceed the ${spec.maxLocaleBytes}-byte locale budget.`,
+      );
+    }
   }
 }
 
@@ -175,7 +161,7 @@ try {
   }
   for (const item of generated) {
     await rename(item.tempFile, item.webFile);
-    item.asset.web = item.metadata;
+    item.asset[item.key] = item.metadata;
   }
   manifest.schemaVersion = 2;
   await writeFile(manifestUrl, `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
@@ -185,13 +171,16 @@ try {
   );
 }
 
-const savings = totalSourceBytes === 0
-  ? 0
-  : Math.round((1 - totalWebBytes / totalSourceBytes) * 1000) / 10;
-console.log(
-  `Generated ${manifest.assets.length} deterministic WebP derivatives: ` +
-  `${totalSourceBytes} -> ${totalWebBytes} bytes (${savings}% smaller).`,
-);
-for (const [locale, byteLength] of localeBytes) {
-  console.log(`${locale}: ${byteLength} bytes.`);
+for (const spec of WEB_DERIVATIVES) {
+  const bytes = derivativeBytes.get(spec.key);
+  const savings = totalSourceBytes === 0
+    ? 0
+    : Math.round((1 - bytes / totalSourceBytes) * 1000) / 10;
+  console.log(
+    `Generated ${manifest.assets.length} deterministic ${spec.key} WebP derivatives: ` +
+    `${totalSourceBytes} -> ${bytes} bytes (${savings}% smaller).`,
+  );
+  for (const [locale, byteLength] of localeBytes.get(spec.key)) {
+    console.log(`${spec.key} ${locale}: ${byteLength} bytes.`);
+  }
 }

@@ -6,15 +6,29 @@ import { languageSwitchPath, LEGACY_ALIASES, NORWEGIAN_PATHS } from '../lib/site
 
 const root = new URL('../', import.meta.url);
 const outputPath = fileURLToPath(new URL('out/', root));
+const runtimeMedia = JSON.parse(
+  await readFile(new URL('content/product-media.runtime.json', root), 'utf8'),
+);
+const runtimeMediaByPath = new Map(runtimeMedia.assets.map((asset) => [asset.path, asset]));
 const supportEmail = 'shuuty.app@gmail.com';
 const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || 'https://shuuty.com').replace(/\/+$/, '');
-const escapedSiteUrl = siteUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-const openGraphImagePattern = new RegExp(
-  `<meta(?=[^>]*\\bproperty="og:image")(?=[^>]*\\bcontent="${escapedSiteUrl}/opengraph-image\\.png(?:\\?[^\"]+)?")[^>]*>`,
+const socialCards = JSON.parse(
+  await readFile(new URL('content/social-cards.json', root), 'utf8'),
 );
-const twitterImagePattern = new RegExp(
-  `<meta(?=[^>]*\\bname="twitter:image")(?=[^>]*\\bcontent="${escapedSiteUrl}/opengraph-image\\.png")[^>]*>`,
-);
+// Every page shares the preview card of its own language.
+const socialImageTags = (language) => {
+  const card = socialCards.cards[language];
+  const url = `${siteUrl}${card.image.path}`;
+  return [
+    `<meta property="og:image" content="${url}"/>`,
+    `<meta property="og:image:width" content="${card.image.width}"/>`,
+    `<meta property="og:image:height" content="${card.image.height}"/>`,
+    `<meta property="og:image:alt" content="${card.alt}"/>`,
+    `<meta property="og:image:type" content="${card.image.mediaType}"/>`,
+    `<meta name="twitter:image" content="${url}"/>`,
+    `<meta name="twitter:image:alt" content="${card.alt}"/>`,
+  ];
+};
 
 // Norwegian covers the landing and support pages only.
 const homeAlternates = { en: '/', pl: '/pl/', nb: '/nb/', 'x-default': '/' };
@@ -26,7 +40,7 @@ const supportAlternates = {
 };
 const copyButtonPattern = (actionLabel) =>
   new RegExp(
-    `<button[^>]*><span>shuuty\\.app@gmail\\.com</span><span[^>]*>, </span><span[^>]*>${actionLabel}</span></button>`,
+    String.raw`<button[^>]*><span>shuuty\.app@gmail\.com</span><span[^>]*>, </span><span[^>]*>${actionLabel}</span></button>`,
   );
 
 const pages = {
@@ -53,7 +67,7 @@ const pages = {
       'shuuty-theme',
       'summary_large_image',
       'android-chrome-192x192.png',
-      'opengraph-image.png',
+      '/images/social/shuuty-en.jpg',
       '/images/brand/shuuty-app-icon.png',
       '/images/brand/golden-relay-flow.png',
       '/images/product/canonical-flow-2026/en-US/01-voice-input.webp',
@@ -73,8 +87,6 @@ const pages = {
       /<script type="application\/ld\+json">/,
       /<details[^>]*open=""/,
       /<title>Shuuty - Voice Tasks, Flexible Groups &amp; Meetings<\/title>/,
-      openGraphImagePattern,
-      twitterImagePattern,
     ],
     forbiddenPatterns: [
       /\/images\/image[1-5]\.webp/,
@@ -124,8 +136,6 @@ const pages = {
       /<script type="application\/ld\+json">/,
       /<details[^>]*open=""/,
       /<title>Zadania głosowe, grupy i spotkania \| Shuuty<\/title>/,
-      openGraphImagePattern,
-      twitterImagePattern,
     ],
     forbiddenPatterns: [
       /\/images\/app\/(?:create-menu|discover-groups|discover-meetings|profile-settings)\.(?:jpe?g|png)/,
@@ -166,8 +176,6 @@ const pages = {
       /<script type="application\/ld\+json">/,
       /<details[^>]*open=""/,
       /<title>Huskeliste med stemmen, grupper og møter \| Shuuty<\/title>/,
-      openGraphImagePattern,
-      twitterImagePattern,
     ],
     forbiddenPatterns: [
       /\/images\/product\/canonical-flow-2026\/pl-PL\//,
@@ -527,14 +535,18 @@ for (const [name, page] of Object.entries(pages)) {
     }
   }
 
-  if (!openGraphImagePattern.test(html) || !twitterImagePattern.test(html)) {
+  const missingSocialImageTags = socialImageTags(page.language).filter((tag) => !html.includes(tag));
+  if (missingSocialImageTags.length > 0) {
     const detectedSocialImageTags =
-      html.match(/<meta[^>]*(?:property="og:image"|name="twitter:image")[^>]*>/g) ?? [];
+      html.match(/<meta[^>]*(?:property="og:image[^"]*"|name="twitter:image[^"]*")[^>]*>/g) ?? [];
     failures.push(
-      `${name} static HTML is missing the shared social preview image; detected tags: ${
-        detectedSocialImageTags.join(' | ') || 'none'
-      }`,
+      `${name} static HTML is missing its ${page.language} social preview card: ${missingSocialImageTags.join(
+        ' | ',
+      )}; detected tags: ${detectedSocialImageTags.join(' | ') || 'none'}`,
     );
+  }
+  if ((html.match(/<meta property="og:image"/g) ?? []).length !== 1) {
+    failures.push(`${name} static HTML should declare exactly one og:image`);
   }
 
   if (page.routeMetadata !== false && !/<title>[^<]+\| Shuuty<\/title>/.test(html)) {
@@ -652,11 +664,11 @@ for (const [language, homePath] of Object.entries({
   const ownLocale = html.match(/<meta property="og:locale" content="([^"]+)"/)?.[1];
   const alternateLocales = [
     ...html.matchAll(/<meta property="og:locale:alternate" content="([^"]+)"/g),
-  ].map((match) => match[1]).sort();
+  ].map((match) => match[1]).sort((left, right) => left.localeCompare(right));
   const expectedAlternates = Object.entries(openGraphLocales)
     .filter(([siteLanguage]) => siteLanguage !== language)
     .map(([, locale]) => locale)
-    .sort();
+    .sort((left, right) => left.localeCompare(right));
   if (ownLocale !== openGraphLocales[language]) {
     failures.push(`${homePath} og:locale should be ${openGraphLocales[language]}, found ${ownLocale}`);
   }
@@ -676,6 +688,35 @@ for (const [language, homePath] of Object.entries({
     || !highPriorityImages[0].includes('/01-voice-input.webp"')
   ) {
     failures.push(`${homePath} should give exactly one image, the LCP hero, high fetch priority`);
+  }
+
+  // Every product capture lists the compact third-size derivative next to the
+  // half-size one, so small phone frames do not download the larger file.
+  const productImages = html.match(/<img[^>]*\bsrc="\/images\/product\/[^"]+"[^>]*>/gi) ?? [];
+  if (productImages.length === 0) {
+    failures.push(`${homePath} renders no product captures`);
+  }
+  for (const image of productImages) {
+    const src = image.match(/\bsrc="([^"]+)"/i)?.[1];
+    const media = runtimeMediaByPath.get(src);
+    const srcSet = image.match(/\bsrcset="([^"]+)"/i)?.[1];
+    const sizes = image.match(/\bsizes="([^"]+)"/i)?.[1];
+    if (!media) {
+      failures.push(`${homePath} renders ${src}, which is not a runtime media derivative`);
+      continue;
+    }
+    const expectedSrcSet = `${media.compact.path} ${media.compact.width}w, ${media.path} ${media.width}w`;
+    if (srcSet !== expectedSrcSet) {
+      failures.push(`${homePath} ${src} srcset should be "${expectedSrcSet}", found "${srcSet ?? 'none'}"`);
+    }
+    if (!sizes) {
+      failures.push(`${homePath} ${src} needs sizes so the browser can choose from srcset`);
+    }
+    try {
+      await access(join(outputPath, ...media.compact.path.split('/').filter(Boolean)));
+    } catch {
+      failures.push(`${homePath} ${media.compact.path} is missing from the static export`);
+    }
   }
 
   for (const placement of ['hero', 'download']) {
