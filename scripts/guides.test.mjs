@@ -143,6 +143,7 @@ test('registry problems are reported in plain words', () => {
       { ...salonPl, description: 'Za krótko.' },
       { ...clubEn, topic: 'home', slug: 'home', updatedOn: '2026-02-30' },
       { ...clubEn, topic: 'team', slug: 'team', updatedLabel: 'Updated 28 September 2026' },
+      { ...clubEn, topic: 'bold', slug: 'bold', heading: 'A **bold** heading' },
       { ...clubEn, topic: 'dash', slug: 'dash', heading: 'Groups \u2014 and meetings' },
     ],
   }).join('\n');
@@ -153,6 +154,8 @@ test('registry problems are reported in plain words', () => {
   assert.match(problems, /updatedOn must be a YYYY-MM-DD date/);
   assert.match(problems, /updatedLabel must show the day and year of 2026-09-27/);
   assert.match(problems, /short hyphen instead of a long dash/);
+  // Titles, headings and labels render as plain text.
+  assert.match(problems, /shown literally in plain text: A \*\*bold\*\* heading/);
 
   const { nb, ...indexWithoutNorwegian } = registry.index;
   assert.ok(nb);
@@ -181,6 +184,15 @@ test('article bodies open with a paragraph and use only known blocks', () => {
   assert.match(problems, /list block 2 needs non-empty items/);
   assert.match(problems, /Unmatched \*\*/);
   assert.match(problems, /FAQ entry 0 is incomplete/);
+  assert.match(
+    guideArticleProblems('bold heading', {
+      body: [
+        { type: 'p', text: 'Paragraphs may use **bold**.' },
+        { type: 'h2', text: 'A **bold** section' },
+      ],
+    }).join('\n'),
+    /h2 block 1: \*\* is shown literally in plain text/,
+  );
   assert.match(guideArticleProblems('empty', { body: [] }).join('\n'), /body is empty/);
   assert.match(
     guideArticleProblems('flat', { body: [{ type: 'p', text: 'Only text.' }] }).join('\n'),

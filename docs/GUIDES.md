@@ -36,7 +36,7 @@ Guides are practical articles at `/guides/` (en), `/pl/poradniki/` (pl) and `/nb
    }
    ```
 
-   The body opens with a paragraph and has at least one `h2`. `faq` is optional; its entries also become FAQPage structured data.
+   The body opens with a paragraph and has at least one `h2`. `faq` is optional; its entries also become FAQPage structured data. `**bold**` works in paragraphs, list items and FAQ entries; titles, headings and labels are plain text, so the checks reject `**` there.
 
 3. Add the page at `app/<section>/<slug>/page.tsx` (`app/guides/`, `app/pl/poradniki/` or `app/nb/guider/`):
 

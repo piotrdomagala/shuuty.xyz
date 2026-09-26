@@ -105,7 +105,8 @@ export function useSiteLanguage(
     const targetPath =
       switchPaths?.[nextLanguage] ?? languageSwitchPath(window.location.pathname, nextLanguage);
     if (targetPath !== window.location.pathname) {
-      // A translated article is a different text, so it opens at the top.
+      // A translated article is a different text, so it opens at the top:
+      // no saved position and no fragment (translations reuse section ids).
       if (!switchPaths) {
         try {
           window.sessionStorage.setItem(LANGUAGE_SCROLL_KEY, JSON.stringify({
@@ -117,7 +118,8 @@ export function useSiteLanguage(
           // Keep the route switch functional when session storage is unavailable.
         }
       }
-      window.location.assign(`${targetPath}${window.location.search}${window.location.hash}`);
+      const hash = switchPaths ? '' : window.location.hash;
+      window.location.assign(`${targetPath}${window.location.search}${hash}`);
     }
   }, [switchPaths]);
 
