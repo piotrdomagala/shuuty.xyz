@@ -51,5 +51,16 @@
       "facts": "Fakta om Shuuty"
     }
   },
-  "guides": []
+  "guides": [
+    {
+      "topic": "sports-club",
+      "language": "pl",
+      "slug": "aplikacja-dla-klubu-sportowego",
+      "title": "Aplikacja dla klubu sportowego - grupa, kort i treningi",
+      "description": "Jedna grupa dla klubu: informacje dla członków, grafik rezerwacji kortu lub sali i cotygodniowe treningi z czatem. Co działa, czego brakuje i jak zacząć.",
+      "heading": "Aplikacja dla klubu sportowego: grupa, grafik kortu i treningi w jednym miejscu",
+      "updatedOn": "2026-09-26",
+      "updatedLabel": "Zaktualizowano 26 września 2026"
+    }
+  ]
 }
