@@ -49,7 +49,7 @@
               "text": "Enable only the modules it needs: chat, threads, tasks, a shared calendar, bookings, plans, projects, and time tracking."
             },
             {
-              "text": "Set the place, time, and participants for a meeting. Discover nearby meetings, public groups, and local offers on the map."
+              "text": "Set the place, time, and participants for a meeting. Discover nearby meetings and public groups on the map."
             }
           ]
         },
@@ -174,7 +174,7 @@
           "question": "Can I find meetings and groups near me?",
           "answer": [
             {
-              "text": "Discover nearby meetings, public groups, and local offers on the map."
+              "text": "Discover nearby meetings and public groups on the map."
             },
             {
               "text": "Your meeting can appear on the map for people nearby, or stay private and invite-only."
@@ -280,7 +280,7 @@
               "text": "Włącz tylko potrzebne moduły: czat, wątki, zadania, wspólny kalendarz, rezerwacje, plany, projekty i ewidencję czasu."
             },
             {
-              "text": "Zaplanuj miejsce, czas i uczestników spotkania. Odkrywaj na mapie pobliskie spotkania, publiczne grupy i lokalne oferty."
+              "text": "Zaplanuj miejsce, czas i uczestników spotkania. Odkrywaj na mapie pobliskie spotkania i publiczne grupy."
             }
           ]
         },
@@ -405,7 +405,7 @@
           "question": "Czy znajdę spotkania i grupy w pobliżu?",
           "answer": [
             {
-              "text": "Odkrywaj na mapie pobliskie spotkania, publiczne grupy i lokalne oferty."
+              "text": "Odkrywaj na mapie pobliskie spotkania i publiczne grupy."
             },
             {
               "text": "Twoje spotkanie może być widoczne na mapie dla osób w okolicy albo pozostać prywatne, tylko dla zaproszonych."
@@ -511,7 +511,7 @@
               "text": "Slå bare på modulene du trenger: chat, tråder, oppgaver, felles kalender, bestillinger, planer, prosjekter og tidsregistrering."
             },
             {
-              "text": "Planlegg sted, tid og deltakere for et møte. Utforsk møter, offentlige grupper og lokale tilbud i nærheten på kartet."
+              "text": "Planlegg sted, tid og deltakere for et møte. Utforsk møter og offentlige grupper i nærheten på kartet."
             }
           ]
         },
@@ -636,7 +636,7 @@
           "question": "Kan jeg finne møter og grupper i nærheten?",
           "answer": [
             {
-              "text": "Utforsk møter, offentlige grupper og lokale tilbud i nærheten på kartet."
+              "text": "Utforsk møter og offentlige grupper i nærheten på kartet."
             },
             {
               "text": "Møtet ditt kan vises på kartet for folk i nærheten, eller være privat og kun for inviterte."

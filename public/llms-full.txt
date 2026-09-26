@@ -130,7 +130,7 @@ Shuuty er en app for oppgaver, grupper og møter med menneskene rundt deg. Si hv
 - Slå bare på modulene du trenger: chat, tråder, oppgaver, felles kalender, bestillinger, planer, prosjekter og tidsregistrering.
 - En gruppe kan også være ditt eget tilbud - for eksempel en bil til salgs, med fullstendig beskrivelse og bilder. Med Pro og Teams får du plass til lengre beskrivelser og flere bilder.
 - Private grupper og møter er bare tilgjengelige via invitasjon. Andre krever godkjenning eller har åpen tilgang, og kan være synlige for venner eller for alle.
-- Planlegg sted, tid og deltakere for et møte. Utforsk møter, offentlige grupper og lokale tilbud i nærheten på kartet. Et møte kan være et engangstreff eller gjentas regelmessig.
+- Planlegg sted, tid og deltakere for et møte. Utforsk møter og offentlige grupper i nærheten på kartet. Et møte kan være et engangstreff eller gjentas regelmessig.
 - iPhone og iPad: App Store, iOS 15.1 eller nyere. Android: Google Play, Android 7.0 eller nyere. Appen finnes ikke som nettversjon - nettstedet er bare til informasjon.
 - På iPhone, iPad og Android finnes appen på norsk, polsk og engelsk. Med Pro og Teams oversetter du meldinger i samtaler, grupper og møter til ditt språk, slik at alle i en flerspråklig gruppe leser på sitt eget.
 - Kom i gang gratis. De valgfrie planene Pro og Teams gir høyere grenser og flere muligheter. Prisene avhenger av landet og vises i App Store og Google Play.
