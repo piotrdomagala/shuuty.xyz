@@ -2,7 +2,7 @@
 
 > Shuuty is a mobile application that connects voice-created tasks, delegation, flexible groups, meetings, conversations, calendars, and nearby discovery.
 
-Last updated: 2026-09-24. This document summarizes the capabilities described on the official Shuuty website and in the official App Store and Google Play listings. It does not describe private APIs or unpublished features. The canonical website is https://shuuty.com/ and the product is available for iPhone, iPad and Android. Publisher: Shuuty Prosta Spółka Akcyjna (Shuuty P.S.A.), Poland. Shuuty (shuuty.com) is not related to Shuut, Shouty or Shuuto.
+Last updated: 2026-09-26. This document summarizes the capabilities described on the official Shuuty website and in the official App Store and Google Play listings. It does not describe private APIs or unpublished features. The canonical website is https://shuuty.com/ and the product is available for iPhone, iPad and Android. Publisher: Shuuty Prosta Spółka Akcyjna (Shuuty P.S.A.), Poland. Shuuty (shuuty.com) is not related to Shuut, Shouty or Shuuto.
 
 ## English product overview
 
@@ -42,8 +42,8 @@ The creator chooses whether the group and its description are public, what remai
 
 ### Languages and chat
 
-- The app is available in English, Polish and Norwegian. On first launch it uses the phone language, and the language can be changed in the profile.
-- Recent app versions add dictation in chat and, on the Pro and Teams plans, translation of messages in conversations, groups and meetings into the reader's language.
+- On iPhone, iPad and Android the app is available in English, Polish and Norwegian (checked 2026-09-26). On first launch it uses the phone language, and the language can be changed in the profile.
+- The app offers dictation in chat and, on the Pro and Teams plans, translation of messages in conversations, groups and meetings into the reader's language.
 - Dates and times follow the format set on the phone.
 
 ### Product flow
@@ -56,7 +56,7 @@ The public website describes this sequence:
 
 ### Availability and plans
 
-- Shuuty is available on iOS (iPhone and iPad, iOS 15.1 or later) and Android.
+- Shuuty is available on iOS (iPhone and iPad, iOS 15.1 or later) and Android (Android 7.0 or later).
 - There is no web version of the app; the website is informational.
 - Users can start on the Free plan.
 - Optional Pro and Teams plans increase limits and unlock additional features.
@@ -100,8 +100,8 @@ Twórca grupy wybiera, czy grupa i jej opis są publiczne, co pozostaje widoczne
 
 ### Języki i czat
 
-- Aplikacja działa po polsku, angielsku i norwesku. Przy pierwszym uruchomieniu przejmuje język telefonu, a język można zmienić w profilu.
-- Nowsze wersje aplikacji pozwalają dyktować wiadomości w czacie, a w planach Pro i Teams tłumaczyć wiadomości w rozmowach, grupach i spotkaniach na język czytającego.
+- Na iPhonie, iPadzie i Androidzie aplikacja działa po polsku, angielsku i norwesku (sprawdzono 2026-09-26). Przy pierwszym uruchomieniu przejmuje język telefonu, a język można zmienić w profilu.
+- Aplikacja pozwala dyktować wiadomości w czacie, a w planach Pro i Teams tłumaczyć wiadomości w rozmowach, grupach i spotkaniach na język czytającego.
 - Daty i godziny wyglądają tak, jak ustawiono je w telefonie.
 
 ### Przebieg działania
@@ -114,14 +114,35 @@ Publiczna strona opisuje następujący proces:
 
 ### Dostępność i plany
 
-- Shuuty jest dostępne na iOS (iPhone i iPad, iOS 15.1 lub nowszy) i Androidzie.
+- Shuuty jest dostępne na iOS (iPhone i iPad, iOS 15.1 lub nowszy) i Androidzie (Android 7.0 lub nowszy).
 - Aplikacja nie ma wersji przeglądarkowej; strona ma charakter informacyjny.
 - Można zacząć od planu Free.
 - Opcjonalne plany Pro i Teams zwiększają limity i odblokowują dodatkowe funkcje.
 - Ten dokument nie podaje cen, ocen, liczby pobrań ani liczby użytkowników.
 
+## Norsk produktbeskrivelse
+
+Shuuty er en app for oppgaver, grupper og møter med menneskene rundt deg. Si hva som må gjøres, så fyller AI ut tittel, frist, påminnelse, mottaker og sted. Gi oppgaven til én venn, flere personer samtidig eller en hel gruppe.
+
+- Spill inn en oppgave med egne ord. Shuuty lager tittel og beskrivelse, kjenner igjen frist, påminnelse, person og sted, og deler flere tanker opp i separate oppgaver du kan se gjennom.
+- Når du delegerer den, får mottakeren den med en gang - eller først en forespørsel om godkjenning, hvis innstillingene til mottakeren krever det.
+- Bruk en gruppe som arbeidsrom for et team, et fellesskap, et samarbeidssted med kunder, et tjenestetilbud eller en presentasjon av et produkt som er til salgs.
+- Slå bare på modulene du trenger: chat, tråder, oppgaver, felles kalender, bestillinger, planer, prosjekter og tidsregistrering.
+- En gruppe kan også være ditt eget tilbud - for eksempel en bil til salgs, med fullstendig beskrivelse og bilder. Med Pro og Teams får du plass til lengre beskrivelser og flere bilder.
+- Private grupper og møter er bare tilgjengelige via invitasjon. Andre krever godkjenning eller har åpen tilgang, og kan være synlige for venner eller for alle.
+- Planlegg sted, tid og deltakere for et møte. Utforsk møter og offentlige grupper i nærheten på kartet. Et møte kan være et engangstreff eller gjentas regelmessig.
+- iPhone og iPad: App Store, iOS 15.1 eller nyere. Android: Google Play, Android 7.0 eller nyere. Appen finnes ikke som nettversjon - nettstedet er bare til informasjon.
+- På iPhone, iPad og Android finnes appen på norsk, polsk og engelsk. Med Pro og Teams oversetter du meldinger i samtaler, grupper og møter til ditt språk, slik at alle i en flerspråklig gruppe leser på sitt eget.
+- Kom i gang gratis. De valgfrie planene Pro og Teams gir høyere grenser og flere muligheter. Prisene avhenger av landet og vises i App Store og Google Play.
+- Du kan starte slettingen i Shuuty-appen under Profil > Konto > Slett konto, eller be om sletting på e-post til shuuty.app@gmail.com fra adressen som er knyttet til kontoen. Sletting av Shuuty-kontoen avslutter ikke automatisk et abonnement som administreres av Apple eller Google.
+- Utgiver: Shuuty Prosta Spółka Akcyjna (Shuuty P.S.A.), Polen. Hjelp: https://shuuty.com/nb/support/ og shuuty.app@gmail.com.
+- Kontrollerte fakta på norsk: https://shuuty.com/nb/facts/
+
 ## Canonical pages
 
+- [Shuuty facts](https://shuuty.com/facts/): Checked facts - platforms, languages, plans, publisher and support.
+- [Fakty o Shuuty](https://shuuty.com/pl/facts/): Sprawdzone fakty - platformy, języki, plany, wydawca i pomoc.
+- [Fakta om Shuuty](https://shuuty.com/nb/facts/): Kontrollerte fakta - plattformer, språk, planer, utgiver og hjelp.
 - [English product page](https://shuuty.com/)
 - [Polska strona produktu](https://shuuty.com/pl/)
 - [English support](https://shuuty.com/support/)

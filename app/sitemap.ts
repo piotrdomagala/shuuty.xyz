@@ -12,14 +12,21 @@ type RouteGroup = Readonly<{
 }>;
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  // Norwegian exists for the landing and support pages; legal documents stay
-  // English and Polish.
+  // Norwegian exists for the landing, support and facts pages; legal documents
+  // stay English and Polish.
   const routeGroups: readonly RouteGroup[] = [
     { english: '/', polish: '/pl/', norwegian: '/nb/', changeFrequency: 'weekly', priority: 1 },
     {
       english: '/support/',
       polish: '/pl/support/',
       norwegian: '/nb/support/',
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    },
+    {
+      english: '/facts/',
+      polish: '/pl/facts/',
+      norwegian: '/nb/facts/',
       changeFrequency: 'monthly',
       priority: 0.6,
     },

@@ -1,6 +1,6 @@
 export type DocumentLanguage = 'en' | 'pl';
 
-// Norwegian covers the landing and support pages. Legal documents stay English
+// Norwegian covers the landing, support and facts pages. Legal documents stay English
 // and Polish, so Norwegian visitors are sent to the English versions.
 export type SiteLanguage = DocumentLanguage | 'nb';
 
@@ -11,6 +11,7 @@ export const documentTranslations = {
     backTitle: 'Back to home',
     languageSwitcher: 'Language',
     support: 'Support',
+    facts: 'Facts',
     accountDeletion: 'Delete account',
     childSafety: 'Child safety',
     privacy: 'Privacy',
@@ -23,6 +24,7 @@ export const documentTranslations = {
     backTitle: 'Powrót do strony głównej',
     languageSwitcher: 'Język',
     support: 'Wsparcie',
+    facts: 'Fakty',
     accountDeletion: 'Usuń konto',
     childSafety: 'Bezpieczeństwo dzieci',
     privacy: 'Prywatność',
@@ -35,6 +37,7 @@ export const documentTranslations = {
     backTitle: 'Tilbake til forsiden',
     languageSwitcher: 'Språk',
     support: 'Hjelp',
+    facts: 'Fakta',
     accountDeletion: 'Slett konto',
     childSafety: 'Barnesikkerhet',
     privacy: 'Personvern',

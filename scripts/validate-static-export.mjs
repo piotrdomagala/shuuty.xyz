@@ -30,7 +30,7 @@ const socialImageTags = (language) => {
   ];
 };
 
-// Norwegian covers the landing and support pages only.
+// Norwegian covers the landing, support and facts pages only.
 const homeAlternates = { en: '/', pl: '/pl/', nb: '/nb/', 'x-default': '/' };
 const supportAlternates = {
   en: '/support/',
@@ -38,6 +38,31 @@ const supportAlternates = {
   nb: '/nb/support/',
   'x-default': '/support/',
 };
+const factsAlternates = {
+  en: '/facts/',
+  pl: '/pl/facts/',
+  nb: '/nb/facts/',
+  'x-default': '/facts/',
+};
+// The AlternativeTo badge is hosted here (the directory allows it), so visitors'
+// browsers never request an image from a third party.
+const alternativeToBadgePath = '/images/badges/alternativeto-listed.svg';
+const alternativeToBadgeSha256 = 'a84a12df6aff9750325eaf9be778610b5db55e111766df2b9fb6ea7eeed7a2bb';
+const alternativeToListingUrl =
+  'https://alternativeto.net/software/shuuty/about/?utm_source=badge&amp;utm_medium=referral';
+const factsContent = JSON.parse(await readFile(new URL('content/facts.json', root), 'utf8'));
+const factsFaqCount = 10;
+// Titles and the checked-on date come from content/facts.json, so moving the date
+// does not need a validator change; the FAQ count stays a fixed contract.
+const factsRequired = (language) => [
+  factsContent.pages[language].title,
+  factsContent.pages[language].checkedLabel,
+  'FAQPage',
+  'WebPage',
+  alternativeToBadgePath,
+  alternativeToListingUrl,
+  'data-goatcounter-click="outbound-alternativeto"',
+];
 const copyButtonPattern = (actionLabel) =>
   new RegExp(
     String.raw`<button[^>]*><span>shuuty\.app@gmail\.com</span><span[^>]*>, </span><span[^>]*>${actionLabel}</span></button>`,
@@ -225,6 +250,34 @@ const pages = {
     forbiddenPatterns: [/href="\/nb\/(?:privacy|terms|account-deletion|child-safety)\//],
     language: 'nb',
     languageAlternates: supportAlternates,
+  },
+  facts: {
+    path: 'out/facts/index.html',
+    route: '/facts/',
+    required: factsRequired('en'),
+    language: 'en',
+    languageAlternates: factsAlternates,
+    factsFaqCount,
+  },
+  factsPl: {
+    path: 'out/pl/facts/index.html',
+    route: '/pl/facts/',
+    required: factsRequired('pl'),
+    language: 'pl',
+    languageAlternates: factsAlternates,
+    factsFaqCount,
+  },
+  factsNb: {
+    path: 'out/nb/facts/index.html',
+    route: '/nb/facts/',
+    required: [
+      ...factsRequired('nb'),
+      'og:locale" content="nb_NO"',
+    ],
+    forbiddenPatterns: [/href="\/nb\/(?:privacy|terms|account-deletion|child-safety)\//],
+    language: 'nb',
+    languageAlternates: factsAlternates,
+    factsFaqCount,
   },
   accountDeletion: {
     path: 'out/account-deletion/index.html',
@@ -556,6 +609,21 @@ for (const [name, page] of Object.entries(pages)) {
   if (page.noindex && !html.includes('<meta name="robots" content="noindex, follow"')) {
     failures.push(`${name} static HTML is missing noindex, follow`);
   }
+
+  if (page.factsFaqCount) {
+    const questionCount = (html.match(/"@type":"Question"/g) ?? []).length;
+    if (questionCount !== page.factsFaqCount) {
+      failures.push(`${name} FAQPage should have ${page.factsFaqCount} questions, found ${questionCount}`);
+    }
+    const disclosureCount = (html.match(/<details/g) ?? []).length;
+    if (disclosureCount !== page.factsFaqCount) {
+      failures.push(`${name} should show ${page.factsFaqCount} FAQ entries, found ${disclosureCount}`);
+    }
+    const externalImages = html.match(/<img[^>]+src="https?:\/\/[^"]+"/g) ?? [];
+    if (externalImages.length > 0) {
+      failures.push(`${name} loads images from another origin: ${externalImages.join(' | ')}`);
+    }
+  }
 }
 
 for (const name of ['privacy.html', 'terms.html', 'support.html']) {
@@ -843,12 +911,15 @@ for (const route of [
   '/pl/terms/',
   '/nb/',
   '/nb/support/',
+  '/facts/',
+  '/pl/facts/',
+  '/nb/facts/',
 ]) {
   if (!sitemap.includes(`<loc>${siteUrl}${route}</loc>`)) {
     failures.push(`sitemap.xml is missing: ${siteUrl}${route}`);
   }
 }
-for (const alternates of [homeAlternates, supportAlternates]) {
+for (const alternates of [homeAlternates, supportAlternates, factsAlternates]) {
   for (const [language, route] of Object.entries(alternates)) {
     if (!sitemap.includes(`hreflang="${language}" href="${siteUrl}${route}"`)) {
       failures.push(`sitemap.xml is missing ${language} language alternate for ${route}`);
@@ -861,12 +932,21 @@ for (const route of ['/nb/privacy/', '/nb/terms/', '/nb/account-deletion/', '/nb
   }
 }
 
+const alternativeToBadge = await readFile(new URL(`out${alternativeToBadgePath}`, root));
+if (createHash('sha256').update(alternativeToBadge).digest('hex') !== alternativeToBadgeSha256) {
+  failures.push(`${alternativeToBadgePath} is not the unmodified AlternativeTo badge`);
+}
+if (/<script|href=/i.test(alternativeToBadge.toString('utf8'))) {
+  failures.push(`${alternativeToBadgePath} must not contain scripts or links`);
+}
+
 const llms = await readFile(new URL('out/llms.txt', root), 'utf8');
 for (const expectedText of [
   '# Shuuty',
   `${siteUrl}/pl/`,
   `${siteUrl}/nb/`,
   `${siteUrl}/llms-full.txt`,
+  `${siteUrl}/facts/`,
   'Shuuty on the App Store',
   'Shuuty on Google Play',
 ]) {
@@ -919,5 +999,5 @@ if (failures.length > 0) {
   console.error(`Static export validation failed:\n- ${failures.join('\n- ')}`);
   process.exitCode = 1;
 } else {
-  console.log('Static landing, legal and support page validation passed.');
+  console.log('Static landing, legal, support and facts page validation passed.');
 }

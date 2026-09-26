@@ -1,0 +1,699 @@
+{
+  "schemaVersion": 1,
+  "checkedOn": "2026-09-26",
+  "pages": {
+    "en": {
+      "path": "/facts/",
+      "title": "Shuuty facts",
+      "description": "Checked facts about the Shuuty app: what it does, platforms, languages, plans, publisher and support.",
+      "checkedLabel": "Checked on 26 September 2026",
+      "navTitle": "Facts",
+      "faqHeading": "Frequently asked questions",
+      "listedOn": "Listed on",
+      "sections": [
+        {
+          "id": "what",
+          "heading": "What Shuuty is",
+          "items": [
+            {
+              "text": "Shuuty is an app for tasks, groups and meetings with the people around you."
+            },
+            {
+              "text": "Say what needs doing and AI prepares the title, due date, reminder, assignee and place. Hand the task to one friend, several people at once or a whole group."
+            },
+            {
+              "text": "A group can serve a family, a team, a community or your clients, and meetings can be one-off or recurring."
+            }
+          ]
+        },
+        {
+          "id": "features",
+          "heading": "What you can do",
+          "items": [
+            {
+              "text": "Record a task in your own words. Shuuty prepares the title and description, recognizes the due time, reminder, assignee, and place, and can split several thoughts into separate tasks for review."
+            },
+            {
+              "text": "Prefer typing? Add tasks manually with the same detail."
+            },
+            {
+              "text": "When you delegate it, the assignee receives it right away - or an approval request first, if their settings require it."
+            },
+            {
+              "text": "Private, Received, and Delegated tasks have clear, separate views. Add subtasks, priorities, due times, reminders, and locations."
+            },
+            {
+              "text": "Use a group as a team workspace, community, client collaboration hub, service offer, or product showcase."
+            },
+            {
+              "text": "Enable only the modules it needs: chat, threads, tasks, a shared calendar, bookings, plans, projects, and time tracking."
+            },
+            {
+              "text": "Set the place, time, and participants for a meeting. Discover nearby meetings and public groups on the map."
+            }
+          ]
+        },
+        {
+          "id": "platforms",
+          "heading": "Platforms",
+          "items": [
+            {
+              "text": "iPhone and iPad: App Store, iOS 15.1 or later."
+            },
+            {
+              "text": "Android: Google Play, Android 7.0 or later."
+            },
+            {
+              "text": "There is no web version of the app; the website is informational."
+            }
+          ]
+        },
+        {
+          "id": "languages",
+          "heading": "Languages",
+          "items": [
+            {
+              "text": "On iPhone, iPad and Android, the app is in English, Polish and Norwegian."
+            },
+            {
+              "text": "Pick the language in your profile; on first launch the app uses your phone's language."
+            },
+            {
+              "text": "With Pro and Teams, translate messages in conversations, groups, and meetings, so everyone in a multilingual group reads in their own language. You can also dictate a message."
+            }
+          ]
+        },
+        {
+          "id": "plans",
+          "heading": "Plans",
+          "items": [
+            {
+              "text": "Start for free. Optional Pro and Teams plans raise limits and unlock additional capabilities."
+            },
+            {
+              "text": "Prices depend on the country and are shown in the App Store and Google Play."
+            }
+          ]
+        },
+        {
+          "id": "publisher",
+          "heading": "Publisher and support",
+          "items": [
+            {
+              "text": "Publisher: Shuuty Prosta Spółka Akcyjna (Shuuty P.S.A.), Poland."
+            },
+            {
+              "text": "Support: https://shuuty.com/support/ and shuuty.app@gmail.com."
+            },
+            {
+              "text": "Shuuty (shuuty.com) is not related to Shuut, Shouty or Shuuto."
+            }
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Which devices does Shuuty run on?",
+          "answer": [
+            {
+              "text": "iPhone and iPad with iOS 15.1 or later, and Android 7.0 or later."
+            },
+            {
+              "text": "There is no web version of the app; the website is informational."
+            }
+          ]
+        },
+        {
+          "question": "Which languages is Shuuty available in?",
+          "answer": [
+            {
+              "text": "On iPhone, iPad and Android, the app is in English, Polish and Norwegian."
+            },
+            {
+              "text": "Pick the language in your profile; on first launch the app uses your phone's language."
+            }
+          ]
+        },
+        {
+          "question": "What happens when I delegate a task?",
+          "answer": [
+            {
+              "text": "When you delegate it, the assignee receives it right away - or an approval request first, if their settings require it."
+            },
+            {
+              "text": "Track tasks awaiting acceptance, in progress, and completed."
+            }
+          ]
+        },
+        {
+          "question": "What can a group include?",
+          "answer": [
+            {
+              "text": "Use a group as a team workspace, community, client collaboration hub, service offer, or product showcase."
+            },
+            {
+              "text": "Enable only the modules it needs: chat, threads, tasks, a shared calendar, bookings, plans, projects, and time tracking."
+            },
+            {
+              "text": "A group can also be your own offer - for example a car for sale, with a full description and photos. Pro and Teams allow longer descriptions and more images."
+            }
+          ]
+        },
+        {
+          "question": "Who can join a group or a meeting?",
+          "answer": [
+            {
+              "text": "Private groups and meetings are available by invitation only."
+            },
+            {
+              "text": "Others require approval or have open entry, and can be visible to your friends or to everyone."
+            }
+          ]
+        },
+        {
+          "question": "Can I find meetings and groups near me?",
+          "answer": [
+            {
+              "text": "Discover nearby meetings and public groups on the map."
+            },
+            {
+              "text": "Your meeting can appear on the map for people nearby, or stay private and invite-only."
+            },
+            {
+              "text": "Meetings can be one-off or recurring."
+            }
+          ]
+        },
+        {
+          "question": "Is Shuuty free, and what do Pro and Teams add?",
+          "answer": [
+            {
+              "text": "Start for free. Optional Pro and Teams plans raise limits and unlock additional capabilities."
+            },
+            {
+              "text": "With Pro and Teams, translate messages in conversations, groups, and meetings, so everyone in a multilingual group reads in their own language."
+            },
+            {
+              "text": "Prices depend on the country and are shown in the App Store and Google Play."
+            }
+          ]
+        },
+        {
+          "question": "How do I delete my account?",
+          "answer": [
+            {
+              "text": "You can start deletion directly in the Shuuty app or by contacting Shuuty support."
+            },
+            {
+              "text": "The steps are described on https://shuuty.com/account-deletion/."
+            }
+          ]
+        },
+        {
+          "question": "Does deleting my account cancel my subscription?",
+          "answer": [
+            {
+              "text": "Deleting a Shuuty account does not automatically cancel a subscription managed by Apple or Google."
+            },
+            {
+              "text": "Cancel an active subscription separately in the subscription settings of the App Store or Google Play."
+            }
+          ]
+        },
+        {
+          "question": "Who publishes Shuuty and how do I contact support?",
+          "answer": [
+            {
+              "text": "Publisher: Shuuty Prosta Spółka Akcyjna (Shuuty P.S.A.), Poland."
+            },
+            {
+              "text": "Support: https://shuuty.com/support/ and shuuty.app@gmail.com."
+            }
+          ]
+        }
+      ]
+    },
+    "pl": {
+      "path": "/pl/facts/",
+      "title": "Fakty o Shuuty",
+      "description": "Sprawdzone fakty o aplikacji Shuuty: co robi, platformy, języki, plany, wydawca i pomoc.",
+      "checkedLabel": "Sprawdzono 26 września 2026",
+      "navTitle": "Fakty",
+      "faqHeading": "Najczęstsze pytania",
+      "listedOn": "Znajdziesz nas też na",
+      "sections": [
+        {
+          "id": "what",
+          "heading": "Czym jest Shuuty",
+          "items": [
+            {
+              "text": "Shuuty to aplikacja do zadań, grup i spotkań z ludźmi wokół Ciebie."
+            },
+            {
+              "text": "Powiedz, co trzeba zrobić, a AI przygotuje tytuł, termin, przypomnienie, osobę i miejsce. Przekaż zadanie jednemu znajomemu, kilku osobom naraz albo całej grupie."
+            },
+            {
+              "text": "Grupa może służyć rodzinie, zespołowi, społeczności albo Twoim klientom, a spotkania mogą być jednorazowe albo cykliczne."
+            }
+          ]
+        },
+        {
+          "id": "features",
+          "heading": "Co możesz zrobić",
+          "items": [
+            {
+              "text": "Nagraj zadanie własnymi słowami. Shuuty przygotuje tytuł i opis, rozpozna termin, przypomnienie, osobę i miejsce, a kilka myśli rozdzieli na osobne zadania do sprawdzenia."
+            },
+            {
+              "text": "Wolisz pisać? Zadanie dodasz też ręcznie, z tą samą szczegółowością."
+            },
+            {
+              "text": "Gdy je delegujesz, odbiorca dostaje je od razu, a jeśli w ustawieniach wymaga akceptacji - najpierw prośbę o przyjęcie."
+            },
+            {
+              "text": "Prywatne, Otrzymane i Delegowane mają czytelne, osobne widoki. Dodawaj podzadania, priorytety, terminy, przypomnienia i lokalizacje."
+            },
+            {
+              "text": "Użyj grupy jako przestrzeni zespołu, społeczności, miejsca współpracy z klientem, oferty usługowej albo prezentacji produktu na sprzedaż."
+            },
+            {
+              "text": "Włącz tylko potrzebne moduły: czat, wątki, zadania, wspólny kalendarz, rezerwacje, plany, projekty i ewidencję czasu."
+            },
+            {
+              "text": "Zaplanuj miejsce, czas i uczestników spotkania. Odkrywaj na mapie pobliskie spotkania i publiczne grupy."
+            }
+          ]
+        },
+        {
+          "id": "platforms",
+          "heading": "Platformy",
+          "items": [
+            {
+              "text": "iPhone i iPad: App Store, iOS 15.1 lub nowszy."
+            },
+            {
+              "text": "Android: Google Play, Android 7.0 lub nowszy."
+            },
+            {
+              "text": "Aplikacja nie ma wersji przeglądarkowej; strona ma charakter informacyjny."
+            }
+          ]
+        },
+        {
+          "id": "languages",
+          "heading": "Języki",
+          "items": [
+            {
+              "text": "Na iPhonie, iPadzie i Androidzie aplikacja działa po polsku, angielsku i norwesku."
+            },
+            {
+              "text": "Język wybierzesz w profilu, a przy pierwszym uruchomieniu aplikacja przejmie ten z telefonu."
+            },
+            {
+              "text": "W planach Pro i Teams przetłumaczysz wiadomości w rozmowach, grupach i spotkaniach, więc w wielojęzycznej grupie każdy czyta po swojemu. Wiadomość możesz też podyktować."
+            }
+          ]
+        },
+        {
+          "id": "plans",
+          "heading": "Plany",
+          "items": [
+            {
+              "text": "Zacznij bezpłatnie. Opcjonalne plany Pro i Teams zwiększają limity i odblokowują dodatkowe możliwości."
+            },
+            {
+              "text": "Ceny zależą od kraju i są podane w App Store i Google Play."
+            }
+          ]
+        },
+        {
+          "id": "publisher",
+          "heading": "Wydawca i pomoc",
+          "items": [
+            {
+              "text": "Wydawca: Shuuty Prosta Spółka Akcyjna (Shuuty P.S.A.), Polska."
+            },
+            {
+              "text": "Pomoc: https://shuuty.com/pl/support/ i shuuty.app@gmail.com."
+            },
+            {
+              "text": "Shuuty (shuuty.com) nie ma związku z Shuut, Shouty ani Shuuto."
+            }
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Na jakich urządzeniach działa Shuuty?",
+          "answer": [
+            {
+              "text": "Na iPhonie i iPadzie z iOS 15.1 lub nowszym oraz na Androidzie 7.0 lub nowszym."
+            },
+            {
+              "text": "Aplikacja nie ma wersji przeglądarkowej; strona ma charakter informacyjny."
+            }
+          ]
+        },
+        {
+          "question": "W jakich językach jest Shuuty?",
+          "answer": [
+            {
+              "text": "Na iPhonie, iPadzie i Androidzie aplikacja działa po polsku, angielsku i norwesku."
+            },
+            {
+              "text": "Język wybierzesz w profilu, a przy pierwszym uruchomieniu aplikacja przejmie ten z telefonu."
+            }
+          ]
+        },
+        {
+          "question": "Co się dzieje, gdy deleguję zadanie?",
+          "answer": [
+            {
+              "text": "Gdy je delegujesz, odbiorca dostaje je od razu, a jeśli w ustawieniach wymaga akceptacji - najpierw prośbę o przyjęcie."
+            },
+            {
+              "text": "Widzisz zadania oczekujące na przyjęcie, realizowane i wykonane."
+            }
+          ]
+        },
+        {
+          "question": "Co może zawierać grupa?",
+          "answer": [
+            {
+              "text": "Użyj grupy jako przestrzeni zespołu, społeczności, miejsca współpracy z klientem, oferty usługowej albo prezentacji produktu na sprzedaż."
+            },
+            {
+              "text": "Włącz tylko potrzebne moduły: czat, wątki, zadania, wspólny kalendarz, rezerwacje, plany, projekty i ewidencję czasu."
+            },
+            {
+              "text": "Grupa może też być Twoją ofertą - na przykład auto na sprzedaż, z pełnym opisem i zdjęciami. Pro i Teams pozwalają na dłuższe opisy i więcej obrazów."
+            }
+          ]
+        },
+        {
+          "question": "Kto może dołączyć do grupy albo spotkania?",
+          "answer": [
+            {
+              "text": "Prywatne grupy i spotkania są dostępne tylko przez zaproszenie."
+            },
+            {
+              "text": "Pozostałe są za akceptacją albo z wolnym wstępem i mogą być widoczne dla znajomych lub dla wszystkich."
+            }
+          ]
+        },
+        {
+          "question": "Czy znajdę spotkania i grupy w pobliżu?",
+          "answer": [
+            {
+              "text": "Odkrywaj na mapie pobliskie spotkania i publiczne grupy."
+            },
+            {
+              "text": "Twoje spotkanie może być widoczne na mapie dla osób w okolicy albo pozostać prywatne, tylko dla zaproszonych."
+            },
+            {
+              "text": "Spotkania mogą być jednorazowe albo cykliczne."
+            }
+          ]
+        },
+        {
+          "question": "Czy Shuuty jest darmowe i co dają Pro i Teams?",
+          "answer": [
+            {
+              "text": "Zacznij bezpłatnie. Opcjonalne plany Pro i Teams zwiększają limity i odblokowują dodatkowe możliwości."
+            },
+            {
+              "text": "W planach Pro i Teams przetłumaczysz wiadomości w rozmowach, grupach i spotkaniach, więc w wielojęzycznej grupie każdy czyta po swojemu."
+            },
+            {
+              "text": "Ceny zależą od kraju i są podane w App Store i Google Play."
+            }
+          ]
+        },
+        {
+          "question": "Jak usunąć konto?",
+          "answer": [
+            {
+              "text": "Usuwanie konta możesz rozpocząć bezpośrednio w aplikacji Shuuty albo kontaktując się ze wsparciem."
+            },
+            {
+              "text": "Kroki opisuje strona https://shuuty.com/pl/account-deletion/."
+            }
+          ]
+        },
+        {
+          "question": "Czy usunięcie konta anuluje subskrypcję?",
+          "answer": [
+            {
+              "text": "Usunięcie konta Shuuty nie anuluje automatycznie subskrypcji obsługiwanej przez Apple lub Google."
+            },
+            {
+              "text": "Aktywną subskrypcję anuluj osobno w ustawieniach subskrypcji App Store albo Google Play."
+            }
+          ]
+        },
+        {
+          "question": "Kto wydaje Shuuty i jak skontaktować się z pomocą?",
+          "answer": [
+            {
+              "text": "Wydawca: Shuuty Prosta Spółka Akcyjna (Shuuty P.S.A.), Polska."
+            },
+            {
+              "text": "Pomoc: https://shuuty.com/pl/support/ i shuuty.app@gmail.com."
+            }
+          ]
+        }
+      ]
+    },
+    "nb": {
+      "path": "/nb/facts/",
+      "title": "Fakta om Shuuty",
+      "description": "Kontrollerte fakta om Shuuty-appen: hva den gjør, plattformer, språk, planer, utgiver og hjelp.",
+      "checkedLabel": "Kontrollert 26. september 2026",
+      "navTitle": "Fakta",
+      "faqHeading": "Vanlige spørsmål",
+      "listedOn": "Du finner oss også på",
+      "sections": [
+        {
+          "id": "what",
+          "heading": "Hva Shuuty er",
+          "items": [
+            {
+              "text": "Shuuty er en app for oppgaver, grupper og møter med menneskene rundt deg."
+            },
+            {
+              "text": "Si hva som må gjøres, så fyller AI ut tittel, frist, påminnelse, mottaker og sted. Gi oppgaven til én venn, flere personer samtidig eller en hel gruppe."
+            },
+            {
+              "text": "En gruppe kan være for familien, et team, et fellesskap eller kundene dine, og et møte kan være et engangstreff eller gjentas regelmessig."
+            }
+          ]
+        },
+        {
+          "id": "features",
+          "heading": "Hva du kan gjøre",
+          "items": [
+            {
+              "text": "Spill inn en oppgave med egne ord. Shuuty lager tittel og beskrivelse, kjenner igjen frist, påminnelse, person og sted, og deler flere tanker opp i separate oppgaver du kan se gjennom."
+            },
+            {
+              "text": "Vil du heller skrive? Du kan også legge til oppgaver manuelt, med samme detaljnivå."
+            },
+            {
+              "text": "Når du delegerer den, får mottakeren den med en gang - eller først en forespørsel om godkjenning, hvis innstillingene til mottakeren krever det."
+            },
+            {
+              "text": "Private, Mottatte og Delegerte har egne, oversiktlige visninger. Legg til deloppgaver, prioriteter, frister, påminnelser og steder."
+            },
+            {
+              "text": "Bruk en gruppe som arbeidsrom for et team, et fellesskap, et samarbeidssted med kunder, et tjenestetilbud eller en presentasjon av et produkt som er til salgs."
+            },
+            {
+              "text": "Slå bare på modulene du trenger: chat, tråder, oppgaver, felles kalender, bestillinger, planer, prosjekter og tidsregistrering."
+            },
+            {
+              "text": "Planlegg sted, tid og deltakere for et møte. Utforsk møter og offentlige grupper i nærheten på kartet."
+            }
+          ]
+        },
+        {
+          "id": "platforms",
+          "heading": "Plattformer",
+          "items": [
+            {
+              "text": "iPhone og iPad: App Store, iOS 15.1 eller nyere."
+            },
+            {
+              "text": "Android: Google Play, Android 7.0 eller nyere."
+            },
+            {
+              "text": "Appen finnes ikke som nettversjon - nettstedet er bare til informasjon."
+            }
+          ]
+        },
+        {
+          "id": "languages",
+          "heading": "Språk",
+          "items": [
+            {
+              "text": "På iPhone, iPad og Android finnes appen på norsk, polsk og engelsk."
+            },
+            {
+              "text": "Du velger språk i profilen, og ved første oppstart bruker appen språket fra telefonen."
+            },
+            {
+              "text": "Med Pro og Teams oversetter du meldinger i samtaler, grupper og møter til ditt språk, slik at alle i en flerspråklig gruppe leser på sitt eget. Du kan også diktere meldinger."
+            }
+          ]
+        },
+        {
+          "id": "plans",
+          "heading": "Planer",
+          "items": [
+            {
+              "text": "Kom i gang gratis. De valgfrie planene Pro og Teams gir høyere grenser og flere muligheter."
+            },
+            {
+              "text": "Prisene avhenger av landet og vises i App Store og Google Play."
+            }
+          ]
+        },
+        {
+          "id": "publisher",
+          "heading": "Utgiver og hjelp",
+          "items": [
+            {
+              "text": "Utgiver: Shuuty Prosta Spółka Akcyjna (Shuuty P.S.A.), Polen."
+            },
+            {
+              "text": "Hjelp: https://shuuty.com/nb/support/ og shuuty.app@gmail.com."
+            },
+            {
+              "text": "Shuuty (shuuty.com) har ingen tilknytning til Shuut, Shouty eller Shuuto."
+            }
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "Hvilke enheter fungerer Shuuty på?",
+          "answer": [
+            {
+              "text": "iPhone og iPad med iOS 15.1 eller nyere, og Android 7.0 eller nyere."
+            },
+            {
+              "text": "Appen finnes ikke som nettversjon - nettstedet er bare til informasjon."
+            }
+          ]
+        },
+        {
+          "question": "Hvilke språk finnes Shuuty på?",
+          "answer": [
+            {
+              "text": "På iPhone, iPad og Android finnes appen på norsk, polsk og engelsk."
+            },
+            {
+              "text": "Du velger språk i profilen, og ved første oppstart bruker appen språket fra telefonen."
+            }
+          ]
+        },
+        {
+          "question": "Hva skjer når jeg delegerer en oppgave?",
+          "answer": [
+            {
+              "text": "Når du delegerer den, får mottakeren den med en gang - eller først en forespørsel om godkjenning, hvis innstillingene til mottakeren krever det."
+            },
+            {
+              "text": "Du ser hvilke oppgaver som venter på godkjenning, er i gang og er fullført."
+            }
+          ]
+        },
+        {
+          "question": "Hva kan en gruppe inneholde?",
+          "answer": [
+            {
+              "text": "Bruk en gruppe som arbeidsrom for et team, et fellesskap, et samarbeidssted med kunder, et tjenestetilbud eller en presentasjon av et produkt som er til salgs."
+            },
+            {
+              "text": "Slå bare på modulene du trenger: chat, tråder, oppgaver, felles kalender, bestillinger, planer, prosjekter og tidsregistrering."
+            },
+            {
+              "text": "En gruppe kan også være ditt eget tilbud - for eksempel en bil til salgs, med fullstendig beskrivelse og bilder. Med Pro og Teams får du plass til lengre beskrivelser og flere bilder."
+            }
+          ]
+        },
+        {
+          "question": "Hvem kan bli med i en gruppe eller et møte?",
+          "answer": [
+            {
+              "text": "Private grupper og møter er bare tilgjengelige via invitasjon."
+            },
+            {
+              "text": "Andre krever godkjenning eller har åpen tilgang, og kan være synlige for venner eller for alle."
+            }
+          ]
+        },
+        {
+          "question": "Kan jeg finne møter og grupper i nærheten?",
+          "answer": [
+            {
+              "text": "Utforsk møter og offentlige grupper i nærheten på kartet."
+            },
+            {
+              "text": "Møtet ditt kan vises på kartet for folk i nærheten, eller være privat og kun for inviterte."
+            },
+            {
+              "text": "Et møte kan være et engangstreff eller gjentas regelmessig."
+            }
+          ]
+        },
+        {
+          "question": "Er Shuuty gratis, og hva får jeg med Pro og Teams?",
+          "answer": [
+            {
+              "text": "Kom i gang gratis. De valgfrie planene Pro og Teams gir høyere grenser og flere muligheter."
+            },
+            {
+              "text": "Med Pro og Teams oversetter du meldinger i samtaler, grupper og møter til ditt språk, slik at alle i en flerspråklig gruppe leser på sitt eget."
+            },
+            {
+              "text": "Prisene avhenger av landet og vises i App Store og Google Play."
+            }
+          ]
+        },
+        {
+          "question": "Hvordan sletter jeg kontoen min?",
+          "answer": [
+            {
+              "text": "Du kan starte slettingen i Shuuty-appen under Profil > Konto > Slett konto, eller be om sletting på e-post til shuuty.app@gmail.com fra adressen som er knyttet til kontoen."
+            },
+            {
+              "text": "Hele fremgangsmåten er beskrevet på https://shuuty.com/account-deletion/ (på engelsk)."
+            }
+          ]
+        },
+        {
+          "question": "Blir abonnementet mitt avsluttet når jeg sletter kontoen?",
+          "answer": [
+            {
+              "text": "Nei. Sletting av Shuuty-kontoen avslutter ikke automatisk et abonnement som administreres av Apple eller Google."
+            },
+            {
+              "text": "Avslutt et aktivt abonnement separat i abonnementsinnstillingene i App Store eller Google Play."
+            }
+          ]
+        },
+        {
+          "question": "Hvem utgir Shuuty, og hvordan får jeg hjelp?",
+          "answer": [
+            {
+              "text": "Utgiver: Shuuty Prosta Spółka Akcyjna (Shuuty P.S.A.), Polen."
+            },
+            {
+              "text": "Hjelp: https://shuuty.com/nb/support/ og shuuty.app@gmail.com."
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

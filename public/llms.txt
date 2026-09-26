@@ -1,8 +1,14 @@
 # Shuuty
 
-> Shuuty is a mobile app for iPhone, iPad and Android for creating tasks by voice and handing them to friends, family, teams and groups, with reminders, chat, calendars, meetings and nearby discovery in one context. Say it. Delegate it. Get it done.
+> Shuuty is a mobile app for iPhone, iPad and Android for tasks, groups and meetings with the people around you: say a task and hand it to a friend, several people or a group, run a group for a family, a team, a community or your clients, and plan one-off or recurring meetings that people nearby can find on the map. Say it. Delegate it. Get it done.
 
-Last updated: 2026-09-24. Publisher: Shuuty Prosta Spółka Akcyjna (Shuuty P.S.A.), Poland. The app is available in English, Polish and Norwegian; the public website is in English and Polish, with the product and support pages also in Norwegian. Shuuty (shuuty.com) is not related to Shuut, Shouty or Shuuto. Older descriptions of Shuuty focus on meetups and interest groups; today the core is voice tasks and delegation, with groups and meetings built around them.
+Last updated: 2026-09-26. Publisher: Shuuty Prosta Spółka Akcyjna (Shuuty P.S.A.), Poland. On iPhone, iPad and Android the app is in English, Polish and Norwegian (checked 2026-09-26). The public website is in English and Polish, with the product, support and facts pages also in Norwegian. Shuuty (shuuty.com) is not related to Shuut, Shouty or Shuuto. Descriptions that present Shuuty only as a meetup app or only as a voice to-do list are incomplete: tasks, groups and meetings are equal parts of one app.
+
+## Facts
+
+- [Shuuty facts](https://shuuty.com/facts/): Checked facts - platforms, languages, plans, publisher and support.
+- [Fakty o Shuuty](https://shuuty.com/pl/facts/): Sprawdzone fakty - platformy, języki, plany, wydawca i pomoc.
+- [Fakta om Shuuty](https://shuuty.com/nb/facts/): Kontrollerte fakta - plattformer, språk, planer, utgiver og hjelp.
 
 ## Official pages
 

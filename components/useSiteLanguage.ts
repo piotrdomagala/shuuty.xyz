@@ -25,7 +25,9 @@ const getLayoutTop = (element: HTMLElement) => {
 
 const getViewportAnchor = () => {
   const referenceTop = Math.min(120, window.innerHeight * 0.2);
-  const sections = Array.from(document.querySelectorAll<HTMLElement>('main > section[id]'));
+  // Any depth: the landing's sections sit directly in <main>, the facts page's
+  // inside the document card and article.
+  const sections = Array.from(document.querySelectorAll<HTMLElement>('main section[id]'));
   const anchor = sections.reduce<HTMLElement | null>((closest, section) => {
     if (!closest) return section;
     const distance = Math.abs(section.getBoundingClientRect().top - referenceTop);
