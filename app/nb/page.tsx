@@ -2,7 +2,7 @@ import HomePageClient from '@/components/HomePageClient';
 import { createPublicPageMetadata } from '@/lib/site';
 
 const description =
-  'Lag huskelister og oppgaver med stemmen og gi dem til venner eller grupper. Shuuty holder påminnelser, chat, kalender og møter samlet - på iOS og Android.';
+  'Oppgaver, grupper og møter i én app: si en oppgave og gi den videre, opprett en gruppe for familien, klubben eller kundene, og møt folk i nærheten.';
 
 export const metadata = createPublicPageMetadata({
   title: 'Huskeliste med stemmen, grupper og møter',

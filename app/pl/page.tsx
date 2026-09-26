@@ -2,7 +2,7 @@ import HomePageClient from '@/components/HomePageClient';
 import { createPublicPageMetadata } from '@/lib/site';
 
 const description =
-  'Twórz zadania głosem i przekazuj je znajomym lub grupom. Shuuty trzyma razem przypomnienia, czat, kalendarz i spotkania - na iOS i Androidzie.';
+  'Zadania, grupy i spotkania w jednej aplikacji: powiedz zadanie i przekaż je dalej, załóż grupę dla rodziny, klubu albo klientów i spotkaj się w okolicy.';
 
 export const metadata = createPublicPageMetadata({
   title: 'Zadania głosowe, grupy i spotkania',
