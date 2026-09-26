@@ -8,6 +8,8 @@ import {
   localizedSitePath,
   type SiteLanguage,
 } from '@/components/documentLocale';
+import guidesContent from '@/content/guides.json';
+import { asGuides, guidesIn } from '@/lib/guides.mjs';
 import styles from '@/app/documents.module.css';
 
 const languageLabels: Record<SiteLanguage, string> = { en: 'EN', pl: 'PL', nb: 'NB' };
@@ -192,6 +194,12 @@ export function DocumentFooter({
           <Link href={localizedPath(language, '/facts/')} className={styles.footerLink}>
             {documentTranslations[language].facts}
           </Link>
+          {/* The guides link appears once the language has a published guide. */}
+          {guidesIn(asGuides(guidesContent.guides), language).length > 0 ? (
+            <Link href={localizedPath(language, '/guides/')} className={styles.footerLink}>
+              {guidesContent.index[language].navTitle}
+            </Link>
+          ) : null}
           <Link
             href={localizedPath(language, '/account-deletion/')}
             className={styles.footerLink}

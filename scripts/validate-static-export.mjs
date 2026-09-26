@@ -2,7 +2,25 @@ import { access, readFile, readdir } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { join, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { languageSwitchPath, LEGACY_ALIASES, NORWEGIAN_PATHS } from '../lib/sitePaths.mjs';
+import {
+  GUIDE_LANGUAGES,
+  asGuides,
+  guideAlternates,
+  guideArticleProblems,
+  guidePath,
+  guideRegistryProblems,
+  guidesIn,
+  guideStoreCampaign,
+  guideSwitchPaths,
+  textSegments,
+} from '../lib/guides.mjs';
+import {
+  GUIDE_INDEX_PATHS,
+  languageSwitchPath,
+  LEGACY_ALIASES,
+  localizedSitePath,
+  NORWEGIAN_PATHS,
+} from '../lib/sitePaths.mjs';
 
 const root = new URL('../', import.meta.url);
 const outputPath = fileURLToPath(new URL('out/', root));
@@ -442,6 +460,127 @@ const pages = {
 };
 
 const failures = [];
+
+// Guides: pages come from content/guides.json, so a new article needs no
+// validator change. An index without guides stays noindex and out of the
+// sitemap and the footers until its first guide lands.
+const guidesRegistry = JSON.parse(await readFile(new URL('content/guides.json', root), 'utf8'));
+const guides = asGuides(guidesRegistry.guides);
+const guideByRoute = new Map(guides.map((guide) => [guidePath(guide), guide]));
+const guideLanguagesWithGuides = GUIDE_LANGUAGES.filter(
+  (language) => guidesIn(guides, language).length > 0,
+);
+// React escapes these characters in text, so expected text is compared escaped.
+const htmlText = (value) =>
+  value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;');
+const hreflangPattern = /<link rel="alternate" hrefLang=/i;
+// hreflang only between real translations; x-default only when English exists.
+const withDefault = (paths) =>
+  Object.keys(paths).length < 2
+    ? null
+    : { ...paths, ...(paths.en ? { 'x-default': paths.en } : {}) };
+const guideIndexAlternates = withDefault(
+  Object.fromEntries(guideLanguagesWithGuides.map((language) => [language, GUIDE_INDEX_PATHS[language]])),
+);
+
+failures.push(...guideRegistryProblems(guidesRegistry));
+
+for (const language of GUIDE_LANGUAGES) {
+  const copy = guidesRegistry.index[language];
+  const entries = guidesIn(guides, language);
+  const hasGuides = entries.length > 0;
+  pages[`guides-${language}`] = {
+    path: `out${GUIDE_INDEX_PATHS[language]}index.html`,
+    route: GUIDE_INDEX_PATHS[language],
+    language,
+    required: [
+      htmlText(copy.title),
+      htmlText(copy.intro),
+      ...(hasGuides
+        ? entries.flatMap((guide) => [`href="${guidePath(guide)}"`, htmlText(guide.heading)])
+        : [htmlText(copy.empty), `href="${localizedSitePath(language, '/facts/')}"`]),
+    ],
+    noindex: !hasGuides,
+    indexable: hasGuides,
+    ...(hasGuides && guideIndexAlternates
+      ? { languageAlternates: guideIndexAlternates }
+      : { forbiddenPatterns: [hreflangPattern] }),
+  };
+}
+
+for (const guide of guides) {
+  const route = guidePath(guide);
+  const name = `guide ${guide.language}/${guide.slug}`;
+  const bodyPath = `content/guides/${guide.language}/${guide.slug}.json`;
+  let article;
+  try {
+    article = JSON.parse(await readFile(new URL(bodyPath, root), 'utf8'));
+  } catch {
+    failures.push(`${name}: ${bodyPath} is missing or is not valid JSON`);
+    continue;
+  }
+  failures.push(...guideArticleProblems(bodyPath, article));
+
+  const firstParagraph = article.body?.find((block) => block.type === 'p');
+  const alternates = withDefault(guideAlternates(guides, guide));
+  const clickSuffix = `guide-${guide.topic}-${guide.language}`;
+  pages[name] = {
+    path: `out${route}index.html`,
+    route,
+    language: guide.language,
+    required: [
+      htmlText(guide.heading),
+      htmlText(guide.updatedLabel),
+      ...(firstParagraph ? textSegments(firstParagraph.text).map((segment) => htmlText(segment.text)) : []),
+      '"@type":"Article"',
+      `"dateModified":"${guide.updatedOn}"`,
+      `data-goatcounter-click="store-ios-${clickSuffix}"`,
+      `data-goatcounter-click="store-android-${clickSuffix}"`,
+      `utm_campaign%3D${guideStoreCampaign(guide)}`,
+      `href="${GUIDE_INDEX_PATHS[guide.language]}"`,
+    ],
+    indexable: true,
+    guideFaqCount: article.faq?.length ?? 0,
+    ...(alternates ? { languageAlternates: alternates } : { forbiddenPatterns: [hreflangPattern] }),
+  };
+}
+
+// A built article folder that the registry does not know would publish a page
+// with no checks, no sitemap entry and no footer path.
+for (const language of GUIDE_LANGUAGES) {
+  const sectionDirectory = join(outputPath, ...GUIDE_INDEX_PATHS[language].split('/').filter(Boolean));
+  const entries = await readdir(sectionDirectory, { withFileTypes: true }).catch(() => []);
+  for (const entry of entries) {
+    if (!entry.isDirectory() || entry.name.startsWith('__next')) continue;
+    if (!guideByRoute.has(`${GUIDE_INDEX_PATHS[language]}${entry.name}/`)) {
+      failures.push(`${GUIDE_INDEX_PATHS[language]}${entry.name}/ is built but not listed in content/guides.json`);
+    }
+  }
+}
+
+// Footers link the guides index only in a language that has a guide.
+for (const language of GUIDE_LANGUAGES) {
+  const hasGuides = guideLanguagesWithGuides.includes(language);
+  for (const pagePath of [
+    `out${localizedSitePath(language, '/')}index.html`,
+    `out${localizedSitePath(language, '/facts/')}index.html`,
+  ]) {
+    const html = await readFile(new URL(pagePath, root), 'utf8');
+    const linksGuides = html.includes(`href="${GUIDE_INDEX_PATHS[language]}"`);
+    if (linksGuides !== hasGuides) {
+      failures.push(
+        hasGuides
+          ? `${pagePath} footer is missing the ${language} guides link`
+          : `${pagePath} links the ${language} guides index before it has a guide`,
+      );
+    }
+  }
+}
 const fgsEvidenceDirectory = new URL(
   'out/google-play/foreground-service/microphone/',
   root,
@@ -618,6 +757,21 @@ for (const [name, page] of Object.entries(pages)) {
     const disclosureCount = (html.match(/<details/g) ?? []).length;
     if (disclosureCount !== page.factsFaqCount) {
       failures.push(`${name} should show ${page.factsFaqCount} FAQ entries, found ${disclosureCount}`);
+    }
+    const externalImages = html.match(/<img[^>]+src="https?:\/\/[^"]+"/g) ?? [];
+    if (externalImages.length > 0) {
+      failures.push(`${name} loads images from another origin: ${externalImages.join(' | ')}`);
+    }
+  }
+
+  if (page.indexable && /<meta name="robots" content="noindex/.test(html)) {
+    failures.push(`${name} static HTML is noindex although it belongs in search`);
+  }
+
+  if (page.guideFaqCount !== undefined) {
+    const questionCount = (html.match(/"@type":"Question"/g) ?? []).length;
+    if (questionCount !== page.guideFaqCount) {
+      failures.push(`${name} FAQPage should have ${page.guideFaqCount} questions, found ${questionCount}`);
     }
     const externalImages = html.match(/<img[^>]+src="https?:\/\/[^"]+"/g) ?? [];
     if (externalImages.length > 0) {
@@ -850,7 +1004,8 @@ for (const htmlPath of await listHtmlFiles(outputPath)) {
   const route = `/${displayPath.slice(0, -'index.html'.length)}`;
   for (const [, pressed, label] of html.matchAll(languageButtonPattern)) {
     const language = label.toLowerCase();
-    const target = languageSwitchPath(route, language);
+    const guide = guideByRoute.get(route);
+    const target = guide ? guideSwitchPaths(guides, guide)[language] : languageSwitchPath(route, language);
     const targetFile = join(outputPath, ...target.split('/').filter(Boolean), 'index.html');
     let targetHtml;
     try {
@@ -922,6 +1077,28 @@ for (const route of [
 for (const alternates of [homeAlternates, supportAlternates, factsAlternates]) {
   for (const [language, route] of Object.entries(alternates)) {
     if (!sitemap.includes(`hreflang="${language}" href="${siteUrl}${route}"`)) {
+      failures.push(`sitemap.xml is missing ${language} language alternate for ${route}`);
+    }
+  }
+}
+for (const language of GUIDE_LANGUAGES) {
+  const listed = sitemap.includes(`<loc>${siteUrl}${GUIDE_INDEX_PATHS[language]}</loc>`);
+  const hasGuides = guideLanguagesWithGuides.includes(language);
+  if (listed !== hasGuides) {
+    failures.push(
+      hasGuides
+        ? `sitemap.xml is missing the ${language} guides index`
+        : `sitemap.xml lists the ${language} guides index before it has a guide`,
+    );
+  }
+}
+for (const guide of guides) {
+  const route = guidePath(guide);
+  if (!sitemap.includes(`<loc>${siteUrl}${route}</loc>`)) {
+    failures.push(`sitemap.xml is missing: ${siteUrl}${route}`);
+  }
+  for (const [language, alternateRoute] of Object.entries(withDefault(guideAlternates(guides, guide)) ?? {})) {
+    if (!sitemap.includes(`hreflang="${language}" href="${siteUrl}${alternateRoute}"`)) {
       failures.push(`sitemap.xml is missing ${language} language alternate for ${route}`);
     }
   }
@@ -999,5 +1176,5 @@ if (failures.length > 0) {
   console.error(`Static export validation failed:\n- ${failures.join('\n- ')}`);
   process.exitCode = 1;
 } else {
-  console.log('Static landing, legal, support and facts page validation passed.');
+  console.log('Static landing, legal, support, facts and guides page validation passed.');
 }
