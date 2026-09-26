@@ -1,0 +1,124 @@
+{
+  "body": [
+    {
+      "type": "p",
+      "text": "Klub tenisowy, siatkarski czy biegowy żyje z trzech rzeczy: informacji dla członków, grafiku kortu albo sali i stałych treningów. Zwykle każda z nich leży w innym miejscu - ogłoszenia w grupie na komunikatorze, grafik w arkuszu, treningi w kalendarzu jednej osoby. Ten poradnik pokazuje, jak zebrać to w jednej grupie w aplikacji Shuuty, i uczciwie mówi, czego Shuuty w klubie nie zrobi."
+    },
+    {
+      "type": "h2",
+      "text": "Czego klub potrzebuje na co dzień"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "miejsca, w którym członkowie widzą ogłoszenia i mogą o nie zapytać;",
+        "grafiku kortu, sali albo trenera, w którym widać wolne terminy;",
+        "stałych treningów, które nie wymagają co tydzień nowej wiadomości „kto jutro gra?”;",
+        "podziału drobnych zadań: kto przywozi siatki, kto zamyka salę, kto zgłasza drużynę do turnieju;",
+        "sposobu, żeby nowe osoby z okolicy w ogóle dowiedziały się o klubie."
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Jak to wygląda w Shuuty"
+    },
+    {
+      "type": "h3",
+      "text": "Jedna grupa klubu"
+    },
+    {
+      "type": "p",
+      "text": "Grupa w Shuuty może być przestrzenią zespołu albo społeczności. Klub włącza w niej tylko te moduły, których potrzebuje: czat, wątki, zadania, kalendarz, rezerwacje, plany i projekty."
+    },
+    {
+      "type": "p",
+      "text": "Sposób dołączania ustawia twórca grupy:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "**prywatna** - nowe osoby wchodzą tylko przez zaproszenie;",
+        "**za akceptacją** - chętni wysyłają prośbę, a organizator decyduje;",
+        "**wolny wstęp** - kto kliknie „Dołącz”, wchodzi od razu, dopóki są miejsca."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "Grupę widoczną dla wszystkich z opisem, zdjęciami, lokalizacją i zainteresowaniami (np. tenis) Shuuty pokazuje w zakładce Odkrywaj. Im dokładniejsze zainteresowania, tym łatwiej trafić do osób z okolicy."
+    },
+    {
+      "type": "h3",
+      "text": "Grafik rezerwacji kortu albo sali"
+    },
+    {
+      "type": "p",
+      "text": "Kalendarz grupy może działać jako grafik rezerwacji - aplikacja podpowiada go wprost dla gabinetu, kortu, sali i innych rezerwacji godzinowych. Organizator ustawia długość sesji, przerwy między rezerwacjami, dni i wyjątki (np. zamknięty kort w święto). Członkowie wybierają wolne sesje, a swoje rezerwacje widzą oznaczone w kalendarzu."
+    },
+    {
+      "type": "h3",
+      "text": "Treningi co tydzień"
+    },
+    {
+      "type": "p",
+      "text": "Stały trening ustawiasz jako spotkanie cykliczne, np. powtarzane co 7 dni. Spotkanie ma miejsce, czas i uczestników, a jego czat jest jeden dla wszystkich terminów: historia przechodzi na kolejne treningi. Gdy termin jeszcze nie jest ustalony, uczestnicy proponują godziny i wybierają najlepszą."
+    },
+    {
+      "type": "h3",
+      "text": "Zadania dla ludzi, a nie dla tablicy"
+    },
+    {
+      "type": "p",
+      "text": "Zadanie mówisz jednym zdaniem, np. „Przywieź siatki w sobotę na 9, przypomnij w piątek wieczorem”, a osobę wskazujesz z listy znajomych albo mówisz jej imię. Shuuty przygotowuje tytuł, termin i przypomnienie. Zadanie trafia do tej osoby od razu albo najpierw jako prośba o przyjęcie, jeśli ma tak w ustawieniach. Widzisz, co czeka, co jest w toku, a co zrobione."
+    },
+    {
+      "type": "h2",
+      "text": "Czego Shuuty w klubie nie zrobi"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "**Nie pobiera składek ani opłat za rezerwacje.** Płatności w aplikacji dotyczą tylko planów Pro i Teams.",
+        "**Nie ma strony WWW do rezerwacji.** Grafik działa w aplikacji na iPhone'a, iPada i Androida - każdy członek potrzebuje Shuuty i musi być w grupie.",
+        "**Nie jest dla osób poniżej 16 lat.** Regulamin dopuszcza tylko użytkowników od 16 lat, więc drużyny młodzieżowe młodszych zawodników zostają poza aplikacją.",
+        "**Nie zapełni mapy za Ciebie.** Shuuty dopiero rośnie, więc w Twojej okolicy mapa może być jeszcze pusta. Otwarta grupa klubu z dobrym opisem to pierwszy krok, żeby osoby z okolicy mogły Was znaleźć."
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Ile to kosztuje"
+    },
+    {
+      "type": "p",
+      "text": "Start jest bezpłatny: podstawowe funkcje z limitami, np. liczbą osób w grupie i w spotkaniu. Plany Pro i Teams zwiększają limity i dodają tłumaczenie wiadomości w czacie. Ceny zależą od kraju i są podane w App Store i Google Play."
+    },
+    {
+      "type": "h2",
+      "text": "Jak zacząć"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Zainstaluj Shuuty z App Store albo Google Play.",
+        "Utwórz grupę klubu i wybierz sposób dołączania: prywatna, za akceptacją albo wolny wstęp.",
+        "Dodaj opis, zdjęcia, lokalizację i zainteresowania, jeśli klub ma być widoczny w Odkrywaj.",
+        "Włącz kalendarz w trybie grafiku rezerwacji i ustaw długość sesji, przerwy, dni i wyjątki.",
+        "Zaproś członków.",
+        "Dodaj stały trening jako spotkanie cykliczne."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "question": "Czy członkowie muszą mieć aplikację?",
+      "answer": "Tak. Shuuty działa na iPhonie, iPadzie i Androidzie, nie ma wersji w przeglądarce."
+    },
+    {
+      "question": "Czy mogę ukryć grupę przed obcymi?",
+      "answer": "Tak. Prywatne grupy i spotkania są dostępne tylko przez zaproszenie."
+    },
+    {
+      "question": "Czy nowe osoby z okolicy znajdą klub?",
+      "answer": "Grupę widoczną dla wszystkich, z lokalizacją i zainteresowaniami, Shuuty pokazuje w Odkrywaj osobom z okolicy. W miejscach, gdzie aplikacja jest jeszcze nowa, takich osób może być na razie mało."
+    }
+  ]
+}
