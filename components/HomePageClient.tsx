@@ -14,6 +14,8 @@ import { localizedSitePath, type SiteLanguage } from '@/components/documentLocal
 import ProductDeviceFrame from '@/components/ProductDeviceFrame';
 import TaskSpatialHandoff from '@/components/TaskSpatialHandoff';
 import { useSiteLanguage } from '@/components/useSiteLanguage';
+import guidesContent from '@/content/guides.json';
+import { asGuides, guidesIn } from '@/lib/guides.mjs';
 import { getProductMediaPlacements } from '@/lib/productMedia';
 import {
   APP_STORE_DEVELOPER_URL,
@@ -910,6 +912,11 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
           <nav className={s.footerLinks} aria-label={c.a11y.footerNav}>
             <Link href={localizedPath(lang, '/support/')}>{c.footer.support}</Link>
             <Link href={localizedPath(lang, '/facts/')}>{c.footer.facts}</Link>
+            {guidesIn(asGuides(guidesContent.guides), lang).length > 0 ? (
+              <Link href={localizedPath(lang, '/guides/')}>
+                {guidesContent.index[lang].navTitle}
+              </Link>
+            ) : null}
             <Link href={localizedPath(lang, '/account-deletion/')}>
               {c.footer.accountDeletion}
             </Link>

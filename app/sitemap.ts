@@ -1,5 +1,8 @@
 import type { MetadataRoute } from 'next';
+import { guides } from '@/lib/guidePages';
+import { guideAlternates, guidePath, guidesIn } from '@/lib/guides.mjs';
 import { SITE_URL } from '@/lib/site';
+import { GUIDE_INDEX_PATHS, type SiteLanguage } from '@/lib/sitePaths.mjs';
 
 export const dynamic = 'force-static';
 
@@ -46,7 +49,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { english: '/terms/', polish: '/pl/terms/', changeFrequency: 'monthly', priority: 0.4 },
   ];
 
-  return routeGroups.flatMap(({ english, polish, norwegian, changeFrequency, priority }) => {
+  const pages = routeGroups.flatMap(({ english, polish, norwegian, changeFrequency, priority }) => {
     const languages = {
       en: `${SITE_URL}${english}`,
       pl: `${SITE_URL}${polish}`,
@@ -61,4 +64,42 @@ export default function sitemap(): MetadataRoute.Sitemap {
       alternates: { languages },
     }));
   });
+
+  return [...pages, ...guideEntries()];
+}
+
+// Guides are listed only where they exist: an index joins the sitemap with its
+// first guide, and hreflang links only real translations.
+function guideEntries(): MetadataRoute.Sitemap {
+  const withLanguages = (paths: Partial<Record<SiteLanguage, string>>) => {
+    const languages: Record<string, string> = Object.fromEntries(
+      Object.entries(paths).map(([code, path]) => [code, `${SITE_URL}${path}`]),
+    );
+    if (Object.keys(languages).length < 2) return {};
+    if (languages.en) languages['x-default'] = languages.en;
+    return { alternates: { languages } };
+  };
+
+  const indexLanguages = (Object.keys(GUIDE_INDEX_PATHS) as SiteLanguage[]).filter(
+    (language) => guidesIn(guides, language).length > 0,
+  );
+  const indexPaths = Object.fromEntries(
+    indexLanguages.map((language) => [language, GUIDE_INDEX_PATHS[language]]),
+  );
+
+  return [
+    ...indexLanguages.map((language) => ({
+      url: `${SITE_URL}${GUIDE_INDEX_PATHS[language]}`,
+      changeFrequency: 'weekly' as const,
+      priority: 0.6,
+      ...withLanguages(indexPaths),
+    })),
+    ...guides.map((guide) => ({
+      url: `${SITE_URL}${guidePath(guide)}`,
+      lastModified: guide.updatedOn,
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
+      ...withLanguages(guideAlternates(guides, guide)),
+    })),
+  ];
 }

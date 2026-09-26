@@ -1,4 +1,5 @@
-import { readFile, writeFile } from 'node:fs/promises';
+import { readdir, readFile, writeFile } from 'node:fs/promises';
+import { GUIDE_INDEX_PATHS } from '../lib/sitePaths.mjs';
 
 const root = new URL('../', import.meta.url);
 const localizedPages = {
@@ -16,6 +17,19 @@ const localizedPages = {
   ],
   nb: ['out/nb/index.html', 'out/nb/support/index.html', 'out/nb/facts/index.html'],
 };
+
+// Every page in the Polish and Norwegian guide sections: the index and one
+// folder per article.
+for (const language of /** @type {const} */ (['pl', 'nb'])) {
+  const sectionPath = `out${GUIDE_INDEX_PATHS[language]}`;
+  localizedPages[language].push(`${sectionPath}index.html`);
+  const entries = await readdir(new URL(sectionPath, root), { withFileTypes: true });
+  for (const entry of entries) {
+    if (entry.isDirectory() && !entry.name.startsWith('__next')) {
+      localizedPages[language].push(`${sectionPath}${entry.name}/index.html`);
+    }
+  }
+}
 
 for (const [language, pagePaths] of Object.entries(localizedPages)) {
   for (const pagePath of pagePaths) {

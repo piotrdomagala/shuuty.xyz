@@ -169,6 +169,9 @@ test('new marketing prose follows the short-hyphen convention', async () => {
     'components/FactsPageClient.tsx',
     'content/facts.json',
     'app/nb/facts/page.tsx',
+    'content/guides.json',
+    'components/GuidesIndexClient.tsx',
+    'components/GuidePageClient.tsx',
     'public/llms.txt',
     'public/llms-full.txt',
   ];
