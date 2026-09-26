@@ -84,8 +84,6 @@ export const metadata: Metadata = {
     'projects and plans',
     'time tracking',
     'group galleries',
-    'local offers',
-    'service listings',
     'local meetings',
     'community map',
     'mobile app',
