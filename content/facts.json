@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "checkedOn": "2026-09-25",
+  "checkedOn": "2026-09-26",
   "pages": {
     "en": {
       "path": "/facts/",
       "title": "Shuuty facts",
       "description": "Checked facts about the Shuuty app: what it does, platforms, languages, plans, publisher and support.",
-      "checkedLabel": "Checked on 25 September 2026",
+      "checkedLabel": "Checked on 26 September 2026",
       "navTitle": "Facts",
       "faqHeading": "Frequently asked questions",
       "listedOn": "Listed on",
@@ -73,16 +73,12 @@
           "heading": "Languages",
           "items": [
             {
-              "text": "On Android, the app is in English, Polish and Norwegian."
-            },
-            {
-              "text": "On iPhone and iPad, the current App Store version is in English and Polish."
+              "text": "On iPhone, iPad and Android, the app is in English, Polish and Norwegian."
             },
             {
               "text": "Pick the language in your profile; on first launch the app uses your phone's language."
             },
             {
-              "platform": "Android",
               "text": "With Pro and Teams, translate messages in conversations, groups, and meetings, so everyone in a multilingual group reads in their own language. You can also dictate a message."
             }
           ]
@@ -131,10 +127,7 @@
           "question": "Which languages is Shuuty available in?",
           "answer": [
             {
-              "text": "On Android, the app is in English, Polish and Norwegian."
-            },
-            {
-              "text": "On iPhone and iPad, the current App Store version is in English and Polish."
+              "text": "On iPhone, iPad and Android, the app is in English, Polish and Norwegian."
             },
             {
               "text": "Pick the language in your profile; on first launch the app uses your phone's language."
@@ -198,7 +191,6 @@
               "text": "Start for free. Optional Pro and Teams plans raise limits and unlock additional capabilities."
             },
             {
-              "platform": "Android",
               "text": "With Pro and Teams, translate messages in conversations, groups, and meetings, so everyone in a multilingual group reads in their own language."
             },
             {
@@ -245,7 +237,7 @@
       "path": "/pl/facts/",
       "title": "Fakty o Shuuty",
       "description": "Sprawdzone fakty o aplikacji Shuuty: co robi, platformy, języki, plany, wydawca i pomoc.",
-      "checkedLabel": "Sprawdzono 25 września 2026",
+      "checkedLabel": "Sprawdzono 26 września 2026",
       "navTitle": "Fakty",
       "faqHeading": "Najczęstsze pytania",
       "listedOn": "Znajdziesz nas też na",
@@ -312,16 +304,12 @@
           "heading": "Języki",
           "items": [
             {
-              "text": "Na Androidzie aplikacja działa po polsku, angielsku i norwesku."
-            },
-            {
-              "text": "Na iPhonie i iPadzie obecna wersja z App Store działa po polsku i angielsku."
+              "text": "Na iPhonie, iPadzie i Androidzie aplikacja działa po polsku, angielsku i norwesku."
             },
             {
               "text": "Język wybierzesz w profilu, a przy pierwszym uruchomieniu aplikacja przejmie ten z telefonu."
             },
             {
-              "platform": "Android",
               "text": "W planach Pro i Teams przetłumaczysz wiadomości w rozmowach, grupach i spotkaniach, więc w wielojęzycznej grupie każdy czyta po swojemu. Wiadomość możesz też podyktować."
             }
           ]
@@ -370,10 +358,7 @@
           "question": "W jakich językach jest Shuuty?",
           "answer": [
             {
-              "text": "Na Androidzie aplikacja działa po polsku, angielsku i norwesku."
-            },
-            {
-              "text": "Na iPhonie i iPadzie obecna wersja z App Store działa po polsku i angielsku."
+              "text": "Na iPhonie, iPadzie i Androidzie aplikacja działa po polsku, angielsku i norwesku."
             },
             {
               "text": "Język wybierzesz w profilu, a przy pierwszym uruchomieniu aplikacja przejmie ten z telefonu."
@@ -437,7 +422,6 @@
               "text": "Zacznij bezpłatnie. Opcjonalne plany Pro i Teams zwiększają limity i odblokowują dodatkowe możliwości."
             },
             {
-              "platform": "Android",
               "text": "W planach Pro i Teams przetłumaczysz wiadomości w rozmowach, grupach i spotkaniach, więc w wielojęzycznej grupie każdy czyta po swojemu."
             },
             {
@@ -484,7 +468,7 @@
       "path": "/nb/facts/",
       "title": "Fakta om Shuuty",
       "description": "Kontrollerte fakta om Shuuty-appen: hva den gjør, plattformer, språk, planer, utgiver og hjelp.",
-      "checkedLabel": "Kontrollert 25. september 2026",
+      "checkedLabel": "Kontrollert 26. september 2026",
       "navTitle": "Fakta",
       "faqHeading": "Vanlige spørsmål",
       "listedOn": "Du finner oss også på",
@@ -551,16 +535,12 @@
           "heading": "Språk",
           "items": [
             {
-              "text": "På Android finnes appen på norsk, polsk og engelsk."
-            },
-            {
-              "text": "På iPhone og iPad er den nåværende versjonen i App Store på engelsk og polsk."
+              "text": "På iPhone, iPad og Android finnes appen på norsk, polsk og engelsk."
             },
             {
               "text": "Du velger språk i profilen, og ved første oppstart bruker appen språket fra telefonen."
             },
             {
-              "platform": "Android",
               "text": "Med Pro og Teams oversetter du meldinger i samtaler, grupper og møter til ditt språk, slik at alle i en flerspråklig gruppe leser på sitt eget. Du kan også diktere meldinger."
             }
           ]
@@ -609,10 +589,7 @@
           "question": "Hvilke språk finnes Shuuty på?",
           "answer": [
             {
-              "text": "På Android finnes appen på norsk, polsk og engelsk."
-            },
-            {
-              "text": "På iPhone og iPad er den nåværende versjonen i App Store på engelsk og polsk."
+              "text": "På iPhone, iPad og Android finnes appen på norsk, polsk og engelsk."
             },
             {
               "text": "Du velger språk i profilen, og ved første oppstart bruker appen språket fra telefonen."
@@ -676,7 +653,6 @@
               "text": "Kom i gang gratis. De valgfrie planene Pro og Teams gir høyere grenser og flere muligheter."
             },
             {
-              "platform": "Android",
               "text": "Med Pro og Teams oversetter du meldinger i samtaler, grupper og møter til ditt språk, slik at alle i en flerspråklig gruppe leser på sitt eget."
             },
             {

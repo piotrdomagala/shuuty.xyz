@@ -42,8 +42,8 @@ The creator chooses whether the group and its description are public, what remai
 
 ### Languages and chat
 
-- On Android the app is available in English, Polish and Norwegian; the current App Store version for iPhone and iPad is in English and Polish (checked 2026-09-25). On first launch it uses the phone language, and the language can be changed in the profile.
-- The Android app adds dictation in chat and, on the Pro and Teams plans, translation of messages in conversations, groups and meetings into the reader's language.
+- On iPhone, iPad and Android the app is available in English, Polish and Norwegian (checked 2026-09-26). On first launch it uses the phone language, and the language can be changed in the profile.
+- The app offers dictation in chat and, on the Pro and Teams plans, translation of messages in conversations, groups and meetings into the reader's language.
 - Dates and times follow the format set on the phone.
 
 ### Product flow
@@ -100,8 +100,8 @@ Twórca grupy wybiera, czy grupa i jej opis są publiczne, co pozostaje widoczne
 
 ### Języki i czat
 
-- Na Androidzie aplikacja działa po polsku, angielsku i norwesku; obecna wersja z App Store na iPhone'a i iPada działa po polsku i angielsku (sprawdzono 2026-09-25). Przy pierwszym uruchomieniu przejmuje język telefonu, a język można zmienić w profilu.
-- Aplikacja na Androida pozwala dyktować wiadomości w czacie, a w planach Pro i Teams tłumaczyć wiadomości w rozmowach, grupach i spotkaniach na język czytającego.
+- Na iPhonie, iPadzie i Androidzie aplikacja działa po polsku, angielsku i norwesku (sprawdzono 2026-09-26). Przy pierwszym uruchomieniu przejmuje język telefonu, a język można zmienić w profilu.
+- Aplikacja pozwala dyktować wiadomości w czacie, a w planach Pro i Teams tłumaczyć wiadomości w rozmowach, grupach i spotkaniach na język czytającego.
 - Daty i godziny wyglądają tak, jak ustawiono je w telefonie.
 
 ### Przebieg działania
@@ -132,8 +132,7 @@ Shuuty er en app for oppgaver, grupper og møter med menneskene rundt deg. Si hv
 - Private grupper og møter er bare tilgjengelige via invitasjon. Andre krever godkjenning eller har åpen tilgang, og kan være synlige for venner eller for alle.
 - Planlegg sted, tid og deltakere for et møte. Utforsk møter, offentlige grupper og lokale tilbud i nærheten på kartet. Et møte kan være et engangstreff eller gjentas regelmessig.
 - iPhone og iPad: App Store, iOS 15.1 eller nyere. Android: Google Play, Android 7.0 eller nyere. Appen finnes ikke som nettversjon - nettstedet er bare til informasjon.
-- På Android finnes appen på norsk, polsk og engelsk. Med Pro og Teams oversetter du meldinger i samtaler, grupper og møter til ditt språk, slik at alle i en flerspråklig gruppe leser på sitt eget.
-- På iPhone og iPad er den nåværende versjonen i App Store på engelsk og polsk.
+- På iPhone, iPad og Android finnes appen på norsk, polsk og engelsk. Med Pro og Teams oversetter du meldinger i samtaler, grupper og møter til ditt språk, slik at alle i en flerspråklig gruppe leser på sitt eget.
 - Kom i gang gratis. De valgfrie planene Pro og Teams gir høyere grenser og flere muligheter. Prisene avhenger av landet og vises i App Store og Google Play.
 - Du kan starte slettingen i Shuuty-appen under Profil > Konto > Slett konto, eller be om sletting på e-post til shuuty.app@gmail.com fra adressen som er knyttet til kontoen. Sletting av Shuuty-kontoen avslutter ikke automatisk et abonnement som administreres av Apple eller Google.
 - Utgiver: Shuuty Prosta Spółka Akcyjna (Shuuty P.S.A.), Polen. Hjelp: https://shuuty.com/nb/support/ og shuuty.app@gmail.com.
