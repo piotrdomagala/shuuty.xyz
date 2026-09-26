@@ -1,0 +1,55 @@
+{
+  "index": {
+    "en": {
+      "navTitle": "Guides",
+      "title": "Shuuty guides",
+      "description": "Practical guides to tasks, groups and meetings in Shuuty, each one clear about what the app does and what it does not do.",
+      "intro": "Guides for everyday situations with tasks, groups and meetings. Each one says plainly what Shuuty does and what it does not do.",
+      "empty": "The first guides are being written. Until then, the facts page has the key information about Shuuty.",
+      "factsLink": "Shuuty facts"
+    },
+    "pl": {
+      "navTitle": "Poradniki",
+      "title": "Poradniki Shuuty",
+      "description": "Praktyczne poradniki o zadaniach, grupach i spotkaniach w Shuuty. Każdy mówi wprost, co aplikacja robi, a czego nie.",
+      "intro": "Poradniki do codziennych sytuacji z zadaniami, grupami i spotkaniami. Każdy mówi wprost, co Shuuty robi, a czego nie.",
+      "empty": "Pierwsze poradniki są w przygotowaniu. Do tego czasu najważniejsze informacje o Shuuty znajdziesz na stronie faktów.",
+      "factsLink": "Fakty o Shuuty"
+    },
+    "nb": {
+      "navTitle": "Guider",
+      "title": "Shuuty-guider",
+      "description": "Praktiske guider om oppgaver, grupper og møter i Shuuty. Hver guide sier rett ut hva appen gjør og ikke gjør.",
+      "intro": "Guider for hverdagen med oppgaver, grupper og møter. Hver guide sier rett ut hva Shuuty gjør og ikke gjør.",
+      "empty": "De første guidene er på vei. Frem til da finner du det viktigste om Shuuty på faktasiden.",
+      "factsLink": "Fakta om Shuuty"
+    }
+  },
+  "labels": {
+    "en": {
+      "faqHeading": "Frequently asked questions",
+      "getApp": "Get Shuuty",
+      "appStorePrefix": "Download on the",
+      "googlePlayPrefix": "Get it on",
+      "allGuides": "All guides",
+      "facts": "Shuuty facts"
+    },
+    "pl": {
+      "faqHeading": "Najczęstsze pytania",
+      "getApp": "Pobierz Shuuty",
+      "appStorePrefix": "Pobierz z",
+      "googlePlayPrefix": "Pobierz z",
+      "allGuides": "Wszystkie poradniki",
+      "facts": "Fakty o Shuuty"
+    },
+    "nb": {
+      "faqHeading": "Vanlige spørsmål",
+      "getApp": "Last ned Shuuty",
+      "appStorePrefix": "Last ned fra",
+      "googlePlayPrefix": "Tilgjengelig på",
+      "allGuides": "Alle guider",
+      "facts": "Fakta om Shuuty"
+    }
+  },
+  "guides": []
+}

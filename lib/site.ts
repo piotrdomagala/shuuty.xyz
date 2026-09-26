@@ -181,6 +181,56 @@ export function createPublicPageMetadata({
   };
 }
 
+type TranslatedPaths = Partial<Record<SocialCardLanguage, `/${string}`>>;
+
+// Pages whose translations are any subset of the site languages, such as
+// guides. hreflang is declared only when another language exists, and a page
+// that is not ready for search (an empty guides index) stays noindex, follow.
+export function createTranslatedPageMetadata({
+  title,
+  description,
+  path,
+  language,
+  translations,
+  noindex = false,
+}: {
+  title: string;
+  description: string;
+  path: `/${string}`;
+  language: SocialCardLanguage;
+  translations: TranslatedPaths;
+  noindex?: boolean;
+}): Metadata {
+  const languages = Object.keys(translations) as SocialCardLanguage[];
+  const hasTranslations = languages.some((code) => code !== language);
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: path,
+      ...(hasTranslations
+        ? {
+            languages: {
+              ...translations,
+              ...(translations.en ? { 'x-default': translations.en } : {}),
+            },
+          }
+        : {}),
+    },
+    ...socialMetadata({
+      title,
+      description,
+      path,
+      language,
+      alternateLanguages: languages,
+    }),
+    ...(noindex
+      ? { robots: { index: false, follow: true, googleBot: { index: false, follow: true } } }
+      : {}),
+  };
+}
+
 export function createNoIndexMetadata({
   title,
   description,

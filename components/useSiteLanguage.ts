@@ -45,7 +45,12 @@ const persistLanguage = (language: SiteLanguage) => {
 };
 
 
-export function useSiteLanguage(initialLanguage: SiteLanguage = 'en') {
+// Pages without a generic counterpart in another language (guide articles)
+// pass their own targets; every other page uses languageSwitchPath.
+export function useSiteLanguage(
+  initialLanguage: SiteLanguage = 'en',
+  switchPaths?: Readonly<Record<SiteLanguage, string>>,
+) {
   const [language, setLanguage] = useState<SiteLanguage>(initialLanguage);
 
   useEffect(() => {
@@ -97,20 +102,26 @@ export function useSiteLanguage(initialLanguage: SiteLanguage = 'en') {
     setLanguage(nextLanguage);
     persistLanguage(nextLanguage);
 
-    const targetPath = languageSwitchPath(window.location.pathname, nextLanguage);
+    const targetPath =
+      switchPaths?.[nextLanguage] ?? languageSwitchPath(window.location.pathname, nextLanguage);
     if (targetPath !== window.location.pathname) {
-      try {
-        window.sessionStorage.setItem(LANGUAGE_SCROLL_KEY, JSON.stringify({
-          targetPath,
-          scrollY: window.scrollY,
-          ...getViewportAnchor(),
-        }));
-      } catch {
-        // Keep the route switch functional when session storage is unavailable.
+      // A translated article is a different text, so it opens at the top:
+      // no saved position and no fragment (translations reuse section ids).
+      if (!switchPaths) {
+        try {
+          window.sessionStorage.setItem(LANGUAGE_SCROLL_KEY, JSON.stringify({
+            targetPath,
+            scrollY: window.scrollY,
+            ...getViewportAnchor(),
+          }));
+        } catch {
+          // Keep the route switch functional when session storage is unavailable.
+        }
       }
-      window.location.assign(`${targetPath}${window.location.search}${window.location.hash}`);
+      const hash = switchPaths ? '' : window.location.hash;
+      window.location.assign(`${targetPath}${window.location.search}${hash}`);
     }
-  }, []);
+  }, [switchPaths]);
 
   return { language, changeLanguage };
 }

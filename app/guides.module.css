@@ -1,0 +1,107 @@
+/* Guides: index cards, article meta lines and the store buttons at the end.
+   Headings, lists and paragraphs come from documents.module.css (.markdown);
+   the rules here carry an element qualifier so they win over `.markdown p`,
+   `.markdown h2` and `.markdown ul` whatever order the stylesheets load in. */
+
+article p.intro {
+  text-align: center;
+}
+
+article ul.guideList {
+  list-style: none;
+  padding: 0;
+  margin: var(--s-xl) 0 0;
+}
+
+article ul.guideList li {
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--s-md) var(--s-lg);
+  margin-bottom: var(--s-md);
+  background: var(--bg-soft);
+}
+
+.guideList li h2 {
+  margin: 0 0 var(--s-sm);
+  padding: 0;
+  border: 0;
+  font-size: 1.2rem;
+  line-height: 1.35;
+}
+
+.guideList li p {
+  margin: 0;
+}
+
+article p.backLink {
+  margin: 0 0 var(--s-md);
+  font-size: 0.95rem;
+}
+
+article p.updated {
+  margin: calc(-1 * var(--s-md)) 0 var(--s-xl);
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+article aside.getApp {
+  margin-top: var(--s-xl);
+  padding: var(--s-lg);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--bg-soft);
+}
+
+.getApp h2 {
+  margin-top: 0;
+}
+
+.storeRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-sm);
+}
+
+/* Two classes, so the rule wins over `.markdown a` whatever the load order. */
+.storeRow .storeLink {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 52px;
+  padding: var(--s-sm) var(--s-md);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--bg-raised);
+  color: var(--text);
+  line-height: 1.15;
+  text-decoration: none;
+}
+
+.storeRow .storeLink:hover {
+  border-color: rgba(var(--gold-rgb), 0.42);
+  opacity: 1;
+  text-decoration: none;
+}
+
+.storeRow .storeLink:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 2px;
+}
+
+.storePrefix {
+  color: var(--text-secondary);
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.storeName {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+article p.related {
+  margin-top: var(--s-lg);
+  font-size: 0.95rem;
+}
