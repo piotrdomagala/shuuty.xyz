@@ -79,7 +79,9 @@ interface FactsPageClientProps {
   initialLanguage?: SiteLanguage;
 }
 
-export default function FactsPageClient({ initialLanguage = 'en' }: FactsPageClientProps) {
+export default function FactsPageClient({
+  initialLanguage = 'en',
+}: Readonly<FactsPageClientProps>) {
   const { language, changeLanguage } = useSiteLanguage(initialLanguage);
   const translations = documentTranslations[language];
   const page = facts.pages[language];
