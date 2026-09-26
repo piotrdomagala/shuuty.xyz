@@ -67,7 +67,7 @@ export const metadata: Metadata = {
     template: '%s | Shuuty',
   },
   description:
-    'Create tasks by voice and hand them to friends or groups. Shuuty keeps reminders, chat, calendars and meetings together - on iOS and Android.',
+    'Tasks, groups and meetings in one app: say a task and hand it to people, start a group for a family, club or clients, and meet up nearby. iOS and Android.',
   applicationName: 'Shuuty',
   category: 'Productivity',
   // Public site-ownership tag from Bing Webmaster Tools; it is meant to be visible.
@@ -111,7 +111,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Shuuty - From Idea to Action',
     description:
-      'Say it, choose a person or group, and move a complete task forward. Build groups for work, community, services, sales and bookings.',
+      'Say it, choose a person or group, and move the task forward. Run groups for work, community, services and bookings, and meet up nearby.',
     url: '/',
     type: 'website',
     locale: 'en_US',
@@ -123,7 +123,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Shuuty - From Idea to Action',
     description:
-      'Say it. Delegate it. Get it done. Shape groups for work, community, services, sales and bookings.',
+      'Say it. Delegate it. Get it done. Groups for work, community, services and bookings, and meetups nearby.',
     images: [{ url: socialImage('en').url, alt: socialImage('en').alt }],
   },
   icons: {
