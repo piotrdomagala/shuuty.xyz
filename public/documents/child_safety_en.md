@@ -32,4 +32,4 @@ We handle reports in line with applicable child-safety laws and Google Play's Ch
 
 Child-safety contact: **support@shuuty.com**
 
-Last updated: August 28, 2026.
+Last updated: September 27, 2026.

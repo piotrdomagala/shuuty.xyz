@@ -1,6 +1,6 @@
 # Shuuty Mobile Application Terms and Conditions
 
-Last updated: July 30, 2026
+Last updated: September 27, 2026
 
 ## §1. Service Provider, scope of services, and agreement
 1. The Service Provider and owner of the Shuuty Application is **Shuuty Prosta Spółka Akcyjna**, ul. Południowa 13, 32-353 Trzyciąż, Poland, entered in the National Court Register under **KRS 0000947279**, tax identification number (NIP) **6372215912**, and statistical number (REGON) **52098153800000** (hereinafter “Shuuty” or the “Service Provider”). Contact: **support@shuuty.com**.

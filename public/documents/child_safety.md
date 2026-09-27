@@ -32,4 +32,4 @@ Obsługujemy zgłoszenia zgodnie z właściwymi przepisami dotyczącymi bezpiecz
 
 Kontakt ds. bezpieczeństwa dzieci: **support@shuuty.com**
 
-Ostatnia aktualizacja: 28 sierpnia 2026 r.
+Ostatnia aktualizacja: 27 września 2026 r.

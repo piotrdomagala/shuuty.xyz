@@ -1,6 +1,6 @@
 # Regulamin aplikacji mobilnej Shuuty
 
-Ostatnia aktualizacja: 30 lipca 2026 r.
+Ostatnia aktualizacja: 27 września 2026 r.
 
 ## §1. Usługodawca, zakres usług i zawarcie umowy
 1. Usługodawcą i właścicielem Aplikacji Shuuty jest **Shuuty Prosta Spółka Akcyjna**, ul. Południowa 13, 32-353 Trzyciąż, Polska, wpisana do Krajowego Rejestru Sądowego pod numerem **KRS 0000947279**, NIP **6372215912**, REGON **52098153800000** (dalej „Shuuty” lub „Usługodawca”). Kontakt: **support@shuuty.com**.

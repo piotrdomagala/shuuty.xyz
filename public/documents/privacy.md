@@ -1,6 +1,6 @@
 # Polityka prywatności aplikacji mobilnej Shuuty
 
-Ostatnia aktualizacja: 24 września 2026 r.
+Ostatnia aktualizacja: 27 września 2026 r.
 
 ## 1. Administrator i dane kontaktowe
 Administratorem danych osobowych jest **Shuuty Prosta Spółka Akcyjna**, ul. Południowa 13, 32-353 Trzyciąż, Polska, wpisana do Krajowego Rejestru Sądowego pod numerem **KRS 0000947279**, NIP **6372215912**, REGON **52098153800000** (dalej „Shuuty”, „my” lub „Administrator”).
