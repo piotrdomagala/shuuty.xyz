@@ -1169,6 +1169,35 @@ for (const [name, page] of Object.entries(pages)) {
   }
 }
 
+// Fonts are self-hosted (content/fonts.json): every page preloads the latin and
+// latin-ext files, every font file is exported, and nothing points at Google Fonts.
+const fontsManifest = JSON.parse(await readFile(new URL('content/fonts.json', root), 'utf8'));
+const preloadedSubsets = new Set(['latin', 'latin-ext']);
+const fontPreloads = fontsManifest.files
+  .filter((entry) => preloadedSubsets.has(entry.subset))
+  .map((entry) => `<link rel="preload" href="/fonts/${entry.file}" as="font" crossorigin="" type="font/woff2"/>`);
+for (const [name, page] of Object.entries(pages)) {
+  const html = await readFile(new URL(page.path, root), 'utf8');
+  for (const preloadTag of fontPreloads) {
+    if (!html.includes(preloadTag)) failures.push(`${name} static HTML is missing the font preload ${preloadTag}`);
+  }
+}
+for (const entry of fontsManifest.files) {
+  try {
+    await access(new URL(`out/fonts/${entry.file}`, root));
+  } catch {
+    failures.push(`out/fonts/${entry.file} is missing from the export`);
+  }
+}
+const googleFontsPattern = /fonts\.(?:googleapis|gstatic)\.com/;
+for (const entry of await readdir(outputPath, { recursive: true, withFileTypes: true })) {
+  if (!entry.isFile() || !/\.(?:html|css|js)$/.test(entry.name)) continue;
+  const filePath = join(entry.parentPath, entry.name);
+  if (googleFontsPattern.test(await readFile(filePath, 'utf8'))) {
+    failures.push(`${relative(outputPath, filePath)} still refers to Google Fonts`);
+  }
+}
+
 const indexNowKey = '82c89256cd2a7441fe790b5d949d58fedac21a8a5c3a0faf';
 const indexNowKeyFile = await readFile(new URL(`out/${indexNowKey}.txt`, root), 'utf8');
 if (indexNowKeyFile.trim() !== indexNowKey) {
