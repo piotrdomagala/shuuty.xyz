@@ -2213,25 +2213,34 @@
     gap: 4px;
   }
 
+  /*
+   * Coverflow: each phone turns in space by where it is against the centre
+   * (--place, --away, written by the scroller on every frame), so the turn
+   * follows the finger and settles with the snap. No transition: the scroll
+   * itself is the animation.
+   */
   .taskScreenSlot {
     height: 550px;
+    perspective: 900px;
   }
 
   .taskScreenPlane {
     width: min(66vw, 250px);
-    opacity: 0.28;
+    opacity: calc(1 - var(--away, 0) * 0.55);
+    transition: none;
+    will-change: transform, opacity;
   }
 
   .taskFlowItem:nth-child(1) .taskScreenPlane,
   .taskFlowItem:nth-child(2) .taskScreenPlane,
-  .taskFlowItem:nth-child(3) .taskScreenPlane {
-    transform: translate3d(0, 18px, 0) scale(0.88);
-  }
-
+  .taskFlowItem:nth-child(3) .taskScreenPlane,
   .taskFlowItem:nth-child(1)[data-active='true'] .taskScreenPlane,
   .taskFlowItem:nth-child(2)[data-active='true'] .taskScreenPlane,
   .taskFlowItem:nth-child(3)[data-active='true'] .taskScreenPlane {
-    transform: translate3d(0, 0, 70px) scale(1);
+    transform:
+      translateX(calc(var(--place, 0) * -34px))
+      rotateY(calc(var(--place, 0) * -42deg))
+      scale(calc(1 - var(--away, 0) * 0.14));
   }
 
   .taskStepCopy {
@@ -2581,5 +2590,13 @@
 
   .groupModuleLine {
     font-size: 0.62rem;
+  }
+}
+
+/* Reduced motion: the phones still dim and shrink away, but do not turn. */
+@media (max-width: 720px) and (prefers-reduced-motion: reduce) {
+  .taskFlowItem .taskScreenPlane,
+  .taskFlowItem[data-active='true'] .taskScreenPlane {
+    transform: scale(calc(1 - var(--away, 0) * 0.14)) !important;
   }
 }

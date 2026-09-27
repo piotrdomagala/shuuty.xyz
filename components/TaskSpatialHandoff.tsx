@@ -6,6 +6,7 @@ import {
   useId,
   useRef,
   useState,
+  type CSSProperties,
   type KeyboardEvent as ReactKeyboardEvent,
   type PointerEvent as ReactPointerEvent,
 } from 'react';
@@ -127,7 +128,13 @@ export default function TaskSpatialHandoff({
         let best = Infinity;
         Array.from(list.children).forEach((child, index) => {
           const item = child as HTMLElement;
-          const distance = Math.abs(item.offsetLeft + item.offsetWidth / 2 - centre);
+          const offset = item.offsetLeft + item.offsetWidth / 2 - centre;
+          const distance = Math.abs(offset);
+          // Where the card is against the centre, in card widths: the CSS
+          // turns it in space from that on every frame of the gesture.
+          const place = Math.max(-1.5, Math.min(1.5, offset / item.offsetWidth));
+          item.style.setProperty('--place', place.toFixed(3));
+          item.style.setProperty('--away', Math.min(1, Math.abs(place)).toFixed(3));
           if (distance < best) {
             best = distance;
             nearest = index;
@@ -141,6 +148,7 @@ export default function TaskSpatialHandoff({
     list.addEventListener('scroll', onScroll, { passive: true });
     list.addEventListener('touchstart', onTouch, { passive: true });
     list.addEventListener('wheel', onTouch, { passive: true });
+    onScroll();
     return () => {
       window.cancelAnimationFrame(frame);
       list.removeEventListener('scroll', onScroll);
@@ -231,7 +239,16 @@ export default function TaskSpatialHandoff({
           const screenDescriptionId = `${flowId}-screen-${index}`;
 
           return (
-            <li key={screen.id} className={s.taskFlowItem} data-active={isActive}>
+            <li
+              key={screen.id}
+              className={s.taskFlowItem}
+              data-active={isActive}
+              // the resting places, before the scroller reports its own
+              style={{
+                '--place': Math.min(index, 1.5),
+                '--away': Math.min(index, 1),
+              } as CSSProperties}
+            >
               <button
                 ref={(element) => {
                   screenButtons.current[index] = element;
