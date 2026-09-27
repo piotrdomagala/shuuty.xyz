@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Outfit, Plus_Jakarta_Sans } from 'next/font/google';
+import { preload } from 'react-dom';
 import {
   APP_STORE_ID,
   createLanguageAlternates,
@@ -7,21 +7,17 @@ import {
   SITE_URL,
   socialImage,
 } from '@/lib/site';
+import './fonts.css';
 import './globals.css';
 
-const outfit = Outfit({
-  subsets: ['latin', 'latin-ext'],
-  variable: '--font-display',
-  display: 'swap',
-  weight: ['400', '500', '600', '700', '800'],
-});
-
-const jakarta = Plus_Jakarta_Sans({
-  subsets: ['latin', 'latin-ext'],
-  variable: '--font-body',
-  display: 'swap',
-  weight: ['400', '500', '600', '700'],
-});
+// The latin and latin-ext files of both fonts, preloaded on every page as
+// next/font/google did; cyrillic-ext and vietnamese load only if a page needs them.
+const PRELOADED_FONTS = [
+  '/fonts/outfit-latin.woff2',
+  '/fonts/outfit-latin-ext.woff2',
+  '/fonts/plus-jakarta-sans-latin.woff2',
+  '/fonts/plus-jakarta-sans-latin-ext.woff2',
+] as const;
 
 const themeScript = `
   (function () {
@@ -161,10 +157,13 @@ export const viewport: Viewport = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  for (const href of PRELOADED_FONTS) {
+    preload(href, { as: 'font', type: 'font/woff2', crossOrigin: '' });
+  }
+
   return (
     <html
       lang="en"
-      className={`${outfit.variable} ${jakarta.variable}`}
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >

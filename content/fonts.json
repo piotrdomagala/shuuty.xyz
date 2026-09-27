@@ -1,0 +1,72 @@
+{
+  "source": "next/font/google output of the live site (main 170035df, 2026-09-27); byte-identical to https://shuuty.com/_next/static/media/*",
+  "licenses": {
+    "Outfit": "public/fonts/OFL-Outfit.txt",
+    "Plus Jakarta Sans": "public/fonts/OFL-PlusJakartaSans.txt"
+  },
+  "weights": {
+    "Outfit": [
+      400,
+      500,
+      600,
+      700,
+      800
+    ],
+    "Plus Jakarta Sans": [
+      400,
+      500,
+      600,
+      700
+    ]
+  },
+  "files": [
+    {
+      "file": "outfit-latin.woff2",
+      "family": "Outfit",
+      "subset": "latin",
+      "bytes": 32228,
+      "sha256": "92684e4acde79ef07758cd09380b7e01e9824d8b061eddeda046f78c166d7b12",
+      "googleMedia": "1b99372b3eaef0c8-s.p.1gsd1jahc5dg_.woff2"
+    },
+    {
+      "file": "outfit-latin-ext.woff2",
+      "family": "Outfit",
+      "subset": "latin-ext",
+      "bytes": 14760,
+      "sha256": "9e38b3f1575daba3435ef09d33a202585ed5bd204bd0a8c744955c750c2b9091",
+      "googleMedia": "b2ea385cb5ae8625-s.p.1spbknb88wd48.woff2"
+    },
+    {
+      "file": "plus-jakarta-sans-latin.woff2",
+      "family": "Plus Jakarta Sans",
+      "subset": "latin",
+      "bytes": 27272,
+      "sha256": "cd8db90cd950e26bc8761f65d323588bd5cd112d326d6d322bc7c8ea86771215",
+      "googleMedia": "fba5a26ea33df6a3-s.p.18rizl4rsrl42.woff2"
+    },
+    {
+      "file": "plus-jakarta-sans-latin-ext.woff2",
+      "family": "Plus Jakarta Sans",
+      "subset": "latin-ext",
+      "bytes": 21688,
+      "sha256": "0303e02b53b0298fb26a0193941a2e8754f0f9a9fce50d90b178d8da3424873f",
+      "googleMedia": "1a099d89ee94ee96-s.p.35a5cae5tspm2.woff2"
+    },
+    {
+      "file": "plus-jakarta-sans-cyrillic-ext.woff2",
+      "family": "Plus Jakarta Sans",
+      "subset": "cyrillic-ext",
+      "bytes": 1716,
+      "sha256": "a16f29d7d2a21a4f9b3249a82eb2725ed5bdb91500dfb5c4758977de27477f20",
+      "googleMedia": "0b1dc8ddaa74ba49-s.0e__wj8580tc5.woff2"
+    },
+    {
+      "file": "plus-jakarta-sans-vietnamese.woff2",
+      "family": "Plus Jakarta Sans",
+      "subset": "vietnamese",
+      "bytes": 8292,
+      "sha256": "5c913fc1b1f86f4b475e5df45a796aa480d1f7f0891ed6f1a5991d6d1be887c3",
+      "googleMedia": "e629b5bc06499d58-s.10u7vx61f1ie7.woff2"
+    }
+  ]
+}
