@@ -13,7 +13,8 @@
 - Źródłem prawdziwego UI jest 16 kanonicznych capture PL/EN z
   `piotrdomagala/S-` na commicie
   `20a14889e2397514b7c7bcd73269508f24c8004f`.
-- Golden Relay jest dokładną kopią
+- Golden Relay (od 27.09.2026 niewyświetlany w sekcji kroków - właściciel uznał
+  puls za telefonami za nieładny; plik zostaje) jest dokładną kopią
   `store-listing/assets/brand/golden-relay-transparent-2048x256.png`, SHA-256
   `4e49a0b5b2f07f5cb934321d573173463e5ab10d986c29acf64593548956ce15`.
 
@@ -30,8 +31,8 @@ Sekcja Tasks używa trzech realnych ekranów jako jednej sekwencji:
 3. Hand-off - `Delegate now. The task is ready.` / `Deleguj teraz. Zadanie jest gotowe.`
 
 Aktywny ekran rośnie, rozjaśnia się i wychodzi do przodu. Pozostałe ekrany
-zachowują kontekst, ale nie konkurują z aktywnym. Prawdziwy Golden Relay łączy
-sekwencję poza warstwą interfejsu produktu.
+zachowują kontekst, ale nie konkurują z aktywnym. Sekwencję niosą same ekrany i
+ich podpisy, bez linii w tle.
 
 Product Depth zestawia czysty capture galerii na iPadzie z telefonem ustawień
 modułów. Daje to inny rytm niż pary telefonów i nie przycina nagłówka galerii.
@@ -40,10 +41,13 @@ modułów. Daje to inny rytm niż pary telefonów i nie przycina nagłówka gale
 
 Implementacja i końcowe QA potwierdzają:
 
-- jednorazowy automat po wejściu sekcji w viewport: `0 -> 1 -> 2`;
+- jednorazowy automat po wejściu sekcji w viewport: `0 -> 1 -> 2` (na mobile
+  wolniej, po 3,2 s i 6,8 s, żeby każdy krok dało się przeczytać);
 - hover, który aktywuje wskazany ekran i zatrzymuje automat;
 - click i tap, które utrzymują wybrany ekran;
-- swipe powyżej progu 36 px;
+- swipe powyżej progu 36 px na tablecie i desktopie; na mobile natywne
+  przewijanie z przyciąganiem (karta idzie za palcem) i kropki kroków pod
+  kartami;
 - `ArrowLeft` i `ArrowRight` wraz z przeniesieniem focusu;
 - `prefers-reduced-motion: reduce`, który blokuje automat;
 - semantyczny `section` z lokalizowaną nazwą regionu;
@@ -64,8 +68,10 @@ czemu kontrast małego kickera i opisu spełnia WCAG AA.
 - Desktop - trzy płaszczyzny tworzą jedną scenę z aktywnym ekranem na pierwszym
   planie.
 - Tablet - scena kompresuje się bez kolizji podpisów.
-- Mobile - transformowany carousel pokazuje jeden centralny ekran i nie dodaje
-  poziomego scrolla dokumentu.
+- Mobile - poziomy scroller ze `scroll-snap` pokazuje jeden centralny ekran,
+  sąsiednie wystają przy krawędziach (11 px przy 320, 29 px przy 412), aktywny
+  krok wynika z pozycji przewijania. Scroller nie dodaje poziomego scrolla
+  dokumentu i ma zapas u góry na uniesiony telefon.
 - Product Depth - przy szerokości 320-390 px zestawienie iPad + telefon ma budżet
   `100vw - 72px`, odpowiadający paddingowi rozdziału i figury. Nie polega na
   ucinaniu overflow.

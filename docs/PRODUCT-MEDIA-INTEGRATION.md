@@ -45,7 +45,8 @@ with source SHA-256, output SHA-256, byte length, dimensions and the pinned
 Sharp/libvips pipeline defined once in `scripts/product-media-derivatives.mjs`.
 Only WebP paths enter the runtime manifest and static HTML, where each capture
 lists both files in `srcset` so small phone frames load the compact one.
-The Golden Relay line used by the interactive task flow is also an exact copy of
+The Golden Relay line (no longer drawn behind the task flow since 27.09.2026 -
+the owner found the pulse unattractive; the file stays) is an exact copy of
 `store-listing/assets/brand/golden-relay-transparent-2048x256.png`, SHA-256
 `4e49a0b5b2f07f5cb934321d573173463e5ab10d986c29acf64593548956ce15`.
 
