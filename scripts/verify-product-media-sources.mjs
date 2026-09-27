@@ -8,11 +8,24 @@
 // never in the owner's main checkout, pass a worktree.
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
+import { statSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
 
-const worktree = process.argv[2];
-if (!worktree) {
+// Nothing from the command line or the manifest reaches git unchecked: an
+// absolute existing directory, full commit SHAs and plain repository paths
+// only, so no value can be read as a git option.
+const COMMIT = /^[a-f0-9]{40}$/u;
+const ENTRY = /^store-listing\/assets\/source\/[A-Za-z0-9._/-]+\.png$/u;
+
+const worktreeArg = process.argv[2];
+if (!worktreeArg) {
   console.error('Pass the path to a worktree of piotrdomagala/S-.');
+  process.exit(2);
+}
+const worktree = resolve(worktreeArg);
+if (!statSync(worktree, { throwIfNoEntry: false })?.isDirectory()) {
+  console.error(`${worktree} is not a directory.`);
   process.exit(2);
 }
 
@@ -29,6 +42,11 @@ const failures = [];
 const onOrigin = new Map();
 for (const asset of manifest.assets) {
   const commit = asset.sourceCommit ?? manifest.source.commit;
+  if (!COMMIT.test(commit ?? '') || !ENTRY.test(asset.sourceArtifactEntry ?? '')
+    || asset.sourceArtifactEntry.split('/').includes('..')) {
+    failures.push(`${asset.id}: source commit or entry is not in the expected form.`);
+    continue;
+  }
   if (!onOrigin.has(commit)) {
     let reachable = false;
     try {
