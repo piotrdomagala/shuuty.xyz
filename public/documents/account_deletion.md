@@ -11,7 +11,7 @@ Usuwanie konta możesz rozpocząć bezpośrednio w aplikacji Shuuty albo kontakt
 
 ## Poproś o usunięcie przez e-mail
 
-Jeśli nie masz dostępu do aplikacji, napisz na [shuuty.app@gmail.com](mailto:shuuty.app@gmail.com?subject=Usu%C5%84%20moje%20konto%20Shuuty) z adresu przypisanego do konta Shuuty. Wpisz temat **Usuń moje konto Shuuty** i podaj wyłącznie adres e-mail konta. Możemy poprosić o potwierdzenie własności przez bezpieczny proces weryfikacji.
+Jeśli nie masz dostępu do aplikacji, napisz na [support@shuuty.com](mailto:support@shuuty.com?subject=Usu%C5%84%20moje%20konto%20Shuuty) z adresu przypisanego do konta Shuuty. Wpisz temat **Usuń moje konto Shuuty** i podaj wyłącznie adres e-mail konta. Możemy poprosić o potwierdzenie własności przez bezpieczny proces weryfikacji.
 
 ## Co usuwamy lub zachowujemy
 

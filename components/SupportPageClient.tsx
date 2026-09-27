@@ -13,7 +13,7 @@ import { useSiteLanguage } from '@/components/useSiteLanguage';
 import styles from '@/app/documents.module.css';
 import guideStyles from '@/app/guides.module.css';
 
-const SUPPORT_EMAIL = 'shuuty.app@gmail.com';
+const SUPPORT_EMAIL = 'support@shuuty.com';
 
 const supportTranslations = {
   en: {

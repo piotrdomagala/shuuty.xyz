@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 import { languageSwitchPath, localizedSitePath } from '../lib/sitePaths.mjs';
 
 const root = new URL('../', import.meta.url);
@@ -214,4 +214,29 @@ test('reduced motion explicitly removes task-flow transform transitions', async 
     );
   }
   assert.match(reducedMotionRules, /transition:\s*none\s*!important/);
+});
+
+test('public copy does not promise local offers on the map or show the old support inbox', async () => {
+  // Offers as a map or classifieds section are not released; a group can still
+  // be its own offer. Support mail goes to support@shuuty.com.
+  const unreleased = /local\s+offers?|lokaln\p{L}*\s+ofert|ofert\p{L}*\s+lokaln|lokal[et]?\s+tilbud/iu;
+  const retiredInbox = ['shuuty.app', 'gmail.com'].join('@');
+  const guideBodies = (await readdir(new URL('content/guides/', root), { recursive: true }))
+    .filter((name) => name.endsWith('.json'))
+    .map((name) => `content/guides/${name.replaceAll('\\', '/')}`);
+  const files = [
+    'app/homeContent.json',
+    'content/facts.json',
+    'content/guides.json',
+    ...guideBodies,
+    'public/llms.txt',
+    'public/llms-full.txt',
+    'components/HomePageClient.tsx',
+    'components/SupportPageClient.tsx',
+  ];
+  for (const file of files) {
+    const text = await readFile(new URL(file, root), 'utf8');
+    assert.doesNotMatch(text, unreleased, `${file} describes local offers`);
+    assert.ok(!text.includes(retiredInbox), `${file} still shows ${retiredInbox}`);
+  }
 });

@@ -16,7 +16,7 @@ W Shuuty zabronione są:
 
 W aplikacji mobilnej Shuuty otwórz **Profil** i wybierz **Zgłoś problem dotyczący bezpieczeństwa dzieci**. Formularz pozostaje w aplikacji i wysyła zgłoszenie bezpośrednio do zespołu bezpieczeństwa Shuuty.
 
-Możesz też napisać do osoby kontaktowej ds. bezpieczeństwa dzieci na adres **shuuty.app@gmail.com**, wpisując w temacie **Zgłoszenie dotyczące bezpieczeństwa dzieci**. Podaj nazwę użytkownika, miejsce wystąpienia problemu, przybliżoną datę i godzinę oraz opis, który pomoże nam go odnaleźć i ocenić.
+Możesz też napisać do osoby kontaktowej ds. bezpieczeństwa dzieci na adres **support@shuuty.com**, wpisując w temacie **Zgłoszenie dotyczące bezpieczeństwa dzieci**. Podaj nazwę użytkownika, miejsce wystąpienia problemu, przybliżoną datę i godzinę oraz opis, który pomoże nam go odnaleźć i ocenić.
 
 Nie kopiuj, nie dołączaj, nie pobieraj ani nie rozpowszechniaj podejrzanych nielegalnych materiałów. Zamiast tego opisz, gdzie się pojawiły. Jeśli dziecko jest w bezpośrednim niebezpieczeństwie, najpierw skontaktuj się z lokalnymi służbami ratunkowymi lub organami ścigania. Formularz i skrzynka Shuuty nie są monitorowane w czasie rzeczywistym.
 
@@ -30,6 +30,6 @@ Obsługujemy zgłoszenia zgodnie z właściwymi przepisami dotyczącymi bezpiecz
 
 **Shuuty Prosta Spółka Akcyjna**
 
-Kontakt ds. bezpieczeństwa dzieci: **shuuty.app@gmail.com**
+Kontakt ds. bezpieczeństwa dzieci: **support@shuuty.com**
 
 Ostatnia aktualizacja: 28 sierpnia 2026 r.
