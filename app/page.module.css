@@ -1197,6 +1197,45 @@
   outline-offset: 6px;
 }
 
+/* Step dots: only where the steps scroll sideways (see the 720px block). */
+.taskFlowDots {
+  display: none;
+}
+
+.taskFlowDot {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  appearance: none;
+  cursor: pointer;
+}
+
+.taskFlowDot::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--text-muted);
+  opacity: 0.4;
+  transition: width 0.3s var(--ease-out), opacity 0.3s ease, background 0.3s ease;
+}
+
+.taskFlowDot[aria-pressed='true']::before {
+  width: 26px;
+  opacity: 1;
+  background: var(--task-kicker);
+}
+
+.taskFlowDot:focus-visible {
+  outline: 2px solid var(--task-kicker);
+  outline-offset: -8px;
+  border-radius: 999px;
+}
+
 .taskStepCopy {
   min-height: 198px;
   padding: 30px 8px 4px;
@@ -1799,7 +1838,7 @@
   width: min(1180px, 100%);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   gap: 26px;
   align-items: center;
 }
@@ -1844,13 +1883,16 @@
   text-align: center;
 }
 
+/* Seven links in Polish are wider than a phone: they wrap, never overflow. */
 .footerLinks {
   display: flex;
+  flex-wrap: wrap;
   justify-content: flex-end;
-  gap: 22px;
+  gap: 8px 22px;
 }
 
 .footerLinks a {
+  white-space: nowrap;
   transition: color 0.2s ease;
 }
 
@@ -1894,7 +1936,8 @@
 
   .taskFlowList,
   .taskScreenPlane,
-  .taskStepCopy {
+  .taskStepCopy,
+  .taskFlowDot::before {
     transition: none !important;
   }
 }
@@ -2195,25 +2238,49 @@
   }
 
   .taskFlow {
-    --task-card-width: min(76vw, 292px);
-    padding: 20px 0 30px;
+    --task-card-width: min(66vw, 256px);
+    --task-card-gap: 12px;
+    padding: 4px 0 24px;
     border-radius: 26px;
   }
 
+  /*
+   * A native horizontal scroller: the card follows the finger and settles on
+   * the nearest step, the neighbours peek in at the edges, and the script
+   * reads the active step back from the scroll position.
+   */
+  .taskFlow {
+    touch-action: auto;
+  }
+
+  /* Room above for the lifted active phone: the scroller clips both ways. */
   .taskFlowList {
-    width: max-content;
-    padding-left: max(12vw, calc(50% - 146px));
+    padding: 18px calc((100% - var(--task-card-width)) / 2) 0;
     grid-template-columns: repeat(3, var(--task-card-width));
-    gap: 16px;
-    transition: transform 0.62s var(--ease-out);
+    gap: var(--task-card-gap);
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
   }
 
-  .taskFlow[data-active='1'] .taskFlowList {
-    transform: translateX(calc(0px - var(--task-card-width) - 16px));
+  .taskFlowList::-webkit-scrollbar {
+    display: none;
   }
 
-  .taskFlow[data-active='2'] .taskFlowList {
-    transform: translateX(calc(0px - var(--task-card-width) - var(--task-card-width) - 32px));
+  .taskFlowItem {
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+  }
+
+  .taskFlowDots {
+    position: relative;
+    z-index: 3;
+    margin-top: 6px;
+    display: flex;
+    justify-content: center;
+    gap: 4px;
   }
 
   .taskRelay {
@@ -2399,17 +2466,39 @@
   }
 
   .footer {
-    padding: 28px 18px 108px;
+    padding: 36px 18px 108px;
   }
 
   .footerInner {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    gap: 20px;
     text-align: center;
   }
 
   .footerBrand,
   .footerLinks {
     justify-content: center;
+  }
+
+  /* On a phone: brand, then the links as tap targets, the copyright last. */
+  .footerLinks {
+    order: 2;
+    max-width: 380px;
+    gap: 2px 4px;
+  }
+
+  .footerLinks a {
+    min-height: 44px;
+    padding: 0 12px;
+    display: inline-flex;
+    align-items: center;
+    border-radius: 12px;
+    font-size: 0.8rem;
+  }
+
+  .footerCopy {
+    order: 3;
   }
 
   .mobileNav {

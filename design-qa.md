@@ -40,10 +40,13 @@ modułów. Daje to inny rytm niż pary telefonów i nie przycina nagłówka gale
 
 Implementacja i końcowe QA potwierdzają:
 
-- jednorazowy automat po wejściu sekcji w viewport: `0 -> 1 -> 2`;
+- jednorazowy automat po wejściu sekcji w viewport: `0 -> 1 -> 2` (na mobile
+  wolniej, po 3,2 s i 6,8 s, żeby każdy krok dało się przeczytać);
 - hover, który aktywuje wskazany ekran i zatrzymuje automat;
 - click i tap, które utrzymują wybrany ekran;
-- swipe powyżej progu 36 px;
+- swipe powyżej progu 36 px na tablecie i desktopie; na mobile natywne
+  przewijanie z przyciąganiem (karta idzie za palcem) i kropki kroków pod
+  kartami;
 - `ArrowLeft` i `ArrowRight` wraz z przeniesieniem focusu;
 - `prefers-reduced-motion: reduce`, który blokuje automat;
 - semantyczny `section` z lokalizowaną nazwą regionu;
@@ -64,8 +67,10 @@ czemu kontrast małego kickera i opisu spełnia WCAG AA.
 - Desktop - trzy płaszczyzny tworzą jedną scenę z aktywnym ekranem na pierwszym
   planie.
 - Tablet - scena kompresuje się bez kolizji podpisów.
-- Mobile - transformowany carousel pokazuje jeden centralny ekran i nie dodaje
-  poziomego scrolla dokumentu.
+- Mobile - poziomy scroller ze `scroll-snap` pokazuje jeden centralny ekran,
+  sąsiednie wystają przy krawędziach (11 px przy 320, 29 px przy 412), aktywny
+  krok wynika z pozycji przewijania. Scroller nie dodaje poziomego scrolla
+  dokumentu i ma zapas u góry na uniesiony telefon.
 - Product Depth - przy szerokości 320-390 px zestawienie iPad + telefon ma budżet
   `100vw - 72px`, odpowiadający paddingowi rozdziału i figury. Nie polega na
   ucinaniu overflow.
