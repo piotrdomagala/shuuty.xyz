@@ -45,14 +45,14 @@
           "icon": "group",
           "kicker": "02",
           "title": "Groups shaped around purpose",
-          "desc": "A private circle, community, team, booking space, listing or local offer.",
+          "desc": "A private circle, community, team, booking space or your own offer.",
           "href": "#groups"
         },
         {
           "icon": "map",
           "kicker": "03",
           "title": "Meetings with a purpose",
-          "desc": "Meet friends or new people, while the map helps you discover relevant groups, offers and activities.",
+          "desc": "Meet friends or new people, while the map helps you discover meetings and public groups nearby.",
           "href": "#discover"
         }
       ]
@@ -146,16 +146,16 @@
       ],
       "map": {
         "label": "Map · Discovery",
-        "heading": "Find what you need nearby.",
-        "lead": "Use the map to find relevant meetings, public groups and communities, plus groups presenting local offers, services, products or useful information.",
+        "heading": "Meetings and groups nearby.",
+        "lead": "Use the map to find meetings, public groups and communities near you.",
         "bullets": [
           "Search by location, needs and interests.",
-          "Open a meeting, group or offer and contact the people behind it."
+          "Open a meeting or group and contact the people behind it."
         ]
       },
       "meetings": "Meetings",
       "groups": "Groups & offers",
-      "mapCaption": "Meetings, groups, offers and information around you"
+      "mapCaption": "Meetings and groups around you"
     },
     "experience": {
       "label": "Product depth",
@@ -296,14 +296,14 @@
           "icon": "group",
           "kicker": "02",
           "title": "Grupy dopasowane do celu",
-          "desc": "Prywatny krąg, społeczność, zespół, rezerwacje, ogłoszenie albo lokalna oferta.",
+          "desc": "Prywatny krąg, społeczność, zespół, rezerwacje albo Twoja oferta.",
           "href": "#groups"
         },
         {
           "icon": "map",
           "kicker": "03",
           "title": "Spotkania z konkretnym celem",
-          "desc": "Spotykaj się ze znajomymi lub nowymi osobami, a na mapie odkrywaj grupy, oferty i aktywności.",
+          "desc": "Spotykaj się ze znajomymi lub nowymi osobami, a na mapie odkrywaj pobliskie spotkania i publiczne grupy.",
           "href": "#discover"
         }
       ]
@@ -397,16 +397,16 @@
       ],
       "map": {
         "label": "Mapa · Odkrywanie",
-        "heading": "Znajdź w pobliżu to, czego potrzebujesz.",
-        "lead": "Na mapie znajdziesz odpowiednie spotkania, publiczne grupy i społeczności, a także grupy prezentujące lokalne oferty, usługi, produkty lub przydatne informacje.",
+        "heading": "Spotkania i grupy w pobliżu.",
+        "lead": "Na mapie znajdziesz spotkania, publiczne grupy i społeczności w pobliżu.",
         "bullets": [
           "Szukaj według miejsca, potrzeb i zainteresowań.",
-          "Otwórz spotkanie, grupę lub ofertę i skontaktuj się z jej twórcami."
+          "Otwórz spotkanie lub grupę i skontaktuj się z ich twórcami."
         ]
       },
       "meetings": "Spotkania",
       "groups": "Grupy i oferty",
-      "mapCaption": "Spotkania, grupy, oferty i informacje wokół Ciebie"
+      "mapCaption": "Spotkania i grupy wokół Ciebie"
     },
     "experience": {
       "label": "Głębia produktu",
@@ -547,14 +547,14 @@
           "icon": "group",
           "kicker": "02",
           "title": "Grupper formet etter formålet",
-          "desc": "En privat krets, et fellesskap, et team, et sted for bestillinger, en annonse eller et lokalt tilbud.",
+          "desc": "En privat krets, et fellesskap, et team, et sted for bestillinger eller ditt eget tilbud.",
           "href": "#groups"
         },
         {
           "icon": "map",
           "kicker": "03",
           "title": "Møter med et formål",
-          "desc": "Møt venner eller nye mennesker, mens kartet hjelper deg å finne relevante grupper, tilbud og aktiviteter.",
+          "desc": "Møt venner eller nye mennesker, mens kartet hjelper deg å finne møter og offentlige grupper i nærheten.",
           "href": "#discover"
         }
       ]
@@ -648,16 +648,16 @@
       ],
       "map": {
         "label": "Kart · Utforsk",
-        "heading": "Finn det du trenger i nærheten.",
-        "lead": "Bruk kartet til å finne relevante møter, offentlige grupper og fellesskap, og grupper som presenterer lokale tilbud, tjenester, produkter eller nyttig informasjon.",
+        "heading": "Møter og grupper i nærheten.",
+        "lead": "Bruk kartet til å finne møter, offentlige grupper og fellesskap i nærheten.",
         "bullets": [
           "Søk etter sted, behov og interesser.",
-          "Åpne et møte, en gruppe eller et tilbud, og ta kontakt med dem som står bak."
+          "Åpne et møte eller en gruppe, og ta kontakt med dem som står bak."
         ]
       },
       "meetings": "Møter",
       "groups": "Grupper og tilbud",
-      "mapCaption": "Møter, grupper, tilbud og informasjon rundt deg"
+      "mapCaption": "Møter og grupper rundt deg"
     },
     "experience": {
       "label": "Produktdybde",

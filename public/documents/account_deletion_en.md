@@ -11,7 +11,7 @@ You can start deletion directly in the Shuuty app or by contacting Shuuty suppor
 
 ## Request deletion by email
 
-If you cannot access the app, email [shuuty.app@gmail.com](mailto:shuuty.app@gmail.com?subject=Delete%20my%20Shuuty%20account) from the address registered to your Shuuty account. Use the subject **Delete my Shuuty account** and include only the account email address. We may ask you to verify ownership through a safe account-verification step.
+If you cannot access the app, email [support@shuuty.com](mailto:support@shuuty.com?subject=Delete%20my%20Shuuty%20account) from the address registered to your Shuuty account. Use the subject **Delete my Shuuty account** and include only the account email address. We may ask you to verify ownership through a safe account-verification step.
 
 ## What is deleted or retained
 

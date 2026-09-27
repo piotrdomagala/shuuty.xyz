@@ -16,7 +16,7 @@ Shuuty prohibits:
 
 In the Shuuty mobile app, open **Profile** and choose **Report a child safety concern**. The report form stays inside the app and sends the concern directly to the Shuuty safety team.
 
-You can also contact the designated child-safety contact at **shuuty.app@gmail.com** with the subject **Child safety report**. Include the relevant username, where the issue appeared, the approximate date and time, and a description that helps us locate and assess it.
+You can also contact the designated child-safety contact at **support@shuuty.com** with the subject **Child safety report**. Include the relevant username, where the issue appeared, the approximate date and time, and a description that helps us locate and assess it.
 
 Do not copy, attach, download, or redistribute suspected illegal material. Describe where it appeared instead. If a child is in immediate danger, contact local emergency services or law enforcement first. The Shuuty report form and mailbox are not monitored in real time.
 
@@ -30,6 +30,6 @@ We handle reports in line with applicable child-safety laws and Google Play's Ch
 
 **Shuuty Prosta Spółka Akcyjna**
 
-Child-safety contact: **shuuty.app@gmail.com**
+Child-safety contact: **support@shuuty.com**
 
-Last updated: August 28, 2026.
+Last updated: September 27, 2026.

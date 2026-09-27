@@ -28,8 +28,13 @@ const supportPageSource = await readFile(
 );
 
 const failures = [];
-const supportEmail = 'shuuty.app@gmail.com';
-const retiredSupportEmail = ['support', 'shuuty.pl'].join('@');
+const supportEmail = 'support@shuuty.com';
+// Addresses the documents and the support page must no longer show: the dead
+// shuuty.pl domain and the Gmail inbox that support@shuuty.com now forwards to.
+const retiredSupportEmails = [
+  ['support', 'shuuty.pl'].join('@'),
+  ['shuuty.app', 'gmail.com'].join('@'),
+];
 const retiredPricePattern =
   /(?<!\d)(?:\$\s*)?1[.,]29\b|(?<!\d)1[.,]29\s*USD\b/i;
 
@@ -71,8 +76,10 @@ for (const [key, content] of Object.entries(documents)) {
     failures.push(`${files[key]} contains the retired fixed subscription price`);
   }
 
-  if (content.includes(retiredSupportEmail)) {
-    failures.push(`${files[key]} contains the retired support address`);
+  for (const retired of retiredSupportEmails) {
+    if (content.includes(retired)) {
+      failures.push(`${files[key]} contains the retired support address ${retired}`);
+    }
   }
 }
 
@@ -80,8 +87,10 @@ if (!supportPageSource.includes(`const SUPPORT_EMAIL = '${supportEmail}'`)) {
   failures.push('components/SupportPageClient.tsx does not use the confirmed support address');
 }
 
-if (supportPageSource.includes(retiredSupportEmail)) {
-  failures.push('components/SupportPageClient.tsx contains the retired support address');
+for (const retired of retiredSupportEmails) {
+  if (supportPageSource.includes(retired)) {
+    failures.push(`components/SupportPageClient.tsx contains the retired support address ${retired}`);
+  }
 }
 
 const companyIdentifiers = [

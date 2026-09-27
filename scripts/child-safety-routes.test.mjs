@@ -41,7 +41,7 @@ test('public standards cover Google child-safety requirements in both languages'
     assert.match(document, /CSAE/u);
     assert.match(document, /CSAM/u);
     assert.match(document, /NCMEC/u);
-    assert.match(document, /shuuty\.app@gmail\.com/u);
+    assert.match(document, /support@shuuty\.com/u);
     assert.doesNotMatch(document, /support@shuuty\.pl/u);
   }
   assert.match(english, /zero tolerance/u);

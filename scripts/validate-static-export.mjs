@@ -28,7 +28,7 @@ const runtimeMedia = JSON.parse(
   await readFile(new URL('content/product-media.runtime.json', root), 'utf8'),
 );
 const runtimeMediaByPath = new Map(runtimeMedia.assets.map((asset) => [asset.path, asset]));
-const supportEmail = 'shuuty.app@gmail.com';
+const supportEmail = 'support@shuuty.com';
 const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || 'https://shuuty.com').replace(/\/+$/, '');
 const socialCards = JSON.parse(
   await readFile(new URL('content/social-cards.json', root), 'utf8'),
@@ -83,7 +83,7 @@ const factsRequired = (language) => [
 ];
 const copyButtonPattern = (actionLabel) =>
   new RegExp(
-    String.raw`<button[^>]*><span>shuuty\.app@gmail\.com</span><span[^>]*>, </span><span[^>]*>${actionLabel}</span></button>`,
+    String.raw`<button[^>]*><span>support@shuuty\.com</span><span[^>]*>, </span><span[^>]*>${actionLabel}</span></button>`,
   );
 
 const pages = {

@@ -1,11 +1,11 @@
 # Polityka prywatności aplikacji mobilnej Shuuty
 
-Ostatnia aktualizacja: 24 września 2026 r.
+Ostatnia aktualizacja: 27 września 2026 r.
 
 ## 1. Administrator i dane kontaktowe
 Administratorem danych osobowych jest **Shuuty Prosta Spółka Akcyjna**, ul. Południowa 13, 32-353 Trzyciąż, Polska, wpisana do Krajowego Rejestru Sądowego pod numerem **KRS 0000947279**, NIP **6372215912**, REGON **52098153800000** (dalej „Shuuty”, „my” lub „Administrator”).
 
-W sprawach dotyczących prywatności i realizacji praw można skontaktować się z nami pod adresem **shuuty.app@gmail.com**.
+W sprawach dotyczących prywatności i realizacji praw można skontaktować się z nami pod adresem **support@shuuty.com**.
 
 Niniejsza Polityka opisuje przetwarzanie danych w aplikacji mobilnej Shuuty („Aplikacja”) oraz, w odpowiednim zakresie, na publicznej stronie Shuuty.
 
@@ -80,7 +80,7 @@ Na warunkach określonych w RODO użytkownik ma prawo do:
 - wycofania zgody w dowolnym momencie, gdy przetwarzanie opiera się na zgodzie; wycofanie nie działa wstecz;
 - złożenia skargi do **Prezesa Urzędu Ochrony Danych Osobowych (PUODO)**, ul. Stanisława Moniuszki 1A, 00-014 Warszawa, [uodo.gov.pl](https://uodo.gov.pl), albo do innego właściwego organu nadzorczego w EOG.
 
-Wniosek dotyczący praw można wysłać na **shuuty.app@gmail.com**. Przed realizacją możemy poprosić o informacje potrzebne do potwierdzenia tożsamości i ochrony konta.
+Wniosek dotyczący praw można wysłać na **support@shuuty.com**. Przed realizacją możemy poprosić o informacje potrzebne do potwierdzenia tożsamości i ochrony konta.
 
 ## 8. Czy podanie danych jest obowiązkowe
 Dane oznaczone w procesie rejestracji jako wymagane, w szczególności dane potrzebne do uwierzytelnienia, utworzenia konta i potwierdzenia spełnienia wymogu wieku, są konieczne do zawarcia i wykonania umowy. Bez nich utworzenie lub obsługa konta może nie być możliwa.
@@ -105,4 +105,4 @@ Aplikacja mobilna nie używa przeglądarkowych plików cookie jako podstawowego 
 Aktualna wersja i data ostatniej aktualizacji są publikowane na tej stronie. O istotnych zmianach możemy również poinformować w Aplikacji lub e-mailem, a jeśli wymaga tego prawo - poprosić o zgodę.
 
 ## 14. Kontakt
-Pytania, wnioski i sprzeciwy dotyczące danych osobowych można kierować na **shuuty.app@gmail.com**.
+Pytania, wnioski i sprzeciwy dotyczące danych osobowych można kierować na **support@shuuty.com**.

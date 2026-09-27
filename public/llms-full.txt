@@ -2,7 +2,7 @@
 
 > Shuuty is a mobile application that connects voice-created tasks, delegation, flexible groups, meetings, conversations, calendars, and nearby discovery.
 
-Last updated: 2026-09-26. This document summarizes the capabilities described on the official Shuuty website and in the official App Store and Google Play listings. It does not describe private APIs or unpublished features. The canonical website is https://shuuty.com/ and the product is available for iPhone, iPad and Android. Publisher: Shuuty Prosta Spółka Akcyjna (Shuuty P.S.A.), Poland. Shuuty (shuuty.com) is not related to Shuut, Shouty or Shuuto.
+Last updated: 2026-09-27. This document summarizes the capabilities described on the official Shuuty website and in the official App Store and Google Play listings. It does not describe private APIs or unpublished features. The canonical website is https://shuuty.com/ and the product is available for iPhone, iPad and Android. Publisher: Shuuty Prosta Spółka Akcyjna (Shuuty P.S.A.), Poland. Shuuty (shuuty.com) is not related to Shuut, Shouty or Shuuto.
 
 ## English product overview
 
@@ -37,7 +37,7 @@ The creator chooses whether the group and its description are public, what remai
 - Meetings can be private plans with friends or open meetings for new people.
 - A meeting keeps its place, time, participants, and conversation together.
 - Chat can be used to agree details before and after a meeting.
-- The map can surface nearby meetings, public groups, communities, offers, services, products, and useful information.
+- The map can surface nearby meetings, public groups and communities.
 - Discovery can use location, needs, and interests before opening the full context of a result.
 
 ### Languages and chat
@@ -95,7 +95,7 @@ Twórca grupy wybiera, czy grupa i jej opis są publiczne, co pozostaje widoczne
 - Spotkanie może być prywatnym planem ze znajomymi albo otwartym spotkaniem dla nowych osób.
 - Miejsce, czas, uczestnicy i rozmowa pozostają w jednym kontekście.
 - Czat pomaga ustalić szczegóły przed spotkaniem i po nim.
-- Mapa może pokazywać pobliskie spotkania, publiczne grupy, społeczności, oferty, usługi, produkty i przydatne informacje.
+- Mapa może pokazywać pobliskie spotkania, publiczne grupy i społeczności.
 - Wyszukiwanie może uwzględniać miejsce, potrzeby i zainteresowania.
 
 ### Języki i czat
@@ -134,8 +134,8 @@ Shuuty er en app for oppgaver, grupper og møter med menneskene rundt deg. Si hv
 - iPhone og iPad: App Store, iOS 15.1 eller nyere. Android: Google Play, Android 7.0 eller nyere. Appen finnes ikke som nettversjon - nettstedet er bare til informasjon.
 - På iPhone, iPad og Android finnes appen på norsk, polsk og engelsk. Med Pro og Teams oversetter du meldinger i samtaler, grupper og møter til ditt språk, slik at alle i en flerspråklig gruppe leser på sitt eget.
 - Kom i gang gratis. De valgfrie planene Pro og Teams gir høyere grenser og flere muligheter. Prisene avhenger av landet og vises i App Store og Google Play.
-- Du kan starte slettingen i Shuuty-appen under Profil > Konto > Slett konto, eller be om sletting på e-post til shuuty.app@gmail.com fra adressen som er knyttet til kontoen. Sletting av Shuuty-kontoen avslutter ikke automatisk et abonnement som administreres av Apple eller Google.
-- Utgiver: Shuuty Prosta Spółka Akcyjna (Shuuty P.S.A.), Polen. Hjelp: https://shuuty.com/nb/support/ og shuuty.app@gmail.com.
+- Du kan starte slettingen i Shuuty-appen under Profil > Konto > Slett konto, eller be om sletting på e-post til support@shuuty.com fra adressen som er knyttet til kontoen. Sletting av Shuuty-kontoen avslutter ikke automatisk et abonnement som administreres av Apple eller Google.
+- Utgiver: Shuuty Prosta Spółka Akcyjna (Shuuty P.S.A.), Polen. Hjelp: https://shuuty.com/nb/support/ og support@shuuty.com.
 - Kontrollerte fakta på norsk: https://shuuty.com/nb/facts/
 
 ## Canonical pages
@@ -166,4 +166,4 @@ Shuuty er en app for oppgaver, grupper og møter med menneskene rundt deg. Si hv
 ## Support
 
 - [Support page](https://shuuty.com/support/)
-- Contact email published by the website: shuuty.app@gmail.com
+- Contact email published by the website: support@shuuty.com
