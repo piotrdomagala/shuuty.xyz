@@ -2,6 +2,7 @@
 
 import { DocumentShell } from '@/components/DocumentChrome';
 import { documentTranslations, type SiteLanguage } from '@/components/documentLocale';
+import GuideLinks from '@/components/GuideLinks';
 import { useSiteLanguage } from '@/components/useSiteLanguage';
 import facts from '@/content/facts.json';
 import { SITE_URL } from '@/lib/site';
@@ -133,6 +134,8 @@ export default function FactsPageClient({
             </details>
           ))}
         </section>
+
+        <GuideLinks language={language} />
       </article>
     </DocumentShell>
   );

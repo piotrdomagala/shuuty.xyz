@@ -581,6 +581,26 @@ for (const language of GUIDE_LANGUAGES) {
     }
   }
 }
+
+// The support and facts pages link every guide of their language, and show no
+// guides section in a language without one.
+for (const language of GUIDE_LANGUAGES) {
+  const entries = guidesIn(guides, language);
+  for (const pagePath of [
+    `out${localizedSitePath(language, '/support/')}index.html`,
+    `out${localizedSitePath(language, '/facts/')}index.html`,
+  ]) {
+    const html = await readFile(new URL(pagePath, root), 'utf8');
+    for (const guide of entries) {
+      if (!html.includes(`href="${guidePath(guide)}"`)) {
+        failures.push(`${pagePath} does not link the ${language} guide ${guidePath(guide)}`);
+      }
+    }
+    if (entries.length === 0 && html.includes('id="guides-heading"')) {
+      failures.push(`${pagePath} shows a guides section before ${language} has a guide`);
+    }
+  }
+}
 const fgsEvidenceDirectory = new URL(
   'out/google-play/foreground-service/microphone/',
   root,

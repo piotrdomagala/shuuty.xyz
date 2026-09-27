@@ -8,8 +8,10 @@ import {
   localizedSitePath,
   type SiteLanguage,
 } from '@/components/documentLocale';
+import GuideLinks from '@/components/GuideLinks';
 import { useSiteLanguage } from '@/components/useSiteLanguage';
 import styles from '@/app/documents.module.css';
+import guideStyles from '@/app/guides.module.css';
 
 const SUPPORT_EMAIL = 'shuuty.app@gmail.com';
 
@@ -174,6 +176,12 @@ export default function SupportPageClient({ initialLanguage = 'en' }: SupportPag
         >
           <span>{translations.accountDeletionAction}</span>
         </Link>
+
+        <GuideLinks
+          language={language}
+          className={guideStyles.supportGuides}
+          headingClassName={styles.supportHint}
+        />
       </div>
     </DocumentShell>
   );
