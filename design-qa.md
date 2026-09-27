@@ -13,7 +13,8 @@
 - Źródłem prawdziwego UI jest 16 kanonicznych capture PL/EN z
   `piotrdomagala/S-` na commicie
   `20a14889e2397514b7c7bcd73269508f24c8004f`.
-- Golden Relay jest dokładną kopią
+- Golden Relay (od 27.09.2026 niewyświetlany w sekcji kroków - właściciel uznał
+  puls za telefonami za nieładny; plik zostaje) jest dokładną kopią
   `store-listing/assets/brand/golden-relay-transparent-2048x256.png`, SHA-256
   `4e49a0b5b2f07f5cb934321d573173463e5ab10d986c29acf64593548956ce15`.
 
@@ -30,8 +31,8 @@ Sekcja Tasks używa trzech realnych ekranów jako jednej sekwencji:
 3. Hand-off - `Delegate now. The task is ready.` / `Deleguj teraz. Zadanie jest gotowe.`
 
 Aktywny ekran rośnie, rozjaśnia się i wychodzi do przodu. Pozostałe ekrany
-zachowują kontekst, ale nie konkurują z aktywnym. Prawdziwy Golden Relay łączy
-sekwencję poza warstwą interfejsu produktu.
+zachowują kontekst, ale nie konkurują z aktywnym. Sekwencję niosą same ekrany i
+ich podpisy, bez linii w tle.
 
 Product Depth zestawia czysty capture galerii na iPadzie z telefonem ustawień
 modułów. Daje to inny rytm niż pary telefonów i nie przycina nagłówka galerii.

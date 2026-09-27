@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import {
   useCallback,
   useEffect,
@@ -222,25 +221,6 @@ export default function TaskSpatialHandoff({
     >
       <span id={`${flowId}-action`} className={s.srOnly}>
         {selectLabel}
-      </span>
-      <span className={s.taskRelay} aria-hidden="true">
-        <Image
-          className={s.taskRelayAsset}
-          src="/images/brand/golden-relay-flow.png"
-          alt=""
-          width={2048}
-          height={256}
-          sizes="(max-width: 720px) 160vw, 1080px"
-        />
-        <Image
-          key={`relay-${activeStep}`}
-          className={s.taskRelayResonance}
-          src="/images/brand/golden-relay-flow.png"
-          alt=""
-          width={2048}
-          height={256}
-          sizes="(max-width: 720px) 160vw, 1080px"
-        />
       </span>
       <ol ref={listRef} className={s.taskFlowList}>
         {screens.slice(0, FLOW_STEP_COUNT).map((screen, index) => {
