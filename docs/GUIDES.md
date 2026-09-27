@@ -61,11 +61,12 @@ Guides are practical articles at `/guides/` (en), `/pl/poradniki/` (pl) and `/nb
 ## What follows automatically
 
 - The index of that language lists the guide, becomes indexable and joins the sitemap; the home and document footers link it. Until a language has a guide, its index stays `noindex, follow` and unlinked.
+- The support and facts pages of that language list the guide by its title in a "Guides" section (`components/GuideLinks.tsx`); a language without guides shows no such section.
 - hreflang links only real translations (x-default only when an English version exists); the language buttons open the translation or, without one, the other language's index.
 - `html lang` is set for every page in the Polish and Norwegian sections.
 
 ## Checks
 
 - `scripts/guides.test.mjs` checks the registry, every body, the page files and the path rules.
-- `scripts/validate-static-export.mjs` checks the built pages: text, canonical, hreflang, one h1, noindex rules, structured data, store campaign and click events, sitemap, footers, and that no built guide folder is missing from the registry.
+- `scripts/validate-static-export.mjs` checks the built pages: text, canonical, hreflang, one h1, noindex rules, structured data, store campaign and click events, sitemap, footers, the guide links on the support and facts pages, and that no built guide folder is missing from the registry.
 - Texts use the short hyphen `-` only. Norwegian text is reviewed before merge.

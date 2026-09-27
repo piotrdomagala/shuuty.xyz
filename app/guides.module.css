@@ -105,3 +105,30 @@ article p.related {
   margin-top: var(--s-lg);
   font-size: 0.95rem;
 }
+
+/* Guides under the support page's contact buttons; the heading reuses
+   .supportHint from documents.module.css. */
+section.supportGuides {
+  margin-top: var(--s-md);
+  text-align: center;
+}
+
+section.supportGuides h2 {
+  font-weight: 600;
+}
+
+section.supportGuides ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+section.supportGuides li + li {
+  margin-top: var(--s-xs);
+}
+
+section.supportGuides a {
+  color: var(--accent-text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

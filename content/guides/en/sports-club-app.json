@@ -1,0 +1,124 @@
+{
+  "body": [
+    {
+      "type": "p",
+      "text": "A tennis, volleyball or running club runs on three things: news for members, a schedule for the court or hall, and regular training. Usually each lives somewhere else - announcements in a messenger group, bookings in a spreadsheet, training in one person's calendar. This guide shows how to keep them in one group in the Shuuty app, and says plainly what Shuuty will not do for a club."
+    },
+    {
+      "type": "h2",
+      "text": "What a club needs every week"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "one place where members see announcements and can ask about them;",
+        "a schedule for the court, hall or coach that shows free slots;",
+        "regular training that does not need a new \"who's playing tomorrow?\" message every week;",
+        "small jobs handed to people: who brings the nets, who locks the hall, who enters the team for the tournament;",
+        "a way for new people nearby to find the club at all."
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "How it works in Shuuty"
+    },
+    {
+      "type": "h3",
+      "text": "One group for the club"
+    },
+    {
+      "type": "p",
+      "text": "A Shuuty group can be a team space or a community. The club turns on only the modules it needs: chat, threads, tasks, calendar, bookings, plans and projects."
+    },
+    {
+      "type": "p",
+      "text": "The group's creator decides how people join:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "**private** - new people join only by invitation;",
+        "**approval required** - people send a request and the organizer decides;",
+        "**open entry** - anyone who taps Join is in right away while there is space."
+      ]
+    },
+    {
+      "type": "p",
+      "text": "A group visible to everyone, with a description, photos, a location and interests (for example tennis), appears in Discover. The more accurate the interests, the easier it is to reach people nearby."
+    },
+    {
+      "type": "h3",
+      "text": "A reservation schedule for the court or hall"
+    },
+    {
+      "type": "p",
+      "text": "The group calendar can work as a reservation schedule - the app suggests it for a clinic, court, room and other hourly bookings. The organizer sets the session length, breaks between reservations, days and exceptions (for example a closed court on a holiday). Members pick free sessions and see their own reservations marked in the calendar."
+    },
+    {
+      "type": "h3",
+      "text": "Weekly training"
+    },
+    {
+      "type": "p",
+      "text": "Set regular training as a recurring meeting, for example every 7 days. A meeting has a place, time and participants, and its chat is shared by all dates: the history carries over to the next session. When the date is not settled yet, participants suggest times and pick the best one."
+    },
+    {
+      "type": "h3",
+      "text": "Jobs for people, not for a noticeboard"
+    },
+    {
+      "type": "p",
+      "text": "Say a task in one sentence, for example \"Bring the nets on Saturday at 9, with a reminder on Friday evening\", and pick the person from your friends list or say their name. Shuuty prepares the title, due time and reminder. The person gets the task right away - or first as an approval request, if their settings ask for one. You see what is pending, in progress and done."
+    },
+    {
+      "type": "h2",
+      "text": "What Shuuty will not do for a club"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "**It does not collect membership fees or booking payments.** Payments in the app are only for the Pro and Teams plans.",
+        "**There is no booking website.** The schedule works in the app on iPhone, iPad and Android - every member needs Shuuty and has to be in the group.",
+        "**It is not for people under 16.** The terms allow only users aged 16 or older, so youth teams with younger players stay outside the app.",
+        "**It will not fill the map for you.** Shuuty is still growing, so the map near you may be quiet. An open club group with a good description is the first step for people nearby to find you."
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "What it costs"
+    },
+    {
+      "type": "p",
+      "text": "Starting is free: the core features with limits, such as the number of people in a group and in a meeting. The Pro and Teams plans raise the limits and add message translation in chat. Prices depend on the country and are shown in the App Store and Google Play."
+    },
+    {
+      "type": "h2",
+      "text": "How to start"
+    },
+    {
+      "type": "ol",
+      "items": [
+        "Install Shuuty from the App Store or Google Play.",
+        "Create the club group and choose how people join: private, approval required or open entry.",
+        "Add a description, photos, a location and interests if the club should appear in Discover.",
+        "Set the group calendar to Reservation schedule and choose the session length, breaks, days and exceptions.",
+        "Invite members.",
+        "Add weekly training as a recurring meeting."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "question": "Do members need the app?",
+      "answer": "Yes. Shuuty runs on iPhone, iPad and Android; there is no web version."
+    },
+    {
+      "question": "Can I hide the group from strangers?",
+      "answer": "Yes. Private groups and meetings are available by invitation only."
+    },
+    {
+      "question": "Will new people nearby find the club?",
+      "answer": "Shuuty shows groups that are visible to everyone, with a location and interests, to people nearby in Discover. Where the app is still new, there may be few such people for now."
+    }
+  ]
+}
