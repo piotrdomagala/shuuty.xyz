@@ -565,6 +565,14 @@ test('the unbound preview gate rejects source-entry and placement drift', async 
     const baseline = convertToPreviewManifest(fixture.manifest);
     assert.deepEqual(await fixture.validate(baseline), []);
 
+    // one capture from another commit, named and explained, passes
+    const ownCommit = structuredClone(baseline);
+    Object.assign(ownCommit.assets.find((asset) => asset.id === 'en-assignee'), {
+      sourceCommit: 'b'.repeat(40),
+      sourceNote: 'Owner request: the capture live on Google Play.',
+    });
+    assert.deepEqual(await fixture.validate(ownCommit), []);
+
     const cases = [
       {
         expected: 'en-assignee.sourceArtifactEntry must be unique across imported product media.',
@@ -592,6 +600,34 @@ test('the unbound preview gate rejects source-entry and placement drift', async 
         expected: 'Preview source.commit must be 20a14889e2397514b7c7bcd73269508f24c8004f.',
         mutate(manifest) {
           manifest.source.commit = 'f'.repeat(40);
+        },
+      },
+      {
+        expected: 'en-assignee.sourceNote must say why this capture has its own source commit.',
+        mutate(manifest) {
+          manifest.assets.find((asset) => asset.id === 'en-assignee').sourceCommit = 'b'.repeat(40);
+        },
+      },
+      {
+        expected: 'en-assignee.sourceCommit must be a lowercase 40-character commit SHA.',
+        mutate(manifest) {
+          const asset = manifest.assets.find((item) => item.id === 'en-assignee');
+          asset.sourceCommit = 'B'.repeat(40);
+          asset.sourceNote = 'Owner request.';
+        },
+      },
+      {
+        expected: 'en-assignee.sourceCommit must differ from the preview source commit.',
+        mutate(manifest) {
+          const asset = manifest.assets.find((item) => item.id === 'en-assignee');
+          asset.sourceCommit = '20a14889e2397514b7c7bcd73269508f24c8004f';
+          asset.sourceNote = 'Owner request.';
+        },
+      },
+      {
+        expected: 'en-assignee.sourceNote needs a sourceCommit it explains.',
+        mutate(manifest) {
+          manifest.assets.find((asset) => asset.id === 'en-assignee').sourceNote = 'Orphan note.';
         },
       },
       {
