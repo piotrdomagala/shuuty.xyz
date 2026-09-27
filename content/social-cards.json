@@ -103,7 +103,7 @@
         "Say it. Delegate it.",
         "Get it done."
       ],
-      "tagline": "A voice to-do list for friends, family and small teams",
+      "tagline": "Tasks, groups and meetups with the people around you",
       "footer": "Available on iOS and Android",
       "screens": [
         "en-delegated-task",
@@ -135,6 +135,32 @@
       "screens": [
         "en-groups",
         "en-modules"
+      ]
+    },
+    {
+      "id": "04-meetups-nearby",
+      "headline": [
+        "Meet up",
+        "nearby."
+      ],
+      "tagline": "Plan one-off or recurring meetings. Open ones show up on the map for people nearby.",
+      "footer": "Available on iOS and Android",
+      "screens": [
+        "en-nearby",
+        "en-groups"
+      ]
+    },
+    {
+      "id": "05-your-group-your-offer",
+      "headline": [
+        "Your group,",
+        "your offer."
+      ],
+      "tagline": "A club, a salon or a freelancer with clients - with a description, photos and bookings.",
+      "footer": "Available on iOS and Android",
+      "screens": [
+        "en-group-offer-gallery",
+        "en-bookings"
       ]
     }
   ]

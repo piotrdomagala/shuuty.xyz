@@ -6,8 +6,9 @@
 //     writes public/images/social/shuuty-<language>.jpg and records each card
 //     (hash, size, the exact capture hashes it used) in content/social-cards.json
 //   node scripts/generate-social-cards.mjs --product-hunt <directory>
-//     writes the Product Hunt gallery into a directory outside public/ with a
-//     product-hunt-gallery.json record; nothing in the site changes.
+//     writes the Product Hunt gallery and its 240x240 thumbnail (the app icon,
+//     scaled) into a directory outside public/ with a product-hunt-gallery.json
+//     record; nothing in the site changes.
 import { createHash } from 'node:crypto';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { isAbsolute, join, relative, resolve } from 'node:path';
@@ -21,6 +22,7 @@ const mediaUrl = new URL('content/product-media.json', root);
 
 export const SOCIAL_CARD_SIZE = Object.freeze({ width: 1200, height: 630 });
 const PRODUCT_HUNT_SIZE = Object.freeze({ width: 1270, height: 760 });
+const PRODUCT_HUNT_THUMBNAIL_SIZE = 240;
 const colors = {
   background: '#0d1117',
   ink: '#f0f6fc',
@@ -386,6 +388,21 @@ async function generateProductHuntGallery(directory) {
     record.images.push({ file, byteLength: output.length, sha256: sha256(output), sources });
     console.log(`${file}: ${output.length} bytes.`);
   }
+  // The square thumbnail is the app icon, only scaled down.
+  const thumbnail = await sharp(assets.icon, { failOn: 'error' })
+    .resize(PRODUCT_HUNT_THUMBNAIL_SIZE, PRODUCT_HUNT_THUMBNAIL_SIZE, { kernel: sharp.kernel.lanczos3 })
+    .png({ compressionLevel: 9 })
+    .toBuffer();
+  const thumbnailFile = `shuuty-product-hunt-thumbnail-${PRODUCT_HUNT_THUMBNAIL_SIZE}.png`;
+  await writeFile(join(target, thumbnailFile), thumbnail);
+  record.thumbnail = {
+    file: thumbnailFile,
+    width: PRODUCT_HUNT_THUMBNAIL_SIZE,
+    height: PRODUCT_HUNT_THUMBNAIL_SIZE,
+    byteLength: thumbnail.length,
+    sha256: sha256(thumbnail),
+  };
+  console.log(`${thumbnailFile}: ${thumbnail.length} bytes.`);
   await writeFile(join(target, 'product-hunt-gallery.json'), `${JSON.stringify(record, null, 2)}\n`);
 }
 
