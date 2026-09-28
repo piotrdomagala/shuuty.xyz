@@ -3,6 +3,7 @@
 import { useMemo } from 'react';
 import Link from 'next/link';
 import { DocumentShell } from '@/components/DocumentChrome';
+import ProductDeviceFrame from '@/components/ProductDeviceFrame';
 import { documentTranslations, localizedSitePath } from '@/components/documentLocale';
 import { useSiteLanguage } from '@/components/useSiteLanguage';
 import guidesContent from '@/content/guides.json';
@@ -18,6 +19,7 @@ import {
   type GuideEntry,
 } from '@/lib/guides.mjs';
 import { GUIDE_INDEX_PATHS } from '@/lib/sitePaths.mjs';
+import { getProductMediaPlacement } from '@/lib/productMedia';
 import { SITE_URL, createStoreLinks } from '@/lib/site';
 import styles from '@/app/documents.module.css';
 import guideStyles from '@/app/guides.module.css';
@@ -38,7 +40,48 @@ function RichText({ text }: Readonly<{ text: string }>) {
   );
 }
 
-function Block({ block }: Readonly<{ block: GuideBlock }>) {
+type StepBlock = Extract<GuideBlock, { type: 'step' }>;
+type BodySegment =
+  | { kind: 'block'; block: Exclude<GuideBlock, StepBlock>; key: number }
+  | { kind: 'steps'; steps: StepBlock[]; key: number };
+
+// Consecutive steps form one numbered list; any other block ends it.
+function segmentBody(body: readonly GuideBlock[]): BodySegment[] {
+  const segments: BodySegment[] = [];
+  body.forEach((block, index) => {
+    const last = segments.at(-1);
+    if (block.type !== 'step') {
+      segments.push({ kind: 'block', block, key: index });
+    } else if (last?.kind === 'steps') {
+      last.steps.push(block);
+    } else {
+      segments.push({ kind: 'steps', steps: [block], key: index });
+    }
+  });
+  return segments;
+}
+
+function StepList({ steps }: Readonly<{ steps: StepBlock[] }>) {
+  return (
+    <ol className={guideStyles.steps}>
+      {steps.map((step) => (
+        <li key={step.media + step.text} className={guideStyles.step}>
+          <ProductDeviceFrame
+            media={getProductMediaPlacement(step.media)}
+            alt={step.alt}
+            sizes="(max-width: 640px) 60vw, 220px"
+            className={guideStyles.stepFrame}
+          />
+          <p className={guideStyles.stepText}>
+            <RichText text={step.text} />
+          </p>
+        </li>
+      ))}
+    </ol>
+  );
+}
+
+function Block({ block }: Readonly<{ block: Exclude<GuideBlock, StepBlock> }>) {
   switch (block.type) {
     case 'h2':
       return <h2>{block.text}</h2>;
@@ -146,9 +189,13 @@ export default function GuidePageClient({ guide, article }: Readonly<GuidePageCl
         <h1>{guide.heading}</h1>
         <p className={guideStyles.updated}>{guide.updatedLabel}</p>
 
-        {article.body.map((block, index) => (
-          <Block key={index} block={block} />
-        ))}
+        {segmentBody(article.body).map((segment) =>
+          segment.kind === 'steps' ? (
+            <StepList key={segment.key} steps={segment.steps} />
+          ) : (
+            <Block key={segment.key} block={segment.block} />
+          ),
+        )}
 
         {article.faq && article.faq.length > 0 ? (
           <section aria-labelledby="faq-heading">

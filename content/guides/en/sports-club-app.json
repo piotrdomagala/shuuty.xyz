@@ -105,6 +105,22 @@
         "Invite members.",
         "Add weekly training as a recurring meeting."
       ]
+    },
+    {
+      "type": "h3",
+      "text": "What it looks like in the app"
+    },
+    {
+      "type": "step",
+      "text": "In **Group options** you set **Visibility and joining**, turn on **Group calendar** and **Group tasks**, and use **Add task** to create tasks for members.",
+      "media": "en-modules",
+      "alt": "Group options in Shuuty: visibility and joining, group calendar, group tasks and adding a task"
+    },
+    {
+      "type": "step",
+      "text": "The group calendar shows the chosen day with a bar of busy hours. Each reservation is a card with its time and note, and yours is marked **Your reservation**.",
+      "media": "en-bookings",
+      "alt": "A Shuuty group calendar with one reservation on the chosen day"
     }
   ],
   "faq": [

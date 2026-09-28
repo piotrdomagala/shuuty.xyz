@@ -101,6 +101,71 @@ article aside.getApp {
   font-weight: 700;
 }
 
+/* Steps: a numbered list of "what to tap" sentences, each beside the real
+   capture it describes. The number comes from a counter, so the list keeps
+   its semantics for screen readers. */
+article ol.steps {
+  counter-reset: guide-step;
+  list-style: none;
+  padding: 0;
+  margin: var(--s-lg) 0 var(--s-xl);
+}
+
+article ol.steps li.step {
+  counter-increment: guide-step;
+  display: grid;
+  grid-template-columns: minmax(0, 200px) minmax(0, 1fr);
+  gap: var(--s-lg);
+  align-items: center;
+  margin: 0 0 var(--s-xl);
+}
+
+/* The frame is sized here; page.module.css gives .deviceFrame width: 100%. */
+article li.step > .stepFrame {
+  width: 100%;
+  max-width: 200px;
+}
+
+article p.stepText {
+  margin: 0;
+  color: var(--text);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+article p.stepText::before {
+  content: counter(guide-step);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.9em;
+  height: 1.9em;
+  margin-right: var(--s-sm);
+  border-radius: 50%;
+  background: rgba(var(--gold-rgb), 0.18);
+  color: var(--accent-text);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 640px) {
+  article ol.steps li.step {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    gap: var(--s-md);
+  }
+
+  article li.step > .stepFrame {
+    width: min(60vw, 240px);
+    max-width: none;
+  }
+
+  article p.stepText {
+    justify-self: stretch;
+  }
+}
+
 article p.related {
   margin-top: var(--s-lg);
   font-size: 0.95rem;

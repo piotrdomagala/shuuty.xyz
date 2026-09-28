@@ -488,6 +488,13 @@ const guideIndexAlternates = withDefault(
 
 failures.push(...guideRegistryProblems(guidesRegistry));
 
+// Guide steps show registered captures only: the id, its locale and, in the
+// built page, the capture's own file.
+const productMediaRegistry = JSON.parse(await readFile(new URL('content/product-media.json', root), 'utf8'));
+const productMediaRuntime = JSON.parse(await readFile(new URL('content/product-media.runtime.json', root), 'utf8'));
+const captureLocales = new Map(productMediaRegistry.assets.map((asset) => [asset.id, asset.locales]));
+const captureFiles = new Map(productMediaRuntime.assets.map((asset) => [asset.id, asset.compact.path]));
+
 for (const language of GUIDE_LANGUAGES) {
   const copy = guidesRegistry.index[language];
   const entries = guidesIn(guides, language);
@@ -522,7 +529,10 @@ for (const guide of guides) {
     failures.push(`${name}: ${bodyPath} is missing or is not valid JSON`);
     continue;
   }
-  failures.push(...guideArticleProblems(bodyPath, article));
+  failures.push(...guideArticleProblems(bodyPath, article, { language: guide.language, media: captureLocales }));
+  const stepFiles = (article.body ?? [])
+    .filter((block) => block.type === 'step' && captureFiles.has(block.media))
+    .flatMap((block) => [captureFiles.get(block.media), htmlText(block.alt)]);
 
   const firstParagraph = article.body?.find((block) => block.type === 'p');
   const alternates = withDefault(guideAlternates(guides, guide));
@@ -541,6 +551,7 @@ for (const guide of guides) {
       `data-goatcounter-click="store-android-${clickSuffix}"`,
       `utm_campaign%3D${guideStoreCampaign(guide)}`,
       `href="${GUIDE_INDEX_PATHS[guide.language]}"`,
+      ...stepFiles,
     ],
     indexable: true,
     guideFaqCount: article.faq?.length ?? 0,

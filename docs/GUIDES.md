@@ -36,6 +36,14 @@ Guides are practical articles at `/guides/` (en), `/pl/poradniki/` (pl) and `/nb
    }
    ```
 
+   A step shows what to tap and what changes, beside a real capture:
+
+   ```json
+   { "type": "step", "text": "In **Group options** turn on **Group calendar**.", "media": "en-modules", "alt": "Group options in Shuuty" }
+   ```
+
+   `media` is an id from `content/product-media.json` in the guide's language (`pl-*` for Polish, `en-*` for English; Norwegian guides use `en-*` until Norwegian captures are registered). Consecutive steps render as one numbered list with the capture in its device frame. Captures are never edited; a new screen needs a new registered capture first (`docs/PRODUCT-MEDIA-INTEGRATION.md`).
+
    The body opens with a paragraph and has at least one `h2`. `faq` is optional; its entries also become FAQPage structured data. `**bold**` works in paragraphs, list items and FAQ entries; titles, headings and labels are plain text, so the checks reject `**` there.
 
 3. Add the page at `app/<section>/<slug>/page.tsx` (`app/guides/`, `app/pl/poradniki/` or `app/nb/guider/`):
