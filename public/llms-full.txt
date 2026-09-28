@@ -2,7 +2,7 @@
 
 > Shuuty is a mobile application that connects voice-created tasks, delegation, flexible groups, meetings, conversations, calendars, and nearby discovery.
 
-Last updated: 2026-09-27. This document summarizes the capabilities described on the official Shuuty website and in the official App Store and Google Play listings. It does not describe private APIs or unpublished features. The canonical website is https://shuuty.com/ and the product is available for iPhone, iPad and Android. Publisher: Shuuty Prosta Spółka Akcyjna (Shuuty P.S.A.), Poland. Shuuty (shuuty.com) is not related to Shuut, Shouty or Shuuto.
+Last updated: 2026-09-28. This document summarizes the capabilities described on the official Shuuty website and in the official App Store and Google Play listings. It does not describe private APIs or unpublished features. The canonical website is https://shuuty.com/ and the product is available for iPhone, iPad and Android. Publisher: Shuuty Prosta Spółka Akcyjna (Shuuty P.S.A.), Poland. Shuuty (shuuty.com) is not related to Shuut, Shouty or Shuuto.
 
 ## English product overview
 
@@ -127,7 +127,7 @@ Shuuty er en app for oppgaver, grupper og møter med menneskene rundt deg. Si hv
 - Spill inn en oppgave med egne ord. Shuuty lager tittel og beskrivelse, kjenner igjen frist, påminnelse, person og sted, og deler flere tanker opp i separate oppgaver du kan se gjennom.
 - Når du delegerer den, får mottakeren den med en gang - eller først en forespørsel om godkjenning, hvis innstillingene til mottakeren krever det.
 - Bruk en gruppe som arbeidsrom for et team, et fellesskap, et samarbeidssted med kunder, et tjenestetilbud eller en presentasjon av et produkt som er til salgs.
-- Slå bare på modulene du trenger: chat, tråder, oppgaver, felles kalender, bestillinger, planer, prosjekter og tidsregistrering.
+- Chat og tråder finnes i alle grupper. Felles kalender og oppgaver slår du på eller av etter behov, og kalenderen kan brukes til planer og prosjekter, bestillinger eller tidsregistrering.
 - En gruppe kan også være ditt eget tilbud - for eksempel en bil til salgs, med fullstendig beskrivelse og bilder. Med Pro og Teams får du plass til lengre beskrivelser og flere bilder.
 - Private grupper og møter er bare tilgjengelige via invitasjon. Andre krever godkjenning eller har åpen tilgang, og kan være synlige for venner eller for alle.
 - Planlegg sted, tid og deltakere for et møte. Utforsk møter og offentlige grupper i nærheten på kartet. Et møte kan være et engangstreff eller gjentas regelmessig.
