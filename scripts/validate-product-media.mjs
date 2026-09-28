@@ -683,6 +683,32 @@ function validatePreviewAssetEntries(assets, failures) {
     if (asset.sourceArtifactEntry?.includes('exports/final')) {
       failures.push(`${asset.id}.sourceArtifactEntry must not reference exports/final.`);
     }
+    validatePreviewAssetSourceCommit(asset, failures);
+  }
+}
+
+/**
+ * One capture may come from another S- commit than the preview source, when
+ * the owner asks for it: it names that commit and says why. Whether the commit
+ * is on origin and holds these bytes is checked where S- is available, by
+ * `npm run verify:media-sources -- <S- worktree>` at import time; the site's
+ * own CI cannot read the private app repository.
+ */
+function validatePreviewAssetSourceCommit(asset, failures) {
+  const hasCommit = asset.sourceCommit !== undefined;
+  const hasNote = asset.sourceNote !== undefined;
+  if (!hasCommit && !hasNote) return;
+  if (!hasCommit) {
+    failures.push(`${asset.id}.sourceNote needs a sourceCommit it explains.`);
+    return;
+  }
+  if (!/^[a-f0-9]{40}$/u.test(asset.sourceCommit)) {
+    failures.push(`${asset.id}.sourceCommit must be a lowercase 40-character commit SHA.`);
+  } else if (asset.sourceCommit === previewSource.commit) {
+    failures.push(`${asset.id}.sourceCommit must differ from the preview source commit.`);
+  }
+  if (typeof asset.sourceNote !== 'string' || !asset.sourceNote.trim()) {
+    failures.push(`${asset.id}.sourceNote must say why this capture has its own source commit.`);
   }
 }
 

@@ -50,6 +50,19 @@ the owner found the pulse unattractive; the file stays) is an exact copy of
 `store-listing/assets/brand/golden-relay-transparent-2048x256.png`, SHA-256
 `4e49a0b5b2f07f5cb934321d573173463e5ab10d986c29acf64593548956ce15`.
 
+One capture may cite its own S- commit instead of the preview source commit:
+the asset then carries `sourceCommit` (lowercase 40-character SHA) and
+`sourceNote` (why), and the validator requires both together. Since 27.09.2026
+the `assignee` pair (`02-assignee` PL and EN, the filled voice task review that
+is live on Google Play) comes from `bd5d70d56223ffe558fb602e38a69ebaa0b432aa` on
+`codex/delegation-gallery-adoption-20260908`, at the owner's request; once that
+gallery is merged to main the pair moves to the main commit. The site's CI
+cannot read the private app repository, so every import runs, from inside an S-
+worktree, `node <path to this site>/scripts/verify-product-media-sources.mjs`: it
+fetches origin and
+checks that each source commit is on origin and that the file at
+`sourceArtifactEntry` in it has exactly `sourceSha256`.
+
 This checked-in set is an owner-attested website preview, not the final store
 artifact binding. `artifactBinding` therefore remains `null`, and
 `finalArtifactContract.status` remains `awaiting-approved-no-publish-package`.

@@ -68,10 +68,13 @@ czemu kontrast małego kickera i opisu spełnia WCAG AA.
 - Desktop - trzy płaszczyzny tworzą jedną scenę z aktywnym ekranem na pierwszym
   planie.
 - Tablet - scena kompresuje się bez kolizji podpisów.
-- Mobile - poziomy scroller ze `scroll-snap` pokazuje jeden centralny ekran,
-  sąsiednie wystają przy krawędziach (11 px przy 320, 29 px przy 412), aktywny
-  krok wynika z pozycji przewijania. Scroller nie dodaje poziomego scrolla
-  dokumentu i ma zapas u góry na uniesiony telefon.
+- Mobile - poziomy scroller ze `scroll-snap` w układzie coverflow (wybór
+  właściciela 27.09.2026): każdy telefon obraca się w przestrzeni (do 42°),
+  maleje i przygasa według swojej odległości od środka, klatka po klatce razem z
+  palcem, bez osobnej animacji. Sąsiednie wystają przy krawędziach (12 px przy
+  320, 23 px przy 412), aktywny krok wynika z pozycji przewijania. Przy
+  `prefers-reduced-motion` telefony się nie obracają. Scroller nie dodaje
+  poziomego scrolla dokumentu.
 - Product Depth - przy szerokości 320-390 px zestawienie iPad + telefon ma budżet
   `100vw - 72px`, odpowiadający paddingowi rozdziału i figury. Nie polega na
   ucinaniu overflow.
