@@ -91,6 +91,36 @@
       "heading": "Send a task to a friend in Shuuty, step by step",
       "updatedOn": "2026-09-28",
       "updatedLabel": "Updated 28 September 2026"
+    },
+    {
+      "topic": "group-tasks",
+      "language": "pl",
+      "slug": "zadania-w-grupie-krok-po-kroku",
+      "title": "Zadania w grupie w Shuuty - krok po kroku",
+      "description": "Jak założyć grupę dla zespołu, rodziny albo klubu, włączyć zadania, dać zadanie całej grupie i zobaczyć, kto je ukończył. Każdy krok ze zrzutem.",
+      "heading": "Zadania w grupie w Shuuty - krok po kroku",
+      "updatedOn": "2026-09-28",
+      "updatedLabel": "Zaktualizowano 28 września 2026"
+    },
+    {
+      "topic": "group-tasks",
+      "language": "en",
+      "slug": "group-tasks-step-by-step",
+      "title": "Group tasks in Shuuty, step by step",
+      "description": "How to set up a group for a team, a family or a club, turn on tasks, give a task to the whole group and see who finished it.",
+      "heading": "Group tasks in Shuuty, step by step",
+      "updatedOn": "2026-09-28",
+      "updatedLabel": "Updated 28 September 2026"
+    },
+    {
+      "topic": "group-tasks",
+      "language": "nb",
+      "slug": "gruppeoppgaver-steg-for-steg",
+      "title": "Gruppeoppgaver i Shuuty, steg for steg",
+      "description": "Slik oppretter du en gruppe for et lag, en familie eller en klubb, slår på oppgaver, gir en oppgave til hele gruppen og ser hvem som fullførte den.",
+      "heading": "Gruppeoppgaver i Shuuty, steg for steg",
+      "updatedOn": "2026-09-28",
+      "updatedLabel": "Oppdatert 28. september 2026"
     }
   ]
 }

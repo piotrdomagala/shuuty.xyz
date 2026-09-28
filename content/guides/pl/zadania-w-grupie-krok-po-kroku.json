@@ -1,0 +1,135 @@
+{
+  "body": [
+    {
+      "type": "p",
+      "text": "Remont z ekipą, obowiązki w rodzinie, sprzęt na trening w klubie - wszędzie tam kilka osób ma wspólne rzeczy do zrobienia i jedną rozmowę, w której to ustalają. W Shuuty grupa łączy te dwie rzeczy: czat i zadania są w jednym miejscu, a każdy członek widzi swoje zadania w planerze. Ten poradnik przechodzi całą drogę krok po kroku i na każdym kroku pokazuje prawdziwy ekran aplikacji."
+    },
+    {
+      "type": "h2",
+      "text": "Załóż grupę i zaproś ludzi"
+    },
+    {
+      "type": "step",
+      "text": "Dotknij **+** na dole ekranu, potem **Grupa**. Kreator prowadzi przez nazwę i opis, okładkę i zainteresowania, a potem **Ustawienia grupy**. Tam wybierasz **Dostęp**: **Wszyscy**, **Znajomi** albo **Prywatne**, i **Sposób dołączania**: **Za akceptacją** albo **Wolny wstęp**. Grupa prywatna jest tylko na zaproszenie.",
+      "media": "pl-group-tasks-access",
+      "alt": "Ustawienia grupy w kreatorze: Dostęp i Sposób dołączania"
+    },
+    {
+      "type": "step",
+      "text": "Na ekranie **Podsumowanie** dotknij **Dodaj członków** i wybierz znajomych, a na koniec **Utwórz grupę**. Zaproszeni dostają powiadomienie i dołączają przyciskiem **Akceptuj**.",
+      "media": "pl-group-tasks-invite",
+      "alt": "Wybór znajomych zaproszonych do nowej grupy"
+    },
+    {
+      "type": "h2",
+      "text": "Włącz zadania grupy"
+    },
+    {
+      "type": "step",
+      "text": "W nowej grupie zadania i kalendarz są wyłączone. Organizator otwiera **Opcje grupy** (ikona koła zębatego) i w części **Funkcje** włącza **Zadania grupy**. Tu włącza też **Kalendarz grupy**. Czat i wątki działają w każdej grupie.",
+      "media": "pl-group-tasks-options",
+      "alt": "Opcje grupy z włączonymi zadaniami grupy"
+    },
+    {
+      "type": "h2",
+      "text": "Daj zadanie całej grupie"
+    },
+    {
+      "type": "step",
+      "text": "W czacie grupy dotknij **+** przy polu wiadomości i wybierz **Utwórz zadanie**. Zadanie doda każdy członek grupy.",
+      "media": "pl-group-tasks-chat-create-task",
+      "alt": "Czat grupy z akcją Utwórz zadanie"
+    },
+    {
+      "type": "step",
+      "text": "Wpisz tytuł i w razie potrzeby opis, podzadania albo zdjęcia, potem **Stwórz zadanie**. Zadanie trafia do wszystkich członków grupy i nie czeka na akceptację - ustawienie **Zadania od znajomych** nie dotyczy zadań grupowych.",
+      "media": "pl-group-tasks-composer",
+      "alt": "Nowe zadanie w grupie przed zapisaniem"
+    },
+    {
+      "type": "step",
+      "text": "W zakładce **Zadania** grupy widać, kto dodał zadanie i u ilu osób jest w planerze. Zakładka **Ukończone** zbiera zrobione zadania.",
+      "media": "pl-group-tasks-tasks-tab",
+      "alt": "Zakładka Zadania w grupie z zadaniem w planerze dwóch osób"
+    },
+    {
+      "type": "h2",
+      "text": "Co widzi członek grupy"
+    },
+    {
+      "type": "step",
+      "text": "Członek dostaje powiadomienie o nowym zadaniu w grupie.",
+      "media": "pl-group-tasks-member-notified",
+      "alt": "Powiadomienie: Maja tworzy nowe zadanie w grupie"
+    },
+    {
+      "type": "step",
+      "text": "Zadanie jest już w jego planerze, w zakładce **Otrzymane**, z nazwą grupy nad tytułem. Może od razu włączyć **Stoper**.",
+      "media": "pl-group-tasks-received-pinned",
+      "alt": "Zakładka Otrzymane z zadaniem z grupy"
+    },
+    {
+      "type": "h2",
+      "text": "Kto kończy zadanie i co widzi grupa"
+    },
+    {
+      "type": "step",
+      "text": "Gdy ktoś z grupy oznaczy zadanie jako ukończone, jest ono ukończone dla wszystkich. W czacie grupy pojawia się karta **Ukończono zadanie** z informacją, kto to zrobił, obok karty **Dodano zadanie grupowe**.",
+      "media": "pl-group-tasks-chat-completed",
+      "alt": "Czat grupy z kartami Dodano zadanie grupowe i Ukończono zadanie"
+    },
+    {
+      "type": "p",
+      "text": "Organizator widzi wszystkie zadania grupy. Pozostali widzą zadania, które sami dodali albo które do nich trafiły."
+    },
+    {
+      "type": "h2",
+      "text": "Kalendarz grupy: kto go widzi"
+    },
+    {
+      "type": "step",
+      "text": "W ustawieniach **Kalendarza grupy** organizator wybiera, do czego służy kalendarz (**Plany i projekty**, **Grafik rezerwacji**, **Ewidencja czasu**), **Widoczność**: **Wszyscy**, **Ukryty** albo **Tylko Ty**, **Wyjątki dla osób** i to, **kto może dodawać plany**.",
+      "media": "pl-group-tasks-calendar-visibility",
+      "alt": "Ustawienia kalendarza grupy: cel, widoczność i wyjątki dla osób"
+    },
+    {
+      "type": "h2",
+      "text": "Czego grupa tu nie robi"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "**Nie da się zmienić cudzego zadania.** Tytuł i termin zmienia tylko autor zadania. Pozostali odbiorcy mogą zmienić opis. Usunąć zadanie może autor albo organizator grupy.",
+        "**Nie pyta członków o zgodę na zadanie.** Kto jest w grupie, dostaje jej zadania od razu.",
+        "**Nie zbiera płatności od członków.** Płatności w aplikacji dotyczą tylko planów Pro i Teams.",
+        "**Nie działa w przeglądarce i nie jest dla osób poniżej 16 lat.** Każdy członek potrzebuje aplikacji na iPhonie, iPadzie albo Androidzie."
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Ile to kosztuje"
+    },
+    {
+      "type": "p",
+      "text": "Start jest bezpłatny. Limity grupy zależą od planu organizatora: w planie Free grupa ma do 20 osób i do 3 aktywnych zadań naraz, w Pro do 150 osób, a w Teams do 900, w obu bez limitu aktywnych zadań. Ceny zależą od kraju i są widoczne w App Store i Google Play."
+    }
+  ],
+  "faq": [
+    {
+      "question": "Czy członek grupy musi zaakceptować zadanie?",
+      "answer": "Nie. Zadanie grupowe trafia do członków od razu. Ustawienie Zadania od znajomych dotyczy tylko zadań od znajomych, poza grupami."
+    },
+    {
+      "question": "Dlaczego w mojej grupie nie ma zadań?",
+      "answer": "W nowej grupie zadania są wyłączone. Organizator włącza je w Opcjach grupy, w części Funkcje, przełącznikiem Zadania grupy."
+    },
+    {
+      "question": "Czy każdy w grupie widzi wszystkie zadania?",
+      "answer": "Organizator tak. Pozostali członkowie widzą zadania, które sami dodali albo które do nich trafiły."
+    },
+    {
+      "question": "Co się dzieje, gdy jedna osoba skończy zadanie?",
+      "answer": "Zadanie jest ukończone dla wszystkich odbiorców, a w czacie grupy widać, kto je ukończył."
+    }
+  ]
+}

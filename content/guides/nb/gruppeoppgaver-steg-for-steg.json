@@ -1,0 +1,121 @@
+{
+  "body": [
+    {
+      "type": "p",
+      "text": "Et oppussingslag, oppgaver hjemme, utstyr til klubbtreningen - der flere har ting å gjøre sammen, har de også én samtale der de avtaler dem. I Shuuty samler en gruppe begge deler: chat og oppgaver på ett sted, og hvert medlem ser oppgavene sine i sin egen planlegger. Denne guiden går gjennom hele veien steg for steg, med appskjermen på de viktigste stegene. Skjermbildene viser appen på engelsk."
+    },
+    {
+      "type": "h2",
+      "text": "Opprett en gruppe og inviter folk"
+    },
+    {
+      "type": "p",
+      "text": "Trykk på **+** nederst på skjermen og deretter **Gruppe**. Veiviseren tar deg gjennom navn og beskrivelse, omslag og interesser, og så **Gruppeinnstillinger**. Der velger du **Tilgang** - **Alle**, **Venner** eller **Privat** - og **Slik blir folk med**: **Krever godkjenning** eller **Åpen tilgang**. En privat gruppe er bare via invitasjon. På skjermen **Oppsummering** trykker du på **Legg til medlemmer**, velger venner og trykker på **Opprett gruppe**. De inviterte får et varsel og blir med ved å trykke på **Godta**."
+    },
+    {
+      "type": "h2",
+      "text": "Slå på gruppeoppgaver"
+    },
+    {
+      "type": "step",
+      "text": "I en ny gruppe er oppgaver og kalender slått av. Arrangøren åpner **Gruppealternativer** (tannhjulet) og slår på **Gruppeoppgaver** under **Funksjoner**. Her slår arrangøren også på **Gruppekalender**. Chat og tråder finnes i alle grupper.",
+      "media": "en-group-tasks-options",
+      "alt": "Gruppealternativer med gruppeoppgaver og gruppekalender slått på"
+    },
+    {
+      "type": "h2",
+      "text": "Gi en oppgave til hele gruppen"
+    },
+    {
+      "type": "step",
+      "text": "I gruppechatten trykker du på **+** ved meldingsfeltet og velger **Opprett oppgave**. Alle medlemmer av gruppen kan legge til en oppgave.",
+      "media": "en-group-tasks-chat-create-task",
+      "alt": "Gruppechat med handlingen Opprett oppgave"
+    },
+    {
+      "type": "step",
+      "text": "Skriv tittelen og eventuelt en beskrivelse, deloppgaver eller bilder, og trykk på **Opprett oppgave**. Oppgaven går til alle medlemmene og venter ikke på godkjenning - innstillingen **Oppgaver fra venner** gjelder ikke gruppeoppgaver.",
+      "media": "en-group-tasks-composer",
+      "alt": "En ny gruppeoppgave før lagring"
+    },
+    {
+      "type": "step",
+      "text": "Gruppens fane **Oppgaver** viser hvem som la til hver oppgave. **Fullførte** samler oppgavene som er gjort.",
+      "media": "en-group-tasks-tasks-tab",
+      "alt": "Fanen Oppgaver i en gruppe med én åpen oppgave"
+    },
+    {
+      "type": "h2",
+      "text": "Hva et medlem ser"
+    },
+    {
+      "type": "step",
+      "text": "Medlemmet får et varsel om den nye oppgaven i gruppen, og oppgaven ligger allerede i planleggeren under **Mottatt**, med gruppens navn over tittelen.",
+      "media": "en-group-tasks-received-pinned",
+      "alt": "Fanen Mottatt med en oppgave fra gruppen"
+    },
+    {
+      "type": "h2",
+      "text": "Hvem fullfører oppgaven og hva gruppen ser"
+    },
+    {
+      "type": "step",
+      "text": "Når noen i gruppen markerer oppgaven som fullført, er den fullført for alle. Gruppechatten viser kortet **Oppgave fullført** med hvem som gjorde den, ved siden av kortet **Gruppeoppgave lagt til**.",
+      "media": "en-group-tasks-chat-completed",
+      "alt": "Gruppechat med kortene Gruppeoppgave lagt til og Oppgave fullført"
+    },
+    {
+      "type": "p",
+      "text": "Arrangøren ser alle oppgavene i gruppen. Andre medlemmer ser oppgavene de har lagt til selv eller som er gitt til dem."
+    },
+    {
+      "type": "h2",
+      "text": "Gruppekalender: hvem ser den"
+    },
+    {
+      "type": "step",
+      "text": "I innstillingene for **Gruppekalender** velger arrangøren hva kalenderen skal brukes til (**Planer og prosjekter**, **Reservasjonsplan**, **Tidsregistrering**), **Synlighet** - **Alle**, **Skjult** eller **Bare deg** - **Unntak per person** og **Hvem kan legge til planer**.",
+      "media": "en-group-tasks-calendar-visibility",
+      "alt": "Innstillinger for gruppekalender: formål, synlighet og unntak per person"
+    },
+    {
+      "type": "h2",
+      "text": "Dette gjør ikke en gruppe"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "**Du kan ikke endre andres oppgaver.** Bare den som opprettet oppgaven, endrer tittel og frist. Andre mottakere kan endre beskrivelsen. Oppgaven kan slettes av den som opprettet den eller av arrangøren.",
+        "**Den spør ikke medlemmene om å godta en oppgave.** Den som er med i gruppen, får oppgavene med en gang.",
+        "**Den tar ikke imot betaling fra medlemmer.** Betaling i appen gjelder bare Pro- og Teams-abonnementene.",
+        "**Den fungerer ikke i nettleseren og er ikke for personer under 16 år.** Alle medlemmer trenger appen på iPhone, iPad eller Android."
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Hva det koster"
+    },
+    {
+      "type": "p",
+      "text": "Det er gratis å starte. Gruppens grenser følger arrangørens abonnement: med Free har en gruppe opptil 20 personer og opptil 3 aktive oppgaver om gangen, med Pro opptil 150 personer og med Teams opptil 900, begge uten grense for aktive oppgaver. Prisene avhenger av landet og vises i App Store og Google Play."
+    }
+  ],
+  "faq": [
+    {
+      "question": "Må et gruppemedlem godta en oppgave?",
+      "answer": "Nei. En gruppeoppgave når medlemmene med en gang. Innstillingen Oppgaver fra venner gjelder bare oppgaver fra venner utenfor grupper."
+    },
+    {
+      "question": "Hvorfor finnes det ingen oppgaver i gruppen min?",
+      "answer": "I en ny gruppe er oppgaver slått av. Arrangøren slår dem på i Gruppealternativer, under Funksjoner, med bryteren Gruppeoppgaver."
+    },
+    {
+      "question": "Ser alle i gruppen alle oppgavene?",
+      "answer": "Arrangøren gjør det. Andre medlemmer ser oppgavene de har lagt til selv eller som er gitt til dem."
+    },
+    {
+      "question": "Hva skjer når én person fullfører oppgaven?",
+      "answer": "Oppgaven er fullført for alle mottakerne, og gruppechatten viser hvem som fullførte den."
+    }
+  ]
+}
