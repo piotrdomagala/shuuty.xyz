@@ -1,36 +1,37 @@
-// usage: npm run verify:media-sources -- <path to a worktree of piotrdomagala/S->
+// usage, from inside a worktree of piotrdomagala/S- (never the owner's main
+// checkout):
+//   node <path to this site>/scripts/verify-product-media-sources.mjs
 //
 // Checks every product capture against the app repository at import time:
 // the source commit (the asset's own sourceCommit, or the preview source
 // commit) is on origin after a fetch, and the file at sourceArtifactEntry in
 // that commit has exactly the recorded sourceSha256. The site's CI cannot read
-// the private app repository, so this runs where a checkout of it exists -
-// never in the owner's main checkout, pass a worktree.
+// the private app repository, so this runs where a checkout of it exists.
+//
+// The script takes no arguments: git works in the current directory, and the
+// only values it passes to git are full commit SHAs and plain repository
+// paths from the site's own manifest, checked before use.
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { statSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
-import { resolve } from 'node:path';
 
-// Nothing from the command line or the manifest reaches git unchecked: an
-// absolute existing directory, full commit SHAs and plain repository paths
-// only, so no value can be read as a git option.
 const COMMIT = /^[a-f0-9]{40}$/u;
 const ENTRY = /^store-listing\/assets\/source\/[A-Za-z0-9._/-]+\.png$/u;
 
-const worktreeArg = process.argv[2];
-if (!worktreeArg) {
-  console.error('Pass the path to a worktree of piotrdomagala/S-.');
-  process.exit(2);
-}
-const worktree = resolve(worktreeArg);
-if (!statSync(worktree, { throwIfNoEntry: false })?.isDirectory()) {
-  console.error(`${worktree} is not a directory.`);
-  process.exit(2);
-}
-
 const git = (args, options = {}) =>
-  execFileSync('git', ['-C', worktree, ...args], { maxBuffer: 64 * 1024 * 1024, ...options });
+  execFileSync('git', args, { maxBuffer: 64 * 1024 * 1024, ...options });
+
+let origin = '';
+try {
+  origin = git(['remote', 'get-url', 'origin']).toString().trim();
+} catch {
+  origin = '';
+}
+// The app repository is piotrdomagala/Shuuty- on GitHub (S- is its local folder).
+if (!/github\.com[/:]piotrdomagala\/Shuuty-(\.git)?$/u.test(origin)) {
+  console.error('Run this from inside a worktree of piotrdomagala/S-.');
+  process.exit(2);
+}
 
 const manifest = JSON.parse(
   await readFile(new URL('../content/product-media.json', import.meta.url), 'utf8'),

@@ -22,7 +22,6 @@
     "validate:media": "node scripts/validate-product-media.mjs",
     "validate:social": "node scripts/validate-social-cards.mjs",
     "validate:static": "node scripts/validate-static-export.mjs",
-    "verify:media-sources": "node scripts/verify-product-media-sources.mjs",
     "generate:favicon": "node scripts/generate-favicon.mjs",
     "submit:indexnow": "node scripts/submit-indexnow.mjs"
   },

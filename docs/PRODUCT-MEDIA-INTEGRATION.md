@@ -57,8 +57,9 @@ the `assignee` pair (`02-assignee` PL and EN, the filled voice task review that
 is live on Google Play) comes from `bd5d70d56223ffe558fb602e38a69ebaa0b432aa` on
 `codex/delegation-gallery-adoption-20260908`, at the owner's request; once that
 gallery is merged to main the pair moves to the main commit. The site's CI
-cannot read the private app repository, so every import runs
-`npm run verify:media-sources -- <path to an S- worktree>`: it fetches origin and
+cannot read the private app repository, so every import runs, from inside an S-
+worktree, `node <path to this site>/scripts/verify-product-media-sources.mjs`: it
+fetches origin and
 checks that each source commit is on origin and that the file at
 `sourceArtifactEntry` in it has exactly `sourceSha256`.
 
