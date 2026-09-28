@@ -105,6 +105,22 @@
         "Zaproś członków.",
         "Dodaj stały trening jako spotkanie cykliczne."
       ]
+    },
+    {
+      "type": "h3",
+      "text": "Jak to wygląda w aplikacji"
+    },
+    {
+      "type": "step",
+      "text": "W **Opcjach grupy** ustawiasz **Widoczność i dołączanie**, włączasz **Kalendarz grupy** i **Zadania grupy**, a przez **Dodaj zadanie** tworzysz zadania dla członków.",
+      "media": "pl-modules",
+      "alt": "Opcje grupy w Shuuty: widoczność i dołączanie, kalendarz grupy, zadania grupy i dodawanie zadania"
+    },
+    {
+      "type": "step",
+      "text": "Kalendarz grupy pokazuje wybrany dzień z paskiem zajętych godzin. Każda rezerwacja to karta z godziną i opisem, a swoją rozpoznasz po **Twoja rezerwacja**.",
+      "media": "pl-bookings",
+      "alt": "Kalendarz grupy w Shuuty z jedną rezerwacją w wybranym dniu"
     }
   ],
   "faq": [

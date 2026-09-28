@@ -47,6 +47,11 @@ const withPresentation = (asset: ProductMediaAsset): ProductMediaPlacement => {
   };
 };
 
+// One registered capture with its device frame, e.g. for a guide step.
+export function getProductMediaPlacement(id: string): ProductMediaPlacement {
+  return withPresentation(getProductMedia(id));
+}
+
 export function getProductMediaPlacements(language: ProductMediaLanguage) {
   const setId = placementSelection[language];
   const placementSet = placementSets[setId];

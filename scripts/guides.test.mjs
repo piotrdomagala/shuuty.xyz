@@ -18,6 +18,8 @@ import {
 } from '../lib/sitePaths.mjs';
 
 const root = new URL('../', import.meta.url);
+const productMedia = JSON.parse(await readFile(new URL('content/product-media.json', root), 'utf8'));
+const captureLocales = new Map(productMedia.assets.map((asset) => [asset.id, asset.locales]));
 const registry = JSON.parse(await readFile(new URL('content/guides.json', root), 'utf8'));
 
 const clubPl = {
@@ -117,7 +119,7 @@ test('the registry is valid and every guide has its body and page files', async 
     const body = JSON.parse(
       await readFile(new URL(`content/guides/${guide.language}/${guide.slug}.json`, root), 'utf8'),
     );
-    assert.deepEqual(guideArticleProblems(guide.slug, body), []);
+    assert.deepEqual(guideArticleProblems(guide.slug, body, { language: guide.language, media: captureLocales }), []);
     await access(new URL(`app${guidePath(guide)}page.tsx`, root));
   }
 
@@ -197,5 +199,49 @@ test('article bodies open with a paragraph and use only known blocks', () => {
   assert.match(
     guideArticleProblems('flat', { body: [{ type: 'p', text: 'Only text.' }] }).join('\n'),
     /at least one h2 section/,
+  );
+});
+
+test('steps show a registered capture in the guide language with an alt text', () => {
+  const article = (step) => ({
+    body: [
+      { type: 'p', text: 'Opening.' },
+      { type: 'h2', text: 'Steps' },
+      step,
+    ],
+  });
+  const context = { language: 'pl', media: captureLocales };
+  const step = {
+    type: 'step',
+    text: 'W **Opcjach grupy** włączasz kalendarz.',
+    media: 'pl-modules',
+    alt: 'Opcje grupy w Shuuty',
+  };
+  assert.deepEqual(guideArticleProblems('step', article(step), context), []);
+  assert.deepEqual(
+    guideArticleProblems('en step', article({ ...step, media: 'en-modules' }), { language: 'en', media: captureLocales }),
+    [],
+  );
+  // Norwegian guides show the English captures until Norwegian ones exist.
+  assert.deepEqual(
+    guideArticleProblems('nb step', article({ ...step, media: 'en-modules' }), { language: 'nb', media: captureLocales }),
+    [],
+  );
+
+  assert.match(
+    guideArticleProblems('wrong language', article({ ...step, media: 'en-modules' }), context).join('\n'),
+    /media en-modules \(en-US\) does not match the pl guide/,
+  );
+  assert.match(
+    guideArticleProblems('unknown', article({ ...step, media: 'pl-invented' }), context).join('\n'),
+    /media pl-invented is not in content\/product-media\.json/,
+  );
+  const incomplete = guideArticleProblems('incomplete', article({ type: 'step', text: ' ', alt: '' }), context).join('\n');
+  assert.match(incomplete, /step text is empty/);
+  assert.match(incomplete, /step needs an alt text/);
+  assert.match(incomplete, /step needs a media id/);
+  assert.match(
+    guideArticleProblems('bold alt', article({ ...step, alt: 'A **bold** alt' }), context).join('\n'),
+    /alt: \*\* is shown literally in plain text/,
   );
 });
