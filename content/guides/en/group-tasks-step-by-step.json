@@ -1,0 +1,121 @@
+{
+  "body": [
+    {
+      "type": "p",
+      "text": "A renovation crew, chores at home, gear for club training - wherever a few people share things to do, they also share one conversation where they agree on them. In Shuuty a group keeps both together: chat and tasks live in one place, and every member sees their tasks in their own planner. This guide walks the whole way, step by step, with the real app screen at the key steps."
+    },
+    {
+      "type": "h2",
+      "text": "Create a group and invite people"
+    },
+    {
+      "type": "p",
+      "text": "Tap **+** at the bottom of the screen, then **Group**. The creator takes you through the name and description, cover and interests, and then **Group settings**, where you choose **Access** - **Everyone**, **Friends** or **Private** - and how people join: **Approval required** or **Open entry**. A private group is invitation only. On the **Summary** screen tap **Add members**, pick your friends and tap **Create group**. Invited friends get a notification and join with **Accept**."
+    },
+    {
+      "type": "h2",
+      "text": "Turn on group tasks"
+    },
+    {
+      "type": "step",
+      "text": "In a new group tasks and the calendar are off. The organizer opens **Group options** (the gear icon) and, under **Features**, turns on **Group tasks**. The **Group calendar** is turned on here too. Chat and threads work in every group.",
+      "media": "en-group-tasks-options",
+      "alt": "Group options with group tasks and the group calendar enabled"
+    },
+    {
+      "type": "h2",
+      "text": "Give a task to the whole group"
+    },
+    {
+      "type": "step",
+      "text": "In the group chat tap **+** next to the message field and choose **Create task**. Any member of the group can add a task.",
+      "media": "en-group-tasks-chat-create-task",
+      "alt": "Group chat with the Create task action"
+    },
+    {
+      "type": "step",
+      "text": "Type the title and, if you need them, a description, subtasks or photos, then tap **Create task**. The task goes to every member of the group and does not wait for approval - the **Task from friends** setting does not apply to group tasks.",
+      "media": "en-group-tasks-composer",
+      "alt": "A new group task before saving"
+    },
+    {
+      "type": "step",
+      "text": "The group's **Tasks** tab shows who added each task. **Completed** collects the tasks that are done.",
+      "media": "en-group-tasks-tasks-tab",
+      "alt": "The Tasks tab of a group with one open task"
+    },
+    {
+      "type": "h2",
+      "text": "What a member sees"
+    },
+    {
+      "type": "step",
+      "text": "A member gets a notification about the new task in the group, and the task is already in their planner, in **Received**, with the group's name above the title. They can start the **Timer** right away.",
+      "media": "en-group-tasks-received-pinned",
+      "alt": "The Received tab with a task from the group"
+    },
+    {
+      "type": "h2",
+      "text": "Who finishes the task and what the group sees"
+    },
+    {
+      "type": "step",
+      "text": "When someone in the group marks the task complete, it is complete for everyone. The group chat shows a **Task completed** card with who did it, next to the **Group task added** card.",
+      "media": "en-group-tasks-chat-completed",
+      "alt": "Group chat with the Group task added and Task completed cards"
+    },
+    {
+      "type": "p",
+      "text": "The organizer sees every task in the group. Other members see the tasks they added or that were given to them."
+    },
+    {
+      "type": "h2",
+      "text": "Group calendar: who sees it"
+    },
+    {
+      "type": "step",
+      "text": "In the **Group calendar** settings the organizer picks what the calendar is for (**Plans & projects**, **Booking schedule**, **Time logging**), its **Visibility** - **Everyone**, **Hidden** or **Only you** - **Per-person exceptions**, and **Who can add plans**.",
+      "media": "en-group-tasks-calendar-visibility",
+      "alt": "Group calendar settings: purpose, visibility and per-person exceptions"
+    },
+    {
+      "type": "h2",
+      "text": "What a group does not do here"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "**You cannot change someone else's task.** Only the task's author changes its title and due date. Other assignees can edit the description. The author or the group organizer can delete it.",
+        "**It does not ask members to accept a task.** Whoever is in the group gets its tasks right away.",
+        "**It does not collect payments from members.** Payments in the app are only for the Pro and Teams plans.",
+        "**It does not run in a browser and is not for people under 16.** Every member needs the app on iPhone, iPad or Android."
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "What it costs"
+    },
+    {
+      "type": "p",
+      "text": "Starting is free. Group limits follow the organizer's plan: on Free a group has up to 20 people and up to 3 active tasks at a time, on Pro up to 150 people and on Teams up to 900, both with no limit on active tasks. Prices depend on the country and are shown in the App Store and Google Play."
+    }
+  ],
+  "faq": [
+    {
+      "question": "Does a group member have to accept a task?",
+      "answer": "No. A group task reaches members right away. The Task from friends setting covers only tasks from friends, outside groups."
+    },
+    {
+      "question": "Why are there no tasks in my group?",
+      "answer": "Tasks are off in a new group. The organizer turns them on in Group options, under Features, with the Group tasks switch."
+    },
+    {
+      "question": "Does everyone in the group see every task?",
+      "answer": "The organizer does. Other members see the tasks they added or that were given to them."
+    },
+    {
+      "question": "What happens when one person finishes the task?",
+      "answer": "The task is complete for all assignees, and the group chat shows who completed it."
+    }
+  ]
+}
