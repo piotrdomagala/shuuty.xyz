@@ -1,0 +1,127 @@
+{
+  "body": [
+    {
+      "type": "p",
+      "text": "You want a friend to do a small thing - buy the tickets, call the plumber back, send the quote - without asking three times in a messenger whether it is done. In Shuuty you give them a task and it lands in their own app. This guide walks the whole way, from the invitation to the finished task, and shows the real app screen at every step."
+    },
+    {
+      "type": "h2",
+      "text": "Invite your friend"
+    },
+    {
+      "type": "p",
+      "text": "You can give a task to someone on your Shuuty friends list. Friends are added with a link or a QR code - there is no search across all users."
+    },
+    {
+      "type": "step",
+      "text": "On the **Planner** screen tap the person-with-a-plus icon. The **Friends** screen opens with the **Invitation link and QR code** card at the bottom.",
+      "media": "en-friend-task-friends",
+      "alt": "The Friends screen in Shuuty with the Invitation link and QR code card"
+    },
+    {
+      "type": "step",
+      "text": "The card shows a QR code and a link. Choose **Send friend request** - when the link is opened, the recipient gets a friend request from you. **Send app link** only leads to installing Shuuty, with no request.",
+      "media": "en-friend-task-invite-link-type",
+      "alt": "Choosing the link type: Send friend request or Send app link"
+    },
+    {
+      "type": "h2",
+      "text": "Your friend accepts"
+    },
+    {
+      "type": "step",
+      "text": "Your friend opens the link (without the app, it leads through the install). A counter appears on their person-with-a-plus icon, and the **Awaiting** tab shows your request with an **Accept** button.",
+      "media": "en-friend-task-friend-request",
+      "alt": "The Awaiting tab with Maja's request and an Accept button"
+    },
+    {
+      "type": "h2",
+      "text": "Your friend chooses how tasks arrive"
+    },
+    {
+      "type": "step",
+      "text": "In **Profile**, under **Preferences**, your friend opens **Task from friends** and picks **Right away**, **After approval** (Accept or Reject first) or **Off**. It does not apply to group tasks.",
+      "media": "en-friend-task-task-policy",
+      "alt": "The Task from friends sheet with Right away, After approval and Off"
+    },
+    {
+      "type": "h2",
+      "text": "Say or type the task"
+    },
+    {
+      "type": "p",
+      "text": "Tap **+** at the bottom of the screen. **Voice** records the task, **Task** opens a form to type it, where you pick the assignee in **Assign to...**. How long you can record depends on your plan."
+    },
+    {
+      "type": "step",
+      "text": "In **Voice** say the task the way you would say it to your friend, for example \"Ask Alex to send the proposal to the client tomorrow at 9 AM\".",
+      "media": "en-voice-input",
+      "alt": "Recording a task by voice in Shuuty"
+    },
+    {
+      "type": "step",
+      "text": "Shuuty turns the recording into a task: title, assignee, due date, reminder and place. You can correct every field and change the assignee in **Assign to...** - the list shows your friends. Then tap **Send**.",
+      "media": "en-assignee",
+      "alt": "A task prepared from the recording: title, assignee Alex, due date, reminder and place"
+    },
+    {
+      "type": "h2",
+      "text": "Your friend gets the task"
+    },
+    {
+      "type": "step",
+      "text": "Your friend gets a notification that they received a new task from you and finds it in **Received**, with who it is from. With **After approval** they first decide whether to take it, and you get a notification when they accept or reject it.",
+      "media": "en-friend-task-received",
+      "alt": "The Received tab with a task from Maja"
+    },
+    {
+      "type": "h2",
+      "text": "Follow the task and talk about it"
+    },
+    {
+      "type": "step",
+      "text": "Everything you handed out is in **Delegated**. When your friend marks the task complete, a green check appears next to their name. In the task details you can talk in the task's own discussion.",
+      "media": "en-delegated-task",
+      "alt": "A delegated task in Shuuty with its details"
+    },
+    {
+      "type": "h2",
+      "text": "What Shuuty does not do here"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "**It will not give a task to someone who is not on your friends list.** The invitation comes first. Group tasks work differently: they go to the group's members.",
+        "**It will not assign a task when your friend chose Off.** Then friends cannot assign tasks to them.",
+        "**It does not send a notification when the task is done.** You see it in Delegated by the green check next to the assignee.",
+        "**It does not run in a browser.** Both of you need the app on iPhone, iPad or Android."
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "What it costs"
+    },
+    {
+      "type": "p",
+      "text": "Starting is free: the core features with limits, such as how long a voice recording can be. The Pro and Teams plans raise the limits. Prices depend on the country and are shown in the App Store and Google Play."
+    }
+  ],
+  "faq": [
+    {
+      "question": "Does my friend need Shuuty?",
+      "answer": "Yes. The invitation link opens the app or leads through installing it. Shuuty has no web version."
+    },
+    {
+      "question": "Can I give my friend a task without their consent?",
+      "answer": "It depends on their Task from friends setting: with Right away the task reaches them at once, with After approval they accept or reject it first, and with Off you cannot assign them a task."
+    },
+    {
+      "question": "Do I have to record the task by voice?",
+      "answer": "No. You can also type it in a form: tap +, then Task."
+    },
+    {
+      "question": "Does this setting apply to group tasks too?",
+      "answer": "No. Task from friends covers only tasks from people on your friends list, outside groups."
+    }
+  ]
+}

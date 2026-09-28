@@ -81,7 +81,12 @@ const localeBytes = new Map(WEB_DERIVATIVES.map((spec) => [spec.key, new Map()])
 const derivativeBytes = new Map(WEB_DERIVATIVES.map((spec) => [spec.key, 0]));
 let totalSourceBytes = 0;
 
-for (const asset of manifest.assets) {
+// Guide captures (emulator screens for step-by-step guides) share the pipeline
+// and the per-image budgets; the locale budgets cover the canonical set only.
+const guideCaptures = Array.isArray(manifest.guideCaptures) ? manifest.guideCaptures : [];
+const canonicalAssets = new Set(manifest.assets);
+
+for (const asset of [...manifest.assets, ...guideCaptures]) {
   const sourceFile = resolvePublicImage(asset.path);
   const source = await readCanonicalSource(asset, sourceFile);
   const sourceMetadata = await sharp(source, { failOn: 'error' }).metadata();
@@ -118,9 +123,11 @@ for (const asset of manifest.assets) {
       );
     }
 
-    const locale = asset.locales?.[0];
-    const specLocaleBytes = localeBytes.get(spec.key);
-    specLocaleBytes.set(locale, (specLocaleBytes.get(locale) ?? 0) + output.length);
+    if (canonicalAssets.has(asset)) {
+      const locale = asset.locales?.[0];
+      const specLocaleBytes = localeBytes.get(spec.key);
+      specLocaleBytes.set(locale, (specLocaleBytes.get(locale) ?? 0) + output.length);
+    }
     derivativeBytes.set(spec.key, derivativeBytes.get(spec.key) + output.length);
     generated.push({
       asset,
@@ -177,7 +184,7 @@ for (const spec of WEB_DERIVATIVES) {
     ? 0
     : Math.round((1 - bytes / totalSourceBytes) * 1000) / 10;
   console.log(
-    `Generated ${manifest.assets.length} deterministic ${spec.key} WebP derivatives: ` +
+    `Generated ${manifest.assets.length + guideCaptures.length} deterministic ${spec.key} WebP derivatives: ` +
     `${totalSourceBytes} -> ${bytes} bytes (${savings}% smaller).`,
   );
   for (const [locale, byteLength] of localeBytes.get(spec.key)) {

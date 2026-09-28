@@ -43,6 +43,7 @@ function runtimeProjection(manifest) {
   return {
     schemaVersion: manifest.schemaVersion,
     assets: manifest.assets.map(runtimeAsset),
+    guideCaptures: (manifest.guideCaptures ?? []).map(runtimeAsset),
     placementSets: manifest.placementSets,
     placementSelection: manifest.placementSelection,
   };
@@ -538,7 +539,7 @@ test('checked-in WebP files reproduce byte-for-byte with the pinned pipeline', a
   assert.equal(sharp.versions.vips, '8.18.3');
   sharp.cache(false);
 
-  for (const asset of manifest.assets) {
+  for (const asset of [...manifest.assets, ...(manifest.guideCaptures ?? [])]) {
     const source = await readFile(new URL(`public${asset.path}`, root));
     for (const spec of WEB_DERIVATIVES) {
       const derivative = asset[spec.key];
@@ -645,6 +646,99 @@ test('the unbound preview gate rejects source-entry and placement drift', async 
       mutate(manifest);
       const failures = await fixture.validate(manifest);
       assert.ok(failures.includes(expected), `${expected}\nReceived:\n${failures.join('\n')}`);
+    }
+  } finally {
+    await rm(fixture.fixturePath, { recursive: true, force: true });
+  }
+});
+
+// A guide capture: an emulator screen stored byte for byte, or cropped by a
+// recorded rectangle, with the same derivatives as the canonical set.
+async function addGuideCapture(fixture, { id, locale, crop = null }) {
+  const raw = await sharp({
+    create: { width: 90, height: 180, channels: 3, background: { r: 250, g: 246, b: 238 } },
+  }).png().toBuffer();
+  const image = crop ? await sharp(raw).extract(crop).png().toBuffer() : raw;
+  const { width, height } = crop ?? { width: 90, height: 180 };
+  const path = `/images/product/guide-captures-2026/${locale}/${id}.png`;
+  const publicFile = join(fixture.fixturePath, 'public', ...path.split('/').filter(Boolean));
+  await mkdir(join(publicFile, '..'), { recursive: true });
+  await writeFile(publicFile, image);
+  const capture = {
+    id,
+    altKey: null,
+    path,
+    mediaType: 'image/png',
+    width,
+    height,
+    sha256: sha256Of(image),
+    locales: [locale],
+    theme: 'light',
+    platform: 'android',
+    device: 'android-phone',
+    sourceSha256: sha256Of(image),
+    capture: {
+      method: 'android-emulator-screencap',
+      appCommit: 'e'.repeat(40),
+      releasedIn: 'f'.repeat(40),
+      capturedOn: '2026-09-28',
+      rawSha256: sha256Of(raw),
+      rawWidth: 90,
+      rawHeight: 180,
+      crop,
+    },
+  };
+  for (const spec of WEB_DERIVATIVES) {
+    const size = derivativeSize(spec, width, height);
+    const buffer = await encodeDerivative(sharp, image, spec, size.width, size.height);
+    const derivative = derivativePath(spec, path);
+    capture[spec.key] = {
+      path: derivative,
+      mediaType: 'image/webp',
+      ...size,
+      byteLength: buffer.length,
+      sha256: sha256Of(buffer),
+      sourceSha256: capture.sha256,
+      encoder: 'sharp@0.35.3',
+      libvips: '8.18.3',
+      parameters: { ...spec.parameters },
+    };
+    await writeFile(join(fixture.fixturePath, 'public', ...derivative.split('/').filter(Boolean)), buffer);
+  }
+  fixture.manifest.guideCaptures = [...(fixture.manifest.guideCaptures ?? []), capture];
+  return capture;
+}
+
+test('guide captures need provenance, a recorded crop and their own locale', async () => {
+  const fixture = await createBoundFixture();
+  try {
+    await addGuideCapture(fixture, { id: 'pl-friend-task-received', locale: 'pl-PL' });
+    await addGuideCapture(fixture, {
+      id: 'en-friend-task-task-policy',
+      locale: 'en-US',
+      crop: { left: 0, top: 30, width: 90, height: 150 },
+    });
+    assert.deepEqual(await fixture.validate(fixture.manifest), []);
+
+    const drifts = [
+      [(captures) => { captures[0].capture.rawSha256 = 'b'.repeat(64); }, 'without a crop must be the raw capture'],
+      [(captures) => { captures[1].capture.crop.top = 40; }, 'inside the raw capture'],
+      [(captures) => { captures[1].capture.crop.height = 140; }, 'dimensions of its recorded crop'],
+      [(captures) => { delete captures[0].capture; }, 'must record where the guide capture came from'],
+      [(captures) => { captures[0].capture.releasedIn = '77aa21e5'; }, 'full app commit and the released commit'],
+      [(captures) => { captures[0].altKey = 'voiceInput'; }, 'altKey must be null'],
+      [(captures) => { captures[0].locales = ['en-US']; }, 'exactly its own locale'],
+      [(captures) => { captures[0].id = 'pl-voice-input'; }, 'Duplicate product media id'],
+      [(captures) => { captures[0].sha256 = 'c'.repeat(64); }, 'SHA-256 is'],
+    ];
+    for (const [drift, message] of drifts) {
+      const manifest = structuredClone(fixture.manifest);
+      drift(manifest.guideCaptures);
+      const failures = await fixture.validate(manifest);
+      assert.ok(
+        failures.some((failure) => failure.includes(message)),
+        `expected "${message}" in ${JSON.stringify(failures)}`,
+      );
     }
   } finally {
     await rm(fixture.fixturePath, { recursive: true, force: true });

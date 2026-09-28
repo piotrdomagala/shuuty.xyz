@@ -1,0 +1,139 @@
+{
+  "body": [
+    {
+      "type": "p",
+      "text": "Chcesz poprosić znajomego o drobną rzecz - kupić bilety, oddzwonić do hydraulika, wysłać ofertę - i nie pytać potem trzy razy na komunikatorze, czy już to zrobił. W Shuuty dajesz mu zadanie, a on dostaje je u siebie w aplikacji. Ten poradnik przechodzi całą drogę krok po kroku, od zaproszenia do ukończenia, i na każdym kroku pokazuje prawdziwy ekran aplikacji."
+    },
+    {
+      "type": "h2",
+      "text": "Zaproś znajomego"
+    },
+    {
+      "type": "p",
+      "text": "Zadanie dasz komuś, kto jest na Twojej liście znajomych w Shuuty. Znajomych dodajesz linkiem albo kodem QR - nie ma wyszukiwarki wszystkich użytkowników."
+    },
+    {
+      "type": "step",
+      "text": "Na ekranie **Planer** dotknij ikony osoby z plusem. Otworzy się ekran **Znajomi**, a na dole karta **Link i kod QR zaproszenia**.",
+      "media": "pl-friend-task-friends",
+      "alt": "Ekran Znajomi w Shuuty z kartą Link i kod QR zaproszenia"
+    },
+    {
+      "type": "step",
+      "text": "W karcie widzisz kod QR i link. Wybierz **Wyślij zaproszenie do znajomych** - po otwarciu linku odbiorca dostanie zaproszenie od Ciebie. **Wyślij link do aplikacji** tylko prowadzi do instalacji Shuuty, bez zaproszenia.",
+      "media": "pl-friend-task-invite-link-type",
+      "alt": "Wybór typu linku: Wyślij zaproszenie do znajomych albo Wyślij link do aplikacji"
+    },
+    {
+      "type": "h2",
+      "text": "Znajomy przyjmuje zaproszenie"
+    },
+    {
+      "type": "step",
+      "text": "Znajomy otwiera link (jeśli nie ma aplikacji, link prowadzi przez instalację). U niego przy ikonie osoby z plusem pojawia się licznik, a w zakładce **Oczekuje** Twoje zaproszenie z przyciskiem **Akceptuj**.",
+      "media": "pl-friend-task-friend-request",
+      "alt": "Zakładka Oczekuje z zaproszeniem od Mai i przyciskiem Akceptuj"
+    },
+    {
+      "type": "h2",
+      "text": "Znajomy wybiera, jak trafiają do niego zadania"
+    },
+    {
+      "type": "step",
+      "text": "W **Profilu**, w części **Preferencje**, znajomy otwiera **Zadania od znajomych** i wybiera: **Od razu**, **Po akceptacji** (najpierw Akceptuj lub Odrzuć) albo **Wyłączone**. Ustawienie nie dotyczy zadań grupowych.",
+      "media": "pl-friend-task-task-policy",
+      "alt": "Arkusz Zadania od znajomych z opcjami Od razu, Po akceptacji i Wyłączone"
+    },
+    {
+      "type": "h2",
+      "text": "Nagraj albo wpisz zadanie"
+    },
+    {
+      "type": "p",
+      "text": "Dotknij **+** na dole ekranu. **Głosowo** nagrywa zadanie, **Zadanie** otwiera formularz do wpisania, w którym odbiorcę wybierasz w **Przypisz do...**. Długość nagrania zależy od planu."
+    },
+    {
+      "type": "step",
+      "text": "W **Głosowo** powiedz zadanie tak, jak powiedziałbyś je znajomemu, na przykład „Poproś Olka, żeby wysłał ofertę do klienta jutro o dziewiątej”.",
+      "media": "pl-voice-input",
+      "alt": "Nagrywanie zadania głosem w Shuuty"
+    },
+    {
+      "type": "step",
+      "text": "Shuuty zamienia nagranie w zadanie: tytuł, odbiorcę, termin, przypomnienie i miejsce. Każde pole możesz poprawić, a odbiorcę zmienić w **Przypisz do...** - na liście są Twoi znajomi. Na koniec dotknij **Wyślij**.",
+      "media": "pl-assignee",
+      "alt": "Zadanie przygotowane z nagrania: tytuł, odbiorca Olek, termin, przypomnienie i miejsce"
+    },
+    {
+      "type": "h2",
+      "text": "Znajomy dostaje zadanie"
+    },
+    {
+      "type": "step",
+      "text": "Znajomy dostaje powiadomienie „Nowe zadanie od użytkownika @...”. Przy ustawieniu **Po akceptacji** najpierw decyduje, czy je przyjmuje, a Ty dostajesz powiadomienie o akceptacji albo odrzuceniu.",
+      "media": "pl-friend-task-new-task-notification",
+      "alt": "Powiadomienie w Shuuty: Nowe zadanie od użytkownika @maja"
+    },
+    {
+      "type": "step",
+      "text": "Zadanie czeka u niego w zakładce **Otrzymane**, z informacją, od kogo jest. Może od razu włączyć **Stoper**, żeby zmierzyć czas pracy.",
+      "media": "pl-friend-task-received",
+      "alt": "Zakładka Otrzymane z zadaniem od Mai"
+    },
+    {
+      "type": "h2",
+      "text": "Śledzisz zadanie i rozmawiacie o nim"
+    },
+    {
+      "type": "step",
+      "text": "Wszystko, co zleciłeś, masz w zakładce **Delegowane**. Kiedy znajomy oznaczy zadanie jako ukończone, przy jego imieniu pojawia się zielony znaczek.",
+      "media": "pl-friend-task-delegated-done",
+      "alt": "Zakładka Delegowane z zadaniem ukończonym przez Olka"
+    },
+    {
+      "type": "step",
+      "text": "W szczegółach zadania jest **Dyskusja** - tu dopytacie o szczegóły, zamiast szukać wątku w komunikatorze.",
+      "media": "pl-friend-task-task-discussion",
+      "alt": "Szczegóły zadania z sekcją Dyskusja"
+    },
+    {
+      "type": "h2",
+      "text": "Czego Shuuty tu nie robi"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "**Nie da zadania komuś spoza listy znajomych.** Najpierw zaproszenie, potem zadanie. W grupie zadania działają inaczej: dostają je jej członkowie.",
+        "**Nie przypisze zadania, gdy znajomy wybrał „Wyłączone”.** Wtedy znajomi nie mogą przypisywać mu zadań.",
+        "**Nie wysyła powiadomienia o ukończeniu.** Ukończenie widzisz w Delegowanych po zielonym znaczku przy odbiorcy.",
+        "**Nie działa w przeglądarce.** Obie osoby potrzebują aplikacji na iPhonie, iPadzie albo Androidzie."
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Ile to kosztuje"
+    },
+    {
+      "type": "p",
+      "text": "Start jest bezpłatny: podstawowe funkcje z limitami, na przykład długością nagrania głosowego. Plany Pro i Teams podnoszą limity. Ceny zależą od kraju i są widoczne w App Store i Google Play."
+    }
+  ],
+  "faq": [
+    {
+      "question": "Czy znajomy musi mieć Shuuty?",
+      "answer": "Tak. Link z zaproszeniem otworzy aplikację albo przeprowadzi przez jej instalację. Shuuty nie ma wersji w przeglądarce."
+    },
+    {
+      "question": "Czy mogę dać znajomemu zadanie bez jego zgody?",
+      "answer": "Zależy od jego ustawienia Zadania od znajomych: przy „Od razu” zadanie trafia do niego od razu, przy „Po akceptacji” najpierw je przyjmuje albo odrzuca, a przy „Wyłączone” nie da się mu przypisać zadania."
+    },
+    {
+      "question": "Czy muszę nagrywać zadanie głosem?",
+      "answer": "Nie. Zadanie możesz też wpisać w formularzu: dotknij +, potem Zadanie."
+    },
+    {
+      "question": "Czy to ustawienie dotyczy też zadań w grupie?",
+      "answer": "Nie. Zadania od znajomych to tylko zadania od osób z Twojej listy znajomych, poza grupami."
+    }
+  ]
+}

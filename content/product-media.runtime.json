@@ -242,6 +242,203 @@
       }
     }
   ],
+  "guideCaptures": [
+    {
+      "id": "pl-friend-task-friends",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/friend-task-01-friends.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/friend-task-01-friends-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "en-friend-task-friends",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/en-US/friend-task-01-friends.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/en-US/friend-task-01-friends-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "pl-friend-task-invite-link-type",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/friend-task-03-invite-link-type.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/friend-task-03-invite-link-type-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "en-friend-task-invite-link-type",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/en-US/friend-task-03-invite-link-type.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/en-US/friend-task-03-invite-link-type-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "pl-friend-task-friend-request",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/friend-task-05-friend-request.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/friend-task-05-friend-request-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "en-friend-task-friend-request",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/en-US/friend-task-05-friend-request.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/en-US/friend-task-05-friend-request-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "pl-friend-task-task-policy",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/friend-task-08-task-policy.webp",
+      "width": 540,
+      "height": 858,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/friend-task-08-task-policy-compact.webp",
+        "width": 360,
+        "height": 572
+      }
+    },
+    {
+      "id": "en-friend-task-task-policy",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/en-US/friend-task-08-task-policy.webp",
+      "width": 540,
+      "height": 858,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/en-US/friend-task-08-task-policy-compact.webp",
+        "width": 360,
+        "height": 572
+      }
+    },
+    {
+      "id": "pl-friend-task-received",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/friend-task-12-received.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/friend-task-12-received-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "en-friend-task-received",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/en-US/friend-task-12-received.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/en-US/friend-task-12-received-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "pl-friend-task-new-task-notification",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/friend-task-13-new-task-notification.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/friend-task-13-new-task-notification-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "pl-friend-task-delegated-done",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/friend-task-14-delegated-done.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/friend-task-14-delegated-done-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "pl-friend-task-task-discussion",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/friend-task-15-task-discussion.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/friend-task-15-task-discussion-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    }
+  ],
   "placementSets": {
     "canonical-source-en": {
       "voiceInput": "en-voice-input",

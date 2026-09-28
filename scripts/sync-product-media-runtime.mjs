@@ -6,7 +6,9 @@ const manifest = JSON.parse(
   await readFile(new URL('content/product-media.json', root), 'utf8'),
 );
 
-for (const asset of manifest.assets) {
+const guideCaptures = manifest.guideCaptures ?? [];
+
+for (const asset of [...manifest.assets, ...guideCaptures]) {
   for (const spec of WEB_DERIVATIVES) {
     if (!asset[spec.key]) {
       throw new Error(`${asset.id} has no validated ${spec.key} website derivative.`);
@@ -17,6 +19,7 @@ for (const asset of manifest.assets) {
 const runtimeManifest = {
   schemaVersion: manifest.schemaVersion,
   assets: manifest.assets.map(runtimeAsset),
+  guideCaptures: guideCaptures.map(runtimeAsset),
   placementSets: manifest.placementSets,
   placementSelection: manifest.placementSelection,
 };
