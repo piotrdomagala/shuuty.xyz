@@ -13,13 +13,26 @@
 // paths from the site's own manifest, checked before use.
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
+import { existsSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
 
 const COMMIT = /^[a-f0-9]{40}$/u;
 const ENTRY = /^store-listing\/assets\/source\/[A-Za-z0-9._/-]+\.png$/u;
 
+// git from a fixed install location, not whatever PATH resolves first.
+const GIT = [
+  'C:\\Program Files\\Git\\cmd\\git.exe',
+  '/usr/bin/git',
+  '/usr/local/bin/git',
+  '/opt/homebrew/bin/git',
+].find((candidate) => existsSync(candidate));
+if (!GIT) {
+  console.error('git was not found in a standard install location.');
+  process.exit(2);
+}
+
 const git = (args, options = {}) =>
-  execFileSync('git', args, { maxBuffer: 64 * 1024 * 1024, ...options });
+  execFileSync(GIT, args, { maxBuffer: 64 * 1024 * 1024, ...options });
 
 let origin = '';
 try {
