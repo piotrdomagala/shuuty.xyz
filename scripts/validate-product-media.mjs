@@ -382,10 +382,11 @@ function getLocalizedAltKeys(homeContent) {
   return new Set([...englishAltKeys].filter((key) => polishAltKeys.has(key)));
 }
 
-function validateRuntimeManifest(manifest, runtimeManifest, assets, failures) {
+function validateRuntimeManifest(manifest, runtimeManifest, assets, guideCaptures, failures) {
   const expectedRuntimeManifest = {
     schemaVersion: manifest.schemaVersion,
     assets: assets.map(runtimeAsset),
+    guideCaptures: guideCaptures.map(runtimeAsset),
     placementSets: manifest.placementSets,
     placementSelection: manifest.placementSelection,
   };
@@ -431,6 +432,106 @@ async function validateAssets(assets, root, failures, altKeys) {
     validateLocaleBudget(assets, spec, failures);
   }
   return ids;
+}
+
+const guideCapturePathPattern =
+  /^\/images\/product\/guide-captures-\d{4}\/(?:en-US|pl-PL)\/[a-z0-9-]+\.png$/u;
+const commitPattern = /^[a-f0-9]{40}$/u;
+
+function isWithinRaw(crop, capture) {
+  return (
+    [crop.left, crop.top, crop.width, crop.height].every(Number.isInteger) &&
+    crop.left >= 0 &&
+    crop.top >= 0 &&
+    crop.width > 0 &&
+    crop.height > 0 &&
+    crop.left + crop.width <= capture.rawWidth &&
+    crop.top + crop.height <= capture.rawHeight
+  );
+}
+
+// Where a guide capture came from: an app screen captured on an emulator from a
+// known app commit whose screens match a released build, optionally cropped by a
+// recorded rectangle (never edited otherwise).
+function validateGuideCaptureProvenance(asset, failures) {
+  const capture = asset.capture;
+  if (!capture || typeof capture !== 'object' || Array.isArray(capture)) {
+    failures.push(`${asset.id}.capture must record where the guide capture came from.`);
+    return;
+  }
+  if (capture.method !== 'android-emulator-screencap') {
+    failures.push(`${asset.id}.capture.method must be android-emulator-screencap.`);
+  }
+  if (!commitPattern.test(capture.appCommit || '') || !commitPattern.test(capture.releasedIn || '')) {
+    failures.push(`${asset.id}.capture must name the full app commit and the released commit.`);
+  }
+  if (!/^\d{4}-\d{2}-\d{2}$/u.test(capture.capturedOn || '')) {
+    failures.push(`${asset.id}.capture.capturedOn must be a YYYY-MM-DD date.`);
+  }
+  if (!/^[a-f0-9]{64}$/u.test(capture.rawSha256 || '')) {
+    failures.push(`${asset.id}.capture.rawSha256 must be a lowercase SHA-256 digest.`);
+  }
+  if (!Number.isInteger(capture.rawWidth) || !Number.isInteger(capture.rawHeight)) {
+    failures.push(`${asset.id}.capture must declare the raw capture dimensions.`);
+    return;
+  }
+  if (capture.crop === null) {
+    if (
+      asset.width !== capture.rawWidth ||
+      asset.height !== capture.rawHeight ||
+      asset.sha256 !== capture.rawSha256
+    ) {
+      failures.push(`${asset.id} without a crop must be the raw capture byte for byte.`);
+    }
+  } else if (!capture.crop || !isWithinRaw(capture.crop, capture)) {
+    failures.push(`${asset.id}.capture.crop must be null or a rectangle inside the raw capture.`);
+  } else if (asset.width !== capture.crop.width || asset.height !== capture.crop.height) {
+    failures.push(`${asset.id} must have the dimensions of its recorded crop.`);
+  }
+}
+
+async function validateGuideCaptures(guideCaptures, root, failures, ids) {
+  const paths = new Set();
+  for (const asset of guideCaptures) {
+    if (typeof asset.id !== 'string' || !/^(?:en|pl)-[a-z0-9-]+$/u.test(asset.id)) {
+      failures.push('Every guide capture needs an id like pl-friend-task-received.');
+    } else if (ids.has(asset.id)) {
+      failures.push(`Duplicate product media id: ${asset.id}`);
+    }
+    ids.add(asset.id);
+    if (asset.altKey !== null) {
+      failures.push(`${asset.id}.altKey must be null: a guide step carries its own alt text.`);
+    }
+    if (!guideCapturePathPattern.test(asset.path || '') || paths.has(asset.path)) {
+      failures.push(`${asset.id} must use a unique PNG path below /images/product/guide-captures-<year>/<locale>/.`);
+    }
+    paths.add(asset.path);
+    const locale = asset.id?.startsWith('pl-') ? 'pl-PL' : 'en-US';
+    if (!isDeepStrictEqual(asset.locales, [locale]) || !asset.path?.includes(`/${locale}/`)) {
+      failures.push(`${asset.id} must cover exactly its own locale ${locale}.`);
+    }
+    if (asset.mediaType !== 'image/png' || !/^[a-f0-9]{64}$/u.test(asset.sha256 || '')) {
+      failures.push(`${asset.id} must be a PNG with a lowercase SHA-256 digest.`);
+    }
+    if (asset.sourceSha256 !== asset.sha256) {
+      failures.push(`${asset.id}.sourceSha256 must equal its checked-in file SHA-256.`);
+    }
+    if (
+      asset.platform !== 'android' ||
+      asset.device !== 'android-phone' ||
+      !importedThemes.has(asset.theme)
+    ) {
+      failures.push(`${asset.id} must be an android-phone capture with a light or dark theme.`);
+    }
+    validateGuideCaptureProvenance(asset, failures);
+    for (const spec of WEB_DERIVATIVES) {
+      validateDerivativeMetadata(asset, spec, failures, paths);
+    }
+    await validateAssetFile(asset, root, failures);
+    for (const spec of WEB_DERIVATIVES) {
+      await validateDerivativeFile(asset, spec, root, failures);
+    }
+  }
 }
 
 function validatePlacementReferences(manifest, assets, ids, failures) {
@@ -799,8 +900,10 @@ export async function validateProductMedia(root = defaultRoot) {
   }
 
   const assets = Array.isArray(manifest.assets) ? manifest.assets : [];
-  validateRuntimeManifest(manifest, runtimeManifest, assets, failures);
+  const guideCaptures = Array.isArray(manifest.guideCaptures) ? manifest.guideCaptures : [];
+  validateRuntimeManifest(manifest, runtimeManifest, assets, guideCaptures, failures);
   const ids = await validateAssets(assets, root, failures, getLocalizedAltKeys(homeContent));
+  await validateGuideCaptures(guideCaptures, root, failures, new Set(ids));
   const { assetsById, placementSets } = validatePlacementReferences(
     manifest,
     assets,

@@ -19,7 +19,9 @@ import {
 
 const root = new URL('../', import.meta.url);
 const productMedia = JSON.parse(await readFile(new URL('content/product-media.json', root), 'utf8'));
-const captureLocales = new Map(productMedia.assets.map((asset) => [asset.id, asset.locales]));
+const captureLocales = new Map(
+  [...productMedia.assets, ...productMedia.guideCaptures].map((asset) => [asset.id, asset.locales]),
+);
 const registry = JSON.parse(await readFile(new URL('content/guides.json', root), 'utf8'));
 
 const clubPl = {

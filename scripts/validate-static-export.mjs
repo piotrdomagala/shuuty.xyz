@@ -492,8 +492,12 @@ failures.push(...guideRegistryProblems(guidesRegistry));
 // built page, the capture's own file.
 const productMediaRegistry = JSON.parse(await readFile(new URL('content/product-media.json', root), 'utf8'));
 const productMediaRuntime = JSON.parse(await readFile(new URL('content/product-media.runtime.json', root), 'utf8'));
-const captureLocales = new Map(productMediaRegistry.assets.map((asset) => [asset.id, asset.locales]));
-const captureFiles = new Map(productMediaRuntime.assets.map((asset) => [asset.id, asset.compact.path]));
+const captureLocales = new Map(
+  [...productMediaRegistry.assets, ...productMediaRegistry.guideCaptures].map((asset) => [asset.id, asset.locales]),
+);
+const captureFiles = new Map(
+  [...productMediaRuntime.assets, ...productMediaRuntime.guideCaptures].map((asset) => [asset.id, asset.compact.path]),
+);
 
 for (const language of GUIDE_LANGUAGES) {
   const copy = guidesRegistry.index[language];

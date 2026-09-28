@@ -67,6 +67,34 @@ This checked-in set is an owner-attested website preview, not the final store
 artifact binding. `artifactBinding` therefore remains `null`, and
 `finalArtifactContract.status` remains `awaiting-approved-no-publish-package`.
 
+## Guide captures
+
+Step-by-step guides need app screens that the eight store slots do not cover, such
+as the friend request or the setting for tasks from friends. These live in the
+separate `guideCaptures` list of `content/product-media.json` and in
+`public/images/product/guide-captures-<year>/<locale>/`. They never enter the home
+placement sets, the store slot checks or the locale budgets of the canonical set.
+
+Each guide capture is a real screen of the released app:
+
+- captured with `adb exec-out screencap -p` on an Android emulator running the app
+  from `capture.appCommit`, with test accounts on a local database and no private
+  data on screen;
+- only from screens whose code did not change visibly between `capture.releasedIn`
+  (the store release) and `capture.appCommit`;
+- stored as the raw PNG byte for byte (`crop: null`, `sha256` equals
+  `capture.rawSha256`), or cropped by the recorded `capture.crop` rectangle, for
+  example to leave out a test account's e-mail address above a sheet. No other
+  edit is allowed;
+- given the same deterministic `web` and `compact` WebP derivatives and per-image
+  budgets as the canonical set;
+- `altKey: null`, because each guide step carries its own alt text.
+
+`npm run validate:media` checks the provenance fields, the crop against the raw
+dimensions, the file hashes and the derivatives. Add a capture by copying the PNG,
+writing its record, then running `npm run generate:media-derivatives` and
+`npm run sync:media-runtime`.
+
 ## Final package gate
 
 Do not promote the current source preview to the final artifact binding until one

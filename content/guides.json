@@ -71,6 +71,26 @@
       "heading": "A sports club app: one group, a court schedule and weekly training",
       "updatedOn": "2026-09-28",
       "updatedLabel": "Updated 28 September 2026"
+    },
+    {
+      "topic": "friend-task",
+      "language": "pl",
+      "slug": "zadanie-dla-znajomego-krok-po-kroku",
+      "title": "Zadanie dla znajomego w Shuuty - krok po kroku",
+      "description": "Jak zaprosić znajomego, ustawić przyjmowanie zadań, nagrać albo wpisać zadanie i śledzić je w Delegowanych. Każdy krok ze zrzutem z aplikacji.",
+      "heading": "Zadanie dla znajomego w Shuuty - krok po kroku",
+      "updatedOn": "2026-09-28",
+      "updatedLabel": "Zaktualizowano 28 września 2026"
+    },
+    {
+      "topic": "friend-task",
+      "language": "en",
+      "slug": "send-a-task-to-a-friend",
+      "title": "Send a task to a friend in Shuuty, step by step",
+      "description": "How to invite a friend, choose how tasks arrive, say or type a task and follow it in Delegated. Every step shows the real app screen.",
+      "heading": "Send a task to a friend in Shuuty, step by step",
+      "updatedOn": "2026-09-28",
+      "updatedLabel": "Updated 28 September 2026"
     }
   ]
 }
