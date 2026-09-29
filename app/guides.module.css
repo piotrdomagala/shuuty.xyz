@@ -10,36 +10,35 @@ article p.intro {
 /* Index: three short points, then one card per guide with three real screens
    (start, middle and end of the path). The whole card is one link: the
    heading's link stretches over it. */
+/* Index: one compact row of what every guide offers, wrapping on phones. */
 article ul.points {
   list-style: none;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--s-md);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 18px;
   padding: 0;
-  margin: var(--s-lg) 0 var(--s-xl);
+  margin: calc(-1 * var(--s-sm)) 0 var(--s-xl);
 }
 
 article ul.points li {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   margin: 0;
-  padding: var(--s-md);
-  border: 1px solid var(--border);
-  border-radius: var(--r-md);
-  background: var(--bg-soft);
   color: var(--text-secondary);
-  font-size: 0.92rem;
-  line-height: 1.45;
+  font-size: 0.88rem;
+  line-height: 1.3;
+  white-space: nowrap;
 }
 
 .points svg {
-  width: 22px;
-  height: 22px;
-  flex: 0 0 22px;
+  width: 17px;
+  height: 17px;
+  flex: 0 0 17px;
   fill: none;
   stroke: var(--accent-text);
-  stroke-width: 1.7;
+  stroke-width: 1.8;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
@@ -176,15 +175,6 @@ article ul.cards li.card:hover .cardCta svg {
 }
 
 @media (max-width: 640px) {
-  article ul.points {
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--s-sm);
-  }
-
-  article ul.points li {
-    padding: 12px var(--s-md);
-  }
-
   .cardVisual {
     height: 190px;
   }
