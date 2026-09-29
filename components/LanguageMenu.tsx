@@ -29,7 +29,7 @@ export default function LanguageMenu({
   languages,
   label,
   onLanguageChange,
-}: LanguageMenuProps) {
+}: Readonly<LanguageMenuProps>) {
   const [open, setOpen] = useState(false);
   const listId = useId();
   const rootRef = useRef<HTMLDivElement>(null);
