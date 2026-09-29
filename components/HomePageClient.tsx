@@ -11,6 +11,7 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 import { localizedSitePath, type SiteLanguage } from '@/components/documentLocale';
+import LanguageMenu from '@/components/LanguageMenu';
 import ProductDeviceFrame from '@/components/ProductDeviceFrame';
 import TaskSpatialHandoff from '@/components/TaskSpatialHandoff';
 import { useSiteLanguage } from '@/components/useSiteLanguage';
@@ -33,6 +34,7 @@ type Lang = SiteLanguage;
 type Theme = 'light' | 'dark';
 type IconName =
   | 'arrow'
+  | 'book'
   | 'calendar'
   | 'check'
   | 'clock'
@@ -53,11 +55,7 @@ type IconName =
 
 type StorePlacement = 'hero' | 'download';
 
-const LANGS: { code: Lang; label: string }[] = [
-  { code: 'en', label: 'EN' },
-  { code: 'pl', label: 'PL' },
-  { code: 'nb', label: 'NB' },
-];
+const LANGS: readonly Lang[] = ['en', 'pl', 'nb'];
 
 const localizedPath = localizedSitePath;
 
@@ -217,6 +215,8 @@ function Icon({ name }: Readonly<{ name: IconName }>) {
   switch (name) {
     case 'arrow':
       return <svg {...props}><path d="M5 12h14M13 6l6 6-6 6" /></svg>;
+    case 'book':
+      return <svg {...props}><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5v-15Z" /><path d="M4 20.5A2.5 2.5 0 0 1 6.5 18H20v3H6.5A2.5 2.5 0 0 1 4 20.5ZM9 7.5h7" /></svg>;
     case 'calendar':
       return <svg {...props}><rect x="3" y="5" width="18" height="16" rx="3" /><path d="M8 3v4m8-4v4M3 10h18" /></svg>;
     case 'check':
@@ -347,6 +347,7 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
   const mobileNavScrollDelta = useRef(0);
   const mobileNavHideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const c = t[lang];
+  const hasGuides = guidesIn(asGuides(guidesContent.guides), lang).length > 0;
   const productMediaPlacements = getProductMediaPlacements(mediaLanguage(lang));
   const carousel = carouselLabels[lang];
 
@@ -551,6 +552,12 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
           </div>
 
           <div className={s.navActions}>
+            {hasGuides ? (
+              <Link href={localizedPath(lang, '/guides/')} className={s.navGuides}>
+                <Icon name="book" />
+                <span>{guidesContent.index[lang].navTitle}</span>
+              </Link>
+            ) : null}
             <button
               type="button"
               className={s.themeBtn}
@@ -560,20 +567,12 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
             >
               <Icon name={theme === 'dark' ? 'sun' : 'moon'} />
             </button>
-            <fieldset className={s.langSwitch}>
-              <legend className={s.srOnly}>{c.a11y.language}</legend>
-              {LANGS.map((item) => (
-                <button
-                  type="button"
-                  key={item.code}
-                  className={`${s.langBtn} ${lang === item.code ? s.langActive : ''}`}
-                  onClick={() => switchLang(item.code)}
-                  aria-pressed={lang === item.code}
-                >
-                  {item.label}
-                </button>
-              ))}
-            </fieldset>
+            <LanguageMenu
+              language={lang}
+              languages={LANGS}
+              label={c.a11y.language}
+              onLanguageChange={switchLang}
+            />
             <a href="#download" className={s.navCta}>{c.nav.download}</a>
           </div>
         </nav>
@@ -912,7 +911,7 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
           <nav className={s.footerLinks} aria-label={c.a11y.footerNav}>
             <Link href={localizedPath(lang, '/support/')}>{c.footer.support}</Link>
             <Link href={localizedPath(lang, '/facts/')}>{c.footer.facts}</Link>
-            {guidesIn(asGuides(guidesContent.guides), lang).length > 0 ? (
+            {hasGuides ? (
               <Link href={localizedPath(lang, '/guides/')}>
                 {guidesContent.index[lang].navTitle}
               </Link>

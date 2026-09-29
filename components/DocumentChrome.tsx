@@ -8,11 +8,10 @@ import {
   localizedSitePath,
   type SiteLanguage,
 } from '@/components/documentLocale';
+import LanguageMenu from '@/components/LanguageMenu';
 import guidesContent from '@/content/guides.json';
 import { asGuides, guidesIn } from '@/lib/guides.mjs';
 import styles from '@/app/documents.module.css';
-
-const languageLabels: Record<SiteLanguage, string> = { en: 'EN', pl: 'PL', nb: 'NB' };
 
 // Legal documents exist in English and Polish only; pages with a Norwegian
 // version pass all three languages.
@@ -136,25 +135,12 @@ export function DocumentHeader({
           >
             <ThemeIcon theme={theme} />
           </button>
-          <div
-            className={styles.languageSwitcher}
-            role="group"
-            aria-label={languageSwitcherLabel}
-          >
-            {languages.map((code) => (
-              <button
-                key={code}
-                type="button"
-                className={`${styles.languageButton} ${
-                  language === code ? styles.languageButtonActive : ''
-                }`}
-                onClick={() => onLanguageChange(code)}
-                aria-pressed={language === code}
-              >
-                {languageLabels[code]}
-              </button>
-            ))}
-          </div>
+          <LanguageMenu
+            language={language}
+            languages={languages}
+            label={languageSwitcherLabel}
+            onLanguageChange={onLanguageChange}
+          />
         </div>
       </div>
     </header>

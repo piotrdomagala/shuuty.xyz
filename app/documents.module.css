@@ -62,7 +62,7 @@
   max-width: 900px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 40px minmax(0, 1fr) auto;
+  grid-template-columns: 44px minmax(0, 1fr) auto;
   align-items: center;
   gap: var(--s-lg);
 }
@@ -71,8 +71,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   background: var(--bg-raised);
   border: 1px solid var(--border);
@@ -131,9 +131,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  flex: 0 0 40px;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
   border: 1px solid var(--border);
   border-radius: var(--r-md);
   background: var(--bg-raised);
@@ -154,40 +154,6 @@
   stroke-width: 1.8;
   stroke-linecap: round;
   stroke-linejoin: round;
-}
-
-.languageSwitcher {
-  display: inline-flex;
-  min-height: 40px;
-  border-radius: var(--r-md);
-  border: 1px solid var(--border);
-  overflow: hidden;
-  flex-shrink: 0;
-  background: var(--bg-raised);
-}
-
-.languageButton {
-  border: none;
-  background: transparent;
-  color: var(--text-muted);
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  min-width: 40px;
-  min-height: 38px;
-  padding: 0 var(--s-sm);
-  cursor: pointer;
-  transition: color 0.2s, background 0.2s;
-}
-
-.languageButton:hover {
-  color: var(--text);
-}
-
-.languageButtonActive {
-  background: var(--gold);
-  color: var(--accent-ink);
 }
 
 /* ── Main content ── */
@@ -467,7 +433,7 @@
 @media (max-width: 768px) {
   .header { padding: var(--s-sm) var(--s-md); }
   .headerContent {
-    grid-template-columns: 40px minmax(0, 1fr) auto;
+    grid-template-columns: 44px minmax(0, 1fr) auto;
     gap: var(--s-sm);
   }
   .headerInfo {
@@ -490,17 +456,9 @@
     gap: 6px;
   }
   .themeButton {
-    width: 36px;
-    height: 36px;
-    flex-basis: 36px;
-  }
-  .languageSwitcher {
-    min-height: 36px;
-  }
-  .languageButton {
-    min-width: 34px;
-    min-height: 34px;
-    padding: 0 6px;
+    width: 44px;
+    height: 44px;
+    flex-basis: 44px;
   }
 }
 
@@ -510,13 +468,13 @@
   }
 
   .headerContent {
-    grid-template-columns: 36px minmax(0, 1fr) auto;
+    grid-template-columns: 44px minmax(0, 1fr) auto;
     gap: 6px;
   }
 
   .backButton {
-    width: 36px;
-    height: 36px;
+    width: 44px;
+    height: 44px;
   }
 
   .logo {
@@ -539,19 +497,9 @@
   }
 
   .themeButton {
-    width: 34px;
-    height: 34px;
-    flex-basis: 34px;
-  }
-
-  .languageSwitcher {
-    min-height: 34px;
-  }
-
-  .languageButton {
-    min-width: 32px;
-    min-height: 32px;
-    padding: 0 5px;
+    width: 44px;
+    height: 44px;
+    flex-basis: 44px;
   }
 
   .main {
