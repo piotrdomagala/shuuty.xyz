@@ -1028,15 +1028,37 @@ for (const htmlPath of await listHtmlFiles(outputPath)) {
 // Every language button must lead to a real page in that language. A switch
 // that keeps the visitor on the same address (for example a legacy alias)
 // would only change the language in memory until the next reload.
-const languageButtonPattern = /<button[^>]*aria-pressed="(true|false)"[^>]*>(EN|PL|NB)<\/button>/g;
+// The header menu keeps its options in the static HTML (hidden until opened).
+// Every page outside the hand-off and error routes must carry at least two of
+// them, so a markup change cannot make this check pass on zero buttons.
+const languageButtonPattern = /<button[^>]*\sdata-site-language="(en|pl|nb)"[^>]*>/g;
+const pagesWithoutLanguageMenu = new Set([
+  '/404/',
+  '/_not-found/',
+  '/auth/reset-password/',
+  '/auth/verify/',
+  '/google-play/foreground-service/microphone/',
+  '/verify/',
+]);
+let languageButtonsChecked = 0;
 for (const htmlPath of await listHtmlFiles(outputPath)) {
   const displayPath = relative(outputPath, htmlPath).split(sep).join('/');
   if (!displayPath.endsWith('index.html')) continue;
 
   const html = await readFile(htmlPath, 'utf8');
   const route = `/${displayPath.slice(0, -'index.html'.length)}`;
-  for (const [, pressed, label] of html.matchAll(languageButtonPattern)) {
-    const language = label.toLowerCase();
+  const languageButtons = [...html.matchAll(languageButtonPattern)];
+  if (!pagesWithoutLanguageMenu.has(route) && languageButtons.length < 2) {
+    failures.push(`${route} has ${languageButtons.length} language menu options, expected at least 2`);
+  }
+  for (const [tag, language] of languageButtons) {
+    languageButtonsChecked += 1;
+    const pressed = tag.match(/\saria-pressed="(true|false)"/)?.[1];
+    const label = language.toUpperCase();
+    if (!pressed) {
+      failures.push(`${route} ${label} language option has no aria-pressed state`);
+      continue;
+    }
     const guide = guideByRoute.get(route);
     const target = guide ? guideSwitchPaths(guides, guide)[language] : languageSwitchPath(route, language);
     const targetFile = join(outputPath, ...target.split('/').filter(Boolean), 'index.html');
@@ -1059,6 +1081,9 @@ for (const htmlPath of await listHtmlFiles(outputPath)) {
       failures.push(`${route} ${label} button opens ${target} in lang="${targetLanguage}"`);
     }
   }
+}
+if (languageButtonsChecked === 0) {
+  failures.push('no language menu options were found in the static export');
 }
 
 const robots = await readFile(new URL('out/robots.txt', root), 'utf8');

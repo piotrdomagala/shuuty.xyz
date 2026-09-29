@@ -1,0 +1,127 @@
+.root {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 9px 0 10px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  color: var(--text-secondary);
+  background: var(--bg-raised);
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.trigger:hover,
+.trigger[aria-expanded='true'] {
+  color: var(--text);
+  border-color: rgba(var(--gold-rgb), 0.45);
+}
+
+.trigger:focus-visible,
+.option:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.globe,
+.chevron {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.globe {
+  width: 17px;
+  height: 17px;
+  stroke-width: 1.6;
+}
+
+.chevron {
+  width: 14px;
+  height: 14px;
+  stroke-width: 2;
+  transition: transform 0.2s ease;
+}
+
+.trigger[aria-expanded='true'] .chevron {
+  transform: rotate(180deg);
+}
+
+.code {
+  min-width: 2ch;
+}
+
+.list {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 10;
+  min-width: 168px;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  background: var(--bg-raised);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
+}
+
+.list[hidden] {
+  display: none;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 11px;
+  color: var(--text);
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+
+.option:hover {
+  background: rgba(var(--gold-rgb), 0.1);
+}
+
+.option[aria-pressed='true'] {
+  color: var(--accent-ink);
+  background: var(--gold);
+}
+
+.optionCode {
+  min-width: 2.4ch;
+  color: inherit;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  opacity: 0.7;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trigger,
+  .chevron {
+    transition: none;
+  }
+}
