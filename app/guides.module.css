@@ -7,30 +7,199 @@ article p.intro {
   text-align: center;
 }
 
-article ul.guideList {
+/* Index: three short points, then one card per guide with three real screens
+   (start, middle and end of the path). The whole card is one link: the
+   heading's link stretches over it. */
+article ul.points {
   list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s-md);
   padding: 0;
-  margin: var(--s-xl) 0 0;
+  margin: var(--s-lg) 0 var(--s-xl);
 }
 
-article ul.guideList li {
+article ul.points li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 0;
+  padding: var(--s-md);
   border: 1px solid var(--border);
   border-radius: var(--r-md);
-  padding: var(--s-md) var(--s-lg);
-  margin-bottom: var(--s-md);
   background: var(--bg-soft);
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  line-height: 1.45;
 }
 
-.guideList li h2 {
+.points svg {
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+  fill: none;
+  stroke: var(--accent-text);
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+article ul.cards {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--s-lg);
+  padding: 0;
+  margin: 0;
+}
+
+article ul.cards li.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--bg-soft);
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+article ul.cards li.card:hover,
+article ul.cards li.card:focus-within {
+  border-color: rgba(var(--gold-rgb), 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.16);
+}
+
+.cardVisual {
+  position: relative;
+  height: 210px;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 90% at 50% 110%, rgba(var(--gold-rgb), 0.22), transparent 60%),
+    var(--bg-raised);
+}
+
+.cardVisual > .cardPhone {
+  position: absolute;
+  top: 22px;
+  left: 50%;
+  width: 98px;
+  border-radius: 16px;
+}
+
+.cardPhone1of1 { transform: translateX(-50%); }
+.cardPhone1of2 { transform: translateX(-92%) rotate(-5deg); }
+.cardPhone2of2 { transform: translateX(-8%) rotate(5deg); top: 30px; }
+.cardPhone1of3 { transform: translateX(-138%) rotate(-8deg); top: 40px; }
+.cardPhone2of3 { transform: translateX(-50%); z-index: 1; }
+.cardPhone3of3 { transform: translateX(38%) rotate(8deg); top: 40px; }
+
+.cardBody {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: var(--s-md) var(--s-lg) var(--s-lg);
+}
+
+article p.cardMeta {
+  margin: 0 0 6px;
+  color: var(--accent-text);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.cardBody h2 {
   margin: 0 0 var(--s-sm);
   padding: 0;
   border: 0;
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   line-height: 1.35;
 }
 
-.guideList li p {
+/* Two classes, so the rule wins over `.markdown a` whatever the load order. */
+.cardBody .cardLink {
+  color: var(--text);
+  text-decoration: none;
+}
+
+.cardBody .cardLink::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.cardBody .cardLink:focus-visible {
+  outline: none;
+}
+
+article ul.cards li.card:has(.cardLink:focus-visible) {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+article p.cardText {
+  flex: 1;
+  margin: 0 0 var(--s-md);
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+article p.cardCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   margin: 0;
+  color: var(--accent-text);
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.cardCta svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.2s ease;
+}
+
+article ul.cards li.card:hover .cardCta svg {
+  transform: translateX(3px);
+}
+
+@media (max-width: 640px) {
+  article ul.points {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--s-sm);
+  }
+
+  article ul.points li {
+    padding: 12px var(--s-md);
+  }
+
+  .cardVisual {
+    height: 190px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  article ul.cards li.card,
+  .cardCta svg {
+    transition: none;
+  }
+
+  article ul.cards li.card:hover,
+  article ul.cards li.card:focus-within {
+    transform: none;
+  }
 }
 
 article p.backLink {
