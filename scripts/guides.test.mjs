@@ -169,6 +169,19 @@ test('registry problems are reported in plain words', () => {
   );
 });
 
+test('index step counts need the {count} placeholder in every language', () => {
+  for (const key of ['stepsOne', 'stepsFew', 'stepsMany']) {
+    const index = { ...registry.index, pl: { ...registry.index.pl, [key]: 'kroków' } };
+    const problems = guideRegistryProblems({ ...registry, index });
+    assert.ok(
+      problems.includes(`guides index.pl.${key} must contain {count}`),
+      problems.join('; '),
+    );
+  }
+  const index = { ...registry.index, nb: { ...registry.index.nb, readGuide: ' ' } };
+  assert.ok(guideRegistryProblems({ ...registry, index }).includes('guides index.nb.readGuide is missing'));
+});
+
 test('article bodies open with a paragraph and use only known blocks', () => {
   assert.deepEqual(guideArticleProblems('valid', validArticle), []);
   assert.deepEqual(guideArticleProblems('no FAQ', { body: validArticle.body }), []);

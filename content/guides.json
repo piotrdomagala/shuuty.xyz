@@ -6,7 +6,14 @@
       "description": "Practical guides to tasks, groups and meetings in Shuuty, each one clear about what the app does and what it does not do.",
       "intro": "Guides for everyday situations with tasks, groups and meetings. Each one says plainly what Shuuty does and what it does not do.",
       "empty": "The first guides are being written. Until then, the facts page has the key information about Shuuty.",
-      "factsLink": "Shuuty facts"
+      "factsLink": "Shuuty facts",
+      "pointScreens": "Real screens from the app, no mock-ups.",
+      "pointSteps": "One screen and one sentence for every step.",
+      "pointHonest": "At the end, plainly: what Shuuty does not do and what it costs.",
+      "readGuide": "See it step by step",
+      "stepsOne": "{count} step",
+      "stepsFew": "{count} steps",
+      "stepsMany": "{count} steps"
     },
     "pl": {
       "navTitle": "Poradniki",
@@ -14,7 +21,14 @@
       "description": "Praktyczne poradniki o zadaniach, grupach i spotkaniach w Shuuty. Każdy mówi wprost, co aplikacja robi, a czego nie.",
       "intro": "Poradniki do codziennych sytuacji z zadaniami, grupami i spotkaniami. Każdy mówi wprost, co Shuuty robi, a czego nie.",
       "empty": "Pierwsze poradniki są w przygotowaniu. Do tego czasu najważniejsze informacje o Shuuty znajdziesz na stronie faktów.",
-      "factsLink": "Fakty o Shuuty"
+      "factsLink": "Fakty o Shuuty",
+      "pointScreens": "Prawdziwe ekrany z aplikacji, bez makiet.",
+      "pointSteps": "Jeden ekran i jedno zdanie na każdy krok.",
+      "pointHonest": "Na końcu wprost: czego Shuuty nie robi i ile to kosztuje.",
+      "readGuide": "Zobacz krok po kroku",
+      "stepsOne": "{count} krok",
+      "stepsFew": "{count} kroki",
+      "stepsMany": "{count} kroków"
     },
     "nb": {
       "navTitle": "Guider",
@@ -22,7 +36,14 @@
       "description": "Praktiske guider om oppgaver, grupper og møter i Shuuty. Hver guide sier rett ut hva appen gjør og ikke gjør.",
       "intro": "Guider for hverdagen med oppgaver, grupper og møter. Hver guide sier rett ut hva Shuuty gjør og ikke gjør.",
       "empty": "De første guidene er på vei. Frem til da finner du det viktigste om Shuuty på faktasiden.",
-      "factsLink": "Fakta om Shuuty"
+      "factsLink": "Fakta om Shuuty",
+      "pointScreens": "Ekte skjermbilder fra appen, ingen skisser.",
+      "pointSteps": "Ett skjermbilde og én setning for hvert steg.",
+      "pointHonest": "Til slutt, rett ut: hva Shuuty ikke gjør og hva det koster.",
+      "readGuide": "Se steg for steg",
+      "stepsOne": "{count} steg",
+      "stepsFew": "{count} steg",
+      "stepsMany": "{count} steg"
     }
   },
   "labels": {
