@@ -8567,6 +8567,142 @@
           "smartSubsample": true
         }
       }
+    },
+    {
+      "id": "pl-home-planner-meeting",
+      "altKey": null,
+      "path": "/images/product/guide-captures-2026/pl-PL/home-24-planner-meeting.png",
+      "mediaType": "image/png",
+      "width": 1080,
+      "height": 2316,
+      "sha256": "9f3a8bfed9690a68a85936159252c1ae8b98bbb42a95717156da41d04e5d62a2",
+      "locales": [
+        "pl-PL"
+      ],
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "sourceSha256": "9f3a8bfed9690a68a85936159252c1ae8b98bbb42a95717156da41d04e5d62a2",
+      "capture": {
+        "method": "android-emulator-screencap",
+        "appCommit": "9dddd31ad5a6f2cc70216f1c47f8f7504c7f238f",
+        "releasedIn": "9dddd31ad5a6f2cc70216f1c47f8f7504c7f238f",
+        "capturedOn": "2026-09-30",
+        "rawSha256": "9f3a8bfed9690a68a85936159252c1ae8b98bbb42a95717156da41d04e5d62a2",
+        "rawWidth": 1080,
+        "rawHeight": 2316,
+        "crop": null
+      },
+      "web": {
+        "path": "/images/product/guide-captures-2026/pl-PL/home-24-planner-meeting.webp",
+        "mediaType": "image/webp",
+        "width": 540,
+        "height": 1158,
+        "byteLength": 53272,
+        "sha256": "b4bcb3788a65e6052a4c20b93cf24ddb41f38c8aafb9dd314355d90c4ae3a3b3",
+        "sourceSha256": "9f3a8bfed9690a68a85936159252c1ae8b98bbb42a95717156da41d04e5d62a2",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.5,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      },
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/home-24-planner-meeting-compact.webp",
+        "mediaType": "image/webp",
+        "width": 360,
+        "height": 772,
+        "byteLength": 31800,
+        "sha256": "8f1c380451d98110903acbbe61968837b0599328a1f9bf3ee84aa5254b2c46ce",
+        "sourceSha256": "9f3a8bfed9690a68a85936159252c1ae8b98bbb42a95717156da41d04e5d62a2",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.3333333333333333,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      }
+    },
+    {
+      "id": "en-home-planner-meeting",
+      "altKey": null,
+      "path": "/images/product/guide-captures-2026/en-US/home-24-planner-meeting.png",
+      "mediaType": "image/png",
+      "width": 1080,
+      "height": 2316,
+      "sha256": "c42b655da7e2c15728af72d7bf35003cde294ddcc7216e2b2a3bcad0361d8cdf",
+      "locales": [
+        "en-US"
+      ],
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "sourceSha256": "c42b655da7e2c15728af72d7bf35003cde294ddcc7216e2b2a3bcad0361d8cdf",
+      "capture": {
+        "method": "android-emulator-screencap",
+        "appCommit": "9dddd31ad5a6f2cc70216f1c47f8f7504c7f238f",
+        "releasedIn": "9dddd31ad5a6f2cc70216f1c47f8f7504c7f238f",
+        "capturedOn": "2026-09-30",
+        "rawSha256": "c42b655da7e2c15728af72d7bf35003cde294ddcc7216e2b2a3bcad0361d8cdf",
+        "rawWidth": 1080,
+        "rawHeight": 2316,
+        "crop": null
+      },
+      "web": {
+        "path": "/images/product/guide-captures-2026/en-US/home-24-planner-meeting.webp",
+        "mediaType": "image/webp",
+        "width": 540,
+        "height": 1158,
+        "byteLength": 52430,
+        "sha256": "c52cee6be3979cf434b8f87cd9f9d51a3e579882ccc26b522bcee12086b20180",
+        "sourceSha256": "c42b655da7e2c15728af72d7bf35003cde294ddcc7216e2b2a3bcad0361d8cdf",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.5,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      },
+      "compact": {
+        "path": "/images/product/guide-captures-2026/en-US/home-24-planner-meeting-compact.webp",
+        "mediaType": "image/webp",
+        "width": 360,
+        "height": 772,
+        "byteLength": 30944,
+        "sha256": "b3c6cb4341a4c2972b998c745d2e398743a9df9cc104b956b32d2d8979326048",
+        "sourceSha256": "c42b655da7e2c15728af72d7bf35003cde294ddcc7216e2b2a3bcad0361d8cdf",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.3333333333333333,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      }
     }
   ],
   "placementSets": {

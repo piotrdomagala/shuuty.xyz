@@ -18,13 +18,13 @@
     "hero": {
       "badge": "Available on iOS and Android",
       "title": "A task app -",
-      "accent": "for you, your friends and your groups",
+      "accent": "for you, your friends and your groups",
       "sub": "Start with your own to-do list. When you want to, hand a task to a friend or join groups and meetings of people who share your interests.",
       "secondaryCta": "See how it works",
       "screens": [
         {
-          "media": "home-planner-subtasks",
-          "alt": "The Shuuty planner with colour-coded tasks, a reminder, a timer and a subtask list"
+          "media": "home-planner-meeting",
+          "alt": "Shuuty planner with colourful tasks and a board games meeting with a photo"
         },
         {
           "media": "home-group-page",
@@ -306,13 +306,13 @@
     "hero": {
       "badge": "Dostępne na iOS i Android",
       "title": "Aplikacja do zadań -",
-      "accent": "Twoich, ze znajomymi i w grupach",
+      "accent": "Twoich, ze znajomymi i w grupach",
       "sub": "Zacznij od własnej listy zadań. Gdy zechcesz, przekaż zadanie znajomemu albo dołącz do grupy i spotkań ludzi o tych samych zainteresowaniach.",
       "secondaryCta": "Zobacz, jak to działa",
       "screens": [
         {
-          "media": "home-planner-subtasks",
-          "alt": "Planer Shuuty z kolorowymi zadaniami, przypomnieniem, stoperem i listą podzadań"
+          "media": "home-planner-meeting",
+          "alt": "Planer Shuuty z kolorowymi zadaniami i spotkaniem planszówkowym ze zdjęciem"
         },
         {
           "media": "home-group-page",
@@ -594,13 +594,13 @@
     "hero": {
       "badge": "Tilgjengelig for iOS og Android",
       "title": "En oppgaveapp -",
-      "accent": "for deg, vennene dine og gruppene dine",
+      "accent": "for deg, vennene dine og gruppene dine",
       "sub": "Start med din egen oppgaveliste. Når du vil, kan du gi en oppgave til en venn eller bli med i grupper og møter med folk som deler interessene dine.",
       "secondaryCta": "Se hvordan det fungerer",
       "screens": [
         {
-          "media": "home-planner-subtasks",
-          "alt": "Oppgavelisten i Shuuty med fargede oppgaver, påminnelse, tidtaker og deloppgaver"
+          "media": "home-planner-meeting",
+          "alt": "Shuuty-planleggeren med fargerike oppgaver og et brettspillmøte med bilde"
         },
         {
           "media": "home-group-page",

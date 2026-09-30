@@ -98,13 +98,14 @@ test('the landing tells one four-step story in every language', async () => {
   );
   const captureIds = new Set(media.guideCaptures.map((capture) => capture.id));
 
+  // No-break spaces keep "i w grupach" together, so the line never ends on a lone "i".
   assert.equal(
     `${content.pl.hero.title} ${content.pl.hero.accent}`,
-    'Aplikacja do zadań - Twoich, ze znajomymi i w grupach',
+    'Aplikacja do zadań - Twoich, ze znajomymi i w grupach',
   );
   assert.equal(
     `${content.en.hero.title} ${content.en.hero.accent}`,
-    'A task app - for you, your friends and your groups',
+    'A task app - for you, your friends and your groups',
   );
   assert.equal(content.pl.how.heading, 'Jedna aplikacja, cztery kroki');
   assert.equal(content.en.how.heading, 'One app, four steps');

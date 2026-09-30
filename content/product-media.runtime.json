@@ -1907,6 +1907,36 @@
         "width": 360,
         "height": 772
       }
+    },
+    {
+      "id": "pl-home-planner-meeting",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/home-24-planner-meeting.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/home-24-planner-meeting-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "en-home-planner-meeting",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/en-US/home-24-planner-meeting.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/en-US/home-24-planner-meeting-compact.webp",
+        "width": 360,
+        "height": 772
+      }
     }
   ],
   "placementSets": {
