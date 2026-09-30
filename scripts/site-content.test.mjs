@@ -82,48 +82,80 @@ test('Norwegian landing content has the same structure and story', async () => {
   );
 
   assert.deepEqual(contentShape(content.en), contentShape(content.nb));
-  assert.equal(content.nb.hero.relay, 'Si det. Deleger det. Få det gjort.');
-  assert.equal(content.nb.tasks.mechanism.length, 3);
-  assert.equal(content.nb.groups.modes.length, 4);
-  assert.equal(content.nb.groups.modules.length, 10);
-  assert.equal(content.nb.faq.items.length, 4);
+  assert.equal(content.nb.hero.title, 'En oppgaveapp -');
+  assert.equal(content.nb.how.steps.length, 4);
+  assert.equal(content.nb.uses.items.length, 5);
+  assert.equal(content.nb.faq.items.length, 5);
 });
 
-test('the Golden Relay and flexible group story stay explicit in both languages', async () => {
+test('the landing tells one four-step story in every language', async () => {
   const content = JSON.parse(
     await readFile(new URL('app/homeContent.json', root), 'utf8'),
   );
+  const guides = JSON.parse(await readFile(new URL('content/guides.json', root), 'utf8'));
+  const media = JSON.parse(
+    await readFile(new URL('content/product-media.runtime.json', root), 'utf8'),
+  );
+  const captureIds = new Set(media.guideCaptures.map((capture) => capture.id));
 
-  assert.equal(content.en.hero.relay, 'Say it. Delegate it. Get it done.');
-  assert.equal(content.pl.hero.relay, 'Powiedz. Deleguj. Działajcie.');
-  assert.equal(content.en.groups.modes.length, 4);
-  assert.equal(content.pl.groups.modes.length, 4);
-  assert.equal(content.en.groups.modules.length, 10);
-  assert.equal(content.pl.groups.modules.length, 10);
-  assert.equal(content.en.tasks.mechanism.length, 3);
-  assert.equal(content.pl.tasks.mechanism.length, 3);
-  assert.equal(content.en.tasks.mechanismLabel, 'From thought to task - three steps.');
-  assert.equal(content.pl.tasks.mechanismLabel, 'Od myśli do zadania - trzy kroki.');
-  assert.equal(content.en.tasks.mechanism[2].title, 'Delegate now. The task is ready.');
-  assert.equal(content.pl.tasks.mechanism[2].title, 'Deleguj teraz. Zadanie jest gotowe.');
-  assert.equal(content.en.faq.items.length, 4);
-  assert.equal(content.pl.faq.items.length, 4);
+  assert.equal(
+    `${content.pl.hero.title} ${content.pl.hero.accent}`,
+    'Aplikacja do zadań - Twoich, ze znajomymi i w grupach',
+  );
+  assert.equal(
+    `${content.en.hero.title} ${content.en.hero.accent}`,
+    'A task app - for you, your friends and your groups',
+  );
+  assert.equal(content.pl.how.heading, 'Jedna aplikacja, cztery kroki');
+  assert.equal(content.en.how.heading, 'One app, four steps');
+  assert.equal(content.pl.uses.heading, 'Do czego ludzie używają Shuuty');
+  assert.equal(content.en.uses.heading, 'What people use Shuuty for');
 
-  for (const required of [
-    'A place to work',
-    'A community',
-    'A service offer',
-    'A sales showcase',
-  ]) {
-    assert.ok(content.en.groups.modes.some((mode) => mode.title === required));
+  for (const language of ['en', 'pl', 'nb']) {
+    const page = content[language];
+    assert.deepEqual(
+      page.how.steps.map((step) => step.id),
+      ['step-tasks', 'step-friends', 'step-discover', 'step-groups'],
+    );
+    assert.equal(page.how.loop.chain.length, 4);
+    assert.equal(page.uses.items.length, 5);
+    assert.equal(page.faq.items.length, 5);
+
+    // Every screen is a registered home capture in the locale the page shows.
+    const captureLanguage = language === 'pl' ? 'pl' : 'en';
+    const screens = [
+      ...page.hero.screens,
+      ...page.how.steps.flatMap((step) => step.screens),
+      page.how.loop.screen,
+    ];
+    for (const screen of screens) {
+      assert.ok(
+        captureIds.has(`${captureLanguage}-${screen.media}`),
+        `${language} shows an unregistered capture: ${screen.media}`,
+      );
+      assert.ok(screen.alt.length > 0);
+    }
+
+    // Guide links name existing topics and carry a label.
+    const topics = [
+      ...page.how.steps.flatMap((step) => step.guides),
+      ...page.uses.items.flatMap((item) => item.guides),
+    ];
+    for (const topic of topics) {
+      assert.ok(guides.guides.some((guide) => guide.topic === topic), `Unknown guide topic: ${topic}`);
+      assert.ok(page.guideLabels[topic], `${language} has no label for ${topic}`);
+    }
   }
-  for (const required of [
-    'Miejsce pracy',
-    'Społeczność',
-    'Oferta usługowa',
-    'Oferta sprzedażowa',
-  ]) {
-    assert.ok(content.pl.groups.modes.some((mode) => mode.title === required));
+
+  // Polish and English link every step with a guide and every use case.
+  for (const language of ['en', 'pl']) {
+    for (const item of content[language].uses.items) {
+      assert.ok(
+        item.guides.some((topic) =>
+          guides.guides.some((guide) => guide.topic === topic && guide.language === language)),
+        `${language} use case without a guide: ${item.title}`,
+      );
+    }
   }
 });
 
@@ -132,7 +164,6 @@ test('the landing does not recreate product UI or disclose implementation provid
     [
       'app/homeContent.json',
       'components/HomePageClient.tsx',
-      'components/TaskSpatialHandoff.tsx',
       'app/page.module.css',
     ].map(async (path) => [path, await readFile(new URL(path, root), 'utf8')]),
   );
@@ -198,7 +229,7 @@ test('the hidden mobile dock stays reachable through sequential keyboard navigat
   assert.match(component, /onFocusCapture=/);
 });
 
-test('reduced motion explicitly removes task-flow transform transitions', async () => {
+test('reduced motion explicitly removes phone transform transitions', async () => {
   const css = await readFile(new URL('app/page.module.css', root), 'utf8');
   const mediaStart = css.indexOf('@media (prefers-reduced-motion: reduce)');
   const mediaEnd = css.indexOf('@media (max-width: 1120px)', mediaStart);
@@ -207,7 +238,7 @@ test('reduced motion explicitly removes task-flow transform transitions', async 
   assert.notEqual(mediaEnd, -1, 'Reduced-motion media query is incomplete');
 
   const reducedMotionRules = css.slice(mediaStart, mediaEnd);
-  for (const selector of ['.taskFlowList', '.taskScreenPlane', '.taskStepCopy']) {
+  for (const selector of ['.heroVisual > .phone', '.stagePhone']) {
     assert.ok(
       reducedMotionRules.includes(selector),
       `${selector} is missing reduced-motion handling`,

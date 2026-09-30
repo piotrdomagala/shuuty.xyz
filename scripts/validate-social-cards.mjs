@@ -132,9 +132,9 @@ async function checkCard(language, card, { homeContent, mediaById, root }, failu
   const label = `cards.${language}`;
   if (
     checkHeadline(label, card.headline, failures) &&
-    card.headline.join(' ') !== homeContent[language]?.hero?.relay
+    card.headline.join(' ') !== homeContent[language]?.social?.headline
   ) {
-    failures.push(`${label}.headline must read exactly like the ${language} hero relay.`);
+    failures.push(`${label}.headline must read exactly like the ${language} social.headline in homeContent.json.`);
   }
   checkText(`${label}.tagline`, card.tagline, failures);
   checkText(`${label}.footer`, card.footer, failures);

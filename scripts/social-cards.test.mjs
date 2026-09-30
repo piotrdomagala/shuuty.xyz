@@ -96,7 +96,7 @@ test('the social card gate rejects stale, oversized and off-brand cards', async 
         },
       },
       {
-        expected: 'cards.en.headline must read exactly like the en hero relay.',
+        expected: 'cards.en.headline must read exactly like the en social.headline in homeContent.json.',
         mutate(config) {
           config.cards.en.headline = ['Say it. Delegate it.', 'Done.'];
         },

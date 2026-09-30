@@ -27,7 +27,10 @@ const outputPath = fileURLToPath(new URL('out/', root));
 const runtimeMedia = JSON.parse(
   await readFile(new URL('content/product-media.runtime.json', root), 'utf8'),
 );
-const runtimeMediaByPath = new Map(runtimeMedia.assets.map((asset) => [asset.path, asset]));
+// Homepage images: the canonical captures and the registered guide captures.
+const runtimeMediaByPath = new Map(
+  [...runtimeMedia.assets, ...runtimeMedia.guideCaptures].map((asset) => [asset.path, asset]),
+);
 const supportEmail = 'support@shuuty.com';
 const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || 'https://shuuty.com').replace(/\/+$/, '');
 const socialCards = JSON.parse(
@@ -86,23 +89,33 @@ const copyButtonPattern = (actionLabel) =>
     String.raw`<button[^>]*><span>support@shuuty\.com</span><span[^>]*>, </span><span[^>]*>${actionLabel}</span></button>`,
   );
 
+// The homepage shows registered home captures (docs/PRODUCT-MEDIA-INTEGRATION.md);
+// the Norwegian page uses the English set, as the Norwegian guides do.
+const homeCaptureRequirements = (locale) => [
+  '01-planner', '02-planner-subtasks', '04-delegated-task', '06-friends', '09-discover-meetings',
+  '10-discover-groups', '11-group-page', '12-group-chat', '15-group-calendar', '19-booking-slots',
+  '20-meeting-page', '21-group-members', '22-voice',
+].map((name) => `/images/product/guide-captures-2026/${locale}/home-${name}-compact.webp`);
+
 const pages = {
   home: {
     path: 'out/index.html',
     route: '/',
     required: [
-      'From idea',
-      'Say it. Delegate it. Get it done.',
-      'Say it. Choose a person or group. The task is ready.',
-      'From thought to task - three steps.',
-      'Your group can become its own world.',
-      'A place to work',
-      'A service offer',
-      'A sales showcase',
-      'Gallery',
-      'Projects',
-      'Start simple. Add structure when it helps.',
-      'Map · Discovery',
+      'A task app -',
+      'for you, your friends and your groups',
+      'One app, four steps',
+      'Your to-do list',
+      'Friends and shared tasks',
+      'One app, not four.',
+      'What people use Shuuty for',
+      'Can I use Shuuty just for my own tasks?',
+      '/guides/to-do-list-with-subtasks/',
+      '/guides/send-a-task-to-a-friend/',
+      '/guides/group-tasks-step-by-step/',
+      '/guides/task-for-selected-people-in-a-group/',
+      '/guides/sports-club-app/',
+      '/guides/group-profile-cover-description-interests/',
       'SoftwareApplication',
       'WebSite',
       'Organization',
@@ -112,14 +125,7 @@ const pages = {
       'android-chrome-192x192.png',
       '/images/social/shuuty-en.jpg',
       '/images/brand/shuuty-app-icon.png',
-      '/images/product/canonical-flow-2026/en-US/01-voice-input.webp',
-      '/images/product/canonical-flow-2026/en-US/02-assignee.webp',
-      '/images/product/canonical-flow-2026/en-US/03-delegated-task.webp',
-      '/images/product/canonical-flow-2026/en-US/04-groups.webp',
-      '/images/product/canonical-flow-2026/en-US/05-group-offer-gallery.webp',
-      '/images/product/canonical-flow-2026/en-US/06-modules.webp',
-      '/images/product/canonical-flow-2026/en-US/07-bookings.webp',
-      '/images/product/canonical-flow-2026/en-US/08-nearby.webp',
+      ...homeCaptureRequirements('en-US'),
       'https://play.google.com/store/apps/details?id=com.shuuty.app',
       '/account-deletion/',
       'Switch to light mode',
@@ -128,13 +134,13 @@ const pages = {
       /<h1[^>]*>/,
       /<script type="application\/ld\+json">/,
       /<details[^>]*open=""/,
-      /<title>Shuuty - Voice Tasks, Flexible Groups &amp; Meetings<\/title>/,
+      /<title>Shuuty - a task app with friends and groups<\/title>/,
     ],
     forbiddenPatterns: [
       /\/images\/image[1-5]\.webp/,
       /\/images\/app\/(?:create-menu|discover-groups|discover-meetings|profile-settings)\.(?:jpe?g|png)/,
-      /\/images\/product\/canonical-flow-2026\/pl-PL\//,
-      /\/images\/product\/canonical-flow-2026\/[^"' )]+\.png/,
+      /\/images\/product\/[a-z-]+-2026\/pl-PL\//,
+      /\/images\/product\/[a-z-]+-2026\/[^"' )]+\.png/,
       /exports\/final/,
     ],
     routeMetadata: false,
@@ -146,42 +152,37 @@ const pages = {
     path: 'out/pl/index.html',
     route: '/pl/',
     required: [
-      'Od pomysłu',
-      'Powiedz. Deleguj. Działajcie.',
-      'Powiedz. Wybierz osobę lub grupę. Zadanie jest gotowe.',
-      'Od myśli do zadania - trzy kroki.',
-      'Twoja grupa może stać się własnym światem.',
-      'Miejsce pracy',
-      'Oferta usługowa',
-      'Oferta sprzedażowa',
-      'Galeria',
-      'Projekty',
-      'Zacznij prosto. Dodaj strukturę, gdy pomaga.',
+      'Aplikacja do zadań -',
+      'Twoich, ze znajomymi i w grupach',
+      'Jedna aplikacja, cztery kroki',
+      'Twoja lista zadań',
+      'Znajomi i wspólne zadania',
+      'Jedna aplikacja, nie cztery.',
+      'Do czego ludzie używają Shuuty',
       'FAQPage',
-      'Co Shuuty rozumie z zadania głosowego?',
+      'Czy mogę używać Shuuty tylko do własnych zadań?',
+      '/pl/poradniki/lista-zadan-z-podzadaniami/',
+      '/pl/poradniki/zadanie-dla-znajomego-krok-po-kroku/',
+      '/pl/poradniki/zadania-w-grupie-krok-po-kroku/',
+      '/pl/poradniki/zadanie-dla-wybranych-osob-w-grupie/',
+      '/pl/poradniki/aplikacja-dla-klubu-sportowego/',
+      '/pl/poradniki/profil-grupy-okladka-opis-zainteresowania/',
       '/pl/support/',
       '/pl/account-deletion/',
       '/pl/privacy/',
       '/pl/terms/',
-      '/images/product/canonical-flow-2026/pl-PL/01-voice-input.webp',
-      '/images/product/canonical-flow-2026/pl-PL/02-assignee.webp',
-      '/images/product/canonical-flow-2026/pl-PL/03-delegated-task.webp',
-      '/images/product/canonical-flow-2026/pl-PL/04-groups.webp',
-      '/images/product/canonical-flow-2026/pl-PL/05-group-offer-gallery.webp',
-      '/images/product/canonical-flow-2026/pl-PL/06-modules.webp',
-      '/images/product/canonical-flow-2026/pl-PL/07-bookings.webp',
-      '/images/product/canonical-flow-2026/pl-PL/08-nearby.webp',
+      ...homeCaptureRequirements('pl-PL'),
     ],
     requiredPatterns: [
       /<h1[^>]*>/,
       /<script type="application\/ld\+json">/,
       /<details[^>]*open=""/,
-      /<title>Zadania głosowe, grupy i spotkania \| Shuuty<\/title>/,
+      /<title>Shuuty - aplikacja do zadań ze znajomymi i w grupach<\/title>/,
     ],
     forbiddenPatterns: [
       /\/images\/app\/(?:create-menu|discover-groups|discover-meetings|profile-settings)\.(?:jpe?g|png)/,
-      /\/images\/product\/canonical-flow-2026\/en-US\//,
-      /\/images\/product\/canonical-flow-2026\/[^"' )]+\.png/,
+      /\/images\/product\/[a-z-]+-2026\/en-US\//,
+      /\/images\/product\/[a-z-]+-2026\/[^"' )]+\.png/,
       /exports\/final/,
     ],
     language: 'pl',
@@ -192,35 +193,33 @@ const pages = {
     path: 'out/nb/index.html',
     route: '/nb/',
     required: [
-      'Fra idé',
-      'Si det. Deleger det. Få det gjort.',
-      'Si det. Velg en person eller gruppe. Oppgaven er klar.',
-      'Fra tanke til oppgave - tre steg.',
-      'Gruppen din kan bli en egen verden.',
-      'Et arbeidssted',
-      'Et tjenestetilbud',
-      'Et utstillingsvindu',
+      'En oppgaveapp -',
+      'for deg, vennene dine og gruppene dine',
+      'Én app, fire steg',
+      'Din oppgaveliste',
+      'Én app, ikke fire.',
+      'Hva folk bruker Shuuty til',
       'FAQPage',
-      'Hva forstår Shuuty av en oppgave du sier høyt?',
+      'Kan jeg bruke Shuuty bare til mine egne oppgaver?',
+      '/nb/guider/gruppeoppgaver-steg-for-steg/',
       '/nb/support/',
       '/account-deletion/',
       '/privacy/',
       '/terms/',
-      '/images/product/canonical-flow-2026/en-US/01-voice-input.webp',
-      '/images/product/canonical-flow-2026/en-US/02-assignee.webp',
-      '/images/product/canonical-flow-2026/en-US/03-delegated-task.webp',
-      '/images/product/canonical-flow-2026/en-US/08-nearby.webp',
+      ...homeCaptureRequirements('en-US'),
       'og:locale" content="nb_NO"',
     ],
     requiredPatterns: [
       /<h1[^>]*>/,
       /<script type="application\/ld\+json">/,
       /<details[^>]*open=""/,
-      /<title>Huskeliste med stemmen, grupper og møter \| Shuuty<\/title>/,
+      /<title>Shuuty - oppgaveapp med venner og grupper<\/title>/,
     ],
     forbiddenPatterns: [
-      /\/images\/product\/canonical-flow-2026\/pl-PL\//,
-      /\/images\/product\/canonical-flow-2026\/[^"' )]+\.png/,
+      /\/images\/product\/[a-z-]+-2026\/pl-PL\//,
+      /\/images\/product\/[a-z-]+-2026\/[^"' )]+\.png/,
+      // Only guides that exist in Norwegian are linked from the page.
+      /href="\/(?:pl\/poradniki|guides)\/[a-z0-9-]+\//,
       // Legal documents have no Norwegian version; links must go to English.
       /href="\/nb\/(?:privacy|terms|account-deletion|child-safety)\//,
       /exports\/final/,
@@ -774,7 +773,8 @@ for (const [name, page] of Object.entries(pages)) {
     failures.push(`${name} static HTML should declare exactly one og:image`);
   }
 
-  if (page.routeMetadata !== false && !/<title>[^<]+\| Shuuty<\/title>/.test(html)) {
+  if (page.routeMetadata !== false &&
+    !/<title>(?:[^<]+\| Shuuty|Shuuty - [^<]+)<\/title>/.test(html)) {
     failures.push(`${name} static HTML is missing route metadata`);
   }
 
@@ -940,7 +940,7 @@ for (const [language, homePath] of Object.entries({
   const highPriorityImages = html.match(/<img[^>]*\bfetchPriority="high"[^>]*>/gi) ?? [];
   if (
     highPriorityImages.length !== 1
-    || !highPriorityImages[0].includes('/01-voice-input.webp"')
+    || !highPriorityImages[0].includes('/home-02-planner-subtasks.webp"')
   ) {
     failures.push(`${homePath} should give exactly one image, the LCP hero, high fetch priority`);
   }

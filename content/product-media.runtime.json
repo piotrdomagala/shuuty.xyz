@@ -1517,6 +1517,396 @@
         "width": 360,
         "height": 772
       }
+    },
+    {
+      "id": "pl-home-planner",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/home-01-planner.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/home-01-planner-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "pl-home-planner-subtasks",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/home-02-planner-subtasks.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/home-02-planner-subtasks-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "pl-home-voice",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/home-22-voice.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/home-22-voice-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "pl-home-delegated-task",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/home-04-delegated-task.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/home-04-delegated-task-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "pl-home-friends",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/home-06-friends.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/home-06-friends-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "pl-home-discover-meetings",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/home-09-discover-meetings.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/home-09-discover-meetings-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "pl-home-discover-groups",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/home-10-discover-groups.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/home-10-discover-groups-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "pl-home-meeting-page",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/home-20-meeting-page.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/home-20-meeting-page-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "pl-home-group-page",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/home-11-group-page.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/home-11-group-page-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "pl-home-group-chat",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/home-12-group-chat.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/home-12-group-chat-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "pl-home-group-calendar",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/home-15-group-calendar.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/home-15-group-calendar-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "pl-home-booking-slots",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/home-19-booking-slots.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/home-19-booking-slots-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "pl-home-group-members",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/home-21-group-members.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/home-21-group-members-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "en-home-planner",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/en-US/home-01-planner.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/en-US/home-01-planner-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "en-home-planner-subtasks",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/en-US/home-02-planner-subtasks.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/en-US/home-02-planner-subtasks-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "en-home-voice",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/en-US/home-22-voice.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/en-US/home-22-voice-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "en-home-delegated-task",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/en-US/home-04-delegated-task.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/en-US/home-04-delegated-task-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "en-home-friends",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/en-US/home-06-friends.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/en-US/home-06-friends-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "en-home-discover-meetings",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/en-US/home-09-discover-meetings.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/en-US/home-09-discover-meetings-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "en-home-discover-groups",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/en-US/home-10-discover-groups.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/en-US/home-10-discover-groups-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "en-home-meeting-page",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/en-US/home-20-meeting-page.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/en-US/home-20-meeting-page-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "en-home-group-page",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/en-US/home-11-group-page.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/en-US/home-11-group-page-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "en-home-group-chat",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/en-US/home-12-group-chat.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/en-US/home-12-group-chat-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "en-home-group-calendar",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/en-US/home-15-group-calendar.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/en-US/home-15-group-calendar-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "en-home-booking-slots",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/en-US/home-19-booking-slots.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/en-US/home-19-booking-slots-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "en-home-group-members",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/en-US/home-21-group-members.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/en-US/home-21-group-members-compact.webp",
+        "width": 360,
+        "height": 772
+      }
     }
   ],
   "placementSets": {
