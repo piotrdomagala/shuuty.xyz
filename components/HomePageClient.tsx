@@ -13,11 +13,10 @@ import Link from 'next/link';
 import { localizedSitePath, type SiteLanguage } from '@/components/documentLocale';
 import LanguageMenu from '@/components/LanguageMenu';
 import ProductDeviceFrame from '@/components/ProductDeviceFrame';
-import TaskSpatialHandoff from '@/components/TaskSpatialHandoff';
 import { useSiteLanguage } from '@/components/useSiteLanguage';
 import guidesContent from '@/content/guides.json';
-import { asGuides, guidesIn } from '@/lib/guides.mjs';
-import { getProductMediaPlacements } from '@/lib/productMedia';
+import { asGuides, guidePath, guidesIn, type GuideEntry } from '@/lib/guides.mjs';
+import { getProductMediaPlacement, type ProductMediaPlacement } from '@/lib/productMedia';
 import {
   APP_STORE_DEVELOPER_URL,
   APP_STORE_URL,
@@ -32,41 +31,51 @@ import t from '@/app/homeContent.json';
 
 type Lang = SiteLanguage;
 type Theme = 'light' | 'dark';
+type Copy = (typeof t)[Lang];
+type GuideTopic = keyof Copy['guideLabels'];
 type IconName =
   | 'arrow'
   | 'book'
   | 'calendar'
   | 'check'
-  | 'clock'
   | 'community'
   | 'download'
   | 'group'
+  | 'loop'
   | 'map'
-  | 'mic'
   | 'moon'
-  | 'offer'
   | 'people'
-  | 'private'
-  | 'reminder'
-  | 'send'
   | 'sun'
   | 'task'
   | 'work';
 
 type StorePlacement = 'hero' | 'download';
+type ScreenCopy = Readonly<{ media: string; alt: string }>;
+type Screen = ProductMediaPlacement & Readonly<{ alt: string }>;
 
 const LANGS: readonly Lang[] = ['en', 'pl', 'nb'];
+const GUIDES = asGuides(guidesContent.guides);
 
 const localizedPath = localizedSitePath;
 
-// Canonical captures exist in English and Polish only; the Norwegian page shows
-// the English set until Norwegian captures are approved.
+// Home captures exist in English and Polish; the Norwegian page shows the
+// English set, as the Norwegian guides do.
 const mediaLanguage = (language: Lang) => (language === 'pl' ? 'pl' : 'en');
 
+const screenFor = (language: Lang, screen: ScreenCopy): Screen => ({
+  ...getProductMediaPlacement(`${mediaLanguage(language)}-${screen.media}`),
+  alt: screen.alt,
+});
+
+// Only guides that exist in the page language are linked; a missing
+// translation leaves the link out rather than pointing to another language.
+const guideFor = (language: Lang, topic: string): GuideEntry | undefined =>
+  GUIDES.find((guide) => guide.language === language && guide.topic === topic);
+
 const pageNames: Record<Lang, string> = {
-  en: 'Shuuty - From idea to action',
-  pl: 'Shuuty - od pomysłu do działania',
-  nb: 'Shuuty - fra idé til handling',
+  en: 'Shuuty - a task app with friends and groups',
+  pl: 'Shuuty - aplikacja do zadań ze znajomymi i w grupach',
+  nb: 'Shuuty - oppgaveapp med venner og grupper',
 };
 
 const carouselLabels: Record<
@@ -106,10 +115,9 @@ const carouselLabels: Record<
   },
 };
 
-const createSiteSchema = (language: Lang, copy: (typeof t)[Lang]) => {
+const createSiteSchema = (language: Lang, copy: Copy) => {
   const pageUrl = `${SITE_URL}${localizedPath(language, '/')}`;
   const supportUrl = `${SITE_URL}${localizedPath(language, '/support/')}`;
-  const productMediaPlacements = getProductMediaPlacements(mediaLanguage(language));
 
   return {
     '@context': 'https://schema.org',
@@ -159,8 +167,8 @@ const createSiteSchema = (language: Lang, copy: (typeof t)[Lang]) => {
         image: socialImage(language).url,
         downloadUrl: [APP_STORE_URL, GOOGLE_PLAY_URL],
         sameAs: [APP_STORE_URL, GOOGLE_PLAY_URL],
-        screenshot: productMediaPlacements.hero.map(
-          (media) => `${SITE_URL}${media.path}`,
+        screenshot: copy.hero.screens.map(
+          (screen) => `${SITE_URL}${screenFor(language, screen).path}`,
         ),
         description: copy.hero.sub,
         featureList: copy.schema.features,
@@ -221,30 +229,20 @@ function Icon({ name }: Readonly<{ name: IconName }>) {
       return <svg {...props}><rect x="3" y="5" width="18" height="16" rx="3" /><path d="M8 3v4m8-4v4M3 10h18" /></svg>;
     case 'check':
       return <svg {...props}><path d="m5 12 4 4L19 6" /></svg>;
-    case 'clock':
-      return <svg {...props}><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></svg>;
     case 'community':
       return <svg {...props}><circle cx="8" cy="9" r="3" /><circle cx="17" cy="8" r="2" /><path d="M2.5 19c.7-3.2 2.7-5 5.5-5s4.8 1.8 5.5 5M14 13c3.7-.4 6.1 1.5 6.8 4.5" /></svg>;
     case 'download':
       return <svg {...props}><path d="M12 3v12m-5-5 5 5 5-5M5 21h14" /></svg>;
     case 'group':
       return <svg {...props}><circle cx="9" cy="8" r="3.2" /><path d="M3 19c.6-3.7 2.7-5.6 6-5.6s5.4 1.9 6 5.6M15.5 5.5a3 3 0 0 1 0 5.8M16.5 14c2.5.3 4 1.9 4.5 4.5" /></svg>;
+    case 'loop':
+      return <svg {...props}><path d="M4.5 11a7.5 7.5 0 0 1 13.2-4.3L20 9" /><path d="M20 4v5h-5" /><path d="M19.5 13a7.5 7.5 0 0 1-13.2 4.3L4 15" /><path d="M4 20v-5h5" /></svg>;
     case 'map':
       return <svg {...props}><path d="m3 6 5-3 8 3 5-3v15l-5 3-8-3-5 3V6Z" /><path d="M8 3v15m8-12v15" /></svg>;
-    case 'mic':
-      return <svg {...props}><rect x="9" y="3" width="6" height="12" rx="3" /><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21m-4 0h8" /></svg>;
     case 'moon':
       return <svg {...props}><path d="M20.5 15.2A8.5 8.5 0 0 1 8.8 3.5 8.5 8.5 0 1 0 20.5 15.2Z" /></svg>;
-    case 'offer':
-      return <svg {...props}><path d="M20 13 13 20l-9-9V4h7l9 9Z" /><circle cx="8.5" cy="8.5" r="1.5" /></svg>;
     case 'people':
       return <svg {...props}><circle cx="8" cy="8" r="3" /><circle cx="17" cy="8.5" r="2.5" /><path d="M2.5 19c.6-3.6 2.5-5.5 5.5-5.5s4.9 1.9 5.5 5.5M14 14c3.7-.7 6.2 1 7 4.5" /></svg>;
-    case 'private':
-      return <svg {...props}><rect x="4" y="10" width="16" height="11" rx="3" /><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3" /></svg>;
-    case 'reminder':
-      return <svg {...props}><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4" /><path d="M18.5 3.5 20 2m-14.5 1.5L4 2" /></svg>;
-    case 'send':
-      return <svg {...props}><path d="m3 11 18-8-8 18-2.5-7.5L3 11Z" /><path d="M10.5 13.5 21 3" /></svg>;
     case 'sun':
       return <svg {...props}><circle cx="12" cy="12" r="4" /><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></svg>;
     case 'task':
@@ -253,6 +251,9 @@ function Icon({ name }: Readonly<{ name: IconName }>) {
       return <svg {...props}><rect x="3" y="7" width="18" height="13" rx="3" /><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12h18m-11 0v2h4v-2" /></svg>;
   }
 }
+
+// The four steps in the nav and the mobile dock, in page order.
+const STEP_ICONS: readonly IconName[] = ['task', 'people', 'map', 'group'];
 
 function AppleIcon() {
   return (
@@ -308,7 +309,7 @@ function StoreButtons({
   language,
   placement,
 }: Readonly<{
-  copy: (typeof t)[Lang]['store'];
+  copy: Copy['store'];
   language: Lang;
   placement: StorePlacement;
 }>) {
@@ -335,6 +336,47 @@ function StoreButtons({
   );
 }
 
+function GuideLink({
+  guide,
+  label,
+}: Readonly<{ guide: GuideEntry; label: string }>) {
+  return (
+    <Link href={guidePath(guide)} className={s.guideLink}>
+      <Icon name="book" />
+      <span>{label}</span>
+      <Icon name="arrow" />
+    </Link>
+  );
+}
+
+// One large screen in front, one or two smaller ones behind it. The screens
+// are real captures, only scaled and framed.
+function StepStage({ screens }: Readonly<{ screens: readonly Screen[] }>) {
+  const [main, ...rest] = screens;
+  const sideClasses = rest.length > 1 ? [s.stagePhoneLeft, s.stagePhoneRight] : [s.stagePhoneSide];
+
+  return (
+    <div className={`${s.stepStage} ${rest.length > 1 ? s.stepStageTrio : ''}`}>
+      <figure className={`${s.stagePhone} ${s.stagePhoneMain}`}>
+        <ProductDeviceFrame
+          media={main}
+          alt={main.alt}
+          sizes="(max-width: 720px) 60vw, 290px"
+        />
+      </figure>
+      {rest.map((screen, index) => (
+        <figure key={screen.id} className={`${s.stagePhone} ${sideClasses[index]}`}>
+          <ProductDeviceFrame
+            media={screen}
+            alt={screen.alt}
+            sizes="(max-width: 720px) 38vw, 200px"
+          />
+        </figure>
+      ))}
+    </div>
+  );
+}
+
 export default function HomePageClient({ initialLanguage }: { initialLanguage: Lang }) {
   const { language: lang, changeLanguage: switchLang } = useSiteLanguage(initialLanguage);
   const [theme, setTheme] = useState<Theme>('dark');
@@ -347,9 +389,9 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
   const mobileNavScrollDelta = useRef(0);
   const mobileNavHideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const c = t[lang];
-  const hasGuides = guidesIn(asGuides(guidesContent.guides), lang).length > 0;
-  const productMediaPlacements = getProductMediaPlacements(mediaLanguage(lang));
+  const hasGuides = guidesIn(GUIDES, lang).length > 0;
   const carousel = carouselLabels[lang];
+  const guideLabel = (topic: string) => c.guideLabels[topic as GuideTopic];
 
   const clearMobileNavTimer = useCallback(() => {
     if (!mobileNavHideTimer.current) return;
@@ -365,25 +407,31 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
     }, 2200);
   }, [clearMobileNavTimer]);
 
-  const mediaAlt = (media: { altKey: string }) =>
-    c.images[media.altKey as keyof typeof c.images];
-
-  const heroPhones = productMediaPlacements.hero.map((media, index) => ({
-    ...media,
-    alt: mediaAlt(media),
-    // Index 0 is the dark-theme front screen and the LCP image; index 2 comes to
-    // the front for light-theme visitors, so both load eagerly.
+  const heroPhones = c.hero.screens.map((screen, index) => ({
+    ...screenFor(lang, screen),
+    // Index 0 is the front screen and the LCP image; index 2 sits in view on
+    // the left, so both load eagerly.
     loading: index === 1 ? ('lazy' as const) : ('eager' as const),
     fetchPriority: index === 0 ? ('high' as const) : undefined,
   }));
-  const taskFlowScreens = [
-    productMediaPlacements.voiceInput,
-    productMediaPlacements.assignee,
-    productMediaPlacements.delegatedTask,
-  ].map((media) => ({
-    ...media,
-    alt: mediaAlt(media),
+  const steps = c.how.steps.map((step) => ({
+    ...step,
+    screens: step.screens.map((screen) => screenFor(lang, screen)),
+    links: step.guides
+      .map((topic) => ({ topic, guide: guideFor(lang, topic) }))
+      .filter((entry): entry is { topic: string; guide: GuideEntry } => Boolean(entry.guide)),
   }));
+  const loopScreen = screenFor(lang, c.how.loop.screen);
+  const useCases = c.uses.items.map((item) => {
+    const topic = item.guides.find((candidate) => guideFor(lang, candidate));
+    return { ...item, topic, guide: topic ? guideFor(lang, topic) : undefined };
+  });
+  const navItems = [
+    { href: `#${c.how.steps[0].id}`, label: c.nav.tasks },
+    { href: `#${c.how.steps[1].id}`, label: c.nav.friends },
+    { href: `#${c.how.steps[2].id}`, label: c.nav.discover },
+    { href: `#${c.how.steps[3].id}`, label: c.nav.groups },
+  ];
 
   const selectHeroPhone = useCallback((index: number) => {
     setActiveHeroPhone((index + 3) % 3);
@@ -444,10 +492,7 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
   );
 
   useEffect(() => {
-    const current = document.documentElement.dataset.theme;
-    const initialTheme = current === 'light' ? 'light' : 'dark';
-    setTheme(initialTheme);
-    if (initialTheme === 'light') setActiveHeroPhone(2);
+    setTheme(document.documentElement.dataset.theme === 'light' ? 'light' : 'dark');
   }, []);
 
   useEffect(() => {
@@ -507,7 +552,6 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
   const toggleTheme = useCallback(() => {
     setTheme((current) => {
       const next = current === 'dark' ? 'light' : 'dark';
-      setActiveHeroPhone(next === 'light' ? 2 : 0);
       document.documentElement.dataset.theme = next;
       document.documentElement.style.colorScheme = next;
       document.querySelectorAll<HTMLMetaElement>('meta[name="theme-color"]').forEach((meta) => {
@@ -521,6 +565,11 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
       return next;
     });
   }, []);
+
+  const hideMobileNav = () => {
+    clearMobileNavTimer();
+    setShowMobileNav(false);
+  };
 
   return (
     <div lang={lang}>
@@ -545,10 +594,7 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
           </a>
 
           <div className={s.navLinks}>
-            <a href="#overview">{c.nav.overview}</a>
-            <a href="#tasks">{c.nav.tasks}</a>
-            <a href="#groups">{c.nav.groups}</a>
-            <a href="#discover">{c.nav.discover}</a>
+            {navItems.map((item) => <a key={item.href} href={item.href}>{item.label}</a>)}
           </div>
 
           <div className={s.navActions}>
@@ -583,21 +629,27 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
           <div className={s.heroCopy}>
             <span className={s.eyebrow}><span className={s.statusDot} />{c.hero.badge}</span>
             <h1 className={s.heroTitle}>
-              {c.hero.title}
+              {c.hero.title}{' '}
               <br />
-              <span className={s.gradientText}>{c.hero.accent}</span>
+              <span className={s.accentText}>{c.hero.accent}</span>
             </h1>
-            <p className={s.relayLine}>{c.hero.relay}</p>
             <p className={s.heroLead}>{c.hero.sub}</p>
             <div className={s.heroActions}>
               <StoreButtons copy={c.store} language={lang} placement="hero" />
-              <a href="#overview" className={s.textCta}>
+              <a href="#how-it-works" className={s.textCta}>
                 {c.hero.secondaryCta}<Icon name="arrow" />
               </a>
             </div>
-            <ul className={s.signalList}>
-              {c.hero.signals.map((signal) => <li key={signal}><Icon name="check" />{signal}</li>)}
-            </ul>
+            <ol className={s.heroSteps} aria-label={c.how.heading}>
+              {navItems.map((item, index) => (
+                <li key={item.href}>
+                  <a href={item.href}>
+                    <Icon name={STEP_ICONS[index]} />
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ol>
           </div>
 
           <div
@@ -682,187 +734,98 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
           </div>
         </section>
 
-        <section id="overview" className={`${s.section} ${s.reveal}`} data-reveal>
+        <section id="how-it-works" className={`${s.section} ${s.howSection}`}>
           <div className={s.container}>
-            <div className={s.sectionIntro}>
-              <span className={s.sectionLabel}>{c.overview.label}</span>
-              <h2>{c.overview.heading}</h2>
-              <p>{c.overview.lead}</p>
-            </div>
-            <div className={s.pillarGrid}>
-              {c.overview.items.map((item) => (
-                <a key={item.kicker} href={item.href} className={s.pillarCard}>
-                  <span className={s.pillarTop}><span>{item.kicker}</span><Icon name={item.icon as IconName} /></span>
-                  <h3>{item.title}</h3>
-                  <p>{item.desc}</p>
-                  <span className={s.cardArrow}><Icon name="arrow" /></span>
-                </a>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="tasks" className={`${s.chapter} ${s.taskChapter} ${s.reveal}`} data-reveal>
-          <div className={s.container}>
-            <div className={s.taskIntro}>
-              <div>
-                <span className={s.sectionLabel}>{c.tasks.label}</span>
-                <h2>{c.tasks.heading}</h2>
-              </div>
-              <div className={s.taskIntroLead}>
-                <span>{c.tasks.mechanismLabel}</span>
-                <p>{c.tasks.lead}</p>
-                <p>{c.tasks.mechanismLead}</p>
-              </div>
+            <div className={`${s.sectionIntro} ${s.centeredIntro} ${s.reveal}`} data-reveal>
+              <span className={s.sectionLabel}>{c.how.label}</span>
+              <h2>{c.how.heading}</h2>
+              <p>{c.how.lead}</p>
             </div>
 
-            <TaskSpatialHandoff
-              regionLabel={c.tasks.flowRegionLabel}
-              selectLabel={c.tasks.flowSelectLabel}
-              screens={taskFlowScreens}
-              steps={c.tasks.mechanism}
-            />
-
-            <ul className={s.taskDepthList}>
-              {c.tasks.bullets.map((bullet, index) => (
-                <li key={bullet}>
-                  <span>{String(index + 1).padStart(2, '0')}</span>
-                  <p>{bullet}</p>
+            <ol className={s.stepList}>
+              {steps.map((step, index) => (
+                <li
+                  key={step.id}
+                  id={step.id}
+                  className={`${s.step} ${s.reveal}`}
+                  data-reveal
+                  data-step={index + 1}
+                >
+                  <StepStage screens={step.screens} />
+                  <div className={s.stepCopy}>
+                    <span className={s.stepNumber} aria-hidden="true">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                    <h3>
+                      <span className={s.srOnly}>{`${index + 1}. `}</span>
+                      {step.title}
+                    </h3>
+                    <p className={s.stepText}>{step.text}</p>
+                    <ul className={s.stepPoints}>
+                      {step.points.map((point) => (
+                        <li key={point}><Icon name="check" />{point}</li>
+                      ))}
+                    </ul>
+                    {step.links.length > 0 ? (
+                      <div className={s.guideLinks}>
+                        {step.links.map(({ topic, guide }) => (
+                          <GuideLink key={topic} guide={guide} label={guideLabel(topic)} />
+                        ))}
+                      </div>
+                    ) : null}
+                  </div>
                 </li>
               ))}
-            </ul>
-          </div>
-        </section>
+            </ol>
 
-        <section id="groups" className={`${s.chapter} ${s.chapterTint} ${s.reveal}`} data-reveal>
-          <div className={`${s.container} ${s.chapterGrid} ${s.reverseGrid}`}>
-            <div className={s.groupsVisual}>
-              <div className={s.groupScreenPair}>
-                <figure className={s.groupGalleryScreen}>
-                  <ProductDeviceFrame
-                    media={productMediaPlacements.groupGallery}
-                    alt=""
-                    sizes="(max-width: 720px) 58vw, (max-width: 960px) 370px, 330px"
-                  />
-                  <figcaption>{mediaAlt(productMediaPlacements.groupGallery)}</figcaption>
-                </figure>
-                <figure className={s.groupListScreen}>
-                  <ProductDeviceFrame
-                    media={productMediaPlacements.groups}
-                    alt=""
-                    sizes="(max-width: 720px) 34vw, (max-width: 960px) 210px, 190px"
-                  />
-                  <figcaption>{mediaAlt(productMediaPlacements.groups)}</figcaption>
-                </figure>
-              </div>
-              <div className={s.groupModeRail}>
-                <span className={s.modesLabel}>{c.groups.modesLabel}</span>
-                <ol className={s.groupModeGrid}>
-                  {c.groups.modes.map((mode, index) => (
-                    <li key={mode.title} className={s.groupModeItem}>
-                      <span>{String(index + 1).padStart(2, '0')}</span>
-                      <div><strong>{mode.title}</strong><p>{mode.desc}</p></div>
+            <div className={`${s.loopCard} ${s.reveal}`} data-reveal>
+              <div className={s.loopCopy}>
+                <span className={s.sectionLabel}><Icon name="loop" />{c.how.loop.label}</span>
+                <p className={s.loopText}>
+                  {c.how.loop.text}{' '}
+                  <strong className={s.accentText}>{c.how.loop.strong}</strong>
+                </p>
+                <ol className={s.loopChain}>
+                  {c.how.loop.chain.map((item, index) => (
+                    <li key={item}>
+                      <a href={navItems[index].href}>
+                        <Icon name={STEP_ICONS[index]} />
+                        {item}
+                      </a>
                     </li>
                   ))}
                 </ol>
-                <p className={s.groupModuleLine}>
-                  <strong>{c.groups.modulesLabel}</strong>{' '}
-                  {c.groups.modules.join(' · ')}
-                </p>
               </div>
-            </div>
-            <div className={s.chapterCopy}>
-              <span className={s.sectionLabel}>{c.groups.label}</span>
-              <h2>{c.groups.heading}</h2>
-              <p className={s.chapterLead}>{c.groups.lead}</p>
-              <ul className={s.bulletList}>
-                {c.groups.bullets.map((bullet) => <li key={bullet}><span><Icon name="check" /></span>{bullet}</li>)}
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <section id="discover" className={`${s.chapter} ${s.reveal}`} data-reveal>
-          <div className={`${s.container} ${s.chapterGrid}`}>
-            <div className={s.chapterCopy}>
-              <span className={s.sectionLabel}>{c.discover.label}</span>
-              <h2>{c.discover.heading}</h2>
-              <p className={s.chapterLead}>{c.discover.lead}</p>
-              <ul className={s.bulletList}>
-                {c.discover.bullets.map((bullet) => <li key={bullet}><span><Icon name="check" /></span>{bullet}</li>)}
-              </ul>
-              <article className={s.mapStory}>
-                <span className={s.mapStoryLabel}><Icon name="map" />{c.discover.map.label}</span>
-                <h3>{c.discover.map.heading}</h3>
-                <p>{c.discover.map.lead}</p>
-                <ul>
-                  {c.discover.map.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
-                </ul>
-              </article>
-            </div>
-            <div className={s.mapVisual}>
-              <div className={s.mapCaption}><span><Icon name="map" /></span>{c.discover.mapCaption}</div>
-              <figure className={s.mapPhoneLeft}>
-                <div className={s.mapPhoneFrame}>
-                  <ProductDeviceFrame
-                    media={productMediaPlacements.bookings}
-                    alt=""
-                    sizes="(max-width: 720px) 48vw, 250px"
-                  />
-                </div>
-                <figcaption>{mediaAlt(productMediaPlacements.bookings)}</figcaption>
-              </figure>
-              <figure className={s.mapPhoneRight}>
-                <div className={s.mapPhoneFrame}>
-                  <ProductDeviceFrame
-                    media={productMediaPlacements.nearby}
-                    alt=""
-                    sizes="(max-width: 720px) 48vw, 250px"
-                  />
-                </div>
-                <figcaption>{mediaAlt(productMediaPlacements.nearby)}</figcaption>
+              <figure className={s.loopPhone}>
+                <ProductDeviceFrame
+                  media={loopScreen}
+                  alt={loopScreen.alt}
+                  sizes="(max-width: 720px) 60vw, 250px"
+                />
               </figure>
             </div>
           </div>
         </section>
 
-        <section id="experience" className={`${s.chapter} ${s.chapterTint} ${s.reveal}`} data-reveal>
-          <div className={`${s.container} ${s.experienceGrid}`}>
-            <figure className={s.experienceVisual}>
-              <div className={s.experienceScreens}>
-                <div className={`${s.experienceDevice} ${s.experienceTabletPrimary}`}>
-                  <ProductDeviceFrame
-                    media={productMediaPlacements.groupGallery}
-                    alt=""
-                    sizes="(max-width: 720px) 72vw, 390px"
-                  />
-                </div>
-                <div className={`${s.experienceDevice} ${s.experiencePhoneSecondary}`}>
-                  <ProductDeviceFrame
-                    media={productMediaPlacements.modules}
-                    alt=""
-                    sizes="(max-width: 720px) 45vw, 215px"
-                  />
-                </div>
-              </div>
-              <figcaption>
-                {c.experience.screenCaption}: {mediaAlt(productMediaPlacements.groupGallery)};{' '}
-                {mediaAlt(productMediaPlacements.modules)}
-              </figcaption>
-            </figure>
-            <div className={s.chapterCopy}>
-              <span className={s.sectionLabel}>{c.experience.label}</span>
-              <h2>{c.experience.heading}</h2>
-              <p className={s.chapterLead}>{c.experience.lead}</p>
-              <div className={s.experienceList}>
-                {c.experience.items.map((item, index) => (
-                  <article key={item.title}>
-                    <span>{String(index + 1).padStart(2, '0')}</span>
-                    <div><h3>{item.title}</h3><p>{item.desc}</p></div>
-                  </article>
-                ))}
-              </div>
+        <section id="use-cases" className={`${s.section} ${s.usesSection}`}>
+          <div className={s.container}>
+            <div className={`${s.sectionIntro} ${s.reveal}`} data-reveal>
+              <span className={s.sectionLabel}>{c.uses.label}</span>
+              <h2>{c.uses.heading}</h2>
+              <p>{c.uses.lead}</p>
             </div>
+            <ul className={`${s.useGrid} ${s.reveal}`} data-reveal>
+              {useCases.map((item) => (
+                <li key={item.title} className={s.useCard}>
+                  <span className={s.useIcon}><Icon name={item.icon as IconName} /></span>
+                  <h3>{item.title}</h3>
+                  <p>{item.text}</p>
+                  {item.guide && item.topic ? (
+                    <GuideLink guide={item.guide} label={guideLabel(item.topic)} />
+                  ) : null}
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 
@@ -874,15 +837,15 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
             </div>
             <div className={s.faqList}>
               {c.faq.items.map((item, index) => (
-                  <details key={item.q} className={s.faqItem} open={index === 0}>
-                    <summary className={s.faqQuestion}>
-                      <span>{item.q}</span>
-                      <i aria-hidden />
-                    </summary>
-                    <div className={s.faqAnswer}>
-                      <p>{item.a}</p>
-                    </div>
-                  </details>
+                <details key={item.q} className={s.faqItem} open={index === 0}>
+                  <summary className={s.faqQuestion}>
+                    <span>{item.q}</span>
+                    <i aria-hidden />
+                  </summary>
+                  <div className={s.faqAnswer}>
+                    <p>{item.a}</p>
+                  </div>
+                </details>
               ))}
             </div>
           </div>
@@ -941,10 +904,12 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
         onPointerEnter={clearMobileNavTimer}
         onPointerLeave={scheduleMobileNavHide}
       >
-        <a href="#tasks" onClick={() => { clearMobileNavTimer(); setShowMobileNav(false); }} aria-label={c.nav.tasks}><Icon name="task" /></a>
-        <a href="#groups" onClick={() => { clearMobileNavTimer(); setShowMobileNav(false); }} aria-label={c.nav.groups}><Icon name="group" /></a>
-        <a href="#discover" onClick={() => { clearMobileNavTimer(); setShowMobileNav(false); }} aria-label={c.nav.discover}><Icon name="map" /></a>
-        <a href="#download" onClick={() => { clearMobileNavTimer(); setShowMobileNav(false); }} className={s.mobileDownload} aria-label={c.nav.download}><Icon name="download" /></a>
+        {navItems.map((item, index) => (
+          <a key={item.href} href={item.href} onClick={hideMobileNav} aria-label={item.label}>
+            <Icon name={STEP_ICONS[index]} />
+          </a>
+        ))}
+        <a href="#download" onClick={hideMobileNav} className={s.mobileDownload} aria-label={c.nav.download}><Icon name="download" /></a>
       </nav>
     </div>
   );

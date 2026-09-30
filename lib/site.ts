@@ -95,14 +95,16 @@ function socialMetadata({
   path,
   language,
   alternateLanguages,
+  absoluteTitle = false,
 }: {
   title: string;
   description: string;
   path: `/${string}`;
   language: SocialCardLanguage;
   alternateLanguages: SocialCardLanguage[];
+  absoluteTitle?: boolean;
 }): Pick<Metadata, 'openGraph' | 'twitter'> {
-  const socialTitle = `${title} | Shuuty`;
+  const socialTitle = absoluteTitle ? title : `${title} | Shuuty`;
   const image = socialImage(language);
   return {
     openGraph: {
@@ -134,6 +136,8 @@ interface PageMetadataOptions {
   englishPath?: `/${string}`;
   polishPath?: `/${string}`;
   norwegianPath?: `/${string}`;
+  // The title already names Shuuty, so the "| Shuuty" template is skipped.
+  absoluteTitle?: boolean;
 }
 
 const OPEN_GRAPH_LOCALES = { en: 'en_US', pl: 'pl_PL', nb: 'nb_NO' } as const;
@@ -159,13 +163,14 @@ export function createPublicPageMetadata({
   englishPath = path,
   polishPath,
   norwegianPath,
+  absoluteTitle = false,
 }: PageMetadataOptions): Metadata {
   const languageAlternates = polishPath
     ? createLanguageAlternates(englishPath, polishPath, norwegianPath)
     : undefined;
 
   return {
-    title,
+    title: absoluteTitle ? { absolute: title } : title,
     description,
     alternates: {
       canonical: path,
@@ -177,6 +182,7 @@ export function createPublicPageMetadata({
       path,
       language,
       alternateLanguages: norwegianPath ? ['en', 'pl', 'nb'] : ['en', 'pl'],
+      absoluteTitle,
     }),
   };
 }

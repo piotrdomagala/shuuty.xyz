@@ -81,22 +81,22 @@ test('the social card gate rejects stale, oversized and off-brand cards', async 
   try {
     const cases = [
       {
-        expected: 'cards.pl was rendered from an older pl-groups; regenerate the social cards.',
+        expected: 'cards.pl was rendered from an older pl-home-planner-subtasks; regenerate the social cards.',
         mutate(config) {
-          config.cards.pl.sources['pl-groups'] = 'e'.repeat(64);
+          config.cards.pl.sources['pl-home-planner-subtasks'] = 'e'.repeat(64);
         },
       },
       {
-        expected: 'cards.pl.screens must use pl-PL captures; en-groups is not.',
+        expected: 'cards.pl.screens must use pl-PL captures; en-home-discover-meetings is not.',
         mutate(config) {
-          config.cards.pl.screens[2] = 'en-groups';
+          config.cards.pl.screens[2] = 'en-home-discover-meetings';
           config.cards.pl.sources = Object.fromEntries(
             config.cards.pl.screens.map((id) => [id, config.cards.en.sources[id] ?? config.cards.pl.sources[id]]),
           );
         },
       },
       {
-        expected: 'cards.en.headline must read exactly like the en hero relay.',
+        expected: 'cards.en.headline must read exactly like the en social.headline in homeContent.json.',
         mutate(config) {
           config.cards.en.headline = ['Say it. Delegate it.', 'Done.'];
         },

@@ -72,8 +72,20 @@ artifact binding. `artifactBinding` therefore remains `null`, and
 Step-by-step guides need app screens that the eight store slots do not cover, such
 as the friend request or the setting for tasks from friends. These live in the
 separate `guideCaptures` list of `content/product-media.json` and in
-`public/images/product/guide-captures-<year>/<locale>/`. They never enter the home
-placement sets, the store slot checks or the locale budgets of the canonical set.
+`public/images/product/guide-captures-<year>/<locale>/`. They never enter the
+canonical placement sets, the store slot checks or the locale budgets of the
+canonical set.
+
+Since 30.09.2026 the homepage may also show registered guide captures, under the
+same provenance rules. Its screens are the `<locale>-home-*` records (files
+`home-NN-*.png` from app commit `9dddd31ad5a6f2cc70216f1c47f8f7504c7f238f`,
+released on iOS as 2.2.4), resolved by id with `getProductMediaPlacement` and
+framed by `ProductDeviceFrame`; the Norwegian page shows the English set, as the
+Norwegian guides do. Any other registered guide capture may be used there too.
+The link preview cards use the same home captures (group page, planner, Discover
+map), so they match the hero. The eight canonical store captures stay the source
+for the Product Hunt gallery and the store listing; the homepage no longer reads
+the canonical placement sets.
 
 Each guide capture is a real screen of the released app:
 
@@ -161,11 +173,11 @@ The current per-locale preview is deliberately mixed across both platforms:
 | `bookings` | Android phone | `store-listing/assets/source/android/<locale>/booking-calendar-populated-light-<lang>.png` |
 | `nearby` | Android phone | `store-listing/assets/source/android/<locale>/discover-map-light-<lang>.png` |
 
-The hero intentionally uses `voice-input`, `delegated-task` and `nearby`: the
-first two screens keep the voice-to-complete-task hook coherent, while the third
-adds a distinct, verified map view instead of repeating the similar assignee
-capture. The dedicated Tasks chapter still uses `voice-input`, `assignee` and
-`delegated-task` as its complete three-step handoff.
+Until 30.09.2026 the homepage hero used `voice-input`, `delegated-task` and
+`nearby`, and its Tasks chapter `voice-input`, `assignee` and `delegated-task`. The
+four-step homepage now shows the registered home captures instead (see Guide
+captures); the resolver `getProductMediaPlacements` still builds the same sets for
+any page that needs the store slots.
 
 Here `<locale>` is `en-US` or `pl-PL`, `<lang>` is `en` or `pl`, and `<person>`
 is `alex` or `olek`. These are tracked source paths, never paths to a working export
@@ -188,9 +200,9 @@ not an artifact binding.
    the build-only `content/product-media.json`.
 3. Change `finalArtifactContract.status` to `approved-no-publish-imported` and
    fill `artifactBinding`.
-4. Preserve the separate `en` and `pl` placement sets. The resolver constructs the
-   hero from `voiceInput`, `delegatedTask` and `nearby`, while the task handoff uses
-   `voiceInput`, `assignee` and `delegatedTask`; layout components require no rewrite.
+4. Preserve the separate `en` and `pl` placement sets. The resolver keeps its `hero`
+   set (`voiceInput`, `delegatedTask`, `nearby`) and the social cards list their own
+   captures, so layout components require no rewrite.
 5. Run `npm run generate:media-derivatives`, `npm run sync:media-runtime` and
    `npm run generate:social-cards`, and review the three cards by eye.
    Commit the deterministic WebP files, cards and runtime projection; never add provenance
@@ -215,7 +227,8 @@ bytes (largest file 89,222 bytes). A normal production build only validates thes
 checked-in bytes. Regeneration is deliberate and fails before publishing files if
 source provenance, the pinned pipeline or any budget drifts.
 
-The link preview cards in `public/images/social/` are built from these captures by
+The link preview cards in `public/images/social/` are built from registered captures
+(since 30.09.2026 the home captures, see Guide captures) by
 `npm run generate:social-cards` and record the capture hashes they used, so a new
 capture makes `npm run validate:social` fail until the cards are regenerated.
 

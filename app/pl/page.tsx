@@ -2,10 +2,11 @@ import HomePageClient from '@/components/HomePageClient';
 import { createPublicPageMetadata } from '@/lib/site';
 
 const description =
-  'Zadania, grupy i spotkania w jednej aplikacji: powiedz zadanie i przekaż je dalej, załóż grupę dla rodziny, klubu albo klientów i spotkaj się w okolicy.';
+  'Lista zadań, zadania dla znajomych i grupy z kalendarzem, rezerwacjami i spotkaniami w pobliżu. Zacznij od własnych zadań. iOS i Android.';
 
 export const metadata = createPublicPageMetadata({
-  title: 'Zadania głosowe, grupy i spotkania',
+  title: 'Shuuty - aplikacja do zadań ze znajomymi i w grupach',
+  absoluteTitle: true,
   description,
   path: '/pl/',
   language: 'pl',

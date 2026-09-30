@@ -16,83 +16,86 @@
   "cards": {
     "en": {
       "headline": [
-        "Say it. Delegate it.",
-        "Get it done."
+        "A task app -",
+        "for you, your friends",
+        "and your groups"
       ],
-      "tagline": "Voice tasks, flexible groups and meetings",
+      "tagline": "Tasks, friends, meetings and groups",
       "footer": "Available on iOS and Android",
-      "alt": "Shuuty - voice tasks, flexible groups and meetings. Real Shuuty product views.",
+      "alt": "Shuuty - a task app for you, your friends and your groups. Real Shuuty app screens.",
       "screens": [
-        "en-delegated-task",
-        "en-voice-input",
-        "en-groups"
+        "en-home-group-page",
+        "en-home-planner-subtasks",
+        "en-home-discover-meetings"
       ],
       "sources": {
-        "en-delegated-task": "b1da13fa5cdf7238558dbf648ab5aa8d2513158037824b1f278b69ea66caa8d7",
-        "en-voice-input": "0e1cf4ae22b6cd8e6050731077f462aac7cb79bb798f83d6f7dda726d07cbdfb",
-        "en-groups": "6380ecb85dfaf76f1c713de118cd5075e49c874939a68fccb0786e86b3bd1ff0"
+        "en-home-group-page": "8619349df335c907b603ffaa4692386d75abf8b9758085c4a1ae02d4e911187d",
+        "en-home-planner-subtasks": "9896da69e69d505eeaf3eee576dd445e8f164a48306181ff02ddd1378ed43f5b",
+        "en-home-discover-meetings": "05091f12e86eb437cf2c74fe6ae5ee28c0d72b87e7eda1d72ffced493c965c51"
       },
       "image": {
         "path": "/images/social/shuuty-en.jpg",
         "mediaType": "image/jpeg",
         "width": 1200,
         "height": 630,
-        "byteLength": 70071,
-        "sha256": "28f54ba11d8d7e59d48a76068dc9efea27a607b0379f93044e4133628ce2a650"
+        "byteLength": 109233,
+        "sha256": "75f9a2386a069a7ab7c85fc322a037f5f36e0cd54096870ba1db451608bedf07"
       }
     },
     "pl": {
       "headline": [
-        "Powiedz. Deleguj.",
-        "Działajcie."
+        "Aplikacja do zadań -",
+        "Twoich, ze znajomymi",
+        "i w grupach"
       ],
-      "tagline": "Zadania głosowe, grupy i spotkania",
+      "tagline": "Zadania, znajomi, spotkania i grupy",
       "footer": "Dostępne na iOS i Android",
-      "alt": "Shuuty - zadania głosowe, grupy i spotkania. Prawdziwe widoki produktu Shuuty.",
+      "alt": "Shuuty - aplikacja do zadań Twoich, ze znajomymi i w grupach. Prawdziwe ekrany aplikacji Shuuty.",
       "screens": [
-        "pl-delegated-task",
-        "pl-voice-input",
-        "pl-groups"
+        "pl-home-group-page",
+        "pl-home-planner-subtasks",
+        "pl-home-discover-meetings"
       ],
       "sources": {
-        "pl-delegated-task": "d97ab18439e7c1f1a0c752c3f0bf5943ef4a9cd30a4c7543c7fea9648750afdb",
-        "pl-voice-input": "3b3743d0270acc67df872da217652f1aea830628591efdd54934fc0bc4d1a770",
-        "pl-groups": "bd36b35d0ea567a2d467fe14b15d70fe50f72b1c9d73098a8157b211241836ee"
+        "pl-home-group-page": "49ca562f9113a288b86593a8169285143b6a6bb5e41b66fd8e1ed5b315e4615a",
+        "pl-home-planner-subtasks": "9a78ec61fb2e8e068d79a8a3890dae0fe31e170d78fa4ab7efd04d1acff8153b",
+        "pl-home-discover-meetings": "24574c10e057f6a6fb0aa3245a0f79262aac672846ee1278b0e1134a7453291d"
       },
       "image": {
         "path": "/images/social/shuuty-pl.jpg",
         "mediaType": "image/jpeg",
         "width": 1200,
         "height": 630,
-        "byteLength": 70556,
-        "sha256": "6e74012cd9d88c81ed861eb2193641cc6a8e330fc5fd240746b9502a4e3ecae0"
+        "byteLength": 107357,
+        "sha256": "e23a39cbe96e38f98b1989ce6353eef125985962f2f6108f901a1a078bb072be"
       }
     },
     "nb": {
       "headline": [
-        "Si det. Deleger det.",
-        "Få det gjort."
+        "En oppgaveapp -",
+        "for deg, vennene dine",
+        "og gruppene dine"
       ],
-      "tagline": "Huskeliste med stemmen, grupper og møter",
+      "tagline": "Oppgaver, venner, møter og grupper",
       "footer": "Tilgjengelig for iOS og Android",
-      "alt": "Shuuty - huskeliste med stemmen, grupper og møter. Ekte skjermbilder fra Shuuty.",
+      "alt": "Shuuty - en oppgaveapp for deg, vennene dine og gruppene dine. Ekte skjermbilder fra Shuuty.",
       "screens": [
-        "en-delegated-task",
-        "en-voice-input",
-        "en-groups"
+        "en-home-group-page",
+        "en-home-planner-subtasks",
+        "en-home-discover-meetings"
       ],
       "sources": {
-        "en-delegated-task": "b1da13fa5cdf7238558dbf648ab5aa8d2513158037824b1f278b69ea66caa8d7",
-        "en-voice-input": "0e1cf4ae22b6cd8e6050731077f462aac7cb79bb798f83d6f7dda726d07cbdfb",
-        "en-groups": "6380ecb85dfaf76f1c713de118cd5075e49c874939a68fccb0786e86b3bd1ff0"
+        "en-home-group-page": "8619349df335c907b603ffaa4692386d75abf8b9758085c4a1ae02d4e911187d",
+        "en-home-planner-subtasks": "9896da69e69d505eeaf3eee576dd445e8f164a48306181ff02ddd1378ed43f5b",
+        "en-home-discover-meetings": "05091f12e86eb437cf2c74fe6ae5ee28c0d72b87e7eda1d72ffced493c965c51"
       },
       "image": {
         "path": "/images/social/shuuty-nb.jpg",
         "mediaType": "image/jpeg",
         "width": 1200,
         "height": 630,
-        "byteLength": 69873,
-        "sha256": "d2ffd45b6abfb88eea262bdc8373d90f66e37572d047c933662be1d16e40e609"
+        "byteLength": 111270,
+        "sha256": "90988f9f18b4e7faeef49cd5b561b435f935580044236824973db4e00029224a"
       }
     }
   },

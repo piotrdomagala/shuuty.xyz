@@ -1,6 +1,7 @@
 // Social preview cards (Open Graph, one per site language) and Product Hunt
-// gallery images, composed from the canonical product captures. A capture is
-// only scaled and placed in a rounded frame - its pixels are never edited.
+// gallery images, composed from registered product captures (the canonical
+// store set or the home captures in guideCaptures). A capture is only scaled
+// and placed in a rounded frame - its pixels are never edited.
 //
 //   node scripts/generate-social-cards.mjs
 //     writes public/images/social/shuuty-<language>.jpg and records each card
@@ -23,13 +24,17 @@ const mediaUrl = new URL('content/product-media.json', root);
 export const SOCIAL_CARD_SIZE = Object.freeze({ width: 1200, height: 630 });
 const PRODUCT_HUNT_SIZE = Object.freeze({ width: 1270, height: 760 });
 const PRODUCT_HUNT_THUMBNAIL_SIZE = 240;
+// The app's dark theme (src/styles/colors.ts in S- at 9dddd31a): page,
+// text, accent text, secondary text, border and the blue glow. The bezel is
+// the device, not the app.
 const colors = {
-  background: '#0d1117',
-  ink: '#f0f6fc',
-  gold: '#ffe5a0',
-  muted: '#9da7b3',
+  background: '#0d1117', // primaryBackgroundColor
+  ink: '#ffffff', // primaryTextColor
+  gold: '#ffe5a0', // accentTextColor
+  muted: '#8b949e', // buttonTextInactive
+  blue: '#7dd3fc', // accentGlowSecondary
   bezel: '#05070a',
-  frame: '#30363d',
+  frame: '#30363d', // navigationBorderColor
 };
 
 const sha256 = (buffer) => createHash('sha256').update(buffer).digest('hex');
@@ -158,8 +163,8 @@ function backgroundSvg({ width, height }, placements, shadowBlur) {
       `<stop offset="0" stop-color="${colors.gold}" stop-opacity="0.17"/>` +
       `<stop offset="1" stop-color="${colors.gold}" stop-opacity="0"/></radialGradient>` +
       '<radialGradient id="cool" cx="0.82" cy="0.95" r="0.65">' +
-      '<stop offset="0" stop-color="#7dd3fc" stop-opacity="0.12"/>' +
-      '<stop offset="1" stop-color="#7dd3fc" stop-opacity="0"/></radialGradient>' +
+      `<stop offset="0" stop-color="${colors.blue}" stop-opacity="0.12"/>` +
+      `<stop offset="1" stop-color="${colors.blue}" stop-opacity="0"/></radialGradient>` +
       `<filter id="shadow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="${shadowBlur}"/></filter>` +
       '</defs>' +
       `<rect width="${width}" height="${height}" fill="${colors.background}"/>` +
@@ -206,8 +211,8 @@ async function composeCard(size, content, captures, assets) {
   const text = (value, options) => renderText(value, { fontfile: assets.fontPath, ...options });
   const fit = (value, maxSize, minSize) =>
     fittedSize(value, { maxSize, minSize, width: textWidth, fontfile: assets.fontPath });
-  // Both headline lines share one size, so the relay reads as one statement,
-  // and never wrap: a headline that does not fit must be shortened instead.
+  // All headline lines share one size, so they read as one statement, and
+  // never wrap: a headline that does not fit must be shortened instead.
   const headlineSizes = [];
   for (const line of content.headline) headlineSizes.push(await fit(line, px(62), px(44)));
   if (headlineSizes.includes(null)) {
@@ -216,11 +221,14 @@ async function composeCard(size, content, captures, assets) {
   const headlineSize = Math.min(...headlineSizes);
   // A long tagline may wrap once it reaches its smallest readable size.
   const taglineSize = await fit(content.tagline, px(29), px(24));
-  const [icon, wordmark, line1, line2, tagline, domain, footer] = await Promise.all([
+  // The first line in the text colour, the rest in the accent, like the hero.
+  const headlineLines = await Promise.all(
+    content.headline.map((line, index) =>
+      text(line, { size: headlineSize, color: index === 0 ? colors.ink : colors.gold })),
+  );
+  const [icon, wordmark, tagline, domain, footer] = await Promise.all([
     renderIcon(assets.icon, px(72)),
     text('Shuuty', { size: px(38), color: colors.ink }),
-    text(content.headline[0], { size: headlineSize, color: colors.ink }),
-    text(content.headline[1], { size: headlineSize, color: colors.gold }),
     taglineSize
       ? text(content.tagline, { size: taglineSize, color: colors.muted })
       : text(content.tagline, { size: px(24), color: colors.muted, width: textWidth }),
@@ -229,7 +237,14 @@ async function composeCard(size, content, captures, assets) {
   ]);
 
   const iconTop = px(58);
-  const headlineTop = px(190);
+  const headlineTop = headlineLines.length > 2 ? px(168) : px(190);
+  const headlineLayers = [];
+  let headlineBottom = headlineTop;
+  headlineLines.forEach((line, index) => {
+    const top = index === 0 ? headlineTop : headlineBottom + px(4);
+    headlineLayers.push({ name: `headline line ${index + 1}`, ...line, left: margin, top });
+    headlineBottom = top + line.height;
+  });
   const footerTop = size.height - px(58) - footer.height;
   const domainTop = footerTop - px(10) - domain.height;
   const textLayers = [
@@ -240,13 +255,12 @@ async function composeCard(size, content, captures, assets) {
       left: margin + px(72) + px(18),
       top: iconTop + Math.round((px(72) - wordmark.height) / 2),
     },
-    { name: 'headline line 1', ...line1, left: margin, top: headlineTop },
-    { name: 'headline line 2', ...line2, left: margin, top: headlineTop + line1.height + px(4) },
+    ...headlineLayers,
     {
       name: 'tagline',
       ...tagline,
       left: margin,
-      top: headlineTop + line1.height + line2.height + px(30),
+      top: headlineBottom + px(26),
     },
     { name: 'domain', ...domain, left: margin, top: domainTop },
     { name: 'footer', ...footer, left: margin, top: footerTop },
@@ -313,7 +327,9 @@ async function loadInputs() {
     fontPath: join(rootPath, renderer.font),
     icon: await readVerified(renderer.icon, renderer.iconSha256, 'Card icon'),
   };
-  const mediaById = new Map(media.assets.map((asset) => [asset.id, asset]));
+  const mediaById = new Map(
+    [...media.assets, ...(media.guideCaptures ?? [])].map((asset) => [asset.id, asset]),
+  );
 
   async function readCaptures(ids) {
     const captures = [];
@@ -322,7 +338,7 @@ async function loadInputs() {
       const asset = mediaById.get(id);
       if (!asset) throw new Error(`Unknown product capture: ${id}`);
       captures.push(
-        await readVerified(`public${asset.path}`, asset.sha256, `Canonical capture ${id}`),
+        await readVerified(`public${asset.path}`, asset.sha256, `Product capture ${id}`),
       );
       sources[id] = asset.sha256;
     }

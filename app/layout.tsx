@@ -59,11 +59,11 @@ const goatCounterSettingsScript = `
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'Shuuty - Voice Tasks, Flexible Groups & Meetings',
+    default: 'Shuuty - a task app with friends and groups',
     template: '%s | Shuuty',
   },
   description:
-    'Tasks, groups and meetings in one app: say a task and hand it to people, start a group for a family, club or clients, and meet up nearby. iOS and Android.',
+    'A to-do list, tasks for friends and groups with a calendar, bookings and meetings nearby. Start with your own tasks. For iOS and Android.',
   applicationName: 'Shuuty',
   category: 'Productivity',
   // Public site-ownership tag from Bing Webmaster Tools; it is meant to be visible.
@@ -72,16 +72,15 @@ export const metadata: Metadata = {
   },
   keywords: [
     'Shuuty',
-    'voice tasks',
-    'task delegation',
-    'shared planner',
+    'task app',
+    'to-do list with subtasks',
+    'tasks for friends',
+    'shared tasks',
+    'group tasks',
     'group calendar',
     'bookings',
-    'projects and plans',
-    'time tracking',
-    'group galleries',
-    'local meetings',
-    'community map',
+    'meetings nearby',
+    'voice tasks',
     'mobile app',
   ],
   authors: [{ name: 'Shuuty' }],
@@ -103,9 +102,9 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'Shuuty - From Idea to Action',
+    title: 'Shuuty - a task app with friends and groups',
     description:
-      'Say it, choose a person or group, and move the task forward. Run groups for work, community, services and bookings, and meet up nearby.',
+      'Start with your own to-do list, hand tasks to friends and join groups and meetings of people who share your interests.',
     url: '/',
     type: 'website',
     locale: 'en_US',
@@ -115,9 +114,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Shuuty - From Idea to Action',
+    title: 'Shuuty - a task app with friends and groups',
     description:
-      'Say it. Delegate it. Get it done. Groups for work, community, services and bookings, and meetups nearby.',
+      'Start with your own to-do list, hand tasks to friends and join groups and meetings of people who share your interests.',
     images: [{ url: socialImage('en').url, alt: socialImage('en').alt }],
   },
   icons: {

@@ -9,193 +9,230 @@
       "footerNav": "Footer navigation"
     },
     "nav": {
-      "overview": "What is Shuuty",
       "tasks": "Tasks",
+      "friends": "Friends",
+      "discover": "Discover",
       "groups": "Groups",
-      "discover": "Meetings / Map",
       "download": "Get the app"
     },
     "hero": {
       "badge": "Available on iOS and Android",
-      "title": "From idea",
-      "accent": "to action.",
-      "relay": "Say it. Delegate it. Get it done.",
-      "sub": "Turn a spoken thought into a structured task for a person or group. Then shape groups around work, community, services, sales, bookings or whatever comes next.",
+      "title": "A task app -",
+      "accent": "for you, your friends and your groups",
+      "sub": "Start with your own to-do list. When you want to, hand a task to a friend or join groups and meetings of people who share your interests.",
       "secondaryCta": "See how it works",
-      "signals": [
-        "Voice or manual input",
-        "A person or group",
-        "One complete task"
-      ],
-      "visualLabel": "Real Shuuty product views"
+      "screens": [
+        {
+          "media": "home-planner-meeting",
+          "alt": "Shuuty planner with colourful tasks and a board games meeting with a photo"
+        },
+        {
+          "media": "home-group-page",
+          "alt": "A dance group page in Shuuty with its description, location and members"
+        },
+        {
+          "media": "home-discover-meetings",
+          "alt": "The Shuuty Discover map with a board game meeting nearby"
+        }
+      ]
     },
-    "overview": {
-      "label": "One connected ecosystem",
-      "heading": "Everyday life does not happen in separate apps.",
-      "lead": "Tasks, conversations, calendars, people and places belong to one flow. Shuuty keeps their context together from the first thought to the moment it gets done.",
+    "how": {
+      "label": "How it works",
+      "heading": "One app, four steps",
+      "lead": "You start with yourself. Add the rest when you need it.",
+      "steps": [
+        {
+          "id": "step-tasks",
+          "title": "Your to-do list",
+          "text": "Add a task by voice or by typing, give it subtasks, a reminder and a category, and start the timer while you work.",
+          "points": [
+            "Voice or typing",
+            "Subtasks",
+            "Reminders",
+            "Timer",
+            "Categories"
+          ],
+          "guides": [
+            "private-tasks"
+          ],
+          "screens": [
+            {
+              "media": "home-planner",
+              "alt": "Today in the Shuuty planner with times, reminders and a timer on each task"
+            },
+            {
+              "media": "home-voice",
+              "alt": "A new voice task in Shuuty, ready to record"
+            }
+          ]
+        },
+        {
+          "id": "step-friends",
+          "title": "Friends and shared tasks",
+          "text": "Add friends with a link or a QR code, hand a task to one of them and talk it over right in the task.",
+          "points": [
+            "Link and QR code",
+            "A task for a friend",
+            "Discussion in the task"
+          ],
+          "guides": [
+            "friend-task"
+          ],
+          "screens": [
+            {
+              "media": "home-delegated-task",
+              "alt": "A task handed to a friend in Shuuty, with a discussion under the description"
+            },
+            {
+              "media": "home-friends",
+              "alt": "The friends list in Shuuty with an invitation link and QR code"
+            }
+          ]
+        },
+        {
+          "id": "step-discover",
+          "title": "Discover",
+          "text": "Find meetings and groups of people with the same interests nearby, on a map.",
+          "points": [
+            "Meetings",
+            "Groups",
+            "Interests"
+          ],
+          "guides": [],
+          "screens": [
+            {
+              "media": "home-discover-groups",
+              "alt": "The Shuuty Discover map with a dance group nearby"
+            },
+            {
+              "media": "home-meeting-page",
+              "alt": "A meeting page in Shuuty with the place, participants and description"
+            }
+          ]
+        },
+        {
+          "id": "step-groups",
+          "title": "Group",
+          "text": "Tasks for everyone or for selected people, a shared calendar and conversations in one place.",
+          "points": [
+            "Tasks for selected people",
+            "Plans and costs in the calendar",
+            "Booking schedule",
+            "Threads",
+            "Group chat"
+          ],
+          "guides": [
+            "group-tasks",
+            "group-people"
+          ],
+          "screens": [
+            {
+              "media": "home-group-calendar",
+              "alt": "A group calendar in Shuuty with a trip, its place and a cost of 180 PLN"
+            },
+            {
+              "media": "home-group-chat",
+              "alt": "A group chat in Shuuty with added plans and a conversation"
+            },
+            {
+              "media": "home-booking-slots",
+              "alt": "Adding a booking in a Shuuty group by choosing a free session"
+            }
+          ]
+        }
+      ],
+      "loop": {
+        "label": "Full circle",
+        "text": "In a group you meet people, add them as friends and start giving each other tasks again.",
+        "strong": "One app, not four.",
+        "chain": [
+          "To-do list",
+          "Friends",
+          "Discover",
+          "Group"
+        ],
+        "screen": {
+          "media": "home-group-members",
+          "alt": "Group members in Shuuty marked as friends, with an Invite button next to a new person"
+        }
+      }
+    },
+    "uses": {
+      "label": "Use cases",
+      "heading": "What people use Shuuty for",
+      "lead": "A few common ways. The same app, a different scale.",
       "items": [
         {
           "icon": "task",
-          "kicker": "01",
-          "title": "Tasks that keep moving",
-          "desc": "Create by voice, receive, delegate, discuss, remind and complete.",
-          "href": "#tasks"
+          "title": "Your own to-do list",
+          "text": "Shopping, bills and today's errands - with a reminder, subtasks and a timer.",
+          "guides": [
+            "private-tasks"
+          ]
         },
         {
-          "icon": "group",
-          "kicker": "02",
-          "title": "Groups shaped around purpose",
-          "desc": "A private circle, community, team, booking space or your own offer.",
-          "href": "#groups"
+          "icon": "people",
+          "title": "Family and friends",
+          "text": "Hand a task to someone at home or to a friend and settle the details in the task discussion.",
+          "guides": [
+            "friend-task"
+          ]
         },
-        {
-          "icon": "map",
-          "kicker": "03",
-          "title": "Meetings with a purpose",
-          "desc": "Meet friends or new people, while the map helps you discover meetings and public groups nearby.",
-          "href": "#discover"
-        }
-      ]
-    },
-    "tasks": {
-      "label": "01 · Tasks",
-      "heading": "Say it. Choose a person or group. The task is ready.",
-      "lead": "Say: “Alex should send the proposal tomorrow at 9. Remind Alex 30 minutes earlier.” Shuuty prepares the title, description, assignee, due time and reminder for review. Create it, and Alex receives the task immediately - or an approval request when their settings require one.",
-      "bullets": [
-        "Private, received and delegated tasks stay in clear, separate views.",
-        "A delegated task is delivered as soon as it is created. The due time defines when to do it. The reminder defines when the recipient is notified.",
-        "A shared or delegated task can become a focused thinking space. Discussion, replies and all activity stay with the task.",
-        "Manual creation keeps the same depth: descriptions, subtasks, priority, reminders, people, location and time tracking."
-      ],
-      "mechanismLabel": "From thought to task - three steps.",
-      "mechanismLead": "Before you send the task, you can see who will receive it, when it is due, and which details and conversations will stay with it.",
-      "flowRegionLabel": "From voice to a delegated task",
-      "flowSelectLabel": "Show this step",
-      "mechanism": [
-        {
-          "kicker": "Capture",
-          "title": "Say it.",
-          "desc": "Speak naturally or type. Shuuty keeps the title, details, timing and reminder together."
-        },
-        {
-          "kicker": "Context",
-          "title": "Choose a person or group.",
-          "desc": "Keep it private, assign a person or place it directly in the right group."
-        },
-        {
-          "kicker": "Hand-off",
-          "title": "Delegate now. The task is ready.",
-          "desc": "Review the structured task, then send it with its discussion, activity and time in one place."
-        }
-      ]
-    },
-    "groups": {
-      "label": "02 · Groups",
-      "heading": "Your group can become its own world.",
-      "lead": "As its creator, you choose what the group becomes, what people outside it can see and which modules are active. Keep it private, open it to everyone or let the public discover the offer while members see the working context.",
-      "bullets": [
-        "Build the public description with a gallery, location and interests, or reserve selected details for members.",
-        "Present services, products or announcements: a practice, workshop, local produce, vehicles, machinery or specialist services.",
-        "Keep the group information-only, or connect tasks, conversations, calendars, bookings, projects, plans and time records as its purpose grows."
-      ],
-      "modesLabel": "Four starting points. No fixed template.",
-      "modes": [
         {
           "icon": "work",
-          "title": "A place to work",
-          "desc": "A team, clients, projects, plans, delegated tasks and per-person time."
+          "title": "A crew or a small business",
+          "text": "Split the work in a team: tasks for everyone or for selected people, with a due date and a conversation.",
+          "guides": [
+            "group-people",
+            "group-tasks"
+          ]
         },
         {
           "icon": "community",
-          "title": "A community",
-          "desc": "Private or open people, interests, information and recurring activities."
+          "title": "A club or a dance group",
+          "text": "Training, trips and costs in the group calendar, with outfits and travel in separate threads.",
+          "guides": [
+            "sports-club",
+            "group-tasks"
+          ]
         },
         {
           "icon": "calendar",
-          "title": "A service offer",
-          "desc": "A practice, workshop or specialist with public or limited reservations."
-        },
-        {
-          "icon": "offer",
-          "title": "A sales showcase",
-          "desc": "Products, vehicles, machinery, local goods, announcements or a catalogue."
-        }
-      ],
-      "modulesLabel": "Shape it with the modules you need",
-      "modules": [
-        "Gallery",
-        "Location",
-        "Interests",
-        "Tasks",
-        "Calendars",
-        "Bookings",
-        "Projects",
-        "Plans",
-        "Time records",
-        "Conversations"
-      ]
-    },
-    "discover": {
-      "label": "03 · Meetings",
-      "heading": "Meet with a clear purpose.",
-      "lead": "Create a private meet-up with friends or an open meeting for new people. Set the place and time, invite participants and keep the details in one shared context.",
-      "bullets": [
-        "Meet privately with friends or open the plan to people you have not met yet.",
-        "Keep the place, time, participants and conversation together.",
-        "Use chat to agree the details before and after the meeting."
-      ],
-      "map": {
-        "label": "Map · Discovery",
-        "heading": "Meetings and groups nearby.",
-        "lead": "Use the map to find meetings, public groups and communities near you.",
-        "bullets": [
-          "Search by location, needs and interests.",
-          "Open a meeting or group and contact the people behind it."
-        ]
-      },
-      "meetings": "Meetings",
-      "groups": "Groups & offers",
-      "mapCaption": "Meetings and groups around you"
-    },
-    "experience": {
-      "label": "Product depth",
-      "heading": "Start simple. Add structure when it helps.",
-      "lead": "Shuuty can be a fast place for one thought or the shared operating context for a longer plan. The same product adapts without forcing every module on every group.",
-      "screenCaption": "Real product views",
-      "items": [
-        {
-          "title": "Light and Dark",
-          "desc": "Use the appearance that fits the moment without changing how the product works."
-        },
-        {
-          "title": "Projects and plans",
-          "desc": "Connect longer work with the tasks, people and group that already hold its context."
-        },
-        {
-          "title": "Calendars and bookings",
-          "desc": "Coordinate shared dates or offer reservations to a broad or limited audience."
-        },
-        {
-          "title": "Time and conversations",
-          "desc": "Keep per-person records, decisions and discussion close to the work."
+          "title": "Services with bookings",
+          "text": "A salon or a barber: a booking schedule in the group, and clients pick a free session.",
+          "guides": [
+            "group-profile"
+          ]
         }
       ]
+    },
+    "guideLabels": {
+      "private-tasks": "Guide: a to-do list with subtasks",
+      "friend-task": "Guide: send a task to a friend",
+      "group-tasks": "Guide: group tasks",
+      "group-people": "Guide: a task for selected people",
+      "sports-club": "Guide: an app for a sports club",
+      "group-profile": "Guide: the group profile"
     },
     "faq": {
       "label": "FAQ",
       "heading": "The useful details",
       "items": [
         {
-          "q": "What can Shuuty understand from a voice task?",
-          "a": "It can structure the title and description, detect a date and time, set a reminder, recognise an assignee and location, and split several thoughts into separate tasks for review."
+          "q": "Can I use Shuuty just for my own tasks?",
+          "a": "Yes. Start with a private to-do list with subtasks, reminders, categories and a timer. Add friends and groups only when you want to."
         },
         {
-          "q": "Can I delegate a task while creating it?",
-          "a": "Yes. If you assign someone while creating the task, they receive it immediately after creation. If their settings require approval, they receive the approval request immediately instead. The due time defines when to act. The reminder defines when to notify them. It never delays delivery."
+          "q": "What is the difference between a group and a meeting?",
+          "a": "A group is a lasting place for people, with a chat, threads, tasks, a calendar and bookings. A meeting is one event with a place and a time - private for invited people or open to new people nearby."
         },
         {
-          "q": "What can a group become, and who can see it?",
-          "a": "It can be a private circle, community, workplace, client space, booking system, service offer, sales showcase or information-only group. Its creator chooses the visibility and active modules. Tasks retain the group context, while a public presentation can include information, gallery images, location and interests."
+          "q": "How do I add a friend?",
+          "a": "Send an invitation link or show a QR code to scan. Once the other person accepts, you can hand each other tasks."
+        },
+        {
+          "q": "How many people can a group have?",
+          "a": "Group limits follow the organizer's plan: on Free a group has up to 20 people and up to 3 active tasks at a time, on Pro up to 150 people and on Teams up to 900, both with no limit on active tasks."
         },
         {
           "q": "Is Shuuty free?",
@@ -209,17 +246,17 @@
       "sub": "Download Shuuty and organise tasks, people, conversations, calendars and places in one app."
     },
     "images": {
-      "create": "Shuuty create menu with task, voice, meeting and group actions",
-      "settings": "Shuuty settings with light mode and language controls",
-      "groups": "Shuuty chat showing conversations and activity across groups",
-      "meetings": "Shuuty map showing a meeting",
       "voiceInput": "Shuuty voice input for capturing a task",
       "assignee": "Shuuty task recipient selection",
       "delegatedTask": "A structured delegated task in Shuuty",
+      "groups": "Shuuty chat showing conversations and activity across groups",
       "groupGallery": "A Shuuty group presentation with a real product gallery",
       "modules": "Shuuty group module settings",
       "bookings": "A populated booking calendar in Shuuty",
       "nearby": "Shuuty discovery map with nearby results"
+    },
+    "social": {
+      "headline": "A task app - for you, your friends and your groups"
     },
     "store": {
       "apple": "App Store",
@@ -239,12 +276,12 @@
     },
     "schema": {
       "features": [
-        "Create tasks by voice or manually, with a due time, reminder, assignee and place",
-        "Split several spoken thoughts into separate tasks for review",
-        "Delegate tasks to friends and groups",
-        "Private, Received and Delegated views with subtasks, priorities and task discussion",
-        "Groups with chat, threads, tasks, calendars, bookings, plans, projects and time tracking",
-        "Private and open meetings with nearby discovery on a map",
+        "A private to-do list with subtasks, reminders, categories and a timer",
+        "Tasks created by voice or by typing",
+        "Friends added with an invitation link or a QR code",
+        "Tasks handed to friends, with a discussion in the task",
+        "Meetings and groups nearby on the Discover map",
+        "Groups with chat, threads, tasks for everyone or selected people, a calendar and bookings",
         "Chat dictation and, on Pro and Teams, chat message translation",
         "Available in English, Polish and Norwegian"
       ]
@@ -260,196 +297,233 @@
       "footerNav": "Nawigacja w stopce"
     },
     "nav": {
-      "overview": "Czym jest Shuuty",
       "tasks": "Zadania",
+      "friends": "Znajomi",
+      "discover": "Odkrywaj",
       "groups": "Grupy",
-      "discover": "Spotkania / Mapa",
       "download": "Pobierz aplikację"
     },
     "hero": {
       "badge": "Dostępne na iOS i Android",
-      "title": "Od pomysłu",
-      "accent": "do działania.",
-      "relay": "Powiedz. Deleguj. Działajcie.",
-      "sub": "Zamień wypowiedzianą myśl w uporządkowane zadanie dla osoby lub grupy. Potem twórz grupy do pracy, społeczności, usług, sprzedaży, rezerwacji i wszystkiego, co przyjdzie dalej.",
+      "title": "Aplikacja do zadań -",
+      "accent": "Twoich, ze znajomymi i w grupach",
+      "sub": "Zacznij od własnej listy zadań. Gdy zechcesz, przekaż zadanie znajomemu albo dołącz do grupy i spotkań ludzi o tych samych zainteresowaniach.",
       "secondaryCta": "Zobacz, jak to działa",
-      "signals": [
-        "Głos lub ręczny wpis",
-        "Osoba albo grupa",
-        "Jedno kompletne zadanie"
-      ],
-      "visualLabel": "Prawdziwe widoki produktu Shuuty"
+      "screens": [
+        {
+          "media": "home-planner-meeting",
+          "alt": "Planer Shuuty z kolorowymi zadaniami i spotkaniem planszówkowym ze zdjęciem"
+        },
+        {
+          "media": "home-group-page",
+          "alt": "Strona grupy tanecznej w Shuuty z opisem, lokalizacją i członkami"
+        },
+        {
+          "media": "home-discover-meetings",
+          "alt": "Mapa Odkrywaj w Shuuty ze spotkaniem planszówkowym w pobliżu"
+        }
+      ]
     },
-    "overview": {
-      "label": "Jeden połączony ekosystem",
-      "heading": "Codzienne życie nie dzieje się w osobnych aplikacjach.",
-      "lead": "Zadania, rozmowy, kalendarze, ludzie i miejsca są częścią jednego przepływu. Shuuty zachowuje ich kontekst od pierwszej myśli aż do wykonania.",
+    "how": {
+      "label": "Jak to działa",
+      "heading": "Jedna aplikacja, cztery kroki",
+      "lead": "Zaczynasz od siebie. Resztę dodajesz wtedy, kiedy jej potrzebujesz.",
+      "steps": [
+        {
+          "id": "step-tasks",
+          "title": "Twoja lista zadań",
+          "text": "Zapisz zadanie głosem albo pisząc, dodaj podzadania, przypomnienie i kategorię, a przy pracy włącz stoper.",
+          "points": [
+            "Głos lub pisanie",
+            "Podzadania",
+            "Przypomnienia",
+            "Stoper",
+            "Kategorie"
+          ],
+          "guides": [
+            "private-tasks"
+          ],
+          "screens": [
+            {
+              "media": "home-planner",
+              "alt": "Dzisiejsze zadania w planerze Shuuty z godzinami, przypomnieniami i stoperem"
+            },
+            {
+              "media": "home-voice",
+              "alt": "Nowe zadanie głosowe w Shuuty, gotowe do nagrania"
+            }
+          ]
+        },
+        {
+          "id": "step-friends",
+          "title": "Znajomi i wspólne zadania",
+          "text": "Dodaj znajomych przez link albo kod QR, przekaż komuś zadanie i rozmawiajcie o nim w samym zadaniu.",
+          "points": [
+            "Link i kod QR",
+            "Zadanie dla znajomego",
+            "Dyskusja w zadaniu"
+          ],
+          "guides": [
+            "friend-task"
+          ],
+          "screens": [
+            {
+              "media": "home-delegated-task",
+              "alt": "Zadanie przekazane znajomemu w Shuuty z dyskusją pod opisem"
+            },
+            {
+              "media": "home-friends",
+              "alt": "Lista znajomych w Shuuty z linkiem i kodem QR zaproszenia"
+            }
+          ]
+        },
+        {
+          "id": "step-discover",
+          "title": "Odkrywaj",
+          "text": "Na mapie znajdziesz spotkania i grupy ludzi o tych samych zainteresowaniach w pobliżu.",
+          "points": [
+            "Spotkania",
+            "Grupy",
+            "Zainteresowania"
+          ],
+          "guides": [],
+          "screens": [
+            {
+              "media": "home-discover-groups",
+              "alt": "Mapa Odkrywaj w Shuuty z grupą taneczną w pobliżu"
+            },
+            {
+              "media": "home-meeting-page",
+              "alt": "Strona spotkania w Shuuty z miejscem, uczestnikami i opisem"
+            }
+          ]
+        },
+        {
+          "id": "step-groups",
+          "title": "Grupa",
+          "text": "Zadania dla wszystkich albo dla wybranych osób, wspólny kalendarz i rozmowy w jednym miejscu.",
+          "points": [
+            "Zadania dla wybranych",
+            "Plany i koszty w kalendarzu",
+            "Grafik rezerwacji",
+            "Wątki",
+            "Czat grupy"
+          ],
+          "guides": [
+            "group-tasks",
+            "group-people"
+          ],
+          "screens": [
+            {
+              "media": "home-group-calendar",
+              "alt": "Kalendarz grupy w Shuuty z wyjazdem, miejscem i kosztem 180 zł"
+            },
+            {
+              "media": "home-group-chat",
+              "alt": "Czat grupy w Shuuty z dodanymi planami i rozmową"
+            },
+            {
+              "media": "home-booking-slots",
+              "alt": "Dodawanie rezerwacji w grupie Shuuty przez wybór wolnej sesji"
+            }
+          ]
+        }
+      ],
+      "loop": {
+        "label": "Koło się zamyka",
+        "text": "W grupie poznajesz ludzi, dodajesz ich do znajomych i znowu dajecie sobie zadania.",
+        "strong": "Jedna aplikacja, nie cztery.",
+        "chain": [
+          "Lista zadań",
+          "Znajomi",
+          "Odkrywaj",
+          "Grupa"
+        ],
+        "screen": {
+          "media": "home-group-members",
+          "alt": "Członkowie grupy w Shuuty oznaczeni jako znajomi i przycisk Zaproś przy nowej osobie"
+        }
+      }
+    },
+    "uses": {
+      "label": "Zastosowania",
+      "heading": "Do czego ludzie używają Shuuty",
+      "lead": "Kilka typowych sposobów. Ta sama aplikacja, inna skala.",
       "items": [
         {
           "icon": "task",
-          "kicker": "01",
-          "title": "Zadania, które żyją",
-          "desc": "Twórz głosem, odbieraj, deleguj, rozmawiaj, przypominaj i kończ.",
-          "href": "#tasks"
+          "title": "Własna lista zadań",
+          "text": "Zakupy, rachunki i sprawy na dziś - z przypomnieniem, podzadaniami i stoperem.",
+          "guides": [
+            "private-tasks"
+          ]
         },
         {
-          "icon": "group",
-          "kicker": "02",
-          "title": "Grupy dopasowane do celu",
-          "desc": "Prywatny krąg, społeczność, zespół, rezerwacje albo Twoja oferta.",
-          "href": "#groups"
+          "icon": "people",
+          "title": "Rodzina i znajomi",
+          "text": "Przekaż zadanie domownikowi albo znajomemu i ustalcie szczegóły w dyskusji przy zadaniu.",
+          "guides": [
+            "friend-task"
+          ]
         },
-        {
-          "icon": "map",
-          "kicker": "03",
-          "title": "Spotkania z konkretnym celem",
-          "desc": "Spotykaj się ze znajomymi lub nowymi osobami, a na mapie odkrywaj pobliskie spotkania i publiczne grupy.",
-          "href": "#discover"
-        }
-      ]
-    },
-    "tasks": {
-      "label": "01 · Zadania",
-      "heading": "Powiedz. Wybierz osobę lub grupę. Zadanie jest gotowe.",
-      "lead": "Powiedz: „Ola ma jutro o 9 wysłać ofertę. Przypomnij jej 30 minut wcześniej”. Shuuty przygotuje do sprawdzenia tytuł, opis, odbiorcę, termin i przypomnienie. Utwórz zadanie, a Ola otrzyma je od razu - albo prośbę o akceptację, jeśli wymagają tego jej ustawienia.",
-      "bullets": [
-        "Zadania prywatne, otrzymane i delegowane mają czytelne, osobne widoki.",
-        "Delegowane zadanie trafia do odbiorcy od razu po utworzeniu. Termin określa czas wykonania. Przypomnienie określa czas powiadomienia.",
-        "Wspólne lub delegowane zadanie może stać się przestrzenią do wspólnego myślenia. Dyskusja, odpowiedzi i cała aktywność zostają przy zadaniu.",
-        "Ręczne tworzenie zachowuje tę samą głębię: opis, podzadania, priorytet, przypomnienia, osoby, lokalizację i pomiar czasu."
-      ],
-      "mechanismLabel": "Od myśli do zadania - trzy kroki.",
-      "mechanismLead": "Zanim wyślesz zadanie, widzisz, kto je otrzyma, do kiedy ma być wykonane oraz jakie informacje i rozmowy pozostaną przy nim.",
-      "flowRegionLabel": "Od głosu do delegowanego zadania",
-      "flowSelectLabel": "Pokaż ten krok",
-      "mechanism": [
-        {
-          "kicker": "Uchwyć",
-          "title": "Powiedz.",
-          "desc": "Mów naturalnie albo wpisz treść. Shuuty zachowa razem tytuł, szczegóły, termin i przypomnienie."
-        },
-        {
-          "kicker": "Kontekst",
-          "title": "Wybierz osobę lub grupę.",
-          "desc": "Zostaw zadanie prywatne, przypisz osobę albo umieść je bezpośrednio we właściwej grupie."
-        },
-        {
-          "kicker": "Przekazanie",
-          "title": "Deleguj teraz. Zadanie jest gotowe.",
-          "desc": "Sprawdź uporządkowane zadanie i wyślij je z rozmową, aktywnością oraz czasem w jednym miejscu."
-        }
-      ]
-    },
-    "groups": {
-      "label": "02 · Grupy",
-      "heading": "Twoja grupa może stać się własnym światem.",
-      "lead": "Jako twórca wybierasz, czym grupa będzie, co zobaczą osoby spoza niej i które moduły pozostaną aktywne. Zachowaj ją prywatną, otwórz dla wszystkich albo pokaż publicznie ofertę, zostawiając kontekst pracy członkom.",
-      "bullets": [
-        "Zbuduj publiczny opis z galerią, lokalizacją i zainteresowaniami albo zachowaj wybrane informacje tylko dla członków.",
-        "Prezentuj usługi, produkty i ogłoszenia: gabinet, zakład, lokalne warzywa, samochody, maszyny lub usługi specjalistyczne.",
-        "Zostaw grupę wyłącznie informacyjną albo połącz zadania, rozmowy, kalendarze, rezerwacje, projekty, plany i ewidencję czasu, gdy jej cel rośnie."
-      ],
-      "modesLabel": "Cztery punkty wyjścia. Bez sztywnego szablonu.",
-      "modes": [
         {
           "icon": "work",
-          "title": "Miejsce pracy",
-          "desc": "Zespół, klienci, projekty, plany, delegowane zadania i czas każdej osoby."
+          "title": "Ekipa albo mała firma",
+          "text": "Rozdziel pracę w zespole: zadania dla wszystkich albo dla wybranych osób, z terminem i rozmową.",
+          "guides": [
+            "group-people",
+            "group-tasks"
+          ]
         },
         {
           "icon": "community",
-          "title": "Społeczność",
-          "desc": "Prywatni lub otwarci ludzie, zainteresowania, informacje i cykliczne aktywności."
+          "title": "Klub albo grupa taneczna",
+          "text": "Treningi, wyjazdy i koszty w kalendarzu grupy, a sprawy strojów i dojazdu w osobnych wątkach.",
+          "guides": [
+            "sports-club",
+            "group-tasks"
+          ]
         },
         {
           "icon": "calendar",
-          "title": "Oferta usługowa",
-          "desc": "Gabinet, zakład albo specjalista z otwartymi lub ograniczonymi rezerwacjami."
-        },
-        {
-          "icon": "offer",
-          "title": "Oferta sprzedażowa",
-          "desc": "Produkty, samochody, maszyny, lokalne towary, ogłoszenia albo katalog."
-        }
-      ],
-      "modulesLabel": "Dobierz moduły, których potrzebujesz",
-      "modules": [
-        "Galeria",
-        "Lokalizacja",
-        "Zainteresowania",
-        "Zadania",
-        "Kalendarze",
-        "Rezerwacje",
-        "Projekty",
-        "Plany",
-        "Ewidencja czasu",
-        "Rozmowy"
-      ]
-    },
-    "discover": {
-      "label": "03 · Spotkania",
-      "heading": "Spotkajcie się wokół konkretnego celu.",
-      "lead": "Twórz prywatne spotkania ze znajomymi albo otwarte spotkania dla nowych osób. Ustal miejsce i czas, zaproś uczestników i zachowaj wszystkie szczegóły w jednym kontekście.",
-      "bullets": [
-        "Spotykaj się prywatnie ze znajomymi albo otwórz plan na osoby, których jeszcze nie znasz.",
-        "Trzymaj miejsce, czas, uczestników i rozmowę razem.",
-        "Ustalaj szczegóły na czacie przed spotkaniem i po nim."
-      ],
-      "map": {
-        "label": "Mapa · Odkrywanie",
-        "heading": "Spotkania i grupy w pobliżu.",
-        "lead": "Na mapie znajdziesz spotkania, publiczne grupy i społeczności w pobliżu.",
-        "bullets": [
-          "Szukaj według miejsca, potrzeb i zainteresowań.",
-          "Otwórz spotkanie lub grupę i skontaktuj się z ich twórcami."
-        ]
-      },
-      "meetings": "Spotkania",
-      "groups": "Grupy i oferty",
-      "mapCaption": "Spotkania i grupy wokół Ciebie"
-    },
-    "experience": {
-      "label": "Głębia produktu",
-      "heading": "Zacznij prosto. Dodaj strukturę, gdy pomaga.",
-      "lead": "Shuuty może być szybkim miejscem dla jednej myśli albo wspólnym kontekstem dłuższego planu. Ten sam produkt dopasowuje się bez narzucania każdej grupie wszystkich modułów.",
-      "screenCaption": "Prawdziwe widoki produktu",
-      "items": [
-        {
-          "title": "Jasny i ciemny motyw",
-          "desc": "Wybierz wygląd odpowiedni do chwili bez zmiany sposobu działania produktu."
-        },
-        {
-          "title": "Projekty i plany",
-          "desc": "Połącz dłuższą pracę z zadaniami, ludźmi i grupą, które już zachowują jej kontekst."
-        },
-        {
-          "title": "Kalendarze i rezerwacje",
-          "desc": "Koordynuj wspólne terminy albo udostępniaj rezerwacje szerokiemu lub ograniczonemu gronu."
-        },
-        {
-          "title": "Czas i rozmowy",
-          "desc": "Trzymaj ewidencję każdej osoby, decyzje i dyskusję blisko wykonywanej pracy."
+          "title": "Usługi z rezerwacjami",
+          "text": "Salon albo barber: grafik rezerwacji w grupie, a klienci wybierają wolną sesję.",
+          "guides": [
+            "group-profile"
+          ]
         }
       ]
+    },
+    "guideLabels": {
+      "private-tasks": "Poradnik: lista zadań z podzadaniami",
+      "friend-task": "Poradnik: zadanie dla znajomego",
+      "group-tasks": "Poradnik: zadania w grupie",
+      "group-people": "Poradnik: zadanie dla wybranych osób",
+      "sports-club": "Poradnik: aplikacja dla klubu",
+      "group-profile": "Poradnik: profil grupy"
     },
     "faq": {
       "label": "FAQ",
       "heading": "Konkrety, które warto znać",
       "items": [
         {
-          "q": "Co Shuuty rozumie z zadania głosowego?",
-          "a": "Potrafi uporządkować tytuł i opis, rozpoznać datę i godzinę, ustawić przypomnienie, rozpoznać odbiorcę i miejsce oraz rozdzielić kilka myśli na osobne zadania do sprawdzenia."
+          "q": "Czy mogę używać Shuuty tylko do własnych zadań?",
+          "a": "Tak. Zacznij od prywatnej listy zadań z podzadaniami, przypomnieniami, kategoriami i stoperem. Znajomych i grupy dodajesz dopiero wtedy, gdy zechcesz."
         },
         {
-          "q": "Czy mogę delegować zadanie już podczas tworzenia?",
-          "a": "Tak. Jeśli przypiszesz osobę podczas tworzenia, otrzyma zadanie od razu po jego utworzeniu. Jeśli jej ustawienia wymagają akceptacji, od razu otrzyma prośbę o przyjęcie zadania. Termin określa czas wykonania. Przypomnienie określa czas powiadomienia. Nigdy nie opóźnia dostarczenia zadania."
+          "q": "Czym różni się grupa od spotkania?",
+          "a": "Grupa to stałe miejsce dla ludzi: z czatem, wątkami, zadaniami, kalendarzem i rezerwacjami. Spotkanie to jedno wydarzenie z miejscem i czasem - prywatne dla zaproszonych albo otwarte dla nowych osób w okolicy."
         },
         {
-          "q": "Czym może stać się grupa i kto może ją zobaczyć?",
-          "a": "Może być prywatnym kręgiem, społecznością, miejscem pracy, przestrzenią dla klientów, systemem rezerwacji, ofertą usługową, prezentacją sprzedażową albo grupą wyłącznie informacyjną. Twórca wybiera jej widoczność i aktywne moduły. Zadania zachowują kontekst grupy, a publiczna prezentacja może zawierać informacje, zdjęcia galerii, lokalizację i zainteresowania."
+          "q": "Jak dodać znajomego?",
+          "a": "Wyślij link zaproszenia albo pokaż kod QR do zeskanowania. Gdy druga osoba przyjmie zaproszenie, możecie przekazywać sobie zadania."
         },
         {
-          "q": "Czy Shuuty jest darmowe?",
+          "q": "Ile osób może być w grupie?",
+          "a": "Limity grupy zależą od planu organizatora: w planie Free grupa ma do 20 osób i do 3 aktywnych zadań naraz, w Pro do 150 osób, a w Teams do 900, w obu bez limitu aktywnych zadań."
+        },
+        {
+          "q": "Czy Shuuty jest za darmo?",
           "a": "Możesz zacząć od planu Free. Opcjonalne plany Pro i Teams zwiększają limity i odblokowują dodatkowe funkcje."
         }
       ]
@@ -460,17 +534,17 @@
       "sub": "Pobierz Shuuty i organizuj zadania, ludzi, rozmowy, kalendarze i miejsca w jednej aplikacji."
     },
     "images": {
-      "create": "Menu tworzenia Shuuty z zadaniem, głosem, spotkaniem i grupą",
-      "settings": "Ustawienia Shuuty z kontrolą jasnego motywu i języka",
-      "groups": "Czat Shuuty z rozmowami i aktywnością w grupach",
-      "meetings": "Mapa Shuuty pokazująca spotkanie",
       "voiceInput": "Wprowadzanie głosowe zadania w Shuuty",
       "assignee": "Wybór odbiorcy zadania w Shuuty",
       "delegatedTask": "Uporządkowane delegowane zadanie w Shuuty",
+      "groups": "Czat Shuuty z rozmowami i aktywnością w grupach",
       "groupGallery": "Prezentacja grupy Shuuty z prawdziwą galerią produktu",
       "modules": "Ustawienia modułów grupy Shuuty",
       "bookings": "Wypełniony kalendarz rezerwacji w Shuuty",
       "nearby": "Mapa odkrywania Shuuty z wynikami w pobliżu"
+    },
+    "social": {
+      "headline": "Aplikacja do zadań - Twoich, ze znajomymi i w grupach"
     },
     "store": {
       "apple": "App Store",
@@ -490,12 +564,12 @@
     },
     "schema": {
       "features": [
-        "Zadania tworzone głosem lub ręcznie, z terminem, przypomnieniem, odbiorcą i miejscem",
-        "Kilka wypowiedzianych myśli rozdzielonych na osobne zadania do sprawdzenia",
-        "Delegowanie zadań znajomym i grupom",
-        "Widoki Prywatne, Otrzymane i Delegowane z podzadaniami, priorytetami i dyskusją przy zadaniu",
-        "Grupy z czatem, wątkami, zadaniami, kalendarzami, rezerwacjami, planami, projektami i ewidencją czasu",
-        "Prywatne i otwarte spotkania oraz odkrywanie w pobliżu na mapie",
+        "Prywatna lista zadań z podzadaniami, przypomnieniami, kategoriami i stoperem",
+        "Zadania tworzone głosem albo pisaniem",
+        "Znajomi dodawani przez link zaproszenia albo kod QR",
+        "Zadania przekazywane znajomym, z dyskusją przy zadaniu",
+        "Spotkania i grupy w pobliżu na mapie Odkrywaj",
+        "Grupy z czatem, wątkami, zadaniami dla wszystkich lub wybranych osób, kalendarzem i rezerwacjami",
         "Dyktowanie w czacie oraz, w planach Pro i Teams, tłumaczenie wiadomości",
         "Dostępne po polsku, angielsku i norwesku"
       ]
@@ -511,193 +585,230 @@
       "footerNav": "Navigasjon i bunnteksten"
     },
     "nav": {
-      "overview": "Hva er Shuuty",
       "tasks": "Oppgaver",
+      "friends": "Venner",
+      "discover": "Utforsk",
       "groups": "Grupper",
-      "discover": "Møter / Kart",
       "download": "Last ned appen"
     },
     "hero": {
       "badge": "Tilgjengelig for iOS og Android",
-      "title": "Fra idé",
-      "accent": "til handling.",
-      "relay": "Si det. Deleger det. Få det gjort.",
-      "sub": "Si en tanke høyt og gjør den om til en ferdig oppgave for en person eller en gruppe. Bygg deretter grupper for jobb, fellesskap, tjenester, salg, bestillinger eller det du trenger senere.",
+      "title": "En oppgaveapp -",
+      "accent": "for deg, vennene dine og gruppene dine",
+      "sub": "Start med din egen oppgaveliste. Når du vil, kan du gi en oppgave til en venn eller bli med i grupper og møter med folk som deler interessene dine.",
       "secondaryCta": "Se hvordan det fungerer",
-      "signals": [
-        "Tale eller manuell registrering",
-        "En person eller en gruppe",
-        "Én komplett oppgave"
-      ],
-      "visualLabel": "Ekte skjermbilder fra Shuuty"
+      "screens": [
+        {
+          "media": "home-planner-meeting",
+          "alt": "Shuuty-planleggeren med fargerike oppgaver og et brettspillmøte med bilde"
+        },
+        {
+          "media": "home-group-page",
+          "alt": "Siden til en dansegruppe i Shuuty med beskrivelse, sted og medlemmer"
+        },
+        {
+          "media": "home-discover-meetings",
+          "alt": "Utforsk-kartet i Shuuty med et brettspillmøte i nærheten"
+        }
+      ]
     },
-    "overview": {
-      "label": "Ett sammenhengende økosystem",
-      "heading": "Hverdagen skjer ikke i separate apper.",
-      "lead": "Oppgaver, samtaler, kalendere, mennesker og steder hører til samme flyt. Shuuty holder sammenhengen fra den første tanken til det øyeblikket noe blir gjort.",
+    "how": {
+      "label": "Slik fungerer det",
+      "heading": "Én app, fire steg",
+      "lead": "Du starter med deg selv. Resten legger du til når du trenger det.",
+      "steps": [
+        {
+          "id": "step-tasks",
+          "title": "Din oppgaveliste",
+          "text": "Legg inn en oppgave med stemmen eller ved å skrive, gi den deloppgaver, en påminnelse og en kategori, og start tidtakeren mens du jobber.",
+          "points": [
+            "Stemme eller skriving",
+            "Deloppgaver",
+            "Påminnelser",
+            "Tidtaker",
+            "Kategorier"
+          ],
+          "guides": [
+            "private-tasks"
+          ],
+          "screens": [
+            {
+              "media": "home-planner",
+              "alt": "Dagens oppgaver i Shuuty med klokkeslett, påminnelser og tidtaker"
+            },
+            {
+              "media": "home-voice",
+              "alt": "En ny oppgave med stemmen i Shuuty, klar til innspilling"
+            }
+          ]
+        },
+        {
+          "id": "step-friends",
+          "title": "Venner og felles oppgaver",
+          "text": "Legg til venner med en lenke eller en QR-kode, gi en oppgave til en av dem og snakk om den rett i oppgaven.",
+          "points": [
+            "Lenke og QR-kode",
+            "En oppgave til en venn",
+            "Diskusjon i oppgaven"
+          ],
+          "guides": [
+            "friend-task"
+          ],
+          "screens": [
+            {
+              "media": "home-delegated-task",
+              "alt": "En oppgave gitt til en venn i Shuuty, med diskusjon under beskrivelsen"
+            },
+            {
+              "media": "home-friends",
+              "alt": "Vennelisten i Shuuty med invitasjonslenke og QR-kode"
+            }
+          ]
+        },
+        {
+          "id": "step-discover",
+          "title": "Utforsk",
+          "text": "Finn møter og grupper med folk som har de samme interessene i nærheten, på kartet.",
+          "points": [
+            "Møter",
+            "Grupper",
+            "Interesser"
+          ],
+          "guides": [],
+          "screens": [
+            {
+              "media": "home-discover-groups",
+              "alt": "Utforsk-kartet i Shuuty med en dansegruppe i nærheten"
+            },
+            {
+              "media": "home-meeting-page",
+              "alt": "Siden til et møte i Shuuty med sted, deltakere og beskrivelse"
+            }
+          ]
+        },
+        {
+          "id": "step-groups",
+          "title": "Gruppe",
+          "text": "Oppgaver til alle eller til utvalgte personer, en felles kalender og samtaler på ett sted.",
+          "points": [
+            "Oppgaver til utvalgte",
+            "Planer og kostnader i kalenderen",
+            "Bestillinger med ledige tider",
+            "Tråder",
+            "Gruppechat"
+          ],
+          "guides": [
+            "group-tasks",
+            "group-people"
+          ],
+          "screens": [
+            {
+              "media": "home-group-calendar",
+              "alt": "Gruppekalenderen i Shuuty med en tur, sted og en kostnad på 180 PLN"
+            },
+            {
+              "media": "home-group-chat",
+              "alt": "Gruppechatten i Shuuty med nye planer og en samtale"
+            },
+            {
+              "media": "home-booking-slots",
+              "alt": "En ny bestilling i en gruppe i Shuuty, der du velger en ledig tid"
+            }
+          ]
+        }
+      ],
+      "loop": {
+        "label": "Ringen er sluttet",
+        "text": "I en gruppe blir du kjent med folk, legger dem til som venner og gir hverandre oppgaver igjen.",
+        "strong": "Én app, ikke fire.",
+        "chain": [
+          "Oppgaveliste",
+          "Venner",
+          "Utforsk",
+          "Gruppe"
+        ],
+        "screen": {
+          "media": "home-group-members",
+          "alt": "Gruppemedlemmer i Shuuty merket som venner, og en Inviter-knapp ved en ny person"
+        }
+      }
+    },
+    "uses": {
+      "label": "Bruksområder",
+      "heading": "Hva folk bruker Shuuty til",
+      "lead": "Noen vanlige måter. Samme app, ulik størrelse.",
       "items": [
         {
           "icon": "task",
-          "kicker": "01",
-          "title": "Oppgaver som ikke blir liggende",
-          "desc": "Opprett med stemmen, motta, deleger, diskuter, få påminnelser og fullfør.",
-          "href": "#tasks"
+          "title": "Din egen oppgaveliste",
+          "text": "Innkjøp, regninger og dagens gjøremål - med påminnelse, deloppgaver og tidtaker.",
+          "guides": [
+            "private-tasks"
+          ]
         },
         {
-          "icon": "group",
-          "kicker": "02",
-          "title": "Grupper formet etter formålet",
-          "desc": "En privat krets, et fellesskap, et team, et sted for bestillinger eller ditt eget tilbud.",
-          "href": "#groups"
+          "icon": "people",
+          "title": "Familie og venner",
+          "text": "Gi en oppgave til noen hjemme eller til en venn, og avtal detaljene i diskusjonen i oppgaven.",
+          "guides": [
+            "friend-task"
+          ]
         },
-        {
-          "icon": "map",
-          "kicker": "03",
-          "title": "Møter med et formål",
-          "desc": "Møt venner eller nye mennesker, mens kartet hjelper deg å finne møter og offentlige grupper i nærheten.",
-          "href": "#discover"
-        }
-      ]
-    },
-    "tasks": {
-      "label": "01 · Oppgaver",
-      "heading": "Si det. Velg en person eller gruppe. Oppgaven er klar.",
-      "lead": "Si: «Alex skal sende tilbudet i morgen kl. 9. Minn Alex på det 30 minutter før.» Shuuty klargjør tittel, beskrivelse, mottaker, frist og påminnelse, slik at du kan se over dem. Opprett oppgaven, og Alex får den med en gang - eller en forespørsel om godkjenning hvis innstillingene til Alex krever det.",
-      "bullets": [
-        "Private, mottatte og delegerte oppgaver har egne, oversiktlige visninger.",
-        "En delegert oppgave leveres så snart den er opprettet. Fristen sier når den skal gjøres. Påminnelsen sier når mottakeren varsles.",
-        "En delt eller delegert oppgave kan bli et eget sted for å tenke sammen. Diskusjon, svar og all aktivitet følger oppgaven.",
-        "Manuell registrering gir samme dybde: beskrivelse, deloppgaver, prioritet, påminnelser, personer, sted og tidsregistrering."
-      ],
-      "mechanismLabel": "Fra tanke til oppgave - tre steg.",
-      "mechanismLead": "Før du sender oppgaven, ser du hvem som får den, når fristen er, og hvilke detaljer og samtaler som følger med.",
-      "flowRegionLabel": "Fra stemme til delegert oppgave",
-      "flowSelectLabel": "Vis dette steget",
-      "mechanism": [
-        {
-          "kicker": "Opptak",
-          "title": "Si det.",
-          "desc": "Snakk naturlig eller skriv. Shuuty holder tittel, detaljer, tidspunkt og påminnelse samlet."
-        },
-        {
-          "kicker": "Kontekst",
-          "title": "Velg en person eller gruppe.",
-          "desc": "Hold den privat, gi den til en person eller legg den rett i riktig gruppe."
-        },
-        {
-          "kicker": "Overlevering",
-          "title": "Deleger nå. Oppgaven er klar.",
-          "desc": "Se over den ferdige oppgaven, og send den med diskusjon, aktivitet og tid samlet på ett sted."
-        }
-      ]
-    },
-    "groups": {
-      "label": "02 · Grupper",
-      "heading": "Gruppen din kan bli en egen verden.",
-      "lead": "Som oppretter bestemmer du hva gruppen skal være, hva folk utenfor kan se og hvilke moduler som er aktive. Hold den privat, åpne den for alle, eller la offentligheten finne tilbudet mens medlemmene ser arbeidskonteksten.",
-      "bullets": [
-        "Lag en offentlig beskrivelse med galleri, sted og interesser, eller forbehold utvalgte detaljer for medlemmer.",
-        "Presenter tjenester, produkter eller kunngjøringer: en klinikk, et verksted, lokale råvarer, kjøretøy, maskiner eller spesialisttjenester.",
-        "Hold gruppen kun til informasjon, eller koble til oppgaver, samtaler, kalendere, bestillinger, prosjekter, planer og tidsregistrering etter hvert som formålet vokser."
-      ],
-      "modesLabel": "Fire utgangspunkt. Ingen fast mal.",
-      "modes": [
         {
           "icon": "work",
-          "title": "Et arbeidssted",
-          "desc": "Et team, kunder, prosjekter, planer, delegerte oppgaver og tid per person."
+          "title": "Et arbeidslag eller en liten bedrift",
+          "text": "Fordel arbeidet i teamet: oppgaver til alle eller til utvalgte personer, med frist og samtale.",
+          "guides": [
+            "group-people",
+            "group-tasks"
+          ]
         },
         {
           "icon": "community",
-          "title": "Et fellesskap",
-          "desc": "Private eller åpne grupper, interesser, informasjon og faste aktiviteter."
+          "title": "En klubb eller en dansegruppe",
+          "text": "Treninger, turer og kostnader i gruppekalenderen, og drakter og reise i egne tråder.",
+          "guides": [
+            "sports-club",
+            "group-tasks"
+          ]
         },
         {
           "icon": "calendar",
-          "title": "Et tjenestetilbud",
-          "desc": "En klinikk, et verksted eller en spesialist med offentlige eller begrensede bestillinger."
-        },
-        {
-          "icon": "offer",
-          "title": "Et utstillingsvindu",
-          "desc": "Produkter, kjøretøy, maskiner, lokale varer, kunngjøringer eller en katalog."
-        }
-      ],
-      "modulesLabel": "Sett den sammen med modulene du trenger",
-      "modules": [
-        "Galleri",
-        "Sted",
-        "Interesser",
-        "Oppgaver",
-        "Kalendere",
-        "Bestillinger",
-        "Prosjekter",
-        "Planer",
-        "Tidsregistrering",
-        "Samtaler"
-      ]
-    },
-    "discover": {
-      "label": "03 · Møter",
-      "heading": "Møt hverandre med et klart formål.",
-      "lead": "Lag et privat treff med venner eller et åpent møte for nye mennesker. Bestem sted og tid, inviter deltakere og hold detaljene samlet i én felles kontekst.",
-      "bullets": [
-        "Møt venner privat, eller åpne planen for folk du ikke har møtt ennå.",
-        "Hold sted, tid, deltakere og samtale samlet.",
-        "Bruk chatten til å avtale detaljene før og etter møtet."
-      ],
-      "map": {
-        "label": "Kart · Utforsk",
-        "heading": "Møter og grupper i nærheten.",
-        "lead": "Bruk kartet til å finne møter, offentlige grupper og fellesskap i nærheten.",
-        "bullets": [
-          "Søk etter sted, behov og interesser.",
-          "Åpne et møte eller en gruppe, og ta kontakt med dem som står bak."
-        ]
-      },
-      "meetings": "Møter",
-      "groups": "Grupper og tilbud",
-      "mapCaption": "Møter og grupper rundt deg"
-    },
-    "experience": {
-      "label": "Produktdybde",
-      "heading": "Start enkelt. Legg til struktur når det hjelper.",
-      "lead": "Shuuty kan være et raskt sted for én tanke eller den felles arbeidskonteksten for en lengre plan. Det samme produktet tilpasser seg uten å tvinge alle moduler på alle grupper.",
-      "screenCaption": "Ekte skjermbilder fra produktet",
-      "items": [
-        {
-          "title": "Lyst og mørkt",
-          "desc": "Velg utseendet som passer øyeblikket, uten at produktet fungerer annerledes."
-        },
-        {
-          "title": "Prosjekter og planer",
-          "desc": "Knytt lengre arbeid til oppgavene, menneskene og gruppen som allerede har konteksten."
-        },
-        {
-          "title": "Kalendere og bestillinger",
-          "desc": "Koordiner felles datoer, eller tilby bestillinger til et bredt eller begrenset publikum."
-        },
-        {
-          "title": "Tid og samtaler",
-          "desc": "Hold tidsregistrering per person, beslutninger og diskusjon nær arbeidet."
+          "title": "Tjenester med timebestilling",
+          "text": "En frisørsalong eller en barber: bestillinger i gruppen, og kundene velger en ledig tid.",
+          "guides": [
+            "group-profile"
+          ]
         }
       ]
+    },
+    "guideLabels": {
+      "private-tasks": "Guide: oppgaveliste med deloppgaver",
+      "friend-task": "Guide: oppgave til en venn",
+      "group-tasks": "Guide: gruppeoppgaver",
+      "group-people": "Guide: oppgave til utvalgte personer",
+      "sports-club": "Guide: app for en idrettsklubb",
+      "group-profile": "Guide: gruppeprofilen"
     },
     "faq": {
       "label": "FAQ",
       "heading": "Nyttige detaljer",
       "items": [
         {
-          "q": "Hva forstår Shuuty av en oppgave du sier høyt?",
-          "a": "Den kan lage tittel og beskrivelse, finne dato og klokkeslett, sette en påminnelse, kjenne igjen mottaker og sted, og dele flere tanker opp i separate oppgaver du kan se over."
+          "q": "Kan jeg bruke Shuuty bare til mine egne oppgaver?",
+          "a": "Ja. Start med en privat oppgaveliste med deloppgaver, påminnelser, kategorier og tidtaker. Venner og grupper legger du til først når du vil."
         },
         {
-          "q": "Kan jeg delegere en oppgave mens jeg oppretter den?",
-          "a": "Ja. Hvis du gir oppgaven til noen mens du oppretter den, får mottakeren den med en gang. Hvis innstillingene til mottakeren krever godkjenning, får mottakeren i stedet en forespørsel om godkjenning med en gang. Fristen sier når noe skal gjøres. Påminnelsen sier når mottakeren varsles. Den forsinker aldri leveringen."
+          "q": "Hva er forskjellen på en gruppe og et møte?",
+          "a": "En gruppe er et fast sted for folk, med chat, tråder, oppgaver, kalender og bestillinger. Et møte er én hendelse med sted og tid - privat for inviterte eller åpent for nye folk i nærheten."
         },
         {
-          "q": "Hva kan en gruppe bli, og hvem kan se den?",
-          "a": "Den kan være en privat krets, et fellesskap, en arbeidsplass, et sted for kunder, et bestillingssystem, et tjenestetilbud, et utstillingsvindu eller en ren informasjonsgruppe. Den som oppretter gruppen, velger synlighet og aktive moduler. Oppgaver beholder gruppens kontekst, og en offentlig presentasjon kan inneholde informasjon, galleribilder, sted og interesser."
+          "q": "Hvordan legger jeg til en venn?",
+          "a": "Send en invitasjonslenke eller vis en QR-kode som den andre kan skanne. Når den andre godtar venneforespørselen, kan dere gi hverandre oppgaver."
+        },
+        {
+          "q": "Hvor mange kan være med i en gruppe?",
+          "a": "Gruppens grenser følger arrangørens abonnement: med Free har en gruppe opptil 20 personer og opptil 3 aktive oppgaver om gangen, med Pro opptil 150 personer og med Teams opptil 900, begge uten grense for aktive oppgaver."
         },
         {
           "q": "Er Shuuty gratis?",
@@ -711,17 +822,17 @@
       "sub": "Last ned Shuuty og organiser oppgaver, mennesker, samtaler, kalendere og steder i én app."
     },
     "images": {
-      "create": "Opprett-menyen i Shuuty med oppgave, tale, møte og gruppe",
-      "settings": "Innstillinger i Shuuty med lyst tema og språkvalg",
-      "groups": "Chat i Shuuty med samtaler og aktivitet i grupper",
-      "meetings": "Kart i Shuuty som viser et møte",
       "voiceInput": "Innspilling av en oppgave med stemmen i Shuuty",
       "assignee": "Valg av mottaker for en oppgave i Shuuty",
       "delegatedTask": "En ferdig delegert oppgave i Shuuty",
+      "groups": "Chat i Shuuty med samtaler og aktivitet i grupper",
       "groupGallery": "En gruppepresentasjon i Shuuty med ekte produktgalleri",
       "modules": "Modulinnstillinger for en gruppe i Shuuty",
       "bookings": "En full bestillingskalender i Shuuty",
       "nearby": "Utforsk-kartet i Shuuty med resultater i nærheten"
+    },
+    "social": {
+      "headline": "En oppgaveapp - for deg, vennene dine og gruppene dine"
     },
     "store": {
       "apple": "App Store",
@@ -741,12 +852,12 @@
     },
     "schema": {
       "features": [
-        "Oppgaver med stemmen eller manuelt, med frist, påminnelse, mottaker og sted",
-        "Flere tanker du sier høyt, delt opp i separate oppgaver du kan se over",
-        "Deleger oppgaver til venner og grupper",
-        "Visningene Private, Mottatte og Delegerte med deloppgaver, prioriteter og diskusjon",
-        "Grupper med chat, tråder, oppgaver, kalendere, bestillinger, planer, prosjekter og tidsregistrering",
-        "Private og åpne møter og utforsking i nærheten på kartet",
+        "En privat oppgaveliste med deloppgaver, påminnelser, kategorier og tidtaker",
+        "Oppgaver med stemmen eller ved å skrive",
+        "Venner lagt til med invitasjonslenke eller QR-kode",
+        "Oppgaver til venner, med diskusjon i oppgaven",
+        "Møter og grupper i nærheten på Utforsk-kartet",
+        "Grupper med chat, tråder, oppgaver til alle eller utvalgte personer, kalender og bestillinger",
         "Diktering i chatten og, med Pro og Teams, oversetting av meldinger",
         "Tilgjengelig på norsk, engelsk og polsk"
       ]
