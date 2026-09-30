@@ -1,12 +1,19 @@
 # Shuuty: product reference
 
-> Shuuty is a mobile application that connects voice-created tasks, delegation, flexible groups, meetings, conversations, calendars, and nearby discovery.
+> Shuuty is a task app for iPhone, iPad and Android - for you, your friends and your groups. It connects a personal to-do list (by voice or typing), tasks shared with friends, nearby meetings and groups, and group spaces with tasks, calendars and bookings.
 
-Last updated: 2026-09-28. This document summarizes the capabilities described on the official Shuuty website and in the official App Store and Google Play listings. It does not describe private APIs or unpublished features. The canonical website is https://shuuty.com/ and the product is available for iPhone, iPad and Android. Publisher: Shuuty Prosta Spółka Akcyjna (Shuuty P.S.A.), Poland. Shuuty (shuuty.com) is not related to Shuut, Shouty or Shuuto.
+Last updated: 2026-09-30. This document summarizes the capabilities described on the official Shuuty website and in the official App Store and Google Play listings. It does not describe private APIs or unpublished features. The canonical website is https://shuuty.com/ and the product is available for iPhone, iPad and Android. Publisher: Shuuty Prosta Spółka Akcyjna (Shuuty P.S.A.), Poland. Shuuty (shuuty.com) is not related to Shuut, Shouty or Shuuto.
 
 ## English product overview
 
-Shuuty is designed around one flow from an idea to action. Tasks, conversations, calendars, people, and places can remain connected instead of being split across separate tools.
+Shuuty is one app with four connected steps. People start with their own to-do list; when they want to, they add friends and hand tasks to them, discover meetings and groups of people with the same interests nearby, and use groups for shared tasks, calendars, bookings and conversations. In a group they meet people, add them as friends and give each other tasks again.
+
+### How it works
+
+1. Your to-do list: add a task by voice or by typing, with subtasks, a reminder, a category and a timer.
+2. Friends and shared tasks: add friends with a link or a QR code, hand a task to a friend and talk it over in the task.
+3. Discover: find meetings and groups of people with the same interests nearby, on a map.
+4. Group: tasks for everyone or for selected people, a shared calendar with plans and costs, a booking schedule, threads and the group chat.
 
 ### Tasks and voice input
 
@@ -18,7 +25,7 @@ Shuuty is designed around one flow from an idea to action. Tasks, conversations,
 - When a person is assigned during task creation, the task is delivered immediately after creation. If that person's settings require approval, an approval request is delivered instead.
 - A due time describes when the task should be done. A reminder describes when the recipient should be notified; it does not delay delivery.
 - Shared or delegated tasks can keep their discussion, replies, and activity in the task context.
-- Subtasks, priority, reminders, and time tracking support the work around a task.
+- Subtasks, priority, reminders, categories, and time tracking support the work around a task.
 
 ### Groups
 
@@ -50,9 +57,10 @@ The creator chooses whether the group and its description are public, what remai
 
 The public website describes this sequence:
 
-1. Capture a thought by speaking or creating it manually.
-2. Choose the next step: a private, delegated, or group task, or a separate meeting.
-3. Keep the task, reminder, conversation, calendar, and place in context as the plan moves forward.
+1. Start with your own list: capture a task by voice or by typing.
+2. Hand a task to a friend, or keep it private.
+3. Discover meetings and groups nearby.
+4. Work together in a group with tasks, a calendar, bookings and chat.
 
 ### Availability and plans
 
@@ -64,7 +72,16 @@ The public website describes this sequence:
 
 ## Polski opis produktu
 
-Shuuty łączy zadania, rozmowy, kalendarze, ludzi i miejsca w jeden proces od pomysłu do działania. Aplikacja jest dostępna na iOS i Androidzie.
+Shuuty to aplikacja do zadań - Twoich, ze znajomymi i w grupach. Zaczynasz od własnej listy zadań; gdy zechcesz, przekazujesz zadanie znajomemu albo dołączasz do grup i spotkań ludzi o tych samych zainteresowaniach. Aplikacja jest dostępna na iOS i Androidzie.
+
+### Jak to działa
+
+1. Twoja lista zadań: zadanie głosem albo pisząc, z podzadaniami, przypomnieniem, kategorią i stoperem.
+2. Znajomi i wspólne zadania: znajomych dodajesz przez link albo kod QR, przekazujesz zadanie i rozmawiacie o nim w samym zadaniu.
+3. Odkrywaj: spotkania i grupy ludzi o tych samych zainteresowaniach w pobliżu, na mapie.
+4. Grupa: zadania dla wszystkich albo dla wybranych osób, wspólny kalendarz z planami i kosztami, grafik rezerwacji, wątki i czat grupy.
+
+W grupie poznajesz ludzi, dodajesz ich do znajomych i znowu dajecie sobie zadania.
 
 ### Zadania i obsługa głosu
 
@@ -76,7 +93,7 @@ Shuuty łączy zadania, rozmowy, kalendarze, ludzi i miejsca w jeden proces od p
 - Osoba przypisana podczas tworzenia otrzymuje zadanie od razu po jego utworzeniu. Jeżeli jej ustawienia wymagają akceptacji, otrzymuje od razu prośbę o przyjęcie zadania.
 - Termin wskazuje czas wykonania, a przypomnienie czas powiadomienia. Przypomnienie nie opóźnia dostarczenia zadania.
 - Dyskusja, odpowiedzi i aktywność mogą pozostać przy zadaniu.
-- Podzadania, priorytet, przypomnienia i pomiar czasu wspierają realizację zadania.
+- Podzadania, priorytet, przypomnienia, kategorie i pomiar czasu wspierają realizację zadania.
 
 ### Grupy
 
@@ -108,9 +125,10 @@ Twórca grupy wybiera, czy grupa i jej opis są publiczne, co pozostaje widoczne
 
 Publiczna strona opisuje następujący proces:
 
-1. Zapisz myśl głosem albo ręcznie.
-2. Utwórz zadanie prywatne, delegowane lub grupowe albo zaplanuj osobne spotkanie.
-3. Zachowaj zadanie, przypomnienie, rozmowę, kalendarz i miejsce w jednym kontekście.
+1. Zacznij od własnej listy: zapisz zadanie głosem albo pisząc.
+2. Przekaż zadanie znajomemu albo zostaw je prywatne.
+3. Odkrywaj spotkania i grupy w pobliżu.
+4. Działajcie razem w grupie: zadania, kalendarz, rezerwacje i czat.
 
 ### Dostępność i plany
 
@@ -122,7 +140,7 @@ Publiczna strona opisuje następujący proces:
 
 ## Norsk produktbeskrivelse
 
-Shuuty er en app for oppgaver, grupper og møter med menneskene rundt deg. Si hva som må gjøres, så fyller AI ut tittel, frist, påminnelse, mottaker og sted. Gi oppgaven til én venn, flere personer samtidig eller en hel gruppe.
+Shuuty er en oppgaveapp - for deg, vennene dine og gruppene dine. Du starter med din egen oppgaveliste; når du vil, gir du en oppgave til en venn eller blir med i grupper og møter med folk som har de samme interessene. Shuuty er en app for oppgaver, grupper og møter med menneskene rundt deg. Si hva som må gjøres, så fyller AI ut tittel, frist, påminnelse, mottaker og sted. Gi oppgaven til én venn, flere personer samtidig eller en hel gruppe.
 
 - Spill inn en oppgave med egne ord. Shuuty lager tittel og beskrivelse, kjenner igjen frist, påminnelse, person og sted, og deler flere tanker opp i separate oppgaver du kan se gjennom.
 - Når du delegerer den, får mottakeren den med en gang - eller først en forespørsel om godkjenning, hvis innstillingene til mottakeren krever det.
