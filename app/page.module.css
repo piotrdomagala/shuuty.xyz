@@ -1063,12 +1063,28 @@
   margin-top: clamp(104px, 11vw, 160px);
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: clamp(32px, 5vw, 72px);
-  align-items: center;
+  grid-template-areas:
+    'intro orbit'
+    'list orbit';
+  grid-template-rows: auto 1fr;
+  column-gap: clamp(32px, 5vw, 72px);
 }
 
-.loopCopy {
+.loopIntro {
+  grid-area: intro;
+  align-self: end;
   min-width: 0;
+  max-width: 540px;
+}
+
+.orbitStage {
+  grid-area: orbit;
+  align-self: center;
+}
+
+.loopList {
+  grid-area: list;
+  align-self: start;
   max-width: 540px;
 }
 
@@ -1104,6 +1120,7 @@
   content: '';
   position: absolute;
   top: 58px;
+  z-index: 1;
   bottom: -10px;
   left: 21px;
   width: 1px;
@@ -1111,10 +1128,21 @@
 }
 
 .loopList a {
-  padding: 12px 0;
+  margin: 0 -12px;
+  padding: 12px;
   display: flex;
   align-items: flex-start;
   gap: 16px;
+  border-radius: 18px;
+  transition: background-color 0.3s ease;
+}
+
+.loopList li[data-active='true'] a {
+  background: rgba(var(--step-rgb), 0.12);
+}
+
+.loopList li[data-active='true'] strong {
+  color: var(--step-ink);
 }
 
 .loopListIcon {
@@ -1175,13 +1203,20 @@
 .orbitStage {
   --orbit-r: 238px;
   --orbit-tilt: 73deg;
-  --orbit-speed: 48s;
   --orbit-phone: 218px;
   position: relative;
   min-width: 0;
   height: calc(var(--orbit-phone) * 2.15 + 110px);
   perspective: 1400px;
   transform-style: preserve-3d;
+  touch-action: pan-y;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.orbitStage:active {
+  cursor: grabbing;
 }
 
 .orbitGlow {
@@ -1202,6 +1237,22 @@
   width: var(--orbit-phone);
   margin: 0;
   transform: translate3d(-50%, -50%, -36px);
+}
+
+.orbitScreen {
+  position: absolute;
+  inset: 0;
+  display: block;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+
+.orbitScreen:first-child {
+  position: relative;
+}
+
+.orbitScreenActive {
+  opacity: 1;
 }
 
 .orbitPlane {
@@ -1240,6 +1291,7 @@
   position: absolute;
   inset: 0;
   transform-style: preserve-3d;
+  transform: rotateZ(var(--orbit-rot, 0deg));
 }
 
 .orbitItem {
@@ -1265,6 +1317,10 @@
   transform-style: preserve-3d;
 }
 
+.orbitCounter {
+  transform: rotateZ(calc(var(--orbit-rot, 0deg) * -1));
+}
+
 .orbitFace {
   transform: rotateX(calc(var(--orbit-tilt) * -1));
 }
@@ -1273,8 +1329,8 @@
   position: absolute;
   top: 0;
   left: 0;
-  min-height: 40px;
-  padding: 0 15px 0 11px;
+  min-height: 44px;
+  padding: 0 16px 0 12px;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -1283,10 +1339,30 @@
   color: var(--text);
   background: color-mix(in srgb, var(--bg-raised) 88%, rgb(var(--step-rgb)));
   box-shadow: 0 10px 26px rgba(var(--shadow-rgb), 0.24);
-  font-size: 0.82rem;
+  font: inherit;
+  font-size: 0.84rem;
   font-weight: 700;
   white-space: nowrap;
+  cursor: pointer;
+  pointer-events: auto;
+  appearance: none;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
   transform: translate(-50%, -50%);
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.orbitChip[aria-pressed='true'] {
+  border-color: var(--step-ink);
+  background: color-mix(in srgb, var(--bg-raised) 72%, rgb(var(--step-rgb)));
+  box-shadow:
+    0 10px 26px rgba(var(--shadow-rgb), 0.24),
+    0 0 0 4px rgba(var(--step-rgb), 0.18);
+}
+
+.orbitChip:focus-visible {
+  outline: 3px solid var(--accent-text);
+  outline-offset: 3px;
 }
 
 .orbitChip {
@@ -1314,24 +1390,6 @@
   height: 17px;
   flex: 0 0 17px;
   color: var(--step-ink);
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .orbitSpin {
-    animation: orbitSpin var(--orbit-speed) linear infinite;
-  }
-
-  .orbitCounter {
-    animation: orbitCounter var(--orbit-speed) linear infinite;
-  }
-}
-
-@keyframes orbitSpin {
-  to { transform: rotateZ(360deg); }
-}
-
-@keyframes orbitCounter {
-  to { transform: rotateZ(-360deg); }
 }
 
 /* What people use Shuuty for. */
@@ -1795,10 +1853,16 @@
 
   .loop {
     grid-template-columns: minmax(0, 1fr);
-    gap: 24px;
+    grid-template-areas:
+      'intro'
+      'orbit'
+      'list';
+    grid-template-rows: auto;
+    row-gap: 12px;
   }
 
-  .loopCopy {
+  .loopIntro,
+  .loopList {
     width: min(640px, 100%);
     max-width: none;
     margin: 0 auto;
@@ -2022,16 +2086,25 @@
 
   .orbitStage {
     --orbit-r: min(31vw, 150px);
-    --orbit-phone: min(48vw, 200px);
+    --orbit-phone: min(44vw, 190px);
     --orbit-tilt: 70deg;
-    height: calc(var(--orbit-phone) * 2.15 + 80px);
+    height: calc(var(--orbit-phone) * 2.15 + 64px);
   }
 
   .orbitChip {
-    min-height: 34px;
-    padding: 0 11px 0 8px;
+    min-height: 44px;
+    padding: 0 13px 0 10px;
     gap: 6px;
-    font-size: 0.72rem;
+    font-size: 0.76rem;
+  }
+
+  .loopList a {
+    padding: 9px 12px;
+  }
+
+  .loopList li:not(:last-child)::before {
+    top: 53px;
+    bottom: -6px;
   }
 
   .orbitChip svg {

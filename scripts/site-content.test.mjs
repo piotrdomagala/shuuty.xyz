@@ -253,10 +253,17 @@ test('reduced motion explicitly removes phone transform transitions', async () =
   }
   assert.match(reducedMotionRules, /transition:\s*none\s*!important/);
 
-  // The loop ring turns only for visitors who have not asked for less motion.
-  const motionBlock = css.indexOf('@media (prefers-reduced-motion: no-preference) {\n  .orbitSpin');
-  assert.notEqual(motionBlock, -1, 'The ring animation must sit under prefers-reduced-motion: no-preference');
-  assert.equal((css.match(/animation:\s*orbit/g) ?? []).length, 2);
+  // The loop ring is turned by script: it reads the reduced-motion setting,
+  // stops when off screen or in a hidden tab, and leaves vertical drags to
+  // the page. Its chips are buttons, not decoration.
+  const component = await readFile(new URL('components/HomePageClient.tsx', root), 'utf8');
+  assert.match(component, /matchMedia\('\(prefers-reduced-motion: reduce\)'\)/);
+  assert.match(component, /new IntersectionObserver\(\(\[entry\]\)/);
+  assert.match(component, /visibilitychange/);
+  assert.match(css, /\.orbitStage \{[^}]*touch-action: pan-y;/);
+  assert.match(css, /\.orbitChip \{[^}]*min-height: 44px;/);
+  assert.equal(/animation:\s*orbit/.test(css), false, 'The ring must not also run a CSS animation');
+  assert.match(component, /className=\{s\.orbitChip\}[\s\S]{0,120}aria-pressed=/);
 });
 
 test('public copy does not promise local offers on the map or show the old support inbox', async () => {

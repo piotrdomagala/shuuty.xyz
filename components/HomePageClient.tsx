@@ -3,6 +3,7 @@
 import {
   useCallback,
   useEffect,
+  useId,
   useRef,
   useState,
   type CSSProperties,
@@ -398,36 +399,303 @@ function StepStage({
   );
 }
 
-// The loop: the four steps on a slowly turning ring around the group members
-// screen. The ring is decoration (aria-hidden); the list next to it carries the
-// same four steps as real text, in order.
-function LoopOrbit({ items, screen }: Readonly<{ items: readonly string[]; screen: Screen }>) {
+type LoopOrbitCopy = Readonly<{ ringLabel: string; showing: string; again: string }>;
+
+// Where each chip sits on the ring, in degrees of the ring's own plane.
+const orbitAngle = (index: number) => index * 90 - 45;
+// The ring angle that puts a chip at the front (the near edge, 180 degrees).
+const frontRotation = (index: number) => 180 - orbitAngle(index);
+const AUTO_SPEED = 7.5; // degrees per second: one turn in 48 s
+const IDLE_BEFORE_AUTO = 3000;
+const DRAG_DEGREES_PER_PIXEL = 0.45;
+
+// The loop: the four steps on a ring around the group members screen. The
+// list next to it is the semantic source (links to the steps); the ring is a
+// set of buttons that choose which step's screen the phone shows. Hover or
+// focus pauses the turning, a horizontal drag spins the ring with a little
+// inertia, and the slow turn resumes after 3 s without input. With reduced
+// motion the ring stands still and every change is instant.
+function LoopOrbit({
+  items,
+  screens,
+  selected,
+  copy,
+  onSelect,
+  onOpen,
+}: Readonly<{
+  items: readonly string[];
+  // screens[0] is the default (members); screens[i + 1] belongs to step i.
+  screens: readonly Screen[];
+  selected: number | null;
+  copy: LoopOrbitCopy;
+  onSelect: (index: number) => void;
+  onOpen: (index: number) => void;
+}>) {
+  const stageRef = useRef<HTMLDivElement | null>(null);
+  const spinRef = useRef<HTMLDivElement | null>(null);
+  const chipRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const [announce, setAnnounce] = useState('');
+  const phoneId = useId();
+  const motion = useRef({
+    rotation: 0,
+    velocity: 0,
+    target: null as number | null,
+    hovered: false,
+    focused: false,
+    dragging: false,
+    reduced: false,
+    lastInput: -Infinity,
+    pointerId: -1,
+    startX: 0,
+    startY: 0,
+    startRotation: 0,
+    lastX: 0,
+    lastTime: 0,
+    suppressClick: false,
+  });
+  const activeScreen = selected === null ? screens[0] : screens[selected + 1];
+
+  useEffect(() => {
+    const m = motion.current;
+    const query = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const syncReduced = () => {
+      m.reduced = query.matches;
+    };
+    syncReduced();
+    query.addEventListener('change', syncReduced);
+
+    // The loop runs only while the ring is on screen and the tab is visible.
+    let frame = 0;
+    let previous = performance.now();
+    let onScreen = false;
+    const running = () => onScreen && document.visibilityState === 'visible';
+    const start = () => {
+      if (frame || !running()) return;
+      previous = performance.now();
+      frame = requestAnimationFrame(tick);
+    };
+    const stop = () => {
+      cancelAnimationFrame(frame);
+      frame = 0;
+    };
+    const tick = (now: number) => {
+      const seconds = Math.min(0.05, (now - previous) / 1000);
+      previous = now;
+      if (!m.dragging) {
+        if (m.target !== null) {
+          const distance = m.target - m.rotation;
+          if (m.reduced || Math.abs(distance) < 0.2) {
+            m.rotation = m.target;
+            m.target = null;
+          } else {
+            m.rotation += distance * Math.min(1, seconds * 6);
+          }
+        } else if (!m.reduced && Math.abs(m.velocity) > 1) {
+          m.rotation += m.velocity * seconds;
+          m.velocity *= Math.pow(0.004, seconds);
+        } else {
+          m.velocity = 0;
+          const idle = now - m.lastInput > IDLE_BEFORE_AUTO;
+          if (!m.reduced && !m.hovered && !m.focused && idle) {
+            m.rotation += AUTO_SPEED * seconds;
+          }
+        }
+      }
+      // Only a custom property on the spinning plane changes: the ring and the
+      // chips turn by transform, nothing is laid out again.
+      spinRef.current?.style.setProperty('--orbit-rot', `${m.rotation.toFixed(2)}deg`);
+      frame = running() ? requestAnimationFrame(tick) : 0;
+    };
+    const observer = new IntersectionObserver(([entry]) => {
+      onScreen = entry.isIntersecting;
+      if (onScreen) start();
+      else stop();
+    });
+    if (stageRef.current) observer.observe(stageRef.current);
+    const onVisibility = () => (running() ? start() : stop());
+    document.addEventListener('visibilitychange', onVisibility);
+    return () => {
+      stop();
+      observer.disconnect();
+      document.removeEventListener('visibilitychange', onVisibility);
+      query.removeEventListener('change', syncReduced);
+    };
+  }, []);
+
+  const nearestFront = (index: number) => {
+    const m = motion.current;
+    const base = frontRotation(index);
+    return base + 360 * Math.round((m.rotation - base) / 360);
+  };
+
+  const isAtFront = (index: number) =>
+    Math.abs(motion.current.rotation - nearestFront(index)) < 25;
+
+  // `now` is the event's timestamp (the same clock as performance.now()).
+  const choose = (index: number, now: number) => {
+    const m = motion.current;
+    if (m.suppressClick) {
+      m.suppressClick = false;
+      return;
+    }
+    if (selected === index && isAtFront(index)) {
+      onOpen(index);
+      return;
+    }
+    m.velocity = 0;
+    m.target = nearestFront(index);
+    // A chosen step stays at the front a little longer before the turn resumes.
+    m.lastInput = now + IDLE_BEFORE_AUTO;
+    onSelect(index);
+    setAnnounce(`${copy.showing} ${screens[index + 1].alt}`);
+  };
+
+  const handleKeyDown = (event: ReactKeyboardEvent<HTMLDivElement>) => {
+    if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+    event.preventDefault();
+    const step = event.key === 'ArrowRight' ? 1 : -1;
+    const next = ((selected ?? (step > 0 ? -1 : 0)) + step + items.length) % items.length;
+    choose(next, event.timeStamp);
+    chipRefs.current[next]?.focus({ preventScroll: true });
+  };
+
+  const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (event.pointerType === 'mouse' && event.button !== 0) return;
+    const m = motion.current;
+    m.pointerId = event.pointerId;
+    m.startX = event.clientX;
+    m.startY = event.clientY;
+    m.startRotation = m.rotation;
+    m.lastX = event.clientX;
+    m.lastTime = performance.now();
+  };
+
+  const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
+    const m = motion.current;
+    if (m.pointerId !== event.pointerId) return;
+    const dx = event.clientX - m.startX;
+    const dy = event.clientY - m.startY;
+    if (!m.dragging) {
+      // Only a clearly horizontal drag turns the ring; a vertical one is the
+      // page scrolling and is left alone.
+      if (Math.abs(dy) > 10 && Math.abs(dy) > Math.abs(dx)) {
+        m.pointerId = -1;
+        return;
+      }
+      if (Math.abs(dx) < 8 || Math.abs(dx) < Math.abs(dy) * 1.2) return;
+      m.dragging = true;
+      m.target = null;
+      m.velocity = 0;
+      event.currentTarget.setPointerCapture(event.pointerId);
+    }
+    const now = performance.now();
+    // Dragging right moves the near edge of the ring to the right.
+    m.rotation = m.startRotation - dx * DRAG_DEGREES_PER_PIXEL;
+    const instant = (-(event.clientX - m.lastX) * DRAG_DEGREES_PER_PIXEL * 1000)
+      / Math.max(8, now - m.lastTime);
+    m.velocity = m.velocity * 0.5 + instant * 0.5;
+    m.lastX = event.clientX;
+    m.lastTime = now;
+    m.lastInput = now;
+  };
+
+  const endDrag = (event: ReactPointerEvent<HTMLDivElement>) => {
+    const m = motion.current;
+    if (m.pointerId !== event.pointerId) return;
+    if (m.dragging) {
+      m.dragging = false;
+      m.suppressClick = true;
+      m.lastInput = performance.now();
+      // A little inertia, never a spin.
+      m.velocity = m.reduced ? 0 : Math.max(-240, Math.min(240, m.velocity));
+      // A click may not follow the drag (the pointer left the chip); clear the
+      // guard on the next frame so the next real tap is not swallowed.
+      window.setTimeout(() => {
+        m.suppressClick = false;
+      }, 0);
+    }
+    m.pointerId = -1;
+  };
+
   return (
-    <div className={s.orbitStage}>
+    <div
+      ref={stageRef}
+      className={s.orbitStage}
+      onPointerEnter={(event) => {
+        if (event.pointerType === 'mouse') motion.current.hovered = true;
+      }}
+      onPointerLeave={() => {
+        motion.current.hovered = false;
+        motion.current.lastInput = performance.now();
+      }}
+      onFocus={() => {
+        motion.current.focused = true;
+      }}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+          motion.current.focused = false;
+          motion.current.lastInput = performance.now();
+        }
+      }}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={endDrag}
+      onPointerCancel={endDrag}
+    >
       <div className={s.orbitGlow} aria-hidden="true" />
-      <figure className={s.orbitPhone}>
-        <ProductDeviceFrame
-          media={screen}
-          alt={screen.alt}
-          sizes="(max-width: 720px) 52vw, 240px"
-        />
+      <figure id={phoneId} className={s.orbitPhone}>
+        {screens.map((screen, index) => {
+          const isActive = screen.id === activeScreen.id;
+          return (
+            <span
+              key={screen.id}
+              className={`${s.orbitScreen} ${isActive ? s.orbitScreenActive : ''}`}
+              aria-hidden={isActive ? undefined : true}
+              data-screen={index}
+            >
+              <ProductDeviceFrame
+                media={screen}
+                alt={isActive ? screen.alt : ''}
+                sizes="(max-width: 720px) 52vw, 240px"
+              />
+            </span>
+          );
+        })}
       </figure>
-      <div className={s.orbitPlane} aria-hidden="true">
-        <div className={`${s.orbitRing} ${s.orbitRingBack}`} />
-        <div className={`${s.orbitRing} ${s.orbitRingFront}`} />
-        <div className={s.orbitSpin}>
+      <p className={s.srOnly} aria-live="polite">{announce}</p>
+      <div className={s.orbitPlane}>
+        <div className={`${s.orbitRing} ${s.orbitRingBack}`} aria-hidden="true" />
+        <div className={`${s.orbitRing} ${s.orbitRingFront}`} aria-hidden="true" />
+        <div
+          ref={spinRef}
+          className={s.orbitSpin}
+          role="group"
+          aria-label={copy.ringLabel}
+          onKeyDown={handleKeyDown}
+        >
           {items.map((item, index) => (
             <div
               key={item}
               className={s.orbitItem}
-              style={{ '--orbit-angle': `${index * 90 - 45}deg` } as CSSProperties}
+              style={{ '--orbit-angle': `${orbitAngle(index)}deg` } as CSSProperties}
             >
               <div className={s.orbitCounter}>
                 <div className={s.orbitFace}>
-                  <span className={s.orbitChip} data-step={index + 1}>
+                  <button
+                    ref={(element) => {
+                      chipRefs.current[index] = element;
+                    }}
+                    type="button"
+                    className={s.orbitChip}
+                    data-step={index + 1}
+                    aria-pressed={selected === index}
+                    aria-controls={phoneId}
+                    onClick={(event) => choose(index, event.timeStamp)}
+                  >
                     <Icon name={STEP_ICONS[index]} />
                     {item}
-                  </span>
+                    {selected === index ? <span className={s.srOnly}>{` ${copy.again}`}</span> : null}
+                  </button>
                 </div>
               </div>
             </div>
@@ -444,6 +712,7 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
   const [showMobileNav, setShowMobileNav] = useState(false);
   const [activeHeroPhone, setActiveHeroPhone] = useState(0);
   const [activeStep, setActiveStep] = useState<string | null>(null);
+  const [loopStep, setLoopStep] = useState<number | null>(null);
   const carouselPointerStart = useRef<number | null>(null);
   const carouselDidSwipe = useRef(false);
   const heroPhoneButtons = useRef<Array<HTMLButtonElement | null>>([]);
@@ -861,12 +1130,27 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
             </ol>
 
             <div className={`${s.loop} ${s.reveal}`} data-reveal>
-              <div className={s.loopCopy}>
+              <div className={s.loopIntro}>
                 <h3 className={s.loopHeading}>{c.how.loop.heading}</h3>
                 <p className={s.loopText}>{c.how.loop.text}</p>
-                <ol className={s.loopList}>
+              </div>
+              <LoopOrbit
+                items={c.how.loop.chain.map((item) => item.title)}
+                screens={[loopScreen, ...steps.map((step) => step.screens[0])]}
+                selected={loopStep}
+                copy={c.how.loop}
+                onSelect={setLoopStep}
+                onOpen={(index) => {
+                  window.location.hash = c.how.steps[index].id;
+                }}
+              />
+              <ol className={s.loopList}>
                   {c.how.loop.chain.map((item, index) => (
-                    <li key={item.title} data-step={index + 1}>
+                    <li
+                      key={item.title}
+                      data-step={index + 1}
+                      data-active={loopStep === index ? 'true' : undefined}
+                    >
                       <a href={navItems[index].href}>
                         <span className={s.loopListIcon}><Icon name={STEP_ICONS[index]} /></span>
                         <span className={s.loopListText}>
@@ -876,9 +1160,7 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
                       </a>
                     </li>
                   ))}
-                </ol>
-              </div>
-              <LoopOrbit items={c.how.loop.chain.map((item) => item.title)} screen={loopScreen} />
+              </ol>
             </div>
           </div>
         </section>

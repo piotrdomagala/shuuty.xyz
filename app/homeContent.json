@@ -144,6 +144,9 @@
       "loop": {
         "heading": "One app, many possibilities",
         "text": "Each step leads to the next: in a group you meet people, add them as friends and give each other tasks again.",
+        "ringLabel": "Choose a step to see its screen",
+        "showing": "On screen:",
+        "again": "Press again to go to this step.",
         "chain": [
           {
             "title": "To-do list",
@@ -443,6 +446,9 @@
       "loop": {
         "heading": "Jedna aplikacja, wiele możliwości",
         "text": "Każdy krok prowadzi do następnego: w grupie poznajesz ludzi, dodajesz ich do znajomych i znowu dajecie sobie zadania.",
+        "ringLabel": "Wybierz krok, aby zobaczyć jego ekran",
+        "showing": "Na ekranie:",
+        "again": "Naciśnij ponownie, aby przejść do tego kroku.",
         "chain": [
           {
             "title": "Lista zadań",
@@ -742,6 +748,9 @@
       "loop": {
         "heading": "Én app, mange muligheter",
         "text": "Hvert steg leder til det neste: i en gruppe blir du kjent med folk, legger dem til som venner og gir hverandre oppgaver igjen.",
+        "ringLabel": "Velg et steg for å se skjermen",
+        "showing": "På skjermen:",
+        "again": "Trykk igjen for å gå til dette steget.",
         "chain": [
           {
             "title": "Oppgaveliste",
