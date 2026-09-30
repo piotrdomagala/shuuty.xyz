@@ -1212,8 +1212,6 @@
   position: relative;
   min-width: 0;
   height: calc(var(--orbit-phone) * 2.15 + 110px);
-  perspective: 1400px;
-  transform-style: preserve-3d;
   touch-action: pan-y;
   cursor: grab;
   user-select: none;
@@ -1222,6 +1220,18 @@
 
 .orbitStage:active {
   cursor: grabbing;
+}
+
+/* The 3D scene takes no pointer events of its own: as the root of the
+   preserve-3d sorting it would sit at z = 0, in front of every chip on the far
+   half of the ring, and swallow their clicks. Dragging stays on .orbitStage,
+   which is outside that sorting, so the chips always win over it. */
+.orbitScene {
+  position: absolute;
+  inset: 0;
+  perspective: 1400px;
+  transform-style: preserve-3d;
+  pointer-events: none;
 }
 
 .orbitGlow {

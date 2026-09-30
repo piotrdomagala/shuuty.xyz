@@ -264,6 +264,19 @@ test('reduced motion explicitly removes phone transform transitions', async () =
   assert.match(css, /\.orbitChip \{[^}]*min-height: 44px;/);
   assert.equal(/animation:\s*orbit/.test(css), false, 'The ring must not also run a CSS animation');
   assert.match(component, /className=\{s\.orbitChip\}[\s\S]{0,120}aria-pressed=/);
+
+  // Every chip answers a click, wherever it is on the ring. The 3D scene is a
+  // layer of its own that takes no pointer events: as the root of the
+  // preserve-3d sorting it would sit at z = 0, in front of the chips on the far
+  // half, and swallow their clicks.
+  assert.match(component, /className=\{s\.orbitScene\}/);
+  assert.match(css, /\.orbitScene \{[^}]*pointer-events: none;/);
+  assert.match(css, /\.orbitChip \{[^}]*pointer-events: auto;/);
+  assert.equal(
+    /\.orbitStage \{[^}]*transform-style: preserve-3d;/.test(css),
+    false,
+    'The stage must stay outside the 3D sorting, or the far chips stop taking clicks',
+  );
 });
 
 test('public copy does not promise local offers on the map or show the old support inbox', async () => {
