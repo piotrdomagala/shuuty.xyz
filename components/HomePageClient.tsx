@@ -885,16 +885,29 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
     const steps = c.how.steps
       .map((step) => document.getElementById(step.id))
       .filter((element): element is HTMLElement => element !== null);
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setActiveStep(entry.target.id);
-        });
-      },
-      { rootMargin: '-45% 0px -45% 0px' },
-    );
-    steps.forEach((step) => observer.observe(step));
-    return () => observer.disconnect();
+    let observer: IntersectionObserver | null = null;
+    // A band through the middle of the viewport. It is set in pixels from the
+    // viewport height: percentage margins are resolved against the root width,
+    // which collapses the band on landscape phones.
+    const connect = () => {
+      observer?.disconnect();
+      const inset = Math.round(window.innerHeight * 0.45);
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) setActiveStep(entry.target.id);
+          });
+        },
+        { rootMargin: `-${inset}px 0px -${inset}px 0px` },
+      );
+      steps.forEach((step) => observer?.observe(step));
+    };
+    connect();
+    window.addEventListener('resize', connect);
+    return () => {
+      window.removeEventListener('resize', connect);
+      observer?.disconnect();
+    };
   }, [c.how.steps]);
 
   const toggleTheme = useCallback(() => {
