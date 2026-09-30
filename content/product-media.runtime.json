@@ -692,6 +692,186 @@
         "width": 360,
         "height": 772
       }
+    },
+    {
+      "id": "pl-private-tasks-plus-menu",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/private-tasks-01-plus-menu.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/private-tasks-01-plus-menu-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "pl-private-tasks-title-description",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/private-tasks-02-title-description.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/private-tasks-02-title-description-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "pl-private-tasks-when-mode",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/private-tasks-03-when-mode.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/private-tasks-03-when-mode-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "pl-private-tasks-date",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/private-tasks-04-date.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/private-tasks-04-date-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "pl-private-tasks-reminder",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/private-tasks-05-reminder.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/private-tasks-05-reminder-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "pl-private-tasks-planner",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/private-tasks-06-planner.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/private-tasks-06-planner-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "pl-private-tasks-subtasks",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/private-tasks-07-subtasks.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/private-tasks-07-subtasks-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "pl-private-tasks-planner-subtasks",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/private-tasks-08-planner-subtasks.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/private-tasks-08-planner-subtasks-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "pl-private-tasks-timer-running",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/private-tasks-09-timer-running.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/private-tasks-09-timer-running-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "pl-private-tasks-save-session",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/private-tasks-10-save-session.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/private-tasks-10-save-session-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "pl-private-tasks-sessions",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/private-tasks-11-sessions.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/private-tasks-11-sessions-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "pl-private-tasks-planner-progress",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/private-tasks-12-planner-progress.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/private-tasks-12-planner-progress-compact.webp",
+        "width": 360,
+        "height": 772
+      }
     }
   ],
   "placementSets": {

@@ -1,0 +1,133 @@
+{
+  "body": [
+    {
+      "type": "p",
+      "text": "Rower do serwisu, rachunki, prezent na urodziny - takie sprawy łatwo zgubić w głowie. W Shuuty zapisujesz je jako zadania prywatne: z terminem, przypomnieniem, listą podzadań i stoperem, który liczy czas pracy. Zadanie prywatne widzisz tylko Ty. Każdy krok poniżej pokazuje prawdziwy ekran aplikacji."
+    },
+    {
+      "type": "h2",
+      "text": "Jak dodać zadanie prywatne?"
+    },
+    {
+      "type": "step",
+      "text": "Dotknij **+** na dole ekranu i wybierz **Zadanie**. Jeśli wolisz powiedzieć zadanie jednym zdaniem, wybierz **Głosowo**.",
+      "media": "pl-private-tasks-plus-menu",
+      "alt": "Menu plusa z opcjami Zadanie, Głosowo, Spotkanie i Grupa"
+    },
+    {
+      "type": "step",
+      "text": "Wpisz tytuł, a pod nim opis. Nowe zadanie jest **Prywatne**, więc widzisz je tylko Ty.",
+      "media": "pl-private-tasks-title-description",
+      "alt": "Nowe zadanie z tytułem Rower do serwisu i opisem"
+    },
+    {
+      "type": "h2",
+      "text": "Jak ustawić termin i przypomnienie?"
+    },
+    {
+      "type": "step",
+      "text": "Dotknij **Kiedy?** i wybierz **Wybierz datę**, jeśli godzina nie ma znaczenia, albo **Wybierz datę i godzinę**.",
+      "media": "pl-private-tasks-when-mode",
+      "alt": "Wybór terminu: Wybierz datę albo Wybierz datę i godzinę"
+    },
+    {
+      "type": "step",
+      "text": "Wybierz dzień w kalendarzu i dotknij **Zatwierdź**.",
+      "media": "pl-private-tasks-date",
+      "alt": "Kalendarz z wybranym piątkiem 2 października"
+    },
+    {
+      "type": "step",
+      "text": "Dotknij **Przypomnienie** i wpisz, ile wcześniej ma przyjść, na przykład **24h** **Przed** terminem. Na koniec dotknij **Stwórz zadanie**.",
+      "media": "pl-private-tasks-reminder",
+      "alt": "Przypomnienie 24 godziny przed terminem w nowym zadaniu"
+    },
+    {
+      "type": "step",
+      "text": "Zadanie czeka w **Planerze**, w zakładce **Prywatne**, pod swoim dniem - z godziną przypomnienia i przyciskiem **Stoper**.",
+      "media": "pl-private-tasks-planner",
+      "alt": "Planer z zadaniem Rower do serwisu na piątek"
+    },
+    {
+      "type": "h2",
+      "text": "Jak rozbić zadanie na podzadania?"
+    },
+    {
+      "type": "step",
+      "text": "Otwórz zadanie i dotknij **Utwórz podzadanie**. Każde podzadanie to jedna linia do odhaczenia, a nad listą widać postęp, na przykład **Podzadania · 1/2**.",
+      "media": "pl-private-tasks-subtasks",
+      "alt": "Szczegóły zadania z listą dwóch podzadań, jedno odhaczone"
+    },
+    {
+      "type": "step",
+      "text": "Podzadania odhaczasz też prosto z planera - dotknij licznika podzadań na karcie. Opis i podzadania mają wspólny limit znaków, a aplikacja pokazuje, ile zostało.",
+      "media": "pl-private-tasks-planner-subtasks",
+      "alt": "Karta zadania w planerze z rozwiniętymi podzadaniami i wspólnym limitem opisu"
+    },
+    {
+      "type": "h2",
+      "text": "Jak zmierzyć czas pracy nad zadaniem?"
+    },
+    {
+      "type": "step",
+      "text": "W szczegółach zadania dotknij **Uruchom stoper**. Na dole widać, ile czasu mija, a **Wstrzymaj** robi przerwę.",
+      "media": "pl-private-tasks-timer-running",
+      "alt": "Włączony stoper zadania z przyciskami Wstrzymaj i Zapisz"
+    },
+    {
+      "type": "step",
+      "text": "Dotknij **Zapisz**, żeby zakończyć sesję. Widzisz **Czas pracy**, początek i koniec, możesz dodać notatkę i potwierdzić **Zapisz**.",
+      "media": "pl-private-tasks-save-session",
+      "alt": "Okno Zapisz sesję z czasem pracy 1 minuta 11 sekund"
+    },
+    {
+      "type": "step",
+      "text": "Sesja trafia do części **Zarejestrowany czas**, a **Całkowity czas** sumuje wszystkie sesje. Kolejną zaczynasz przyciskiem **Nowa sesja**, a zapomnianą dopisujesz przez **Dodaj ręcznie**.",
+      "media": "pl-private-tasks-sessions",
+      "alt": "Zarejestrowany czas zadania z jedną zapisaną sesją"
+    },
+    {
+      "type": "step",
+      "text": "Na karcie w planerze widać wtedy łączny czas i postęp podzadań, więc od razu wiesz, co zostało.",
+      "media": "pl-private-tasks-planner-progress",
+      "alt": "Karta zadania z czasem 1 minuta i postępem podzadań 1 z 2"
+    },
+    {
+      "type": "h2",
+      "text": "Czego zadania prywatne tu nie robią"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "**Nie pokazują się innym.** Zadanie staje się wspólne dopiero wtedy, gdy przypiszesz je znajomemu albo utworzysz je w grupie.",
+        "**Nie działają w przeglądarce.** Potrzebujesz aplikacji na iPhonie, iPadzie albo Androidzie."
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Ile to kosztuje"
+    },
+    {
+      "type": "p",
+      "text": "Zadania prywatne, podzadania, przypomnienia i stoper działają w bezpłatnym planie Free. Plan zmienia limit opisu: opis razem z podzadaniami ma w Free do 1000 znaków na zadanie, w Pro do 5000, a w Teams do 10 000. Ceny zależą od kraju i są widoczne w App Store i Google Play."
+    }
+  ],
+  "faq": [
+    {
+      "question": "Czy ktoś widzi moje zadania prywatne?",
+      "answer": "Nie. Zadanie prywatne widzisz tylko Ty. Inni zobaczą je dopiero wtedy, gdy przypiszesz je komuś albo utworzysz je w grupie."
+    },
+    {
+      "question": "Ile podzadań mogę dodać?",
+      "answer": "Tyle, ile zmieści się we wspólnym limicie opisu. W planie Free to 1000 znaków na całe zadanie, razem z opisem."
+    },
+    {
+      "question": "Co, jeśli zapomnę włączyć stoper?",
+      "answer": "Dopisz sesję przyciskiem Dodaj ręcznie w części Zarejestrowany czas."
+    },
+    {
+      "question": "Czy mogę dodać zadanie głosem?",
+      "answer": "Tak. Po dotknięciu + wybierz Głosowo i powiedz zadanie jednym zdaniem."
+    }
+  ]
+}

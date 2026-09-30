@@ -142,6 +142,16 @@
       "heading": "Gruppeoppgaver i Shuuty, steg for steg",
       "updatedOn": "2026-09-28",
       "updatedLabel": "Oppdatert 28. september 2026"
+    },
+    {
+      "topic": "private-tasks",
+      "language": "pl",
+      "slug": "lista-zadan-z-podzadaniami",
+      "title": "Lista zadań z podzadaniami i stoperem - krok po kroku",
+      "description": "Jak zapisać zadanie prywatne z terminem i przypomnieniem, rozbić je na podzadania i zmierzyć czas pracy stoperem. Każdy krok ze zrzutem ekranu.",
+      "heading": "Lista zadań z podzadaniami i stoperem - krok po kroku",
+      "updatedOn": "2026-09-30",
+      "updatedLabel": "Zaktualizowano 30 września 2026"
     }
   ]
 }
