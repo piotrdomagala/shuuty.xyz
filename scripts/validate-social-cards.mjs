@@ -91,8 +91,8 @@ async function checkCardImage(language, card, root, failures) {
 }
 
 function checkHeadline(label, headline, failures) {
-  if (!Array.isArray(headline) || headline.length !== 2) {
-    failures.push(`${label}.headline must have two lines.`);
+  if (!Array.isArray(headline) || headline.length < 2 || headline.length > 3) {
+    failures.push(`${label}.headline must have two or three lines.`);
     return false;
   }
   headline.forEach((line, index) => checkText(`${label}.headline[${index}]`, line, failures));
@@ -183,7 +183,9 @@ export async function validateSocialCards(root = defaultRoot) {
     readFile(new URL('app/homeContent.json', root), 'utf8').then(JSON.parse),
   ]);
   const failures = [];
-  const mediaById = new Map(media.assets.map((asset) => [asset.id, asset]));
+  const mediaById = new Map(
+    [...media.assets, ...(media.guideCaptures ?? [])].map((asset) => [asset.id, asset]),
+  );
 
   checkRenderer(config, failures);
   if (JSON.stringify(Object.keys(config.cards ?? {})) !== JSON.stringify(cardLanguages)) {

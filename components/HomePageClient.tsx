@@ -630,7 +630,8 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
             <span className={s.eyebrow}><span className={s.statusDot} />{c.hero.badge}</span>
             <h1 className={s.heroTitle}>
               {c.hero.title}{' '}
-              <span className={s.gradientText}>{c.hero.accent}</span>
+              <br />
+              <span className={s.accentText}>{c.hero.accent}</span>
             </h1>
             <p className={s.heroLead}>{c.hero.sub}</p>
             <div className={s.heroActions}>
@@ -782,7 +783,7 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
                 <span className={s.sectionLabel}><Icon name="loop" />{c.how.loop.label}</span>
                 <p className={s.loopText}>
                   {c.how.loop.text}{' '}
-                  <strong className={s.gradientText}>{c.how.loop.strong}</strong>
+                  <strong className={s.accentText}>{c.how.loop.strong}</strong>
                 </p>
                 <ol className={s.loopChain}>
                   {c.how.loop.chain.map((item, index) => (

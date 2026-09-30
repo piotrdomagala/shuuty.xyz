@@ -107,12 +107,12 @@
   height: 40px;
   flex: 0 0 40px;
   overflow: hidden;
-  border: 1px solid rgba(255, 229, 160, 0.16);
+  border: 1px solid rgba(245, 200, 76, 0.2);
   border-radius: 12px;
-  background: #000;
+  background: var(--brand-ink);
   box-shadow:
     0 8px 22px rgba(0, 0, 0, 0.24),
-    0 0 0 1px rgba(255, 229, 160, 0.06);
+    0 0 0 1px rgba(245, 200, 76, 0.06);
 }
 
 .brandMark img {
@@ -320,14 +320,8 @@
   text-wrap: balance;
 }
 
-.gradientText {
-  display: inline-block;
-  padding: 0 0.05em 0.08em 0;
-  color: transparent;
-  background: linear-gradient(118deg, var(--gradient-text-start) 10%, color-mix(in srgb, var(--gradient-text-start) 46%, var(--gradient-text-end)) 56%, var(--gradient-text-end) 100%);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.accentText {
+  color: var(--accent-text);
 }
 
 .heroLead {
@@ -468,10 +462,10 @@
 }
 
 :global(:root[data-theme='light']) .deviceFrame {
-  border-color: rgba(54, 49, 45, 0.58);
+  border-color: rgba(28, 25, 23, 0.58);
   box-shadow:
-    0 24px 48px rgba(71, 55, 44, 0.2),
-    0 3px 8px rgba(71, 55, 44, 0.15);
+    0 24px 48px rgba(139, 126, 116, 0.26),
+    0 3px 8px rgba(139, 126, 116, 0.2);
 }
 
 .deviceFrameIosPhone {
@@ -658,10 +652,6 @@
   border-top: 1px solid var(--border-subtle);
 }
 
-.chapterTint {
-  background: linear-gradient(180deg, transparent, var(--surface-purple) 22%, transparent 88%);
-}
-
 .container {
   width: min(1180px, 100%);
   margin: 0 auto;
@@ -764,6 +754,7 @@
 
 .step {
   --step-rgb: var(--gold-rgb);
+  --step-ink: var(--accent-text);
   display: grid;
   grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
   gap: clamp(40px, 6vw, 88px);
@@ -773,14 +764,17 @@
 
 .step[data-step='2'] {
   --step-rgb: var(--blue-rgb);
+  --step-ink: var(--cool-accent-text);
 }
 
 .step[data-step='3'] {
-  --step-rgb: 59, 130, 246;
+  --step-rgb: var(--meeting-rgb);
+  --step-ink: var(--meeting-accent);
 }
 
 .step[data-step='4'] {
-  --step-rgb: 139, 92, 246;
+  --step-rgb: var(--group-rgb);
+  --step-ink: var(--group-accent);
 }
 
 .step:nth-child(even) {
@@ -892,7 +886,7 @@
   letter-spacing: -0.04em;
   line-height: 0.85;
   font-variant-numeric: lining-nums;
-  -webkit-text-stroke: 1.5px rgba(var(--step-rgb), 0.8);
+  -webkit-text-stroke: 1.5px var(--step-ink);
 }
 
 .stepCopy h3 {
@@ -939,11 +933,7 @@
   width: 14px;
   height: 14px;
   flex: 0 0 14px;
-  color: rgb(var(--step-rgb));
-}
-
-:global(:root[data-theme='light']) .stepPoints svg {
-  color: var(--text-secondary);
+  color: var(--step-ink);
 }
 
 .guideLinks {
@@ -1030,8 +1020,7 @@
   line-height: 1.16;
 }
 
-.loopText .gradientText {
-  display: inline;
+.loopText .accentText {
   font-weight: 800;
 }
 
@@ -1083,6 +1072,7 @@
 
 .useCard {
   --use-rgb: var(--gold-rgb);
+  --use-ink: var(--accent-text);
   position: relative;
   min-height: 290px;
   padding: 28px;
@@ -1100,14 +1090,17 @@
 
 .useCard:nth-child(2) {
   --use-rgb: var(--blue-rgb);
+  --use-ink: var(--cool-accent-text);
 }
 
 .useCard:nth-child(3) {
-  --use-rgb: 59, 130, 246;
+  --use-rgb: var(--meeting-rgb);
+  --use-ink: var(--meeting-accent);
 }
 
 .useCard:nth-child(4) {
-  --use-rgb: 139, 92, 246;
+  --use-rgb: var(--group-rgb);
+  --use-ink: var(--group-accent);
   grid-column: span 3;
 }
 
@@ -1123,7 +1116,7 @@
   justify-content: center;
   border: 1px solid rgba(var(--use-rgb), 0.32);
   border-radius: 16px;
-  color: var(--accent-text);
+  color: var(--use-ink);
   background: rgba(var(--use-rgb), 0.12);
 }
 
@@ -1880,7 +1873,7 @@
 
   .mobileNav .mobileDownload {
     color: var(--accent-ink);
-    background: linear-gradient(135deg, var(--gold), color-mix(in srgb, var(--gold) 68%, var(--blue)));
+    background: linear-gradient(135deg, var(--gold), var(--blue));
   }
 }
 

@@ -8,50 +8,61 @@
   padding: 0;
 }
 
+/*
+ * Colours come from the app's theme, src/styles/colors.ts in piotrdomagala/S-
+ * at 9dddd31ad5a6f2cc70216f1c47f8f7504c7f238f (darkThemeColors, lightThemeColors
+ * and the fixed brand and entity accents). The name after each value is the app
+ * token; a value with an alpha is that token at the stated opacity. Do not add a
+ * colour here that the app does not use.
+ */
 :root {
   color-scheme: dark;
 
-  --bg: #0d1117;
-  --bg-soft: #11161d;
-  --bg-raised: #161b22;
-  --bg-elevated: #21262d;
-  --bg-overlay: rgba(13, 17, 23, 0.88);
+  --bg: #0d1117; /* primaryBackgroundColor */
+  --bg-soft: #161b22; /* navigationCardColor */
+  --bg-raised: #161b22; /* secondaryBackgroundColor */
+  --bg-elevated: #21262d; /* buttonBackgroundInactive */
+  --bg-overlay: rgba(13, 17, 23, 0.85); /* glassBackgroundDark */
 
-  --text: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.68);
-  --text-muted: #8b949e;
-  --text-faint: #626b76;
+  --text: #ffffff; /* primaryTextColor */
+  --text-secondary: rgba(255, 255, 255, 0.6); /* secondaryTextColor */
+  --text-muted: #8b949e; /* buttonTextInactive */
+  --text-faint: rgba(255, 255, 255, 0.4); /* iconInactive */
 
-  --gold: #ffe5a0;
-  --gold-dim: #ffd080;
-  --blue: #7dd3fc;
-  --accent-text: #ffe5a0;
-  --accent-ink: #0d1117;
-  --gradient-text-start: #ffe5a0;
-  --gradient-text-end: #7dd3fc;
-  --gold-rgb: 255, 229, 160;
-  --blue-rgb: 125, 211, 252;
-  --group-accent: #8b5cf6;
-  --meeting-accent: #3b82f6;
+  --gold: #ffe5a0; /* buttonGradientStartColor, goldPremiumColor */
+  --gold-dim: #ffd080; /* splashGradient2 */
+  --blue: #7dd3fc; /* buttonGradientEndColor */
+  --accent-text: #ffe5a0; /* accentTextColor */
+  --cool-accent-text: #7dd3fc; /* coolAccentTextColor */
+  --accent-ink: #0d1117; /* buttonTextActive */
+  --gold-rgb: 255, 229, 160; /* accentGlow */
+  --blue-rgb: 125, 211, 252; /* accentGlowSecondary */
+  --group-accent: #8b5cf6; /* GROUP_ACCENT */
+  --group-rgb: 139, 92, 246;
+  --meeting-accent: #3b82f6; /* MEETING_ACCENT */
+  --meeting-rgb: 59, 130, 246;
+  --brand-ink: #0d1117; /* BRAND_INK */
+  --brand-gold: #f5c84c; /* BRAND_GOLD */
 
-  --border: #30363d;
-  --border-subtle: rgba(255, 255, 255, 0.07);
-  --border-strong: rgba(255, 255, 255, 0.15);
+  --border: #30363d; /* navigationBorderColor */
+  --border-subtle: rgba(255, 255, 255, 0.05); /* borderColor */
+  --border-strong: rgba(255, 255, 255, 0.15); /* glassBorderLight */
 
-  --glass-bg: rgba(22, 27, 34, 0.76);
-  --glass-bg-strong: rgba(22, 27, 34, 0.92);
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --nav-bg: rgba(13, 17, 23, 0.78);
+  --glass-bg: rgba(22, 27, 34, 0.75); /* glassBackground */
+  --glass-bg-strong: rgba(13, 17, 23, 0.85); /* bottomBarBackgroundColor */
+  --glass-border: rgba(255, 255, 255, 0.1); /* glassBorder */
+  --nav-bg: rgba(13, 17, 23, 0.7); /* frostedOverlay */
 
-  --surface-peach: rgba(255, 229, 160, 0.08);
-  --surface-blue: rgba(125, 211, 252, 0.08);
-  --surface-purple: rgba(139, 92, 246, 0.09);
+  --surface-peach: rgba(255, 229, 160, 0.12); /* subscriptionBadgeBg */
+  --surface-blue: rgba(125, 211, 252, 0.1); /* blue10 */
+  --surface-purple: rgba(139, 92, 246, 0.1); /* GROUP_ACCENT 10% */
 
-  --shadow-soft: 0 18px 60px rgba(0, 0, 0, 0.22);
+  --shadow-soft: 0 18px 60px rgba(0, 0, 0, 0.22); /* shadowColor */
   --shadow-strong: 0 34px 100px rgba(0, 0, 0, 0.48);
   --phone-border: rgba(255, 255, 255, 0.12);
 
-  --success: #34d399;
+  --success: #34d399; /* successColor */
+  --error-text: #f87171; /* errorTextColor */
 
   --s-xs: 4px;
   --s-sm: 8px;
@@ -80,47 +91,47 @@
 :root[data-theme='light'] {
   color-scheme: light;
 
-  --bg: #fffbf5;
-  --bg-soft: #fbf6ef;
-  --bg-raised: #ffffff;
-  --bg-elevated: #f2efe9;
-  --bg-overlay: rgba(255, 251, 245, 0.9);
+  --bg: #fffbf5; /* primaryBackgroundColor */
+  --bg-soft: #f7f5f2; /* subscriptionFreeBg */
+  --bg-raised: #ffffff; /* secondaryBackgroundColor */
+  --bg-elevated: #f2efe9; /* buttonBackgroundInactive */
+  --bg-overlay: rgba(255, 251, 245, 0.8); /* frostedOverlay */
 
-  --text: #1c1917;
-  --text-secondary: rgba(28, 25, 23, 0.7);
-  --text-muted: #78716c;
-  --text-faint: #a8a29e;
+  --text: #1c1917; /* primaryTextColor */
+  --text-secondary: rgba(28, 25, 23, 0.7); /* secondaryTextColor */
+  --text-muted: #79716c; /* buttonTextInactive, 4.79:1 */
+  --text-faint: rgba(28, 25, 23, 0.47); /* iconInactive, UI only */
 
-  --gold: #ffb088;
-  --gold-dim: #ea8e61;
-  --blue: #89cff0;
-  --accent-text: #a94b25;
-  --accent-ink: #1c1917;
-  --gradient-text-start: #b95027;
-  --gradient-text-end: #267da4;
-  --gold-rgb: 255, 176, 136;
-  --blue-rgb: 137, 207, 240;
-  --group-accent: #7c3aed;
-  --meeting-accent: #2563eb;
+  --gold: #ffb088; /* buttonGradientStartColor, goldPremiumColor (fill, never text) */
+  --gold-dim: #ffd4b8; /* splashGradient2 */
+  --blue: #89cff0; /* buttonGradientEndColor */
+  --accent-text: #c2410c; /* accentTextColor, 5.02:1 on the page */
+  --cool-accent-text: #14729e; /* coolAccentTextColor, 5.18:1 */
+  --accent-ink: #1c1917; /* buttonTextActive */
+  --gold-rgb: 255, 176, 136; /* accentGlow */
+  --blue-rgb: 137, 207, 240; /* accentGlowSecondary */
+  --group-accent: #7c3aed; /* GROUP_ACCENT_DARK */
+  --meeting-accent: #2563eb; /* MEETING_ACCENT_DARK */
 
-  --border: #e7e0d8;
-  --border-subtle: rgba(28, 25, 23, 0.08);
-  --border-strong: rgba(28, 25, 23, 0.16);
+  --border: rgba(28, 25, 23, 0.1); /* black10 */
+  --border-subtle: rgba(28, 25, 23, 0.05); /* borderColor */
+  --border-strong: rgba(28, 25, 23, 0.18); /* glassBorderLight */
 
-  --glass-bg: rgba(255, 255, 255, 0.76);
-  --glass-bg-strong: rgba(255, 255, 255, 0.94);
-  --glass-border: rgba(28, 25, 23, 0.12);
-  --nav-bg: rgba(255, 251, 245, 0.8);
+  --glass-bg: rgba(255, 255, 255, 0.9); /* glassBackground */
+  --glass-bg-strong: rgba(255, 251, 245, 0.85); /* bottomBarBackgroundColor */
+  --glass-border: rgba(28, 25, 23, 0.15); /* glassBorder */
+  --nav-bg: rgba(255, 251, 245, 0.8); /* frostedOverlay */
 
-  --surface-peach: rgba(255, 176, 136, 0.12);
-  --surface-blue: rgba(137, 207, 240, 0.13);
-  --surface-purple: rgba(139, 92, 246, 0.08);
+  --surface-peach: rgba(255, 176, 136, 0.15); /* subscriptionBadgeBg */
+  --surface-blue: rgba(137, 207, 240, 0.1); /* blue10 */
+  --surface-purple: rgba(139, 92, 246, 0.08); /* GROUP_ACCENT 8% */
 
-  --shadow-soft: 0 18px 55px rgba(88, 67, 49, 0.1);
-  --shadow-strong: 0 34px 90px rgba(88, 67, 49, 0.2);
+  --shadow-soft: 0 18px 55px rgba(139, 126, 116, 0.16); /* shadowColor #8b7e74 */
+  --shadow-strong: 0 34px 90px rgba(139, 126, 116, 0.3);
   --phone-border: rgba(28, 25, 23, 0.12);
 
-  --success: #059669;
+  --success: #0b835c; /* successColor */
+  --error-text: #e30d32; /* errorTextColor */
 }
 
 html {

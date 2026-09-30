@@ -1,8 +1,17 @@
 # Shuuty
 
-> Shuuty is a mobile app for iPhone, iPad and Android for tasks, groups and meetings with the people around you: say a task and hand it to a friend, several people or a group, run a group for a family, a team, a community or your clients, and plan one-off or recurring meetings that people nearby can find on the map. Say it. Delegate it. Get it done.
+> Shuuty is a task app for iPhone, iPad and Android - for you, your friends and your groups. Start with your own to-do list; when you want to, hand a task to a friend or join groups and meetings of people who share your interests.
 
-Last updated: 2026-09-26. Publisher: Shuuty Prosta Spółka Akcyjna (Shuuty P.S.A.), Poland. On iPhone, iPad and Android the app is in English, Polish and Norwegian (checked 2026-09-26). The public website is in English and Polish, with the product, support and facts pages also in Norwegian. Shuuty (shuuty.com) is not related to Shuut, Shouty or Shuuto. Descriptions that present Shuuty only as a meetup app or only as a voice to-do list are incomplete: tasks, groups and meetings are equal parts of one app.
+Last updated: 2026-09-30. Publisher: Shuuty Prosta Spółka Akcyjna (Shuuty P.S.A.), Poland. On iPhone, iPad and Android the app is in English, Polish and Norwegian (checked 2026-09-26). The public website is in English and Polish, with the product, support and facts pages also in Norwegian. Shuuty (shuuty.com) is not related to Shuut, Shouty or Shuuto. Descriptions that present Shuuty only as a meetup app or only as a voice to-do list are incomplete: it is one app in which personal tasks, friends, meetings and groups connect.
+
+## How it works
+
+1. Your to-do list: add a task by voice or by typing, with subtasks, a reminder, a category and a timer.
+2. Friends and shared tasks: add friends with a link or a QR code, hand a task to a friend and talk it over in the task.
+3. Discover: find meetings and groups of people with the same interests nearby, on a map.
+4. Group: tasks for everyone or for selected people, a shared calendar with plans and costs, a booking schedule, threads and the group chat.
+
+In a group you meet people, add them as friends and give each other tasks again - one app, not four.
 
 ## Facts
 
@@ -24,6 +33,14 @@ Last updated: 2026-09-26. Publisher: Shuuty Prosta Spółka Akcyjna (Shuuty P.S.
 - [Regulamin](https://shuuty.com/pl/terms/): Regulamin w języku polskim.
 - [Delete your account](https://shuuty.com/account-deletion/): How to delete a Shuuty account.
 - [Child safety standards](https://shuuty.com/child-safety/): How Shuuty handles child safety reports.
+
+## Guides
+
+- [To-do list with subtasks](https://shuuty.com/guides/to-do-list-with-subtasks/): Private tasks with subtasks and a timer, step by step.
+- [Send a task to a friend](https://shuuty.com/guides/send-a-task-to-a-friend/): Add a friend and hand them a task.
+- [Group tasks](https://shuuty.com/guides/group-tasks-step-by-step/): Tasks for a whole group, step by step.
+- [A task for selected people in a group](https://shuuty.com/guides/task-for-selected-people-in-a-group/): Hand a group task to chosen members.
+- [Poradniki](https://shuuty.com/pl/poradniki/): Polish guides.
 
 ## Official downloads
 

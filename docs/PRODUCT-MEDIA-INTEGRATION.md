@@ -82,9 +82,10 @@ same provenance rules. Its screens are the `<locale>-home-*` records (files
 released on iOS as 2.2.4), resolved by id with `getProductMediaPlacement` and
 framed by `ProductDeviceFrame`; the Norwegian page shows the English set, as the
 Norwegian guides do. Any other registered guide capture may be used there too.
-The eight canonical store captures stay the source for the social cards, the
-Product Hunt gallery and the store listing; the homepage no longer reads the
-canonical placement sets.
+The link preview cards use the same home captures (group page, planner, Discover
+map), so they match the hero. The eight canonical store captures stay the source
+for the Product Hunt gallery and the store listing; the homepage no longer reads
+the canonical placement sets.
 
 Each guide capture is a real screen of the released app:
 
@@ -226,7 +227,8 @@ bytes (largest file 89,222 bytes). A normal production build only validates thes
 checked-in bytes. Regeneration is deliberate and fails before publishing files if
 source provenance, the pinned pipeline or any budget drifts.
 
-The link preview cards in `public/images/social/` are built from these captures by
+The link preview cards in `public/images/social/` are built from registered captures
+(since 30.09.2026 the home captures, see Guide captures) by
 `npm run generate:social-cards` and record the capture hashes they used, so a new
 capture makes `npm run validate:social` fail until the cards are regenerated.
 
