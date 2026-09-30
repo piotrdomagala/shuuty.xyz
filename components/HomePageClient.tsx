@@ -3,8 +3,10 @@
 import {
   useCallback,
   useEffect,
+  useId,
   useRef,
   useState,
+  type CSSProperties,
   type KeyboardEvent as ReactKeyboardEvent,
   type PointerEvent as ReactPointerEvent,
 } from 'react';
@@ -41,7 +43,6 @@ type IconName =
   | 'community'
   | 'download'
   | 'group'
-  | 'loop'
   | 'map'
   | 'moon'
   | 'people'
@@ -235,8 +236,6 @@ function Icon({ name }: Readonly<{ name: IconName }>) {
       return <svg {...props}><path d="M12 3v12m-5-5 5 5 5-5M5 21h14" /></svg>;
     case 'group':
       return <svg {...props}><circle cx="9" cy="8" r="3.2" /><path d="M3 19c.6-3.7 2.7-5.6 6-5.6s5.4 1.9 6 5.6M15.5 5.5a3 3 0 0 1 0 5.8M16.5 14c2.5.3 4 1.9 4.5 4.5" /></svg>;
-    case 'loop':
-      return <svg {...props}><path d="M4.5 11a7.5 7.5 0 0 1 13.2-4.3L20 9" /><path d="M20 4v5h-5" /><path d="M19.5 13a7.5 7.5 0 0 1-13.2 4.3L4 15" /><path d="M4 20v-5h5" /></svg>;
     case 'map':
       return <svg {...props}><path d="m3 6 5-3 8 3 5-3v15l-5 3-8-3-5 3V6Z" /><path d="M8 3v15m8-12v15" /></svg>;
     case 'moon':
@@ -349,30 +348,360 @@ function GuideLink({
   );
 }
 
+type CarouselCopy = (typeof carouselLabels)[Lang];
+
 // One large screen in front, one or two smaller ones behind it. The screens
-// are real captures, only scaled and framed.
-function StepStage({ screens }: Readonly<{ screens: readonly Screen[] }>) {
-  const [main, ...rest] = screens;
-  const sideClasses = rest.length > 1 ? [s.stagePhoneLeft, s.stagePhoneRight] : [s.stagePhoneSide];
+// are real captures, only scaled and framed. Tapping a screen behind brings
+// it to the front and sends the front one back, like the hero carousel.
+function StepStage({
+  label,
+  screens,
+  carousel,
+}: Readonly<{ label: string; screens: readonly Screen[]; carousel: CarouselCopy }>) {
+  // order[position] = screen index; position 0 is the front.
+  const [order, setOrder] = useState(() => screens.map((_, index) => index));
+  const count = screens.length;
+  const bringToFront = (position: number) =>
+    setOrder((current) => {
+      const next = [...current];
+      [next[0], next[position]] = [next[position], next[0]];
+      return next;
+    });
+  const sideClasses = count > 2 ? [s.stagePhoneRight, s.stagePhoneLeft] : [s.stagePhoneSide];
 
   return (
-    <div className={`${s.stepStage} ${rest.length > 1 ? s.stepStageTrio : ''}`}>
-      <figure className={`${s.stagePhone} ${s.stagePhoneMain}`}>
-        <ProductDeviceFrame
-          media={main}
-          alt={main.alt}
-          sizes="(max-width: 720px) 60vw, 290px"
-        />
+    <div
+      className={`${s.stepStage} ${count > 2 ? s.stepStageTrio : ''}`}
+      role="group"
+      aria-label={`${label}: ${carousel.choose}`}
+    >
+      {screens.map((screen, index) => {
+        const position = order.indexOf(index);
+        const isFront = position === 0;
+        return (
+          <button
+            type="button"
+            key={screen.id}
+            className={`${s.stagePhone} ${isFront ? s.stagePhoneMain : sideClasses[position - 1]}`}
+            onClick={() => bringToFront(position)}
+            aria-label={`${screen.alt}. ${isFront ? carousel.active : carousel.bringToFront}`}
+            aria-pressed={isFront}
+          >
+            <ProductDeviceFrame
+              media={screen}
+              alt={screen.alt}
+              sizes="(max-width: 720px) 60vw, 290px"
+            />
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+type LoopOrbitCopy = Readonly<{ ringLabel: string; showing: string; again: string }>;
+
+// Where each chip sits on the ring, in degrees of the ring's own plane.
+const orbitAngle = (index: number) => index * 90 - 45;
+// The ring angle that puts a chip at the front (the near edge, 180 degrees).
+const frontRotation = (index: number) => 180 - orbitAngle(index);
+const AUTO_SPEED = 7.5; // degrees per second: one turn in 48 s
+const IDLE_BEFORE_AUTO = 3000;
+const DRAG_DEGREES_PER_PIXEL = 0.45;
+
+// The loop: the four steps on a ring around the group members screen. The
+// list next to it is the semantic source (links to the steps); the ring is a
+// set of buttons that choose which step's screen the phone shows. Hover or
+// focus pauses the turning, a horizontal drag spins the ring with a little
+// inertia, and the slow turn resumes after 3 s without input. With reduced
+// motion the ring stands still and every change is instant.
+function LoopOrbit({
+  items,
+  screens,
+  selected,
+  copy,
+  onSelect,
+  onOpen,
+}: Readonly<{
+  items: readonly string[];
+  // screens[0] is the default (members); screens[i + 1] belongs to step i.
+  screens: readonly Screen[];
+  selected: number | null;
+  copy: LoopOrbitCopy;
+  onSelect: (index: number) => void;
+  onOpen: (index: number) => void;
+}>) {
+  const stageRef = useRef<HTMLDivElement | null>(null);
+  const spinRef = useRef<HTMLDivElement | null>(null);
+  const chipRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const [announce, setAnnounce] = useState('');
+  const phoneId = useId();
+  const motion = useRef({
+    rotation: 0,
+    velocity: 0,
+    target: null as number | null,
+    hovered: false,
+    focused: false,
+    dragging: false,
+    reduced: false,
+    lastInput: -Infinity,
+    pointerId: -1,
+    startX: 0,
+    startY: 0,
+    startRotation: 0,
+    lastX: 0,
+    lastTime: 0,
+    suppressClick: false,
+  });
+  const activeScreen = selected === null ? screens[0] : screens[selected + 1];
+
+  useEffect(() => {
+    const m = motion.current;
+    const query = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const syncReduced = () => {
+      m.reduced = query.matches;
+    };
+    syncReduced();
+    query.addEventListener('change', syncReduced);
+
+    // The loop runs only while the ring is on screen and the tab is visible.
+    let frame = 0;
+    let previous = performance.now();
+    let onScreen = false;
+    const running = () => onScreen && document.visibilityState === 'visible';
+    const start = () => {
+      if (frame || !running()) return;
+      previous = performance.now();
+      frame = requestAnimationFrame(tick);
+    };
+    const stop = () => {
+      cancelAnimationFrame(frame);
+      frame = 0;
+    };
+    const tick = (now: number) => {
+      const seconds = Math.min(0.05, (now - previous) / 1000);
+      previous = now;
+      if (!m.dragging) {
+        if (m.target !== null) {
+          const distance = m.target - m.rotation;
+          if (m.reduced || Math.abs(distance) < 0.2) {
+            m.rotation = m.target;
+            m.target = null;
+          } else {
+            m.rotation += distance * Math.min(1, seconds * 6);
+          }
+        } else if (!m.reduced && Math.abs(m.velocity) > 1) {
+          m.rotation += m.velocity * seconds;
+          m.velocity *= Math.pow(0.004, seconds);
+        } else {
+          m.velocity = 0;
+          const idle = now - m.lastInput > IDLE_BEFORE_AUTO;
+          if (!m.reduced && !m.hovered && !m.focused && idle) {
+            m.rotation += AUTO_SPEED * seconds;
+          }
+        }
+      }
+      // Only a custom property on the spinning plane changes: the ring and the
+      // chips turn by transform, nothing is laid out again.
+      spinRef.current?.style.setProperty('--orbit-rot', `${m.rotation.toFixed(2)}deg`);
+      frame = running() ? requestAnimationFrame(tick) : 0;
+    };
+    const observer = new IntersectionObserver(([entry]) => {
+      onScreen = entry.isIntersecting;
+      if (onScreen) start();
+      else stop();
+    });
+    if (stageRef.current) observer.observe(stageRef.current);
+    const onVisibility = () => (running() ? start() : stop());
+    document.addEventListener('visibilitychange', onVisibility);
+    return () => {
+      stop();
+      observer.disconnect();
+      document.removeEventListener('visibilitychange', onVisibility);
+      query.removeEventListener('change', syncReduced);
+    };
+  }, []);
+
+  const nearestFront = (index: number) => {
+    const m = motion.current;
+    const base = frontRotation(index);
+    return base + 360 * Math.round((m.rotation - base) / 360);
+  };
+
+  const isAtFront = (index: number) =>
+    Math.abs(motion.current.rotation - nearestFront(index)) < 25;
+
+  // `now` is the event's timestamp (the same clock as performance.now()).
+  const choose = (index: number, now: number) => {
+    const m = motion.current;
+    if (m.suppressClick) {
+      m.suppressClick = false;
+      return;
+    }
+    if (selected === index && isAtFront(index)) {
+      onOpen(index);
+      return;
+    }
+    m.velocity = 0;
+    m.target = nearestFront(index);
+    // A chosen step stays at the front a little longer before the turn resumes.
+    m.lastInput = now + IDLE_BEFORE_AUTO;
+    onSelect(index);
+    setAnnounce(`${copy.showing} ${screens[index + 1].alt}`);
+  };
+
+  const handleKeyDown = (event: ReactKeyboardEvent<HTMLDivElement>) => {
+    if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+    event.preventDefault();
+    const step = event.key === 'ArrowRight' ? 1 : -1;
+    const next = ((selected ?? (step > 0 ? -1 : 0)) + step + items.length) % items.length;
+    choose(next, event.timeStamp);
+    chipRefs.current[next]?.focus({ preventScroll: true });
+  };
+
+  const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (event.pointerType === 'mouse' && event.button !== 0) return;
+    const m = motion.current;
+    m.pointerId = event.pointerId;
+    m.startX = event.clientX;
+    m.startY = event.clientY;
+    m.startRotation = m.rotation;
+    m.lastX = event.clientX;
+    m.lastTime = performance.now();
+  };
+
+  const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
+    const m = motion.current;
+    if (m.pointerId !== event.pointerId) return;
+    const dx = event.clientX - m.startX;
+    const dy = event.clientY - m.startY;
+    if (!m.dragging) {
+      // Only a clearly horizontal drag turns the ring; a vertical one is the
+      // page scrolling and is left alone.
+      if (Math.abs(dy) > 10 && Math.abs(dy) > Math.abs(dx)) {
+        m.pointerId = -1;
+        return;
+      }
+      if (Math.abs(dx) < 8 || Math.abs(dx) < Math.abs(dy) * 1.2) return;
+      m.dragging = true;
+      m.target = null;
+      m.velocity = 0;
+      event.currentTarget.setPointerCapture(event.pointerId);
+    }
+    const now = performance.now();
+    // Dragging right moves the near edge of the ring to the right.
+    m.rotation = m.startRotation - dx * DRAG_DEGREES_PER_PIXEL;
+    const instant = (-(event.clientX - m.lastX) * DRAG_DEGREES_PER_PIXEL * 1000)
+      / Math.max(8, now - m.lastTime);
+    m.velocity = m.velocity * 0.5 + instant * 0.5;
+    m.lastX = event.clientX;
+    m.lastTime = now;
+    m.lastInput = now;
+  };
+
+  const endDrag = (event: ReactPointerEvent<HTMLDivElement>) => {
+    const m = motion.current;
+    if (m.pointerId !== event.pointerId) return;
+    if (m.dragging) {
+      m.dragging = false;
+      m.suppressClick = true;
+      m.lastInput = performance.now();
+      // A little inertia, never a spin.
+      m.velocity = m.reduced ? 0 : Math.max(-240, Math.min(240, m.velocity));
+      // A click may not follow the drag (the pointer left the chip); clear the
+      // guard on the next frame so the next real tap is not swallowed.
+      window.setTimeout(() => {
+        m.suppressClick = false;
+      }, 0);
+    }
+    m.pointerId = -1;
+  };
+
+  return (
+    <div
+      ref={stageRef}
+      className={s.orbitStage}
+      onPointerEnter={(event) => {
+        if (event.pointerType === 'mouse') motion.current.hovered = true;
+      }}
+      onPointerLeave={() => {
+        motion.current.hovered = false;
+        motion.current.lastInput = performance.now();
+      }}
+      onFocus={() => {
+        motion.current.focused = true;
+      }}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+          motion.current.focused = false;
+          motion.current.lastInput = performance.now();
+        }
+      }}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={endDrag}
+      onPointerCancel={endDrag}
+    >
+      <div className={s.orbitGlow} aria-hidden="true" />
+      <figure id={phoneId} className={s.orbitPhone}>
+        {screens.map((screen, index) => {
+          const isActive = screen.id === activeScreen.id;
+          return (
+            <span
+              key={screen.id}
+              className={`${s.orbitScreen} ${isActive ? s.orbitScreenActive : ''}`}
+              aria-hidden={isActive ? undefined : true}
+              data-screen={index}
+            >
+              <ProductDeviceFrame
+                media={screen}
+                alt={isActive ? screen.alt : ''}
+                sizes="(max-width: 720px) 52vw, 240px"
+              />
+            </span>
+          );
+        })}
       </figure>
-      {rest.map((screen, index) => (
-        <figure key={screen.id} className={`${s.stagePhone} ${sideClasses[index]}`}>
-          <ProductDeviceFrame
-            media={screen}
-            alt={screen.alt}
-            sizes="(max-width: 720px) 38vw, 200px"
-          />
-        </figure>
-      ))}
+      <p className={s.srOnly} aria-live="polite">{announce}</p>
+      <div className={s.orbitPlane}>
+        <div className={`${s.orbitRing} ${s.orbitRingBack}`} aria-hidden="true" />
+        <div className={`${s.orbitRing} ${s.orbitRingFront}`} aria-hidden="true" />
+        <div
+          ref={spinRef}
+          className={s.orbitSpin}
+          role="group"
+          aria-label={copy.ringLabel}
+          onKeyDown={handleKeyDown}
+        >
+          {items.map((item, index) => (
+            <div
+              key={item}
+              className={s.orbitItem}
+              style={{ '--orbit-angle': `${orbitAngle(index)}deg` } as CSSProperties}
+            >
+              <div className={s.orbitCounter}>
+                <div className={s.orbitFace}>
+                  <button
+                    ref={(element) => {
+                      chipRefs.current[index] = element;
+                    }}
+                    type="button"
+                    className={s.orbitChip}
+                    data-step={index + 1}
+                    aria-pressed={selected === index}
+                    aria-controls={phoneId}
+                    onClick={(event) => choose(index, event.timeStamp)}
+                  >
+                    <Icon name={STEP_ICONS[index]} />
+                    {item}
+                    {selected === index ? <span className={s.srOnly}>{` ${copy.again}`}</span> : null}
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
@@ -382,6 +711,8 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
   const [theme, setTheme] = useState<Theme>('dark');
   const [showMobileNav, setShowMobileNav] = useState(false);
   const [activeHeroPhone, setActiveHeroPhone] = useState(0);
+  const [activeStep, setActiveStep] = useState<string | null>(null);
+  const [loopStep, setLoopStep] = useState<number | null>(null);
   const carouselPointerStart = useRef<number | null>(null);
   const carouselDidSwipe = useRef(false);
   const heroPhoneButtons = useRef<Array<HTMLButtonElement | null>>([]);
@@ -549,6 +880,36 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    if (!('IntersectionObserver' in window)) return;
+    const steps = c.how.steps
+      .map((step) => document.getElementById(step.id))
+      .filter((element): element is HTMLElement => element !== null);
+    let observer: IntersectionObserver | null = null;
+    // A band through the middle of the viewport. It is set in pixels from the
+    // viewport height: percentage margins are resolved against the root width,
+    // which collapses the band on landscape phones.
+    const connect = () => {
+      observer?.disconnect();
+      const inset = Math.round(window.innerHeight * 0.45);
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) setActiveStep(entry.target.id);
+          });
+        },
+        { rootMargin: `-${inset}px 0px -${inset}px 0px` },
+      );
+      steps.forEach((step) => observer?.observe(step));
+    };
+    connect();
+    window.addEventListener('resize', connect);
+    return () => {
+      window.removeEventListener('resize', connect);
+      observer?.disconnect();
+    };
+  }, [c.how.steps]);
+
   const toggleTheme = useCallback(() => {
     setTheme((current) => {
       const next = current === 'dark' ? 'light' : 'dark';
@@ -642,10 +1003,13 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
             </div>
             <ol className={s.heroSteps} aria-label={c.how.heading}>
               {navItems.map((item, index) => (
-                <li key={item.href}>
+                <li key={item.href} data-step={index + 1}>
                   <a href={item.href}>
+                    <span className={s.heroStepNumber} aria-hidden="true">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
                     <Icon name={STEP_ICONS[index]} />
-                    {item.label}
+                    <span className={s.heroStepLabel}>{item.label}</span>
                   </a>
                 </li>
               ))}
@@ -751,7 +1115,7 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
                   data-reveal
                   data-step={index + 1}
                 >
-                  <StepStage screens={step.screens} />
+                  <StepStage label={step.title} screens={step.screens} carousel={carousel} />
                   <div className={s.stepCopy}>
                     <span className={s.stepNumber} aria-hidden="true">
                       {String(index + 1).padStart(2, '0')}
@@ -778,31 +1142,38 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
               ))}
             </ol>
 
-            <div className={`${s.loopCard} ${s.reveal}`} data-reveal>
-              <div className={s.loopCopy}>
-                <span className={s.sectionLabel}><Icon name="loop" />{c.how.loop.label}</span>
-                <p className={s.loopText}>
-                  {c.how.loop.text}{' '}
-                  <strong className={s.accentText}>{c.how.loop.strong}</strong>
-                </p>
-                <ol className={s.loopChain}>
+            <div className={`${s.loop} ${s.reveal}`} data-reveal>
+              <div className={s.loopIntro}>
+                <h3 className={s.loopHeading}>{c.how.loop.heading}</h3>
+                <p className={s.loopText}>{c.how.loop.text}</p>
+              </div>
+              <LoopOrbit
+                items={c.how.loop.chain.map((item) => item.title)}
+                screens={[loopScreen, ...steps.map((step) => step.screens[0])]}
+                selected={loopStep}
+                copy={c.how.loop}
+                onSelect={setLoopStep}
+                onOpen={(index) => {
+                  window.location.hash = c.how.steps[index].id;
+                }}
+              />
+              <ol className={s.loopList}>
                   {c.how.loop.chain.map((item, index) => (
-                    <li key={item}>
+                    <li
+                      key={item.title}
+                      data-step={index + 1}
+                      data-active={loopStep === index ? 'true' : undefined}
+                    >
                       <a href={navItems[index].href}>
-                        <Icon name={STEP_ICONS[index]} />
-                        {item}
+                        <span className={s.loopListIcon}><Icon name={STEP_ICONS[index]} /></span>
+                        <span className={s.loopListText}>
+                          <strong>{item.title}</strong>
+                          <span>{item.text}</span>
+                        </span>
                       </a>
                     </li>
                   ))}
-                </ol>
-              </div>
-              <figure className={s.loopPhone}>
-                <ProductDeviceFrame
-                  media={loopScreen}
-                  alt={loopScreen.alt}
-                  sizes="(max-width: 720px) 60vw, 250px"
-                />
-              </figure>
+              </ol>
             </div>
           </div>
         </section>
@@ -905,7 +1276,14 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
         onPointerLeave={scheduleMobileNavHide}
       >
         {navItems.map((item, index) => (
-          <a key={item.href} href={item.href} onClick={hideMobileNav} aria-label={item.label}>
+          <a
+            key={item.href}
+            href={item.href}
+            onClick={hideMobileNav}
+            aria-label={item.label}
+            aria-current={activeStep && item.href === `#${activeStep}` ? 'location' : undefined}
+            data-step={index + 1}
+          >
             <Icon name={STEP_ICONS[index]} />
           </a>
         ))}

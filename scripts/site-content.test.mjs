@@ -111,6 +111,9 @@ test('the landing tells one four-step story in every language', async () => {
   assert.equal(content.en.how.heading, 'One app, four steps');
   assert.equal(content.pl.uses.heading, 'Do czego ludzie używają Shuuty');
   assert.equal(content.en.uses.heading, 'What people use Shuuty for');
+  assert.equal(content.pl.how.loop.heading, 'Jedna aplikacja, wiele możliwości');
+  assert.equal(content.en.how.loop.heading, 'One app, many possibilities');
+  assert.equal(content.nb.how.loop.heading, 'Én app, mange muligheter');
 
   for (const language of ['en', 'pl', 'nb']) {
     const page = content[language];
@@ -119,6 +122,9 @@ test('the landing tells one four-step story in every language', async () => {
       ['step-tasks', 'step-friends', 'step-discover', 'step-groups'],
     );
     assert.equal(page.how.loop.chain.length, 4);
+    for (const item of page.how.loop.chain) {
+      assert.ok(item.title.length > 0 && item.text.length > 0);
+    }
     assert.equal(page.uses.items.length, 5);
     assert.equal(page.faq.items.length, 5);
 
@@ -246,6 +252,18 @@ test('reduced motion explicitly removes phone transform transitions', async () =
     );
   }
   assert.match(reducedMotionRules, /transition:\s*none\s*!important/);
+
+  // The loop ring is turned by script: it reads the reduced-motion setting,
+  // stops when off screen or in a hidden tab, and leaves vertical drags to
+  // the page. Its chips are buttons, not decoration.
+  const component = await readFile(new URL('components/HomePageClient.tsx', root), 'utf8');
+  assert.match(component, /matchMedia\('\(prefers-reduced-motion: reduce\)'\)/);
+  assert.match(component, /new IntersectionObserver\(\(\[entry\]\)/);
+  assert.match(component, /visibilitychange/);
+  assert.match(css, /\.orbitStage \{[^}]*touch-action: pan-y;/);
+  assert.match(css, /\.orbitChip \{[^}]*min-height: 44px;/);
+  assert.equal(/animation:\s*orbit/.test(css), false, 'The ring must not also run a CSS animation');
+  assert.match(component, /className=\{s\.orbitChip\}[\s\S]{0,120}aria-pressed=/);
 });
 
 test('public copy does not promise local offers on the map or show the old support inbox', async () => {

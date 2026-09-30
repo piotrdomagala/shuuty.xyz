@@ -43,6 +43,14 @@
   --meeting-rgb: 59, 130, 246;
   --brand-ink: #0d1117; /* BRAND_INK */
   --brand-gold: #f5c84c; /* BRAND_GOLD */
+  --brand-gold-rgb: 245, 200, 76;
+  --shadow-rgb: 0, 0, 0; /* shadowColor */
+
+  /* The phone around a capture is a device, not app UI: the same in both themes. */
+  --device-bezel: #080a0d;
+  --device-edge: rgba(181, 186, 195, 0.5);
+  --device-screen: #05070a;
+  --capture-light-bg: #fffbf5; /* lightThemeColors.primaryBackgroundColor */
 
   --border: #30363d; /* navigationBorderColor */
   --border-subtle: rgba(255, 255, 255, 0.05); /* borderColor */
@@ -126,7 +134,8 @@
   --surface-blue: rgba(137, 207, 240, 0.1); /* blue10 */
   --surface-purple: rgba(139, 92, 246, 0.08); /* GROUP_ACCENT 8% */
 
-  --shadow-soft: 0 18px 55px rgba(139, 126, 116, 0.16); /* shadowColor #8b7e74 */
+  --shadow-rgb: 139, 126, 116; /* shadowColor #8b7e74 */
+  --shadow-soft: 0 18px 55px rgba(139, 126, 116, 0.16);
   --shadow-strong: 0 34px 90px rgba(139, 126, 116, 0.3);
   --phone-border: rgba(28, 25, 23, 0.12);
 

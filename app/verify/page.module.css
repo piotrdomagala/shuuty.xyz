@@ -61,7 +61,7 @@
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, var(--gold), var(--blue), var(--gold));
+  background: var(--gold);
   background-size: 200% auto;
   animation: gradientMove 3s linear infinite;
 }
