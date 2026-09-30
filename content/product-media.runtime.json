@@ -872,6 +872,231 @@
         "width": 360,
         "height": 772
       }
+    },
+    {
+      "id": "pl-group-people-task-details",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/group-people-01-task-details.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-people-01-task-details-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "pl-group-people-people",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/group-people-02-people.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-people-02-people-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "pl-group-people-selected-person",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/group-people-03-selected-person.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-people-03-selected-person-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "pl-group-people-member-received",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/group-people-04-member-received.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-people-04-member-received-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "pl-group-people-not-participating-received",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/group-people-05-not-participating-received.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-people-05-not-participating-received-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "pl-group-people-discussion",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/group-people-06-discussion.webp",
+      "width": 540,
+      "height": 800,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-people-06-discussion-compact.webp",
+        "width": 360,
+        "height": 533
+      }
+    },
+    {
+      "id": "pl-group-people-discussion-reply",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/group-people-07-discussion-reply.webp",
+      "width": 540,
+      "height": 745,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-people-07-discussion-reply-compact.webp",
+        "width": 360,
+        "height": 497
+      }
+    },
+    {
+      "id": "pl-group-profile-page-cover",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/group-profile-01-page-cover.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-profile-01-page-cover-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "pl-group-profile-options",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/group-profile-02-options.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-profile-02-options-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "pl-group-profile-description-edit",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/group-profile-03-description-edit.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-profile-03-description-edit-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "pl-group-profile-page-description",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/group-profile-04-page-description.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-profile-04-page-description-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "pl-group-profile-interests",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/group-profile-05-interests.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-profile-05-interests-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "pl-group-profile-interests-picked",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/group-profile-06-interests-picked.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-profile-06-interests-picked-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "pl-group-profile-page-full",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/group-profile-07-page-full.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-profile-07-page-full-compact.webp",
+        "width": 360,
+        "height": 772
+      }
+    },
+    {
+      "id": "pl-group-profile-members",
+      "altKey": null,
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "path": "/images/product/guide-captures-2026/pl-PL/group-profile-08-members.webp",
+      "width": 540,
+      "height": 1158,
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-profile-08-members-compact.webp",
+        "width": 360,
+        "height": 772
+      }
     }
   ],
   "placementSets": {

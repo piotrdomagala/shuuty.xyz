@@ -152,6 +152,26 @@
       "heading": "Lista zadań z podzadaniami i stoperem - krok po kroku",
       "updatedOn": "2026-09-30",
       "updatedLabel": "Zaktualizowano 30 września 2026"
+    },
+    {
+      "topic": "group-people",
+      "language": "pl",
+      "slug": "zadanie-dla-wybranych-osob-w-grupie",
+      "title": "Zadanie dla wybranych osób w grupie - krok po kroku",
+      "description": "Jak w grupie dać zadanie tylko części osób, sprawdzić, kto je dostał, i porozmawiać o nim w dyskusji przy zadaniu. Każdy krok ze zrzutem ekranu.",
+      "heading": "Zadanie dla wybranych osób w grupie - krok po kroku",
+      "updatedOn": "2026-09-30",
+      "updatedLabel": "Zaktualizowano 30 września 2026"
+    },
+    {
+      "topic": "group-profile",
+      "language": "pl",
+      "slug": "profil-grupy-okladka-opis-zainteresowania",
+      "title": "Profil grupy: okładka, opis i zainteresowania",
+      "description": "Jak zrobić czytelny profil grupy w Shuuty: okładka, opis widoczny dla nowych osób, zainteresowania i lista członków. Każdy krok ze zrzutem ekranu.",
+      "heading": "Profil grupy: okładka, opis i zainteresowania",
+      "updatedOn": "2026-09-30",
+      "updatedLabel": "Zaktualizowano 30 września 2026"
     }
   ]
 }

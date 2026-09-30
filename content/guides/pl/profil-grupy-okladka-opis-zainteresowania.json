@@ -1,0 +1,98 @@
+{
+  "body": [
+    {
+      "type": "p",
+      "text": "Nowa osoba, która trafia do grupy, w kilka sekund ocenia, o co w niej chodzi. Okładka, krótki opis, zainteresowania i zdjęcia członków robią tę robotę za Ciebie. Ten poradnik pokazuje, gdzie to wszystko ustawić w Shuuty. Każdy krok pokazuje prawdziwy ekran aplikacji."
+    },
+    {
+      "type": "h2",
+      "text": "Gdzie zmieniasz wygląd grupy?"
+    },
+    {
+      "type": "step",
+      "text": "Strona grupy zaczyna się od okładki z nazwą. Pod nią są karty **Członkowie** i **Zadania grupy**, a na dole **Przejdź do konwersacji**.",
+      "media": "pl-group-profile-page-cover",
+      "alt": "Strona grupy Ekipa remontowa z ilustracją na okładce"
+    },
+    {
+      "type": "step",
+      "text": "Organizator dotyka koła zębatego i otwiera **Opcje grupy**. Są tam **Zainteresowania grupy**, **Dodaj lokalizację**, **Dodaj opis grupy** i **Edytuj okładkę**.",
+      "media": "pl-group-profile-options",
+      "alt": "Opcje grupy z zainteresowaniami, lokalizacją, opisem i okładką"
+    },
+    {
+      "type": "h2",
+      "text": "Jak napisać opis grupy?"
+    },
+    {
+      "type": "step",
+      "text": "W **Opisie grupy** napisz w dwóch albo trzech zdaniach, czym żyje grupa. Przełącznik **Opis widoczny dla osób spoza grupy** decyduje, czy zobaczą go osoby spoza grupy. Na koniec dotknij **Zapisz**.",
+      "media": "pl-group-profile-description-edit",
+      "alt": "Edycja opisu grupy z licznikiem punktów i przełącznikiem widoczności"
+    },
+    {
+      "type": "step",
+      "text": "Opis pojawia się na stronie grupy w części **Opis grupy**.",
+      "media": "pl-group-profile-page-description",
+      "alt": "Strona grupy z opisem pod kartami"
+    },
+    {
+      "type": "h2",
+      "text": "Jak dodać zainteresowania grupy?"
+    },
+    {
+      "type": "step",
+      "text": "W **Zainteresowaniach grupy** wybierasz do 3 tematów, z kategorii albo przez wyszukiwarkę.",
+      "media": "pl-group-profile-interests",
+      "alt": "Zainteresowania grupy z wyszukiwarką i kategoriami"
+    },
+    {
+      "type": "step",
+      "text": "Wpisz słowo, na przykład \"malowanie\", zaznacz pasujące tematy i dotknij **Zatwierdź**.",
+      "media": "pl-group-profile-interests-picked",
+      "alt": "Wybrane dwa tematy: Remonty i Malowanie ścian"
+    },
+    {
+      "type": "step",
+      "text": "Tematy pokazują się na okładce. Dzięki nim łatwiej pokazać grupę osobom, które szukają podobnych miejsc, usług albo aktywności.",
+      "media": "pl-group-profile-page-full",
+      "alt": "Strona grupy z tematami na okładce i opisem"
+    },
+    {
+      "type": "h2",
+      "text": "Kto jest w grupie?"
+    },
+    {
+      "type": "step",
+      "text": "Karta **Członkowie** prowadzi do listy **Członkowie grupy** z organizatorem i członkami. Kolejne osoby zaprosisz przez **Link i kod QR do grupy**.",
+      "media": "pl-group-profile-members",
+      "alt": "Lista Członkowie grupy z trzema osobami i ich zdjęciami"
+    },
+    {
+      "type": "p",
+      "text": "Grupa wygląda czytelniej, gdy członkowie mają zdjęcia profilowe - od razu widać, kto ma zadanie i kto pisze w dyskusji."
+    },
+    {
+      "type": "h2",
+      "text": "Ile to kosztuje"
+    },
+    {
+      "type": "p",
+      "text": "Profil grupy ustawisz w bezpłatnym planie Free. Opis grupy ma w nim limit punktów i zdjęć, który widać pod polem opisu. Grupa w planie Free ma do 20 osób, w Pro do 150, a w Teams do 900. Ceny zależą od kraju i są widoczne w App Store i Google Play."
+    }
+  ],
+  "faq": [
+    {
+      "question": "Gdzie zmienia się okładkę i opis grupy?",
+      "answer": "W Opcjach grupy, które organizator otwiera ikoną koła zębatego na stronie grupy."
+    },
+    {
+      "question": "Ile zainteresowań może mieć grupa?",
+      "answer": "Do 3 tematów. Wybierasz je z kategorii albo przez wyszukiwarkę."
+    },
+    {
+      "question": "Czy osoby spoza grupy widzą opis?",
+      "answer": "Tak, jeśli włączony jest przełącznik Opis widoczny dla osób spoza grupy."
+    }
+  ]
+}

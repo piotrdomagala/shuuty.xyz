@@ -3855,6 +3855,1036 @@
           "smartSubsample": true
         }
       }
+    },
+    {
+      "id": "pl-group-people-task-details",
+      "altKey": null,
+      "path": "/images/product/guide-captures-2026/pl-PL/group-people-01-task-details.png",
+      "mediaType": "image/png",
+      "width": 1080,
+      "height": 2316,
+      "sha256": "b69e99d0bc97ef4c93a229f823b5fceb879fda92c3f3fcf2daab89a69e61a1c1",
+      "locales": [
+        "pl-PL"
+      ],
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "sourceSha256": "b69e99d0bc97ef4c93a229f823b5fceb879fda92c3f3fcf2daab89a69e61a1c1",
+      "capture": {
+        "method": "android-emulator-screencap",
+        "appCommit": "9dddd31ad5a6f2cc70216f1c47f8f7504c7f238f",
+        "releasedIn": "9dddd31ad5a6f2cc70216f1c47f8f7504c7f238f",
+        "capturedOn": "2026-09-30",
+        "rawSha256": "b69e99d0bc97ef4c93a229f823b5fceb879fda92c3f3fcf2daab89a69e61a1c1",
+        "rawWidth": 1080,
+        "rawHeight": 2316,
+        "crop": null
+      },
+      "web": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-people-01-task-details.webp",
+        "mediaType": "image/webp",
+        "width": 540,
+        "height": 1158,
+        "byteLength": 28852,
+        "sha256": "9110473b8873371c78e0f381db185986b630f287edbcee437f24b1a8c80c6dae",
+        "sourceSha256": "b69e99d0bc97ef4c93a229f823b5fceb879fda92c3f3fcf2daab89a69e61a1c1",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.5,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      },
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-people-01-task-details-compact.webp",
+        "mediaType": "image/webp",
+        "width": 360,
+        "height": 772,
+        "byteLength": 17074,
+        "sha256": "9868fb539a788ed5b76a3a4a0a89a04197e78191b6b56dd1fc30efc7332bf4c3",
+        "sourceSha256": "b69e99d0bc97ef4c93a229f823b5fceb879fda92c3f3fcf2daab89a69e61a1c1",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.3333333333333333,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      }
+    },
+    {
+      "id": "pl-group-people-people",
+      "altKey": null,
+      "path": "/images/product/guide-captures-2026/pl-PL/group-people-02-people.png",
+      "mediaType": "image/png",
+      "width": 1080,
+      "height": 2316,
+      "sha256": "1ab45fb17d2758ac861f0b60e5375aee6a294c0f113417fc33474a89bc70c393",
+      "locales": [
+        "pl-PL"
+      ],
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "sourceSha256": "1ab45fb17d2758ac861f0b60e5375aee6a294c0f113417fc33474a89bc70c393",
+      "capture": {
+        "method": "android-emulator-screencap",
+        "appCommit": "9dddd31ad5a6f2cc70216f1c47f8f7504c7f238f",
+        "releasedIn": "9dddd31ad5a6f2cc70216f1c47f8f7504c7f238f",
+        "capturedOn": "2026-09-30",
+        "rawSha256": "1ab45fb17d2758ac861f0b60e5375aee6a294c0f113417fc33474a89bc70c393",
+        "rawWidth": 1080,
+        "rawHeight": 2316,
+        "crop": null
+      },
+      "web": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-people-02-people.webp",
+        "mediaType": "image/webp",
+        "width": 540,
+        "height": 1158,
+        "byteLength": 31302,
+        "sha256": "098799e8b84ab0f47c252e268b84bbed2e8ba5b638e79b2724654cb474444513",
+        "sourceSha256": "1ab45fb17d2758ac861f0b60e5375aee6a294c0f113417fc33474a89bc70c393",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.5,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      },
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-people-02-people-compact.webp",
+        "mediaType": "image/webp",
+        "width": 360,
+        "height": 772,
+        "byteLength": 18582,
+        "sha256": "64c3815927477406f13a9e8b1975323f2d7364659b913dc2ee11d5d9b65876da",
+        "sourceSha256": "1ab45fb17d2758ac861f0b60e5375aee6a294c0f113417fc33474a89bc70c393",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.3333333333333333,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      }
+    },
+    {
+      "id": "pl-group-people-selected-person",
+      "altKey": null,
+      "path": "/images/product/guide-captures-2026/pl-PL/group-people-03-selected-person.png",
+      "mediaType": "image/png",
+      "width": 1080,
+      "height": 2316,
+      "sha256": "5a32cd0584107513a9966d96e0afa619b7e7a3a4de548787c13cbc68e3ca17ca",
+      "locales": [
+        "pl-PL"
+      ],
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "sourceSha256": "5a32cd0584107513a9966d96e0afa619b7e7a3a4de548787c13cbc68e3ca17ca",
+      "capture": {
+        "method": "android-emulator-screencap",
+        "appCommit": "9dddd31ad5a6f2cc70216f1c47f8f7504c7f238f",
+        "releasedIn": "9dddd31ad5a6f2cc70216f1c47f8f7504c7f238f",
+        "capturedOn": "2026-09-30",
+        "rawSha256": "5a32cd0584107513a9966d96e0afa619b7e7a3a4de548787c13cbc68e3ca17ca",
+        "rawWidth": 1080,
+        "rawHeight": 2316,
+        "crop": null
+      },
+      "web": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-people-03-selected-person.webp",
+        "mediaType": "image/webp",
+        "width": 540,
+        "height": 1158,
+        "byteLength": 32620,
+        "sha256": "19575c6e6778798f098645c7a806788b92c302bec8c15c744e43c2897050a3a9",
+        "sourceSha256": "5a32cd0584107513a9966d96e0afa619b7e7a3a4de548787c13cbc68e3ca17ca",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.5,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      },
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-people-03-selected-person-compact.webp",
+        "mediaType": "image/webp",
+        "width": 360,
+        "height": 772,
+        "byteLength": 19262,
+        "sha256": "a785c023137a4a6df08805d0d4b45a99e2f4f8688b7f2e299f04654cd9784433",
+        "sourceSha256": "5a32cd0584107513a9966d96e0afa619b7e7a3a4de548787c13cbc68e3ca17ca",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.3333333333333333,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      }
+    },
+    {
+      "id": "pl-group-people-member-received",
+      "altKey": null,
+      "path": "/images/product/guide-captures-2026/pl-PL/group-people-04-member-received.png",
+      "mediaType": "image/png",
+      "width": 1080,
+      "height": 2316,
+      "sha256": "6fa75a38691d9cf620212ed5e2ae64b3414877711a9445360946841cf2f5aa67",
+      "locales": [
+        "pl-PL"
+      ],
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "sourceSha256": "6fa75a38691d9cf620212ed5e2ae64b3414877711a9445360946841cf2f5aa67",
+      "capture": {
+        "method": "android-emulator-screencap",
+        "appCommit": "9dddd31ad5a6f2cc70216f1c47f8f7504c7f238f",
+        "releasedIn": "9dddd31ad5a6f2cc70216f1c47f8f7504c7f238f",
+        "capturedOn": "2026-09-30",
+        "rawSha256": "6fa75a38691d9cf620212ed5e2ae64b3414877711a9445360946841cf2f5aa67",
+        "rawWidth": 1080,
+        "rawHeight": 2316,
+        "crop": null
+      },
+      "web": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-people-04-member-received.webp",
+        "mediaType": "image/webp",
+        "width": 540,
+        "height": 1158,
+        "byteLength": 24596,
+        "sha256": "b8e56a66e3c1fa952b5e3df84d9e5a24df7a5386e1e86c9316e069d63bc69f0f",
+        "sourceSha256": "6fa75a38691d9cf620212ed5e2ae64b3414877711a9445360946841cf2f5aa67",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.5,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      },
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-people-04-member-received-compact.webp",
+        "mediaType": "image/webp",
+        "width": 360,
+        "height": 772,
+        "byteLength": 14374,
+        "sha256": "e107eb2f99603fe8876968af23a0c30f17355e7fa25c008b81d76b06e6f619a5",
+        "sourceSha256": "6fa75a38691d9cf620212ed5e2ae64b3414877711a9445360946841cf2f5aa67",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.3333333333333333,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      }
+    },
+    {
+      "id": "pl-group-people-not-participating-received",
+      "altKey": null,
+      "path": "/images/product/guide-captures-2026/pl-PL/group-people-05-not-participating-received.png",
+      "mediaType": "image/png",
+      "width": 1080,
+      "height": 2316,
+      "sha256": "a86db9662e25990805f0fc0bec5807b6f8b8531e3ba577cc452e7e9bf7f004d6",
+      "locales": [
+        "pl-PL"
+      ],
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "sourceSha256": "a86db9662e25990805f0fc0bec5807b6f8b8531e3ba577cc452e7e9bf7f004d6",
+      "capture": {
+        "method": "android-emulator-screencap",
+        "appCommit": "9dddd31ad5a6f2cc70216f1c47f8f7504c7f238f",
+        "releasedIn": "9dddd31ad5a6f2cc70216f1c47f8f7504c7f238f",
+        "capturedOn": "2026-09-30",
+        "rawSha256": "a86db9662e25990805f0fc0bec5807b6f8b8531e3ba577cc452e7e9bf7f004d6",
+        "rawWidth": 1080,
+        "rawHeight": 2316,
+        "crop": null
+      },
+      "web": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-people-05-not-participating-received.webp",
+        "mediaType": "image/webp",
+        "width": 540,
+        "height": 1158,
+        "byteLength": 37992,
+        "sha256": "d3bf7c2e77146470f68f4bc7af72a81fc25381c29799797f9c474d3f9def30c1",
+        "sourceSha256": "a86db9662e25990805f0fc0bec5807b6f8b8531e3ba577cc452e7e9bf7f004d6",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.5,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      },
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-people-05-not-participating-received-compact.webp",
+        "mediaType": "image/webp",
+        "width": 360,
+        "height": 772,
+        "byteLength": 22344,
+        "sha256": "d8ade9c286a384c8b4f15f32ef77de786b96cf5ca3c1043fe01d1398e0d2c31d",
+        "sourceSha256": "a86db9662e25990805f0fc0bec5807b6f8b8531e3ba577cc452e7e9bf7f004d6",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.3333333333333333,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      }
+    },
+    {
+      "id": "pl-group-people-discussion",
+      "altKey": null,
+      "path": "/images/product/guide-captures-2026/pl-PL/group-people-06-discussion.png",
+      "mediaType": "image/png",
+      "width": 1080,
+      "height": 1600,
+      "sha256": "75dc5a9a482d15df79280c1ae22f8c6bd59c180ba0107d70599ccde33c31f4df",
+      "locales": [
+        "pl-PL"
+      ],
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "sourceSha256": "75dc5a9a482d15df79280c1ae22f8c6bd59c180ba0107d70599ccde33c31f4df",
+      "capture": {
+        "method": "android-emulator-screencap",
+        "appCommit": "9dddd31ad5a6f2cc70216f1c47f8f7504c7f238f",
+        "releasedIn": "9dddd31ad5a6f2cc70216f1c47f8f7504c7f238f",
+        "capturedOn": "2026-09-30",
+        "rawSha256": "5f467e33975448d28446df33020f4319285a42cdc7a119f5f05ff2a8e6eff3e2",
+        "rawWidth": 1080,
+        "rawHeight": 2316,
+        "crop": {
+          "left": 0,
+          "top": 0,
+          "width": 1080,
+          "height": 1600
+        }
+      },
+      "web": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-people-06-discussion.webp",
+        "mediaType": "image/webp",
+        "width": 540,
+        "height": 800,
+        "byteLength": 21950,
+        "sha256": "4813758ab963db90a9fb939111a1e1c85cc3f242b5f71192315c9e5919a7cb5d",
+        "sourceSha256": "75dc5a9a482d15df79280c1ae22f8c6bd59c180ba0107d70599ccde33c31f4df",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.5,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      },
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-people-06-discussion-compact.webp",
+        "mediaType": "image/webp",
+        "width": 360,
+        "height": 533,
+        "byteLength": 13270,
+        "sha256": "364d50b4ac1b7cc87072d89574caedc381f5cf9eb471f75033d94ee602e45392",
+        "sourceSha256": "75dc5a9a482d15df79280c1ae22f8c6bd59c180ba0107d70599ccde33c31f4df",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.3333333333333333,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      }
+    },
+    {
+      "id": "pl-group-people-discussion-reply",
+      "altKey": null,
+      "path": "/images/product/guide-captures-2026/pl-PL/group-people-07-discussion-reply.png",
+      "mediaType": "image/png",
+      "width": 1080,
+      "height": 1490,
+      "sha256": "1e9350f4068cd0fdc35d183a08891ca4f98b2f4b0f083bb82cbffb6dc84b871e",
+      "locales": [
+        "pl-PL"
+      ],
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "sourceSha256": "1e9350f4068cd0fdc35d183a08891ca4f98b2f4b0f083bb82cbffb6dc84b871e",
+      "capture": {
+        "method": "android-emulator-screencap",
+        "appCommit": "9dddd31ad5a6f2cc70216f1c47f8f7504c7f238f",
+        "releasedIn": "9dddd31ad5a6f2cc70216f1c47f8f7504c7f238f",
+        "capturedOn": "2026-09-30",
+        "rawSha256": "ea69162d228ca4dd2031a5e813f09a2e41ad66eb04d59834218ae111bf146e90",
+        "rawWidth": 1080,
+        "rawHeight": 2316,
+        "crop": {
+          "left": 0,
+          "top": 0,
+          "width": 1080,
+          "height": 1490
+        }
+      },
+      "web": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-people-07-discussion-reply.webp",
+        "mediaType": "image/webp",
+        "width": 540,
+        "height": 745,
+        "byteLength": 19792,
+        "sha256": "deda92efdfd6799f627099891b44ae1367ee3ba0af1954551c5d803226acd7f5",
+        "sourceSha256": "1e9350f4068cd0fdc35d183a08891ca4f98b2f4b0f083bb82cbffb6dc84b871e",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.5,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      },
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-people-07-discussion-reply-compact.webp",
+        "mediaType": "image/webp",
+        "width": 360,
+        "height": 497,
+        "byteLength": 11668,
+        "sha256": "6c3f758592ed7a0e7abcaa8e2397312719f11173b8b2dbc08b72e99647173d0f",
+        "sourceSha256": "1e9350f4068cd0fdc35d183a08891ca4f98b2f4b0f083bb82cbffb6dc84b871e",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.3333333333333333,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      }
+    },
+    {
+      "id": "pl-group-profile-page-cover",
+      "altKey": null,
+      "path": "/images/product/guide-captures-2026/pl-PL/group-profile-01-page-cover.png",
+      "mediaType": "image/png",
+      "width": 1080,
+      "height": 2316,
+      "sha256": "2a75a4863985a14469d91ce6dac08b93c1ad7f80edddf9091d972f76dd972370",
+      "locales": [
+        "pl-PL"
+      ],
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "sourceSha256": "2a75a4863985a14469d91ce6dac08b93c1ad7f80edddf9091d972f76dd972370",
+      "capture": {
+        "method": "android-emulator-screencap",
+        "appCommit": "9dddd31ad5a6f2cc70216f1c47f8f7504c7f238f",
+        "releasedIn": "9dddd31ad5a6f2cc70216f1c47f8f7504c7f238f",
+        "capturedOn": "2026-09-30",
+        "rawSha256": "2a75a4863985a14469d91ce6dac08b93c1ad7f80edddf9091d972f76dd972370",
+        "rawWidth": 1080,
+        "rawHeight": 2316,
+        "crop": null
+      },
+      "web": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-profile-01-page-cover.webp",
+        "mediaType": "image/webp",
+        "width": 540,
+        "height": 1158,
+        "byteLength": 22110,
+        "sha256": "83201269d6a69959f26600c1a1290514c605f24285df3f1da9f482d1b4c7803e",
+        "sourceSha256": "2a75a4863985a14469d91ce6dac08b93c1ad7f80edddf9091d972f76dd972370",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.5,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      },
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-profile-01-page-cover-compact.webp",
+        "mediaType": "image/webp",
+        "width": 360,
+        "height": 772,
+        "byteLength": 13414,
+        "sha256": "4bf690d4453ff2be20a8755244b75988228b0ecbc0757f5a5fe3a959a7167233",
+        "sourceSha256": "2a75a4863985a14469d91ce6dac08b93c1ad7f80edddf9091d972f76dd972370",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.3333333333333333,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      }
+    },
+    {
+      "id": "pl-group-profile-options",
+      "altKey": null,
+      "path": "/images/product/guide-captures-2026/pl-PL/group-profile-02-options.png",
+      "mediaType": "image/png",
+      "width": 1080,
+      "height": 2316,
+      "sha256": "50e6995e9f0023beee5aebe12519bc375c7d8c10b25de88bf442743bfcb8d5b9",
+      "locales": [
+        "pl-PL"
+      ],
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "sourceSha256": "50e6995e9f0023beee5aebe12519bc375c7d8c10b25de88bf442743bfcb8d5b9",
+      "capture": {
+        "method": "android-emulator-screencap",
+        "appCommit": "9dddd31ad5a6f2cc70216f1c47f8f7504c7f238f",
+        "releasedIn": "9dddd31ad5a6f2cc70216f1c47f8f7504c7f238f",
+        "capturedOn": "2026-09-30",
+        "rawSha256": "50e6995e9f0023beee5aebe12519bc375c7d8c10b25de88bf442743bfcb8d5b9",
+        "rawWidth": 1080,
+        "rawHeight": 2316,
+        "crop": null
+      },
+      "web": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-profile-02-options.webp",
+        "mediaType": "image/webp",
+        "width": 540,
+        "height": 1158,
+        "byteLength": 40854,
+        "sha256": "7fc905d0704d9757604a3fef6e4eab6c961a59f3dbe9d6d9d73001a9537364eb",
+        "sourceSha256": "50e6995e9f0023beee5aebe12519bc375c7d8c10b25de88bf442743bfcb8d5b9",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.5,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      },
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-profile-02-options-compact.webp",
+        "mediaType": "image/webp",
+        "width": 360,
+        "height": 772,
+        "byteLength": 23966,
+        "sha256": "454b0430e60d5a69b64e8f3bd88d362739920f0ece293bc1e1094fa880a40ae9",
+        "sourceSha256": "50e6995e9f0023beee5aebe12519bc375c7d8c10b25de88bf442743bfcb8d5b9",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.3333333333333333,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      }
+    },
+    {
+      "id": "pl-group-profile-description-edit",
+      "altKey": null,
+      "path": "/images/product/guide-captures-2026/pl-PL/group-profile-03-description-edit.png",
+      "mediaType": "image/png",
+      "width": 1080,
+      "height": 2316,
+      "sha256": "de0b1dee5c36810d72e8732089c31ecf1308c92f43c064d9898e77d4e3b33917",
+      "locales": [
+        "pl-PL"
+      ],
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "sourceSha256": "de0b1dee5c36810d72e8732089c31ecf1308c92f43c064d9898e77d4e3b33917",
+      "capture": {
+        "method": "android-emulator-screencap",
+        "appCommit": "9dddd31ad5a6f2cc70216f1c47f8f7504c7f238f",
+        "releasedIn": "9dddd31ad5a6f2cc70216f1c47f8f7504c7f238f",
+        "capturedOn": "2026-09-30",
+        "rawSha256": "de0b1dee5c36810d72e8732089c31ecf1308c92f43c064d9898e77d4e3b33917",
+        "rawWidth": 1080,
+        "rawHeight": 2316,
+        "crop": null
+      },
+      "web": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-profile-03-description-edit.webp",
+        "mediaType": "image/webp",
+        "width": 540,
+        "height": 1158,
+        "byteLength": 20866,
+        "sha256": "6b6567a55245813181b7ac5bc620e5cd16095a816c49d2a1508fbc13efeb3054",
+        "sourceSha256": "de0b1dee5c36810d72e8732089c31ecf1308c92f43c064d9898e77d4e3b33917",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.5,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      },
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-profile-03-description-edit-compact.webp",
+        "mediaType": "image/webp",
+        "width": 360,
+        "height": 772,
+        "byteLength": 12598,
+        "sha256": "f1cfdc2aa0b77b37ea994056b981b8b6677f94abdc13df7d6a698fc50b8ccfe5",
+        "sourceSha256": "de0b1dee5c36810d72e8732089c31ecf1308c92f43c064d9898e77d4e3b33917",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.3333333333333333,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      }
+    },
+    {
+      "id": "pl-group-profile-page-description",
+      "altKey": null,
+      "path": "/images/product/guide-captures-2026/pl-PL/group-profile-04-page-description.png",
+      "mediaType": "image/png",
+      "width": 1080,
+      "height": 2316,
+      "sha256": "15e83252ab56de48013221708ffec12ddb357de3b9d2b30eef57b2cacf10612d",
+      "locales": [
+        "pl-PL"
+      ],
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "sourceSha256": "15e83252ab56de48013221708ffec12ddb357de3b9d2b30eef57b2cacf10612d",
+      "capture": {
+        "method": "android-emulator-screencap",
+        "appCommit": "9dddd31ad5a6f2cc70216f1c47f8f7504c7f238f",
+        "releasedIn": "9dddd31ad5a6f2cc70216f1c47f8f7504c7f238f",
+        "capturedOn": "2026-09-30",
+        "rawSha256": "15e83252ab56de48013221708ffec12ddb357de3b9d2b30eef57b2cacf10612d",
+        "rawWidth": 1080,
+        "rawHeight": 2316,
+        "crop": null
+      },
+      "web": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-profile-04-page-description.webp",
+        "mediaType": "image/webp",
+        "width": 540,
+        "height": 1158,
+        "byteLength": 29816,
+        "sha256": "4f4932f36524124ea6cb9f10e8c935f0b10496930ab875b2a374299a105cc99d",
+        "sourceSha256": "15e83252ab56de48013221708ffec12ddb357de3b9d2b30eef57b2cacf10612d",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.5,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      },
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-profile-04-page-description-compact.webp",
+        "mediaType": "image/webp",
+        "width": 360,
+        "height": 772,
+        "byteLength": 17884,
+        "sha256": "3b95fe35324465d4cb5ee5b33a64c269b044867ea6fcc6be24baa5dd7e66196e",
+        "sourceSha256": "15e83252ab56de48013221708ffec12ddb357de3b9d2b30eef57b2cacf10612d",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.3333333333333333,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      }
+    },
+    {
+      "id": "pl-group-profile-interests",
+      "altKey": null,
+      "path": "/images/product/guide-captures-2026/pl-PL/group-profile-05-interests.png",
+      "mediaType": "image/png",
+      "width": 1080,
+      "height": 2316,
+      "sha256": "073ff34c9e4d5fb9d3a25d3a1efeb473ca9c6e2c64650172159b381140d2708b",
+      "locales": [
+        "pl-PL"
+      ],
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "sourceSha256": "073ff34c9e4d5fb9d3a25d3a1efeb473ca9c6e2c64650172159b381140d2708b",
+      "capture": {
+        "method": "android-emulator-screencap",
+        "appCommit": "9dddd31ad5a6f2cc70216f1c47f8f7504c7f238f",
+        "releasedIn": "9dddd31ad5a6f2cc70216f1c47f8f7504c7f238f",
+        "capturedOn": "2026-09-30",
+        "rawSha256": "073ff34c9e4d5fb9d3a25d3a1efeb473ca9c6e2c64650172159b381140d2708b",
+        "rawWidth": 1080,
+        "rawHeight": 2316,
+        "crop": null
+      },
+      "web": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-profile-05-interests.webp",
+        "mediaType": "image/webp",
+        "width": 540,
+        "height": 1158,
+        "byteLength": 44866,
+        "sha256": "70c379af66cf84985763c0002b3ef6f9273eac8f0750f95dd281dc61b04045f4",
+        "sourceSha256": "073ff34c9e4d5fb9d3a25d3a1efeb473ca9c6e2c64650172159b381140d2708b",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.5,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      },
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-profile-05-interests-compact.webp",
+        "mediaType": "image/webp",
+        "width": 360,
+        "height": 772,
+        "byteLength": 26550,
+        "sha256": "b0c60742345599514fe047cbb12549bf06b0cc0db27abe8159df1d5ff7663a2b",
+        "sourceSha256": "073ff34c9e4d5fb9d3a25d3a1efeb473ca9c6e2c64650172159b381140d2708b",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.3333333333333333,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      }
+    },
+    {
+      "id": "pl-group-profile-interests-picked",
+      "altKey": null,
+      "path": "/images/product/guide-captures-2026/pl-PL/group-profile-06-interests-picked.png",
+      "mediaType": "image/png",
+      "width": 1080,
+      "height": 2316,
+      "sha256": "000a64c8815e7efca6029a012eca7515b178190bbfee7af7c47f023c5d5e890d",
+      "locales": [
+        "pl-PL"
+      ],
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "sourceSha256": "000a64c8815e7efca6029a012eca7515b178190bbfee7af7c47f023c5d5e890d",
+      "capture": {
+        "method": "android-emulator-screencap",
+        "appCommit": "9dddd31ad5a6f2cc70216f1c47f8f7504c7f238f",
+        "releasedIn": "9dddd31ad5a6f2cc70216f1c47f8f7504c7f238f",
+        "capturedOn": "2026-09-30",
+        "rawSha256": "000a64c8815e7efca6029a012eca7515b178190bbfee7af7c47f023c5d5e890d",
+        "rawWidth": 1080,
+        "rawHeight": 2316,
+        "crop": null
+      },
+      "web": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-profile-06-interests-picked.webp",
+        "mediaType": "image/webp",
+        "width": 540,
+        "height": 1158,
+        "byteLength": 37426,
+        "sha256": "cf260da83b1d80c79d6acb901e33e755793eee162c79cc6eb78366e533522120",
+        "sourceSha256": "000a64c8815e7efca6029a012eca7515b178190bbfee7af7c47f023c5d5e890d",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.5,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      },
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-profile-06-interests-picked-compact.webp",
+        "mediaType": "image/webp",
+        "width": 360,
+        "height": 772,
+        "byteLength": 22436,
+        "sha256": "82da18e72b57ff6b6129aafbf96c5835277f576c9b04d6870884429af248915a",
+        "sourceSha256": "000a64c8815e7efca6029a012eca7515b178190bbfee7af7c47f023c5d5e890d",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.3333333333333333,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      }
+    },
+    {
+      "id": "pl-group-profile-page-full",
+      "altKey": null,
+      "path": "/images/product/guide-captures-2026/pl-PL/group-profile-07-page-full.png",
+      "mediaType": "image/png",
+      "width": 1080,
+      "height": 2316,
+      "sha256": "41b69185ad53f64f24273b43483aeda11b6b3cfeb294a6d2f6b1346f6221087d",
+      "locales": [
+        "pl-PL"
+      ],
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "sourceSha256": "41b69185ad53f64f24273b43483aeda11b6b3cfeb294a6d2f6b1346f6221087d",
+      "capture": {
+        "method": "android-emulator-screencap",
+        "appCommit": "9dddd31ad5a6f2cc70216f1c47f8f7504c7f238f",
+        "releasedIn": "9dddd31ad5a6f2cc70216f1c47f8f7504c7f238f",
+        "capturedOn": "2026-09-30",
+        "rawSha256": "41b69185ad53f64f24273b43483aeda11b6b3cfeb294a6d2f6b1346f6221087d",
+        "rawWidth": 1080,
+        "rawHeight": 2316,
+        "crop": null
+      },
+      "web": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-profile-07-page-full.webp",
+        "mediaType": "image/webp",
+        "width": 540,
+        "height": 1158,
+        "byteLength": 31782,
+        "sha256": "c7c1ae194871e2705986297518334a30a898e6d916b5b9c61c261042c6618c8d",
+        "sourceSha256": "41b69185ad53f64f24273b43483aeda11b6b3cfeb294a6d2f6b1346f6221087d",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.5,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      },
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-profile-07-page-full-compact.webp",
+        "mediaType": "image/webp",
+        "width": 360,
+        "height": 772,
+        "byteLength": 19180,
+        "sha256": "0a6c1d013f864bc8ce690500824247a986c27abde05c5928be4b760c3b626590",
+        "sourceSha256": "41b69185ad53f64f24273b43483aeda11b6b3cfeb294a6d2f6b1346f6221087d",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.3333333333333333,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      }
+    },
+    {
+      "id": "pl-group-profile-members",
+      "altKey": null,
+      "path": "/images/product/guide-captures-2026/pl-PL/group-profile-08-members.png",
+      "mediaType": "image/png",
+      "width": 1080,
+      "height": 2316,
+      "sha256": "0964d7cd37bda972b48a0a663cda32227953d25c63d3f9837a60d31ccc542f94",
+      "locales": [
+        "pl-PL"
+      ],
+      "theme": "light",
+      "platform": "android",
+      "device": "android-phone",
+      "sourceSha256": "0964d7cd37bda972b48a0a663cda32227953d25c63d3f9837a60d31ccc542f94",
+      "capture": {
+        "method": "android-emulator-screencap",
+        "appCommit": "9dddd31ad5a6f2cc70216f1c47f8f7504c7f238f",
+        "releasedIn": "9dddd31ad5a6f2cc70216f1c47f8f7504c7f238f",
+        "capturedOn": "2026-09-30",
+        "rawSha256": "0964d7cd37bda972b48a0a663cda32227953d25c63d3f9837a60d31ccc542f94",
+        "rawWidth": 1080,
+        "rawHeight": 2316,
+        "crop": null
+      },
+      "web": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-profile-08-members.webp",
+        "mediaType": "image/webp",
+        "width": 540,
+        "height": 1158,
+        "byteLength": 23558,
+        "sha256": "2ecd5321ca2f261aae75e9b5ab285d66fab4cba0a2477915cd51cbe6bc74d4c3",
+        "sourceSha256": "0964d7cd37bda972b48a0a663cda32227953d25c63d3f9837a60d31ccc542f94",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.5,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      },
+      "compact": {
+        "path": "/images/product/guide-captures-2026/pl-PL/group-profile-08-members-compact.webp",
+        "mediaType": "image/webp",
+        "width": 360,
+        "height": 772,
+        "byteLength": 13688,
+        "sha256": "000ba6fd7acb000cf5fc71d409ea4b3dfd5a8bae5b6875d3544e80621deb5f94",
+        "sourceSha256": "0964d7cd37bda972b48a0a663cda32227953d25c63d3f9837a60d31ccc542f94",
+        "encoder": "sharp@0.35.3",
+        "libvips": "8.18.3",
+        "parameters": {
+          "scale": 0.3333333333333333,
+          "fit": "fill",
+          "kernel": "lanczos3",
+          "colourspace": "srgb",
+          "stripMetadata": true,
+          "quality": 88,
+          "effort": 6,
+          "smartSubsample": true
+        }
+      }
     }
   ],
   "placementSets": {
