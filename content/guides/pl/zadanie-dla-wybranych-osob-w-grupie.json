@@ -1,0 +1,100 @@
+{
+  "body": [
+    {
+      "type": "p",
+      "text": "Nie każde zadanie w grupie jest dla wszystkich. Farbę kupuje jedna osoba, a nie cała ekipa remontowa. W Shuuty zadanie grupowe może trafić tylko do wybranych członków grupy - tak koordynujesz zespół, a zadanie dostają tylko ci, którzy mają je zrobić - a rozmowa o nim zostaje przy zadaniu, zamiast ginąć w czacie. Każdy krok poniżej pokazuje prawdziwy ekran aplikacji."
+    },
+    {
+      "type": "p",
+      "text": "Zadanie grupowe tworzysz w czacie grupy przyciskiem **+** i **Utwórz zadanie** - krok po kroku opisuje to poradnik o zadaniach w grupie. Tutaj zaczynamy od gotowego zadania."
+    },
+    {
+      "type": "h2",
+      "text": "Jak dać zadanie tylko części grupy?"
+    },
+    {
+      "type": "step",
+      "text": "Otwórz zadanie grupowe. Nad tytułem widać nazwę grupy, a u góry okrągłe awatary osób, które mają zadanie.",
+      "media": "pl-group-people-task-details",
+      "alt": "Szczegóły zadania grupowego Farba do kuchni w grupie Ekipa remontowa"
+    },
+    {
+      "type": "step",
+      "text": "Dotknij awatarów. W oknie **Zadanie grupowe - osoby** widać **Twórcę** i **Delegowane osoby**, a przy każdej osobie jej status, na przykład **W trakcie** i **Zadanie w planerze**.",
+      "media": "pl-group-people-people",
+      "alt": "Okno Zadanie grupowe - osoby z twórcą i dwiema delegowanymi osobami"
+    },
+    {
+      "type": "step",
+      "text": "Dotknij **x** przy osobie, która nie ma robić tego zadania - dostaje status **Nie uczestniczy**. Przycisk **+** ją przywraca, a **Dodaj członków** dopisuje kolejne osoby z grupy. Na koniec dotknij **Gotowe**.",
+      "media": "pl-group-people-selected-person",
+      "alt": "Ola ze statusem Nie uczestniczy i przyciskiem przywrócenia"
+    },
+    {
+      "type": "h2",
+      "text": "Kto dostaje zadanie?"
+    },
+    {
+      "type": "step",
+      "text": "Wybrana osoba ma zadanie w swoim planerze, w zakładce **Otrzymane**, z nazwą grupy nad tytułem.",
+      "media": "pl-group-people-member-received",
+      "alt": "Zakładka Otrzymane u Olka z zadaniem z grupy Ekipa remontowa"
+    },
+    {
+      "type": "step",
+      "text": "Osoba ze statusem **Nie uczestniczy** nie ma tego zadania w **Otrzymanych**.",
+      "media": "pl-group-people-not-participating-received",
+      "alt": "Pusta zakładka Otrzymane u Oli"
+    },
+    {
+      "type": "h2",
+      "text": "Jak rozmawiać o zadaniu?"
+    },
+    {
+      "type": "step",
+      "text": "Pod opisem zadania jest **Dyskusja**. Wpisz wiadomość w polu **Napisz wiadomość...** - rozmowa zostaje przy zadaniu.",
+      "media": "pl-group-people-discussion",
+      "alt": "Dyskusja w zadaniu z pierwszą wiadomością od Mai"
+    },
+    {
+      "type": "step",
+      "text": "Odpowiedź przychodzi w tym samym miejscu, a przy każdej wiadomości widać autora i godzinę.",
+      "media": "pl-group-people-discussion-reply",
+      "alt": "Dyskusja w zadaniu z odpowiedzią Olka"
+    },
+    {
+      "type": "h2",
+      "text": "Czego tu nie ma"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "**Nie da się zmienić cudzego zadania.** Tytuł i termin zmienia tylko autor zadania.",
+        "**Nie pyta członków o zgodę na zadanie.** Kto jest w grupie i ma zadanie, dostaje je od razu.",
+        "**Nie działa w przeglądarce.** Każda osoba potrzebuje aplikacji na iPhonie, iPadzie albo Androidzie."
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "Ile to kosztuje"
+    },
+    {
+      "type": "p",
+      "text": "Start jest bezpłatny. Limity grupy zależą od planu organizatora: w planie Free grupa ma do 20 osób i do 3 aktywnych zadań naraz, w Pro do 150 osób, a w Teams do 900, w obu bez limitu aktywnych zadań. Ceny zależą od kraju i są widoczne w App Store i Google Play."
+    }
+  ],
+  "faq": [
+    {
+      "question": "Czy mogę dodać osobę do zadania później?",
+      "answer": "Tak. W oknie Zadanie grupowe - osoby użyj Dodaj członków albo przycisku + przy osobie, która nie uczestniczy."
+    },
+    {
+      "question": "Gdzie wybrana osoba widzi zadanie?",
+      "answer": "W swoim planerze, w zakładce Otrzymane, z nazwą grupy nad tytułem zadania."
+    },
+    {
+      "question": "Gdzie rozmawiać o jednym zadaniu?",
+      "answer": "W Dyskusji w szczegółach zadania. Rozmowa zostaje przy zadaniu i nie miesza się z czatem grupy."
+    }
+  ]
+}

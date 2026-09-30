@@ -1,0 +1,82 @@
+{
+  "body": [
+    {
+      "type": "p",
+      "text": "Someone who opens your group decides in a few seconds what it is about. A cover, a short description, interests and members' profile photos do that work for you - for new members and, when the group can be found in Discover, for people looking for a service like yours. This guide shows where to set it all up in Shuuty. Every step shows a real screen of the app."
+    },
+    {
+      "type": "h2",
+      "text": "Where do I change how the group looks?"
+    },
+    {
+      "type": "step",
+      "text": "The group page starts with the cover, the interests and the name. Below are the **Members** and **Group tasks** cards, the **Group description**, and **Go to the conversation** at the bottom.",
+      "media": "en-group-profile-page",
+      "alt": "The Renovation crew group page with an illustrated cover, interests and a description"
+    },
+    {
+      "type": "step",
+      "text": "The organiser taps the gear icon to open **Group options**. In the **Group profile** section there are **Group interests**, **Add location** and **Edit cover**.",
+      "media": "en-group-profile-options",
+      "alt": "Group options with the Group profile section"
+    },
+    {
+      "type": "h2",
+      "text": "How do I write the group description?"
+    },
+    {
+      "type": "step",
+      "text": "Tap the pencil next to **Group description** and write in two or three sentences what the group is about. The **Visible to people outside the group** switch decides whether people outside the group can see it. Then tap **Save**.",
+      "media": "en-group-profile-description-edit",
+      "alt": "Editing the group description with a points counter and the visibility switch"
+    },
+    {
+      "type": "h2",
+      "text": "How do I add group interests?"
+    },
+    {
+      "type": "step",
+      "text": "In **Group interests** you choose up to 3 topics, from the categories or with the search.",
+      "media": "en-group-profile-interests",
+      "alt": "Group interests with two topics selected"
+    },
+    {
+      "type": "step",
+      "text": "Type a word, for example \"painting\", tick the matching topics and tap **Confirm**. The topics then appear on the cover.",
+      "media": "en-group-profile-interests-search",
+      "alt": "Search results for painting with Wall Painting selected"
+    },
+    {
+      "type": "h2",
+      "text": "Who is in the group?"
+    },
+    {
+      "type": "step",
+      "text": "The **Members** card opens the member list with the organiser and the members. Invite more people with **Group link and QR code**. A group looks clearer when members have profile photos - you see at once who has a task and who writes in a discussion.",
+      "media": "en-group-profile-members",
+      "alt": "The group member list with three people and their photos"
+    },
+    {
+      "type": "h2",
+      "text": "What it costs"
+    },
+    {
+      "type": "p",
+      "text": "You can set up a group profile on the free Free plan. The group description has a points and photo limit on it, shown under the description field. A group on Free has up to 20 people, on Pro up to 150 and on Teams up to 900. Prices depend on your country and are shown in the App Store and Google Play."
+    }
+  ],
+  "faq": [
+    {
+      "question": "Where do I change the cover and the description?",
+      "answer": "The cover is in Group options, which the organiser opens with the gear icon on the group page. The description has a pencil next to it on the group page."
+    },
+    {
+      "question": "How many interests can a group have?",
+      "answer": "Up to 3 topics. You choose them from the categories or with the search."
+    },
+    {
+      "question": "Can people outside the group see the description?",
+      "answer": "Yes, when the Visible to people outside the group switch is on."
+    }
+  ]
+}
