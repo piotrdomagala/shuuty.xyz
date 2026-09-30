@@ -119,7 +119,7 @@
             "Plans and costs in the calendar",
             "Booking schedule",
             "Threads",
-            "Meetings for the group or open to all"
+            "Group chat"
           ],
           "guides": [
             "group-tasks",
@@ -224,7 +224,7 @@
         },
         {
           "q": "What is the difference between a group and a meeting?",
-          "a": "A group is a lasting place for people, with a chat, threads, tasks, a calendar and bookings. A meeting is one event with a place and a time, just for the group or open to others."
+          "a": "A group is a lasting place for people, with a chat, threads, tasks, a calendar and bookings. A meeting is one event with a place and a time - private for invited people or open to new people nearby."
         },
         {
           "q": "How do I add a friend?",
@@ -407,7 +407,7 @@
             "Plany i koszty w kalendarzu",
             "Grafik rezerwacji",
             "Wątki",
-            "Spotkania dla grupy albo otwarte"
+            "Czat grupy"
           ],
           "guides": [
             "group-tasks",
@@ -512,7 +512,7 @@
         },
         {
           "q": "Czym różni się grupa od spotkania?",
-          "a": "Grupa to stałe miejsce dla ludzi: z czatem, wątkami, zadaniami, kalendarzem i rezerwacjami. Spotkanie to jedno wydarzenie z miejscem i czasem, tylko dla grupy albo otwarte dla innych."
+          "a": "Grupa to stałe miejsce dla ludzi: z czatem, wątkami, zadaniami, kalendarzem i rezerwacjami. Spotkanie to jedno wydarzenie z miejscem i czasem - prywatne dla zaproszonych albo otwarte dla nowych osób w okolicy."
         },
         {
           "q": "Jak dodać znajomego?",
@@ -695,7 +695,7 @@
             "Planer og kostnader i kalenderen",
             "Bestillinger med ledige tider",
             "Tråder",
-            "Møter for gruppen eller åpne"
+            "Gruppechat"
           ],
           "guides": [
             "group-tasks",
@@ -800,7 +800,7 @@
         },
         {
           "q": "Hva er forskjellen på en gruppe og et møte?",
-          "a": "En gruppe er et fast sted for folk, med chat, tråder, oppgaver, kalender og bestillinger. Et møte er én hendelse med sted og tid, bare for gruppen eller åpent for andre."
+          "a": "En gruppe er et fast sted for folk, med chat, tråder, oppgaver, kalender og bestillinger. Et møte er én hendelse med sted og tid - privat for inviterte eller åpent for nye folk i nærheten."
         },
         {
           "q": "Hvordan legger jeg til en venn?",
