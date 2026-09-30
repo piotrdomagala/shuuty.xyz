@@ -142,14 +142,25 @@
         }
       ],
       "loop": {
-        "label": "Full circle",
-        "text": "In a group you meet people, add them as friends and start giving each other tasks again.",
-        "strong": "One app, not four.",
+        "heading": "One app, many possibilities",
+        "text": "Each step leads to the next: in a group you meet people, add them as friends and give each other tasks again.",
         "chain": [
-          "To-do list",
-          "Friends",
-          "Discover",
-          "Group"
+          {
+            "title": "To-do list",
+            "text": "You start with your own things."
+          },
+          {
+            "title": "Friends",
+            "text": "You hand tasks to people close to you."
+          },
+          {
+            "title": "Discover",
+            "text": "You find people who share your interests."
+          },
+          {
+            "title": "Group",
+            "text": "You do things together, and new people become friends."
+          }
         ],
         "screen": {
           "media": "home-group-members",
@@ -430,14 +441,25 @@
         }
       ],
       "loop": {
-        "label": "Koło się zamyka",
-        "text": "W grupie poznajesz ludzi, dodajesz ich do znajomych i znowu dajecie sobie zadania.",
-        "strong": "Jedna aplikacja, nie cztery.",
+        "heading": "Jedna aplikacja, wiele możliwości",
+        "text": "Każdy krok prowadzi do następnego: w grupie poznajesz ludzi, dodajesz ich do znajomych i znowu dajecie sobie zadania.",
         "chain": [
-          "Lista zadań",
-          "Znajomi",
-          "Odkrywaj",
-          "Grupa"
+          {
+            "title": "Lista zadań",
+            "text": "Zaczynasz od własnych spraw."
+          },
+          {
+            "title": "Znajomi",
+            "text": "Przekazujesz zadania bliskim osobom."
+          },
+          {
+            "title": "Odkrywaj",
+            "text": "Znajdujesz ludzi o tych samych zainteresowaniach."
+          },
+          {
+            "title": "Grupa",
+            "text": "Działacie razem, a nowe osoby zostają znajomymi."
+          }
         ],
         "screen": {
           "media": "home-group-members",
@@ -718,14 +740,25 @@
         }
       ],
       "loop": {
-        "label": "Ringen er sluttet",
-        "text": "I en gruppe blir du kjent med folk, legger dem til som venner og gir hverandre oppgaver igjen.",
-        "strong": "Én app, ikke fire.",
+        "heading": "Én app, mange muligheter",
+        "text": "Hvert steg leder til det neste: i en gruppe blir du kjent med folk, legger dem til som venner og gir hverandre oppgaver igjen.",
         "chain": [
-          "Oppgaveliste",
-          "Venner",
-          "Utforsk",
-          "Gruppe"
+          {
+            "title": "Oppgaveliste",
+            "text": "Du starter med dine egne gjøremål."
+          },
+          {
+            "title": "Venner",
+            "text": "Du gir oppgaver til folk du kjenner."
+          },
+          {
+            "title": "Utforsk",
+            "text": "Du finner folk med de samme interessene."
+          },
+          {
+            "title": "Gruppe",
+            "text": "Dere gjør ting sammen, og nye folk blir venner."
+          }
         ],
         "screen": {
           "media": "home-group-members",

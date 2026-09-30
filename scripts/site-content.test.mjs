@@ -111,6 +111,9 @@ test('the landing tells one four-step story in every language', async () => {
   assert.equal(content.en.how.heading, 'One app, four steps');
   assert.equal(content.pl.uses.heading, 'Do czego ludzie używają Shuuty');
   assert.equal(content.en.uses.heading, 'What people use Shuuty for');
+  assert.equal(content.pl.how.loop.heading, 'Jedna aplikacja, wiele możliwości');
+  assert.equal(content.en.how.loop.heading, 'One app, many possibilities');
+  assert.equal(content.nb.how.loop.heading, 'Én app, mange muligheter');
 
   for (const language of ['en', 'pl', 'nb']) {
     const page = content[language];
@@ -119,6 +122,9 @@ test('the landing tells one four-step story in every language', async () => {
       ['step-tasks', 'step-friends', 'step-discover', 'step-groups'],
     );
     assert.equal(page.how.loop.chain.length, 4);
+    for (const item of page.how.loop.chain) {
+      assert.ok(item.title.length > 0 && item.text.length > 0);
+    }
     assert.equal(page.uses.items.length, 5);
     assert.equal(page.faq.items.length, 5);
 
@@ -246,6 +252,11 @@ test('reduced motion explicitly removes phone transform transitions', async () =
     );
   }
   assert.match(reducedMotionRules, /transition:\s*none\s*!important/);
+
+  // The loop ring turns only for visitors who have not asked for less motion.
+  const motionBlock = css.indexOf('@media (prefers-reduced-motion: no-preference) {\n  .orbitSpin');
+  assert.notEqual(motionBlock, -1, 'The ring animation must sit under prefers-reduced-motion: no-preference');
+  assert.equal((css.match(/animation:\s*orbit/g) ?? []).length, 2);
 });
 
 test('public copy does not promise local offers on the map or show the old support inbox', async () => {

@@ -5,6 +5,7 @@ import {
   useEffect,
   useRef,
   useState,
+  type CSSProperties,
   type KeyboardEvent as ReactKeyboardEvent,
   type PointerEvent as ReactPointerEvent,
 } from 'react';
@@ -41,7 +42,6 @@ type IconName =
   | 'community'
   | 'download'
   | 'group'
-  | 'loop'
   | 'map'
   | 'moon'
   | 'people'
@@ -235,8 +235,6 @@ function Icon({ name }: Readonly<{ name: IconName }>) {
       return <svg {...props}><path d="M12 3v12m-5-5 5 5 5-5M5 21h14" /></svg>;
     case 'group':
       return <svg {...props}><circle cx="9" cy="8" r="3.2" /><path d="M3 19c.6-3.7 2.7-5.6 6-5.6s5.4 1.9 6 5.6M15.5 5.5a3 3 0 0 1 0 5.8M16.5 14c2.5.3 4 1.9 4.5 4.5" /></svg>;
-    case 'loop':
-      return <svg {...props}><path d="M4.5 11a7.5 7.5 0 0 1 13.2-4.3L20 9" /><path d="M20 4v5h-5" /><path d="M19.5 13a7.5 7.5 0 0 1-13.2 4.3L4 15" /><path d="M4 20v-5h5" /></svg>;
     case 'map':
       return <svg {...props}><path d="m3 6 5-3 8 3 5-3v15l-5 3-8-3-5 3V6Z" /><path d="M8 3v15m8-12v15" /></svg>;
     case 'moon':
@@ -349,30 +347,93 @@ function GuideLink({
   );
 }
 
+type CarouselCopy = (typeof carouselLabels)[Lang];
+
 // One large screen in front, one or two smaller ones behind it. The screens
-// are real captures, only scaled and framed.
-function StepStage({ screens }: Readonly<{ screens: readonly Screen[] }>) {
-  const [main, ...rest] = screens;
-  const sideClasses = rest.length > 1 ? [s.stagePhoneLeft, s.stagePhoneRight] : [s.stagePhoneSide];
+// are real captures, only scaled and framed. Tapping a screen behind brings
+// it to the front and sends the front one back, like the hero carousel.
+function StepStage({
+  label,
+  screens,
+  carousel,
+}: Readonly<{ label: string; screens: readonly Screen[]; carousel: CarouselCopy }>) {
+  // order[position] = screen index; position 0 is the front.
+  const [order, setOrder] = useState(() => screens.map((_, index) => index));
+  const count = screens.length;
+  const bringToFront = (position: number) =>
+    setOrder((current) => {
+      const next = [...current];
+      [next[0], next[position]] = [next[position], next[0]];
+      return next;
+    });
+  const sideClasses = count > 2 ? [s.stagePhoneRight, s.stagePhoneLeft] : [s.stagePhoneSide];
 
   return (
-    <div className={`${s.stepStage} ${rest.length > 1 ? s.stepStageTrio : ''}`}>
-      <figure className={`${s.stagePhone} ${s.stagePhoneMain}`}>
+    <div
+      className={`${s.stepStage} ${count > 2 ? s.stepStageTrio : ''}`}
+      role="group"
+      aria-label={`${label}: ${carousel.choose}`}
+    >
+      {screens.map((screen, index) => {
+        const position = order.indexOf(index);
+        const isFront = position === 0;
+        return (
+          <button
+            type="button"
+            key={screen.id}
+            className={`${s.stagePhone} ${isFront ? s.stagePhoneMain : sideClasses[position - 1]}`}
+            onClick={() => bringToFront(position)}
+            aria-label={`${screen.alt}. ${isFront ? carousel.active : carousel.bringToFront}`}
+            aria-pressed={isFront}
+          >
+            <ProductDeviceFrame
+              media={screen}
+              alt={screen.alt}
+              sizes="(max-width: 720px) 60vw, 290px"
+            />
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+// The loop: the four steps on a slowly turning ring around the group members
+// screen. The ring is decoration (aria-hidden); the list next to it carries the
+// same four steps as real text, in order.
+function LoopOrbit({ items, screen }: Readonly<{ items: readonly string[]; screen: Screen }>) {
+  return (
+    <div className={s.orbitStage}>
+      <div className={s.orbitGlow} aria-hidden="true" />
+      <figure className={s.orbitPhone}>
         <ProductDeviceFrame
-          media={main}
-          alt={main.alt}
-          sizes="(max-width: 720px) 60vw, 290px"
+          media={screen}
+          alt={screen.alt}
+          sizes="(max-width: 720px) 52vw, 240px"
         />
       </figure>
-      {rest.map((screen, index) => (
-        <figure key={screen.id} className={`${s.stagePhone} ${sideClasses[index]}`}>
-          <ProductDeviceFrame
-            media={screen}
-            alt={screen.alt}
-            sizes="(max-width: 720px) 38vw, 200px"
-          />
-        </figure>
-      ))}
+      <div className={s.orbitPlane} aria-hidden="true">
+        <div className={`${s.orbitRing} ${s.orbitRingBack}`} />
+        <div className={`${s.orbitRing} ${s.orbitRingFront}`} />
+        <div className={s.orbitSpin}>
+          {items.map((item, index) => (
+            <div
+              key={item}
+              className={s.orbitItem}
+              style={{ '--orbit-angle': `${index * 90 - 45}deg` } as CSSProperties}
+            >
+              <div className={s.orbitCounter}>
+                <div className={s.orbitFace}>
+                  <span className={s.orbitChip} data-step={index + 1}>
+                    <Icon name={STEP_ICONS[index]} />
+                    {item}
+                  </span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
@@ -382,6 +443,7 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
   const [theme, setTheme] = useState<Theme>('dark');
   const [showMobileNav, setShowMobileNav] = useState(false);
   const [activeHeroPhone, setActiveHeroPhone] = useState(0);
+  const [activeStep, setActiveStep] = useState<string | null>(null);
   const carouselPointerStart = useRef<number | null>(null);
   const carouselDidSwipe = useRef(false);
   const heroPhoneButtons = useRef<Array<HTMLButtonElement | null>>([]);
@@ -549,6 +611,23 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    if (!('IntersectionObserver' in window)) return;
+    const steps = c.how.steps
+      .map((step) => document.getElementById(step.id))
+      .filter((element): element is HTMLElement => element !== null);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActiveStep(entry.target.id);
+        });
+      },
+      { rootMargin: '-45% 0px -45% 0px' },
+    );
+    steps.forEach((step) => observer.observe(step));
+    return () => observer.disconnect();
+  }, [c.how.steps]);
+
   const toggleTheme = useCallback(() => {
     setTheme((current) => {
       const next = current === 'dark' ? 'light' : 'dark';
@@ -642,10 +721,13 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
             </div>
             <ol className={s.heroSteps} aria-label={c.how.heading}>
               {navItems.map((item, index) => (
-                <li key={item.href}>
+                <li key={item.href} data-step={index + 1}>
                   <a href={item.href}>
+                    <span className={s.heroStepNumber} aria-hidden="true">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
                     <Icon name={STEP_ICONS[index]} />
-                    {item.label}
+                    <span className={s.heroStepLabel}>{item.label}</span>
                   </a>
                 </li>
               ))}
@@ -751,7 +833,7 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
                   data-reveal
                   data-step={index + 1}
                 >
-                  <StepStage screens={step.screens} />
+                  <StepStage label={step.title} screens={step.screens} carousel={carousel} />
                   <div className={s.stepCopy}>
                     <span className={s.stepNumber} aria-hidden="true">
                       {String(index + 1).padStart(2, '0')}
@@ -778,31 +860,25 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
               ))}
             </ol>
 
-            <div className={`${s.loopCard} ${s.reveal}`} data-reveal>
+            <div className={`${s.loop} ${s.reveal}`} data-reveal>
               <div className={s.loopCopy}>
-                <span className={s.sectionLabel}><Icon name="loop" />{c.how.loop.label}</span>
-                <p className={s.loopText}>
-                  {c.how.loop.text}{' '}
-                  <strong className={s.accentText}>{c.how.loop.strong}</strong>
-                </p>
-                <ol className={s.loopChain}>
+                <h3 className={s.loopHeading}>{c.how.loop.heading}</h3>
+                <p className={s.loopText}>{c.how.loop.text}</p>
+                <ol className={s.loopList}>
                   {c.how.loop.chain.map((item, index) => (
-                    <li key={item}>
+                    <li key={item.title} data-step={index + 1}>
                       <a href={navItems[index].href}>
-                        <Icon name={STEP_ICONS[index]} />
-                        {item}
+                        <span className={s.loopListIcon}><Icon name={STEP_ICONS[index]} /></span>
+                        <span className={s.loopListText}>
+                          <strong>{item.title}</strong>
+                          <span>{item.text}</span>
+                        </span>
                       </a>
                     </li>
                   ))}
                 </ol>
               </div>
-              <figure className={s.loopPhone}>
-                <ProductDeviceFrame
-                  media={loopScreen}
-                  alt={loopScreen.alt}
-                  sizes="(max-width: 720px) 60vw, 250px"
-                />
-              </figure>
+              <LoopOrbit items={c.how.loop.chain.map((item) => item.title)} screen={loopScreen} />
             </div>
           </div>
         </section>
@@ -905,7 +981,14 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
         onPointerLeave={scheduleMobileNavHide}
       >
         {navItems.map((item, index) => (
-          <a key={item.href} href={item.href} onClick={hideMobileNav} aria-label={item.label}>
+          <a
+            key={item.href}
+            href={item.href}
+            onClick={hideMobileNav}
+            aria-label={item.label}
+            aria-current={activeStep && item.href === `#${activeStep}` ? 'location' : undefined}
+            data-step={index + 1}
+          >
             <Icon name={STEP_ICONS[index]} />
           </a>
         ))}
