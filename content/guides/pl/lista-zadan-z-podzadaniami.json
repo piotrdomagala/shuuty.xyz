@@ -2,7 +2,7 @@
   "body": [
     {
       "type": "p",
-      "text": "Rower do serwisu, rachunki, prezent na urodziny - takie sprawy łatwo zgubić w głowie. W Shuuty zapisujesz je jako zadania prywatne: z terminem, przypomnieniem, listą podzadań i stoperem, który liczy czas pracy. Zadanie prywatne widzisz tylko Ty. Każdy krok poniżej pokazuje prawdziwy ekran aplikacji."
+      "text": "Rower do serwisu, rachunki, prezent na urodziny - takie sprawy łatwo zgubić w głowie. W Shuuty zapisujesz je jako zadania prywatne: z terminem, przypomnieniem, kategorią, listą podzadań i stoperem, który liczy czas pracy. Zadanie prywatne widzisz tylko Ty. Każdy krok poniżej pokazuje prawdziwy ekran aplikacji."
     },
     {
       "type": "h2",
@@ -47,6 +47,22 @@
       "text": "Zadanie czeka w **Planerze**, w zakładce **Prywatne**, pod swoim dniem - z godziną przypomnienia i przyciskiem **Stoper**.",
       "media": "pl-private-tasks-planner",
       "alt": "Planer z zadaniem Rower do serwisu na piątek"
+    },
+    {
+      "type": "h2",
+      "text": "Jak nadać zadaniu kategorię?"
+    },
+    {
+      "type": "step",
+      "text": "Otwórz zadanie i dotknij ikony etykiety obok strzałki wstecz. Wybierz kategorię, na przykład **Zakupy**, i zapisz zmianę.",
+      "media": "pl-private-tasks-category",
+      "alt": "Siatka kategorii zadania z zaznaczonymi Zakupami"
+    },
+    {
+      "type": "step",
+      "text": "Kafelek zadania w planerze dostaje kolor kategorii, więc od razu odróżniasz sprawy różnego rodzaju.",
+      "media": "pl-private-tasks-planner-category",
+      "alt": "Planer z kafelkiem bez kategorii i kafelkiem w kolorze kategorii Zakupy"
     },
     {
       "type": "h2",
@@ -109,13 +125,17 @@
     },
     {
       "type": "p",
-      "text": "Zadania prywatne, podzadania, przypomnienia i stoper działają w bezpłatnym planie Free. Plan zmienia limit opisu: opis razem z podzadaniami ma w Free do 1000 znaków na zadanie, w Pro do 5000, a w Teams do 10 000. Ceny zależą od kraju i są widoczne w App Store i Google Play."
+      "text": "Zadania prywatne, kategorie, podzadania, przypomnienia i stoper działają w bezpłatnym planie Free. Plan zmienia limit opisu: opis razem z podzadaniami ma w Free do 1000 znaków na zadanie, w Pro do 5000, a w Teams do 10 000. Ceny zależą od kraju i są widoczne w App Store i Google Play."
     }
   ],
   "faq": [
     {
       "question": "Czy ktoś widzi moje zadania prywatne?",
       "answer": "Nie. Zadanie prywatne widzisz tylko Ty. Inni zobaczą je dopiero wtedy, gdy przypiszesz je komuś albo utworzysz je w grupie."
+    },
+    {
+      "question": "Co zmienia kategoria?",
+      "answer": "Zadanie dostaje ikonę kategorii, a jego kafelek w planerze kolor kategorii, więc łatwo odróżnić sprawy różnego rodzaju."
     },
     {
       "question": "Ile podzadań mogę dodać?",

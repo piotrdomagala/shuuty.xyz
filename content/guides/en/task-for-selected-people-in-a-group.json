@@ -1,0 +1,100 @@
+{
+  "body": [
+    {
+      "type": "p",
+      "text": "Not every task in a group is for everyone. One person buys the paint, not the whole renovation crew. In Shuuty a group task can go to selected members only, which keeps the team coordinated, and the conversation about it stays with the task instead of getting lost in the chat. Every step below shows a real screen of the app."
+    },
+    {
+      "type": "p",
+      "text": "You create a group task in the group chat with **+** and **Create task** - the group tasks guide shows it step by step. Here we start from a task that already exists."
+    },
+    {
+      "type": "h2",
+      "text": "How do I give a task to only part of the group?"
+    },
+    {
+      "type": "step",
+      "text": "On the group page, open **Group tasks**. Each task shows who added it and how many people have it in their planner. Open the task.",
+      "media": "en-group-people-task-list",
+      "alt": "The group tasks list with the task Kitchen paint in the planner of 2 people"
+    },
+    {
+      "type": "step",
+      "text": "Tap the round avatars at the top of the task. The **Group task - people** window shows the **Creator** and the **Delegated People**, each with a status such as **In progress** and **Task in planner**.",
+      "media": "en-group-people-people",
+      "alt": "The Group task - people window with the creator and one delegated person"
+    },
+    {
+      "type": "step",
+      "text": "Tap **x** next to a person who should not do this task - they get the status **Not participating**. The **+** button brings them back, and **Add members** adds more people from the group. Finish with **Done**.",
+      "media": "en-group-people-selected-person",
+      "alt": "Olek with the status Not participating and a button to bring him back"
+    },
+    {
+      "type": "h2",
+      "text": "Who gets the task?"
+    },
+    {
+      "type": "step",
+      "text": "A selected person has the task in their planner, on the **Received** tab, with the group name above the title.",
+      "media": "en-group-people-member-received",
+      "alt": "Olek's Received tab with the task from the group Renovation crew"
+    },
+    {
+      "type": "step",
+      "text": "A person who is not taking part does not have the task in **Received**.",
+      "media": "en-group-people-not-participating-received",
+      "alt": "Ola's empty Received tab"
+    },
+    {
+      "type": "h2",
+      "text": "How do we talk about the task?"
+    },
+    {
+      "type": "step",
+      "text": "Below the task description there is a **Discussion**. Type in **Write a message...** - the conversation stays with the task.",
+      "media": "en-group-people-discussion",
+      "alt": "The discussion in a group task with two messages"
+    },
+    {
+      "type": "step",
+      "text": "Replies arrive in the same place, and every message shows its author and time.",
+      "media": "en-group-people-discussion-reply",
+      "alt": "The same discussion seen by Olek"
+    },
+    {
+      "type": "h2",
+      "text": "What this does not do"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "**You cannot change someone else's task.** Only the author changes the title and the due date.",
+        "**Members are not asked to accept the task.** A member who has the task gets it right away.",
+        "**It does not run in a browser.** Everyone needs the app on an iPhone, iPad or Android phone."
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "What it costs"
+    },
+    {
+      "type": "p",
+      "text": "Getting started is free. Group limits depend on the organiser's plan: on Free a group has up to 20 people and up to 3 active tasks at a time, on Pro up to 150 people and on Teams up to 900, both without a limit on active tasks. Prices depend on your country and are shown in the App Store and Google Play."
+    }
+  ],
+  "faq": [
+    {
+      "question": "Can I add a person to the task later?",
+      "answer": "Yes. In the Group task - people window, use Add members or the + button next to a person who is not taking part."
+    },
+    {
+      "question": "Where does a selected person see the task?",
+      "answer": "In their planner, on the Received tab, with the group name above the task title."
+    },
+    {
+      "question": "Where do we talk about one task?",
+      "answer": "In the Discussion inside the task details. The conversation stays with the task and does not mix with the group chat."
+    }
+  ]
+}

@@ -148,7 +148,7 @@
       "language": "pl",
       "slug": "lista-zadan-z-podzadaniami",
       "title": "Lista zadań z podzadaniami i stoperem - krok po kroku",
-      "description": "Jak zapisać zadanie prywatne z terminem i przypomnieniem, rozbić je na podzadania i zmierzyć czas pracy stoperem. Każdy krok ze zrzutem ekranu.",
+      "description": "Jak zapisać zadanie prywatne z terminem i przypomnieniem, nadać mu kategorię, rozbić je na podzadania i zmierzyć czas pracy stoperem.",
       "heading": "Lista zadań z podzadaniami i stoperem - krok po kroku",
       "updatedOn": "2026-09-30",
       "updatedLabel": "Zaktualizowano 30 września 2026"
@@ -172,6 +172,36 @@
       "heading": "Profil grupy: okładka, opis i zainteresowania",
       "updatedOn": "2026-09-30",
       "updatedLabel": "Zaktualizowano 30 września 2026"
+    },
+    {
+      "topic": "private-tasks",
+      "language": "en",
+      "slug": "to-do-list-with-subtasks",
+      "title": "A to-do list with subtasks and a timer, step by step",
+      "description": "How to save a private task with a date and a reminder, give it a category, split it into subtasks and track work time with the timer.",
+      "heading": "A to-do list with subtasks and a timer, step by step",
+      "updatedOn": "2026-09-30",
+      "updatedLabel": "Updated 30 September 2026"
+    },
+    {
+      "topic": "group-people",
+      "language": "en",
+      "slug": "task-for-selected-people-in-a-group",
+      "title": "A task for selected people in a group, step by step",
+      "description": "How to give a group task to only some members, check who received it and talk about it in the discussion inside the task.",
+      "heading": "A task for selected people in a group, step by step",
+      "updatedOn": "2026-09-30",
+      "updatedLabel": "Updated 30 September 2026"
+    },
+    {
+      "topic": "group-profile",
+      "language": "en",
+      "slug": "group-profile-cover-description-interests",
+      "title": "Group profile: cover, description and interests",
+      "description": "How to set up a clear group profile in Shuuty: a cover, a description for new people, interests and the member list.",
+      "heading": "Group profile: cover, description and interests",
+      "updatedOn": "2026-09-30",
+      "updatedLabel": "Updated 30 September 2026"
     }
   ]
 }

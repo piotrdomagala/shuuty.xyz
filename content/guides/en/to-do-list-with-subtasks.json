@@ -1,0 +1,143 @@
+{
+  "body": [
+    {
+      "type": "p",
+      "text": "A birthday present, a bike service, a bill to pay - small things like these are easy to lose track of. In Shuuty you save them as private tasks with a date, a reminder, a category, a list of subtasks and a timer that records your work time. Only you see a private task. Every step below shows a real screen of the app."
+    },
+    {
+      "type": "h2",
+      "text": "How do I add a private task?"
+    },
+    {
+      "type": "step",
+      "text": "Tap **+** at the bottom of the screen and choose **Task**. If you would rather say the task in one sentence, choose **Voice**.",
+      "media": "en-private-tasks-plus-menu",
+      "alt": "The plus menu with Task, Voice, Meeting and Group"
+    },
+    {
+      "type": "step",
+      "text": "Type a title and a description below it. A new task is **Private**, so only you see it.",
+      "media": "en-private-tasks-title-description",
+      "alt": "A new task titled Buy a birthday present with a description"
+    },
+    {
+      "type": "h2",
+      "text": "How do I set a date and a reminder?"
+    },
+    {
+      "type": "step",
+      "text": "Tap **When?** and choose **Select date** if the time does not matter, or **Select date and time**.",
+      "media": "en-private-tasks-when-mode",
+      "alt": "Choosing Select date or Select date and time"
+    },
+    {
+      "type": "step",
+      "text": "Pick a day in the calendar and tap **Confirm**.",
+      "media": "en-private-tasks-date",
+      "alt": "A calendar with Saturday, October 3 selected"
+    },
+    {
+      "type": "step",
+      "text": "Tap **Reminder** and type how early it should come, for example **24h** **Before** the due date. Then tap **Create task**.",
+      "media": "en-private-tasks-reminder",
+      "alt": "A reminder one day before the due time in a new task"
+    },
+    {
+      "type": "step",
+      "text": "The task waits in the **Planner**, on the **Private** tab, under its day - with the reminder time and a **Timer** button.",
+      "media": "en-private-tasks-planner",
+      "alt": "The planner with two private tasks on Friday and Saturday"
+    },
+    {
+      "type": "h2",
+      "text": "How do I give a task a category?"
+    },
+    {
+      "type": "step",
+      "text": "Open the task and tap the tag icon next to the back arrow. Choose a category, for example **Shopping**, and save the change. The task card in the planner then gets the category colour, so different kinds of tasks are easy to tell apart.",
+      "media": "en-private-tasks-category",
+      "alt": "The category grid with Away, Home, Work, Shopping and more"
+    },
+    {
+      "type": "h2",
+      "text": "How do I split a task into subtasks?"
+    },
+    {
+      "type": "step",
+      "text": "Tap **Create subtask**. Each subtask is one line you tick off, and the list shows your progress, for example **Subtasks · 1/2**.",
+      "media": "en-private-tasks-subtasks",
+      "alt": "Task details with two subtasks, one ticked"
+    },
+    {
+      "type": "step",
+      "text": "You can tick subtasks straight from the planner - tap the subtask counter on the card. The description and the subtasks share one character limit, and the app shows how much is left.",
+      "media": "en-private-tasks-planner-subtasks",
+      "alt": "A planner card with expanded subtasks and the shared description budget"
+    },
+    {
+      "type": "h2",
+      "text": "How do I track the time I spend on a task?"
+    },
+    {
+      "type": "step",
+      "text": "In the task details, tap **Start timer**. The bottom bar shows the running time, and **Pause** takes a break.",
+      "media": "en-private-tasks-timer-running",
+      "alt": "A running task timer with Pause and Save"
+    },
+    {
+      "type": "step",
+      "text": "Tap **Save** to finish the session. You see the **Work time**, the start and the end, you can add a note, and you confirm with **Save**.",
+      "media": "en-private-tasks-save-session",
+      "alt": "The Save session sheet with the work time 0:01:10"
+    },
+    {
+      "type": "step",
+      "text": "The session appears under **Registered time**, and **Total time** adds up all sessions. Start the next one with **New Session**, or add a forgotten one with **Add manually**.",
+      "media": "en-private-tasks-sessions",
+      "alt": "Registered time with one saved session"
+    },
+    {
+      "type": "step",
+      "text": "The planner card then shows the total time and the subtask progress, so you see at a glance what is left.",
+      "media": "en-private-tasks-planner-progress",
+      "alt": "A task card with 1 minute of time and 1 of 2 subtasks done"
+    },
+    {
+      "type": "h2",
+      "text": "What private tasks do not do"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "**They are not shown to anyone else.** A task becomes shared only when you assign it to a friend or create it in a group.",
+        "**They do not run in a browser.** You need the app on an iPhone, iPad or Android phone."
+      ]
+    },
+    {
+      "type": "h2",
+      "text": "What it costs"
+    },
+    {
+      "type": "p",
+      "text": "Private tasks, categories, subtasks, reminders and the timer all work on the free Free plan. The plan changes the description limit: the description together with the subtasks can have up to 1,000 characters per task on Free, 5,000 on Pro and 10,000 on Teams. Prices depend on your country and are shown in the App Store and Google Play."
+    }
+  ],
+  "faq": [
+    {
+      "question": "Can anyone see my private tasks?",
+      "answer": "No. Only you see a private task. Others see it only when you assign it to someone or create it in a group."
+    },
+    {
+      "question": "What does a category change?",
+      "answer": "The task gets a category icon, and its card in the planner gets the category colour, so tasks of different kinds are easy to tell apart."
+    },
+    {
+      "question": "How many subtasks can I add?",
+      "answer": "As many as fit in the shared description limit. On the Free plan that is 1,000 characters for the whole task, including the description."
+    },
+    {
+      "question": "What if I forget to start the timer?",
+      "answer": "Add the session with Add manually under Registered time."
+    }
+  ]
+}
