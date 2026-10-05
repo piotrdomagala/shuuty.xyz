@@ -930,6 +930,9 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
         const headLeft = head.offsetLeft;
         const headRight = head.offsetLeft + head.offsetWidth;
         head.style.setProperty(`--x-${front}`, '0px');
+        // Level with the word in front unless stacked below; set on every pass,
+        // so a phone layout widened to a computer one keeps no offset.
+        items.forEach((word) => word.style.setProperty(`--y-${front}`, '0px'));
         // Every word scales round its own centre, so a change of role never
         // moves the origin; the shift puts the scaled word's edge at its spot.
         const shiftTo = (word: HTMLElement, edge: number, side: 'left' | 'right') => {
@@ -944,8 +947,6 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
           if (fits) {
             left.style.setProperty(`--x-${front}`, shiftTo(left, headLeft - gap, 'right'));
             right.style.setProperty(`--x-${front}`, shiftTo(right, headRight + gap, 'left'));
-            left.style.setProperty(`--y-${front}`, '0px');
-            right.style.setProperty(`--y-${front}`, '0px');
           } else {
             // Under the word in front, either side of the middle.
             stackedAny = true;
