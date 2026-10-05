@@ -771,7 +771,6 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
   const [heroScope, setHeroScope] = useState(0);
   // The phones change when the smoke from the new word reaches them.
   const [heroPhonesScope, setHeroPhonesScope] = useState(0);
-  const [heroPaused, setHeroPaused] = useState(false);
   const heroLastInput = useRef(-Infinity);
   const heroScopesRef = useRef<HTMLSpanElement | null>(null);
   const heroVisualRef = useRef<HTMLDivElement | null>(null);
@@ -888,8 +887,8 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
   );
 
   // The place in the headline and the phones change together every few
-  // seconds; a choice by the reader holds it for a while, hovering pauses it,
-  // and with reduced motion it never changes by itself.
+  // seconds; a choice by the reader holds it for a while, and with reduced
+  // motion it never changes by itself.
   const chooseHeroScope = useCallback((index: number) => {
     heroLastInput.current = performance.now();
     setHeroScope(index);
@@ -906,13 +905,13 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
   useEffect(() => {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
     const timer = window.setInterval(() => {
-      if (reduced.matches || heroPaused || document.visibilityState !== 'visible') return;
+      if (reduced.matches || document.visibilityState !== 'visible') return;
       if (performance.now() - heroLastInput.current < HERO_HOLD_AFTER_INPUT) return;
       setHeroScope((current) => (current + 1) % 3);
       setActiveHeroPhone(0);
     }, HERO_SCOPE_MS);
     return () => window.clearInterval(timer);
-  }, [heroPaused]);
+  }, []);
 
   useEffect(() => {
     setTheme(document.documentElement.dataset.theme === 'light' ? 'light' : 'dark');
@@ -1126,10 +1125,6 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
             aria-label={carousel.region}
             data-step={HERO_SCOPE_STEPS[heroPhonesScope]}
             onKeyDown={handleCarouselKeyDown}
-            onPointerEnter={(event) => {
-              if (event.pointerType === 'mouse') setHeroPaused(true);
-            }}
-            onPointerLeave={() => setHeroPaused(false)}
             onPointerDown={handleCarouselPointerDown}
             onPointerUp={handleCarouselPointerUp}
             onPointerCancel={() => {

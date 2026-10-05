@@ -136,7 +136,7 @@ test('the landing tells one four-step story in every language', async () => {
   assert.match(heroCss, /\.heroScope\[data-active\] \{[^}]*opacity: 1;/);
   assert.match(heroCss, /prefers-reduced-motion: reduce\) \{[^@]*\.heroScopes \{\s*display: none;/);
   const heroComponent = await readFile(new URL('components/HomePageClient.tsx', root), 'utf8');
-  assert.match(heroComponent, /reduced\.matches \|\| heroPaused/);
+  assert.match(heroComponent, /if \(reduced\.matches \|\| document\.visibilityState !== 'visible'\) return;/);
   assert.equal(content.pl.how.heading, 'Jedna aplikacja, cztery kroki');
   assert.equal(content.en.how.heading, 'One app, four steps');
   assert.equal(content.pl.uses.heading, 'Do czego ludzie używają Shuuty');
