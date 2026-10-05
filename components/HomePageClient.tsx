@@ -16,7 +16,7 @@ import { localizedSitePath, type SiteLanguage } from '@/components/documentLocal
 import LanguageMenu from '@/components/LanguageMenu';
 import HeroSmoke from '@/components/HeroSmoke';
 import ProductDeviceFrame from '@/components/ProductDeviceFrame';
-import { swirlScreens, type SwirlRun } from '@/components/screenSwirl';
+import { prepareSwirl, swirlScreens, type SwirlRun } from '@/components/screenSwirl';
 import { useSiteLanguage } from '@/components/useSiteLanguage';
 import guidesContent from '@/content/guides.json';
 import { asGuides, guidePath, guidesIn, type GuideEntry } from '@/lib/guides.mjs';
@@ -261,6 +261,9 @@ const HERO_SCOPE_MS = 6000;
 // Each screen swirls into the next one; the front phone starts, then the
 // right, then the left.
 const HERO_SWIRL_MS = 1300;
+// Size of the two places waiting beside the word in front (see .heroScope).
+const HERO_GHOST_SCALE = 0.4;
+const HERO_WORD_FADE_MS = 300;
 const HERO_SWIRL_STAGGER_MS = 110;
 // The same colours as --gold-rgb, --blue-rgb and --group-rgb in globals.css.
 const HERO_SMOKE_COLORS = {
@@ -753,6 +756,10 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
   const [showMobileNav, setShowMobileNav] = useState(false);
   const [activeHeroPhone, setActiveHeroPhone] = useState(0);
   const [heroScope, setHeroScope] = useState(0);
+  // The words in the headline follow the place a moment later: first all
+  // three fade out, then they show again in their new spots.
+  const [heroWordScope, setHeroWordScope] = useState(0);
+  const [heroWordsFading, setHeroWordsFading] = useState(false);
   // The phones change when the smoke from the new word reaches them.
   const [heroPhonesScope, setHeroPhonesScope] = useState(0);
   const heroSwirls = useRef<SwirlRun[]>([]);
@@ -899,41 +906,91 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
   // cross-fade.
   // The waiting places stand beside the word in front: one on each side when
   // the line is centred (phone), both after it when it starts at the left
-  // (computer). Each is moved from its own box by the distance to that spot.
+  // (computer). Every word gets its spot for each of the three states up
+  // front (--x-0, --x-1, --x-2), so a change moves it straight to the right
+  // place in the same frame; the container picks the state (data-front).
   useEffect(() => {
     const words = heroScopesRef.current;
     if (!words) return undefined;
     const place = () => {
       const items = Array.from(words.children) as HTMLElement[];
-      const front = items.find((word) => word.dataset.place === 'front');
-      if (!front) return;
-      const gap = front.offsetHeight * 0.18;
-      const scale = 0.5;
-      const frontLeft = front.offsetLeft;
-      const frontRight = front.offsetLeft + front.offsetWidth;
+      if (items.length !== 3) return;
       const centred = getComputedStyle(words).justifyItems === 'center';
-      const left = items.find((word) => word.dataset.place === 'left');
-      const right = items.find((word) => word.dataset.place === 'right');
-      if (centred) {
-        // transform-origin: right for the left one, left for the right one.
-        if (left) left.style.setProperty('--ghost-x', `${frontLeft - gap - (left.offsetLeft + left.offsetWidth)}px`);
-        if (right) right.style.setProperty('--ghost-x', `${frontRight + gap - right.offsetLeft}px`);
-      } else {
-        // Both after the word in front; both scale from their left edge.
-        let next = frontRight + gap;
-        [left, right].forEach((word) => {
-          if (!word) return;
-          word.style.setProperty('--ghost-x', `${next - word.offsetLeft}px`);
-          next += word.offsetWidth * scale + gap;
-        });
+      // The room the line has on screen: on a narrow phone the waiting places
+      // would run off the edges beside a long word, so there they wait under it.
+      const box = words.getBoundingClientRect();
+      const roomLeft = box.left - 12;
+      const roomRight = window.innerWidth - box.right - 12;
+      let stackedAny = false;
+      for (let front = 0; front < 3; front += 1) {
+        const head = items[front];
+        const left = items[(front + 1) % 3];
+        const right = items[(front + 2) % 3];
+        const gap = head.offsetHeight * 0.16;
+        const headLeft = head.offsetLeft;
+        const headRight = head.offsetLeft + head.offsetWidth;
+        head.style.setProperty(`--x-${front}`, '0px');
+        // Every word scales round its own centre, so a change of role never
+        // moves the origin; the shift puts the scaled word's edge at its spot.
+        const shiftTo = (word: HTMLElement, edge: number, side: 'left' | 'right') => {
+          const half = (word.offsetWidth * HERO_GHOST_SCALE) / 2;
+          const centre = side === 'left' ? edge + half : edge - half;
+          return `${centre - (word.offsetLeft + word.offsetWidth / 2)}px`;
+        };
+        if (centred) {
+          const leftEdge = headLeft - gap - left.offsetWidth * HERO_GHOST_SCALE;
+          const rightEdge = headRight + gap + right.offsetWidth * HERO_GHOST_SCALE;
+          const fits = leftEdge >= -roomLeft && rightEdge <= words.offsetWidth + roomRight;
+          if (fits) {
+            left.style.setProperty(`--x-${front}`, shiftTo(left, headLeft - gap, 'right'));
+            right.style.setProperty(`--x-${front}`, shiftTo(right, headRight + gap, 'left'));
+            left.style.setProperty(`--y-${front}`, '0px');
+            right.style.setProperty(`--y-${front}`, '0px');
+          } else {
+            // Under the word in front, either side of the middle.
+            stackedAny = true;
+            const middle = words.offsetWidth / 2;
+            const below = `${head.offsetHeight * 0.62}px`;
+            left.style.setProperty(`--x-${front}`, shiftTo(left, middle - gap, 'right'));
+            right.style.setProperty(`--x-${front}`, shiftTo(right, middle + gap, 'left'));
+            left.style.setProperty(`--y-${front}`, below);
+            right.style.setProperty(`--y-${front}`, below);
+          }
+        } else {
+          let next = headRight + gap;
+          [left, right].forEach((word) => {
+            word.style.setProperty(`--x-${front}`, shiftTo(word, next, 'left'));
+            next += word.offsetWidth * HERO_GHOST_SCALE + gap;
+          });
+        }
       }
-      front.style.setProperty('--ghost-x', '0px');
+      // Room under the line for places waiting there.
+      words.toggleAttribute('data-stacked', stackedAny);
     };
     place();
     window.addEventListener('resize', place);
     void document.fonts?.ready.then(place);
-    return () => window.removeEventListener('resize', place);
-  }, [heroScope]);
+    // Build the swirl renderer while the page is idle.
+    const warm = window.setTimeout(prepareSwirl, 1200);
+    return () => {
+      window.removeEventListener('resize', place);
+      window.clearTimeout(warm);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (heroWordScope === heroScope) return undefined;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setHeroWordScope(heroScope);
+      return undefined;
+    }
+    setHeroWordsFading(true);
+    const swap = window.setTimeout(() => {
+      setHeroWordScope(heroScope);
+      setHeroWordsFading(false);
+    }, HERO_WORD_FADE_MS);
+    return () => window.clearTimeout(swap);
+  }, [heroScope, heroWordScope]);
 
   const heroPhonesScopeRef = useRef(0);
   useEffect(() => {
@@ -1182,17 +1239,23 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
                   phones: on your own, with friends, in groups. The sentence
                   above is what a screen reader and a search engine read; with
                   reduced motion the whole sentence stands still. */}
-              <span ref={heroScopesRef} className={s.heroScopes} aria-hidden="true">
+              <span
+                ref={heroScopesRef}
+                className={s.heroScopes}
+                data-front={heroWordScope}
+                data-fading={heroWordsFading ? '' : undefined}
+                aria-hidden="true"
+              >
                 {heroSets.map((set, index) => (
                   <span
                     key={set.scope}
                     className={s.heroScope}
                     data-step={HERO_SCOPE_STEPS[index]}
-                    data-active={index === heroScope ? '' : undefined}
+                    data-active={index === heroWordScope ? '' : undefined}
                     // The next place waits on the left and the one before on
                     // the right, small and soft behind the word in front, so
                     // a reader sees at once that there are three.
-                    data-place={index === heroScope ? 'front' : index === (heroScope + 1) % 3 ? 'left' : 'right'}
+                    data-place={index === heroWordScope ? 'front' : index === (heroWordScope + 1) % 3 ? 'left' : 'right'}
                   >
                     {set.scope}
                   </span>

@@ -139,7 +139,7 @@ test('the landing tells one four-step story in every language', async () => {
   // Autoplay stops for reduced motion, a mouse on the phones and focus inside.
   assert.match(heroComponent, /if \(reduced\.matches \|\| heroHover\.current \|\| heroFocus\.current \|\| document\.visibilityState !== 'visible'\) return;/);
   // The two places waiting stay visible, small and soft, behind the one in front.
-  assert.match(heroComponent, /data-place=\{index === heroScope \? 'front'/);
+  assert.match(heroComponent, /data-place=\{index === heroWordScope \? 'front'/);
   assert.match(heroCss, /\.heroScope \{[^}]*opacity: 0\.3;/);
   assert.equal(content.pl.how.heading, 'Jedna aplikacja, cztery kroki');
   assert.equal(content.en.how.heading, 'One app, four steps');

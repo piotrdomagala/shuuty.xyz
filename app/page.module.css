@@ -261,7 +261,6 @@
 .hero {
   position: relative;
   z-index: 1;
-  overflow-x: clip;
   width: min(1240px, 100%);
   min-height: min(920px, 100svh);
   margin: 0 auto;
@@ -347,6 +346,11 @@
   justify-items: start;
 }
 
+/* On a narrow phone the two places waiting stand under the word in front. */
+.heroScopes[data-stacked] {
+  padding-bottom: 0.32em;
+}
+
 /* All three share one grid cell, so the line keeps the width of the longest
    and nothing below it moves. The page switches them together with the
    phones; the one shown has a line drawn under it in its step colour. */
@@ -362,27 +366,37 @@
      one at each end of the line (--ghost-x is set by the page from the word
      widths). */
   opacity: 0.3;
-  transform: translateX(var(--ghost-x, 0px)) translateY(0.06em) scale(0.5);
+  transform: translate(var(--ghost-x, 0px), var(--ghost-y, 0px)) translateY(0.04em) scale(0.4);
   filter: blur(0.8px);
+  /* Nothing slides: on a change every word fades and blurs out, takes its
+     new spot while unseen and fades back in (see [data-fading]). */
+  translate: 0 0;
   transition:
-    opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1),
-    transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1),
-    filter 0.8s ease;
+    opacity 0.45s cubic-bezier(0.2, 0.8, 0.2, 1),
+    filter 0.45s ease,
+    translate 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-.heroScope[data-place='left'] {
-  transform-origin: right center;
+.heroScopes[data-fading] .heroScope {
+  opacity: 0;
+  filter: blur(6px);
+  translate: 0 -0.2em;
+  transition-duration: 0.28s;
 }
 
-.heroScope[data-place='right'] {
-  transform-origin: left center;
+.heroScopes[data-front='0'] .heroScope {
+  --ghost-x: var(--x-0, 0px);
+  --ghost-y: var(--y-0, 0px);
 }
 
-/* On a computer the line starts at the left and both wait after the word. */
-@media (min-width: 961px) {
-  .heroScope[data-place='left'] {
-    transform-origin: left center;
-  }
+.heroScopes[data-front='1'] .heroScope {
+  --ghost-x: var(--x-1, 0px);
+  --ghost-y: var(--y-1, 0px);
+}
+
+.heroScopes[data-front='2'] .heroScope {
+  --ghost-x: var(--x-2, 0px);
+  --ghost-y: var(--y-2, 0px);
 }
 
 /* The canvas with the smoke from the word to the phones lies under the
