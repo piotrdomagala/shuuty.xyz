@@ -17,9 +17,10 @@
     },
     "hero": {
       "badge": "Available on iOS and Android",
-      "title": "A task app -",
-      "accent": "for you, your friends and your groups",
-      "sub": "Start with your own to-do list. When you want to, hand a task to a friend or join groups and meetings of people who share your interests.",
+      "title": "Tasks, plans and reservations",
+      "accent": "on your own, with friends and in groups",
+      "scopes": ["on your own", "with friends", "in groups"],
+      "sub": "Plan your own things, share a task with friends or run a group with a calendar, reservations and chat - all in one app.",
       "secondaryCta": "See how it works",
       "screens": [
         {
@@ -319,9 +320,10 @@
     },
     "hero": {
       "badge": "Dostępne na iOS i Android",
-      "title": "Aplikacja do zadań -",
-      "accent": "Twoich, ze znajomymi i w grupach",
-      "sub": "Zacznij od własnej listy zadań. Gdy zechcesz, przekaż zadanie znajomemu albo dołącz do grupy i spotkań ludzi o tych samych zainteresowaniach.",
+      "title": "Zadania, terminy i rezerwacje",
+      "accent": "prywatnie, ze znajomymi i w grupach",
+      "scopes": ["prywatnie", "ze znajomymi", "w grupach"],
+      "sub": "Zaplanuj własne sprawy, podziel się zadaniem ze znajomymi albo prowadź grupę z kalendarzem, rezerwacjami i czatem - wszystko w jednej aplikacji.",
       "secondaryCta": "Zobacz, jak to działa",
       "screens": [
         {
@@ -621,9 +623,10 @@
     },
     "hero": {
       "badge": "Tilgjengelig for iOS og Android",
-      "title": "En oppgaveapp -",
-      "accent": "for deg, vennene dine og gruppene dine",
-      "sub": "Start med din egen oppgaveliste. Når du vil, kan du gi en oppgave til en venn eller bli med i grupper og møter med folk som deler interessene dine.",
+      "title": "Oppgaver, avtaler og reservasjoner",
+      "accent": "for deg selv, med venner og i grupper",
+      "scopes": ["for deg selv", "med venner", "i grupper"],
+      "sub": "Planlegg egne ting, del en oppgave med venner eller driv en gruppe med kalender, reservasjoner og chat - alt i én app.",
       "secondaryCta": "Se hvordan det fungerer",
       "screens": [
         {

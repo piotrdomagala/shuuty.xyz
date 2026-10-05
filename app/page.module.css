@@ -324,6 +324,66 @@
   color: var(--accent-text);
 }
 
+.heroScopes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+  font-family: var(--font-body);
+  font-size: clamp(0.98rem, 1.4vw, 1.12rem);
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.heroScope {
+  --step-ink: var(--accent-text);
+  --step-rgb: var(--gold-rgb);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 0 16px 0 12px;
+  border: 1px solid rgba(var(--step-rgb), 0.42);
+  border-radius: var(--r-full);
+  color: var(--text);
+  background: color-mix(in srgb, var(--bg-raised) 84%, rgb(var(--step-rgb)));
+  box-shadow: 0 8px 22px rgba(var(--step-rgb), 0.14);
+  animation: heroScopeIn 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.heroScope:nth-child(2) {
+  animation-delay: 0.12s;
+}
+
+.heroScope:nth-child(3) {
+  animation-delay: 0.24s;
+}
+
+.heroScope[data-step='2'] {
+  --step-ink: var(--cool-accent-text);
+  --step-rgb: var(--blue-rgb);
+}
+
+.heroScope[data-step='4'] {
+  --step-ink: var(--group-accent);
+  --step-rgb: var(--group-rgb);
+}
+
+.heroScope svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  color: var(--step-ink);
+}
+
+@keyframes heroScopeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
 .heroLead {
   max-width: min(590px, 100%);
   margin-top: 22px;
@@ -1769,6 +1829,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .heroScope {
+    animation: none;
+  }
+
   .ambient span {
     animation: none !important;
   }
@@ -1846,6 +1910,7 @@
     margin-left: auto;
   }
 
+  .heroScopes,
   .heroActions,
   .heroSteps {
     justify-content: center;

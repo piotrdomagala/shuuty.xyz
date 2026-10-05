@@ -253,6 +253,8 @@ function Icon({ name }: Readonly<{ name: IconName }>) {
 
 // The four steps in the nav and the mobile dock, in page order.
 const STEP_ICONS: readonly IconName[] = ['task', 'people', 'map', 'group'];
+// The hero chips reuse the colours and icons of steps 1, 2 and 4.
+const HERO_SCOPE_STEPS = [1, 2, 4] as const;
 
 function AppleIcon() {
   return (
@@ -1015,8 +1017,18 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
             <span className={s.eyebrow}><span className={s.statusDot} />{c.hero.badge}</span>
             <h1 className={s.heroTitle}>
               {c.hero.title}{' '}
-              <br />
-              <span className={s.accentText}>{c.hero.accent}</span>
+              <span className={s.srOnly}>{c.hero.accent}</span>
+              {/* Where it works, as three chips in the step colours: on your
+                  own, with friends, in groups. The sentence above is what a
+                  screen reader and a search engine read. */}
+              <span className={s.heroScopes} aria-hidden="true">
+                {c.hero.scopes.map((scope, index) => (
+                  <span key={scope} className={s.heroScope} data-step={HERO_SCOPE_STEPS[index]}>
+                    <Icon name={STEP_ICONS[HERO_SCOPE_STEPS[index] - 1]} />
+                    {scope}
+                  </span>
+                ))}
+              </span>
             </h1>
             <p className={s.heroLead}>{c.hero.sub}</p>
             <div className={s.heroActions}>
