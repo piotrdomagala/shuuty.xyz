@@ -277,6 +277,17 @@ test('reduced motion explicitly removes phone transform transitions', async () =
     false,
     'The stage must stay outside the 3D sorting, or the far chips stop taking clicks',
   );
+
+  // A chip fades out before it reaches the edge of the phone, and a fully
+  // faded one takes no taps. With reduced motion the ring stands still, so
+  // nothing fades: the override comes after every breakpoint that sets a depth.
+  assert.match(css, /\.orbitChip \{[^}]*opacity: clamp\(/);
+  assert.match(css, /\.orbitChip\[data-far\] \{[^}]*pointer-events: none;/);
+  assert.match(component, /toggleAttribute\('data-far', far\)/);
+  const lastFade = css.lastIndexOf('--orbit-fade-to:');
+  const reducedFade = css.lastIndexOf('@media (prefers-reduced-motion: reduce)');
+  assert.ok(reducedFade > 0 && reducedFade < lastFade, 'The reduced-motion fade override must be last');
+  assert.match(css.slice(reducedFade), /--orbit-fade-to: 3;/);
 });
 
 test('public copy does not promise local offers on the map or show the old support inbox', async () => {

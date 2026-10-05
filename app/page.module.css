@@ -2335,3 +2335,13 @@
     font-size: 0.78rem;
   }
 }
+
+/* With reduced motion the ring stands still, so a faded chip would stay out
+   of reach for good: every chip stays visible and takes taps. Last in the file,
+   after the breakpoints that set the fade depths. */
+@media (prefers-reduced-motion: reduce) {
+  .orbitStage {
+    --orbit-fade-from: 2;
+    --orbit-fade-to: 3;
+  }
+}
