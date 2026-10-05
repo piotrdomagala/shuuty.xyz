@@ -43,12 +43,12 @@
           "scope": "with friends",
           "screens": [
             {
-              "media": "home-delegated-task",
-              "alt": "A task handed to a friend in Shuuty, with a discussion under the description"
+              "media": "home-assign-friends",
+              "alt": "Choosing a friend for a task in Shuuty - Kasia added to the task"
             },
             {
-              "media": "home-friends",
-              "alt": "The friends list in Shuuty with an invitation link and QR code"
+              "media": "home-delegated-task",
+              "alt": "A task handed to a friend in Shuuty, with a discussion under the description"
             },
             {
               "media": "home-meeting-page",
@@ -68,8 +68,8 @@
               "alt": "Adding a booking in a Shuuty group by choosing a free session"
             },
             {
-              "media": "home-group-page",
-              "alt": "A dance group page in Shuuty with its description, location and members"
+              "media": "home-group-members",
+              "alt": "Group members in Shuuty marked as friends, with an Invite button next to a new person"
             }
           ]
         }
@@ -384,12 +384,12 @@
           "scope": "ze znajomymi",
           "screens": [
             {
-              "media": "home-delegated-task",
-              "alt": "Zadanie przekazane znajomemu w Shuuty z dyskusją pod opisem"
+              "media": "home-assign-friends",
+              "alt": "Wybór znajomego do zadania w Shuuty - Kasia dodana do zadania"
             },
             {
-              "media": "home-friends",
-              "alt": "Lista znajomych w Shuuty z linkiem i kodem QR zaproszenia"
+              "media": "home-delegated-task",
+              "alt": "Zadanie przekazane znajomemu w Shuuty z dyskusją pod opisem"
             },
             {
               "media": "home-meeting-page",
@@ -409,8 +409,8 @@
               "alt": "Dodawanie rezerwacji w grupie Shuuty przez wybór wolnej sesji"
             },
             {
-              "media": "home-group-page",
-              "alt": "Strona grupy tanecznej w Shuuty z opisem, lokalizacją i członkami"
+              "media": "home-group-members",
+              "alt": "Członkowie grupy w Shuuty oznaczeni jako znajomi i przycisk Zaproś przy nowej osobie"
             }
           ]
         }
@@ -725,12 +725,12 @@
           "scope": "med venner",
           "screens": [
             {
-              "media": "home-delegated-task",
-              "alt": "En oppgave gitt til en venn i Shuuty, med diskusjon under beskrivelsen"
+              "media": "home-assign-friends",
+              "alt": "Velg en venn til en oppgave i Shuuty - Kasia er lagt til"
             },
             {
-              "media": "home-friends",
-              "alt": "Vennelisten i Shuuty med invitasjonslenke og QR-kode"
+              "media": "home-delegated-task",
+              "alt": "En oppgave gitt til en venn i Shuuty, med diskusjon under beskrivelsen"
             },
             {
               "media": "home-meeting-page",
@@ -750,8 +750,8 @@
               "alt": "En ny bestilling i en gruppe i Shuuty, der du velger en ledig tid"
             },
             {
-              "media": "home-group-page",
-              "alt": "Siden til en dansegruppe i Shuuty med beskrivelse, sted og medlemmer"
+              "media": "home-group-members",
+              "alt": "Gruppemedlemmer i Shuuty merket som venner, og en Inviter-knapp ved en ny person"
             }
           ]
         }

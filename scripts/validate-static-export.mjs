@@ -94,7 +94,7 @@ const copyButtonPattern = (actionLabel) =>
 const homeCaptureRequirements = (locale) => [
   '01-planner', '24-planner-meeting', '02-planner-subtasks', '04-delegated-task', '06-friends',
   '10-discover-groups', '11-group-page', '12-group-chat', '15-group-calendar', '19-booking-slots',
-  '20-meeting-page', '21-group-members', '22-voice',
+  '20-meeting-page', '21-group-members', '22-voice', '25-assign-friends',
 ].map((name) => `/images/product/guide-captures-2026/${locale}/home-${name}-compact.webp`);
 
 const pages = {

@@ -114,8 +114,8 @@ test('the landing tells one four-step story in every language', async () => {
   // the place in the headline: tasks on your own, with friends, in groups.
   const heroSets = {
     private: ['home-planner-meeting', 'home-planner-subtasks', 'home-voice'],
-    friends: ['home-delegated-task', 'home-friends', 'home-meeting-page'],
-    groups: ['home-group-calendar', 'home-booking-slots', 'home-group-page'],
+    friends: ['home-assign-friends', 'home-delegated-task', 'home-meeting-page'],
+    groups: ['home-group-calendar', 'home-booking-slots', 'home-group-members'],
   };
   for (const lang of ['en', 'pl', 'nb']) {
     const sets = content[lang].hero.scopeSets;
