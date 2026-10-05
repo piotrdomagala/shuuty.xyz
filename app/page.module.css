@@ -261,6 +261,7 @@
 .hero {
   position: relative;
   z-index: 1;
+  overflow-x: clip;
   width: min(1240px, 100%);
   min-height: min(920px, 100svh);
   margin: 0 auto;
@@ -353,16 +354,35 @@
   --step-ink: var(--accent-text);
   --step-rgb: var(--gold-rgb);
   position: relative;
+  z-index: 0;
   grid-area: 1 / 1;
   color: var(--step-ink);
   white-space: nowrap;
-  opacity: 0;
-  transform: translateY(0.3em);
-  filter: blur(6px);
+  /* The two places waiting stand small and soft behind the word in front,
+     one at each end of the line (--ghost-x is set by the page from the word
+     widths). */
+  opacity: 0.3;
+  transform: translateX(var(--ghost-x, 0px)) translateY(0.06em) scale(0.5);
+  filter: blur(0.8px);
   transition:
-    opacity 0.55s cubic-bezier(0.2, 0.8, 0.2, 1),
-    transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1),
-    filter 0.55s ease;
+    opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1),
+    filter 0.8s ease;
+}
+
+.heroScope[data-place='left'] {
+  transform-origin: right center;
+}
+
+.heroScope[data-place='right'] {
+  transform-origin: left center;
+}
+
+/* On a computer the line starts at the left and both wait after the word. */
+@media (min-width: 961px) {
+  .heroScope[data-place='left'] {
+    transform-origin: left center;
+  }
 }
 
 /* The canvas with the smoke from the word to the phones lies under the
@@ -384,6 +404,7 @@
 }
 
 .heroScope[data-active] {
+  z-index: 1;
   text-shadow: 0 0 28px rgba(var(--step-rgb), 0.45);
   opacity: 1;
   transform: none;
@@ -554,39 +575,10 @@
   z-index: 7;
   width: min(calc(100% - 32px), 400px);
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr)) 44px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   align-items: start;
   gap: 10px;
   transform: translateX(-50%);
-}
-
-.heroScopePause {
-  width: 44px;
-  height: 44px;
-  display: grid;
-  place-items: center;
-  border: 0;
-  border-radius: 50%;
-  color: var(--text-faint);
-  background: transparent;
-  cursor: pointer;
-  transition: color 0.2s ease;
-}
-
-.heroScopePause:hover,
-.heroScopePause[aria-pressed='true'] {
-  color: var(--text);
-}
-
-.heroScopePause:focus-visible {
-  outline: 2px solid var(--accent-text);
-  outline-offset: 2px;
-}
-
-.heroScopePause svg {
-  width: 16px;
-  height: 16px;
-  fill: currentColor;
 }
 
 .heroScopeTab {

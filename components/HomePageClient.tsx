@@ -90,8 +90,6 @@ const carouselLabels: Record<
     bringToFront: string;
     choose: string;
     preview: string;
-    pause: string;
-    play: string;
   }>
 > = {
   en: {
@@ -101,9 +99,7 @@ const carouselLabels: Record<
     bringToFront: 'Bring to front',
     choose: 'Choose a preview',
     preview: 'Preview',
-    pause: 'Pause the change',
-    play: 'Resume the change',
-  },
+      },
   pl: {
     roleDescription: 'karuzela',
     region: 'Podglądy aplikacji Shuuty',
@@ -111,9 +107,7 @@ const carouselLabels: Record<
     bringToFront: 'Pokaż na pierwszym planie',
     choose: 'Wybierz podgląd',
     preview: 'Podgląd',
-    pause: 'Zatrzymaj zmianę',
-    play: 'Wznów zmianę',
-  },
+      },
   nb: {
     roleDescription: 'karusell',
     region: 'Forhåndsvisninger av Shuuty-appen',
@@ -121,8 +115,6 @@ const carouselLabels: Record<
     bringToFront: 'Flytt fremst',
     choose: 'Velg forhåndsvisning',
     preview: 'Forhåndsvisning',
-    pause: 'Stopp vekslingen',
-    play: 'Fortsett vekslingen',
   },
 };
 
@@ -776,9 +768,8 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
   const heroLastInput = useRef(-Infinity);
   // A mouse resting on the phones holds the place shown.
   const heroHover = useRef(false);
-  // Focus inside the hero holds it too; the pause button holds it for good.
+  // Focus inside the hero holds it too.
   const heroFocus = useRef(false);
-  const [heroStopped, setHeroStopped] = useState(false);
   const heroScopesRef = useRef<HTMLSpanElement | null>(null);
   const heroVisualRef = useRef<HTMLDivElement | null>(null);
   const [activeStep, setActiveStep] = useState<string | null>(null);
@@ -902,15 +893,60 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
   }, []);
 
   // A change of place swirls every screen into its next one (WebGL over the
-  // screen), then shows the new screens under it and lifts the canvases off.
-  // Without WebGL, with an image not loaded yet or with reduced motion it is a
-  // plain cross-fade.
+  // screen). The screens underneath swap at the middle of the turn, where the
+  // swirl hides them, and the swirl fades out over the new screens. Without
+  // WebGL, with an image not loaded yet or with reduced motion it is a plain
+  // cross-fade.
+  // The waiting places stand beside the word in front: one on each side when
+  // the line is centred (phone), both after it when it starts at the left
+  // (computer). Each is moved from its own box by the distance to that spot.
+  useEffect(() => {
+    const words = heroScopesRef.current;
+    if (!words) return undefined;
+    const place = () => {
+      const items = Array.from(words.children) as HTMLElement[];
+      const front = items.find((word) => word.dataset.place === 'front');
+      if (!front) return;
+      const gap = front.offsetHeight * 0.18;
+      const scale = 0.5;
+      const frontLeft = front.offsetLeft;
+      const frontRight = front.offsetLeft + front.offsetWidth;
+      const centred = getComputedStyle(words).justifyItems === 'center';
+      const left = items.find((word) => word.dataset.place === 'left');
+      const right = items.find((word) => word.dataset.place === 'right');
+      if (centred) {
+        // transform-origin: right for the left one, left for the right one.
+        if (left) left.style.setProperty('--ghost-x', `${frontLeft - gap - (left.offsetLeft + left.offsetWidth)}px`);
+        if (right) right.style.setProperty('--ghost-x', `${frontRight + gap - right.offsetLeft}px`);
+      } else {
+        // Both after the word in front; both scale from their left edge.
+        let next = frontRight + gap;
+        [left, right].forEach((word) => {
+          if (!word) return;
+          word.style.setProperty('--ghost-x', `${next - word.offsetLeft}px`);
+          next += word.offsetWidth * scale + gap;
+        });
+      }
+      front.style.setProperty('--ghost-x', '0px');
+    };
+    place();
+    window.addEventListener('resize', place);
+    void document.fonts?.ready.then(place);
+    return () => window.removeEventListener('resize', place);
+  }, [heroScope]);
+
+  const heroPhonesScopeRef = useRef(0);
+  useEffect(() => {
+    heroPhonesScopeRef.current = heroPhonesScope;
+  }, [heroPhonesScope]);
+
   useEffect(() => {
     // A swirl still running for an abandoned change goes first, also when the
     // reader came back to the place already shown.
     heroSwirls.current.forEach((run) => run.remove());
     heroSwirls.current = [];
-    if (heroPhonesScope === heroScope) {
+    const shown = heroPhonesScopeRef.current;
+    if (shown === heroScope) {
       setHeroSwapping(false);
       return undefined;
     }
@@ -920,7 +956,7 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
       heroPhoneButtons.current.forEach((button, index) => {
         if (!button) return;
         const layers = button.querySelectorAll<HTMLElement>('[data-hero-layer]');
-        const from = layers[heroPhonesScope]?.querySelector('img');
+        const from = layers[shown]?.querySelector('img');
         const to = layers[heroScope]?.querySelector('img');
         if (!from || !to) return;
         const order = (index - activeHeroPhoneRef.current + 3) % 3; // 0 front, 1 right, 2 left
@@ -939,20 +975,21 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
     heroSwirls.current = runs;
     setHeroSwapping(true);
     let cancelled = false;
+    void Promise.all(runs.map((run) => run.midpoint)).then(() => {
+      if (!cancelled) setHeroPhonesScope(heroScope);
+    });
     void Promise.all(runs.map((run) => run.done)).then(() => {
       if (cancelled) return;
-      setHeroPhonesScope(heroScope);
-      // Let the new screens paint under the canvases before lifting them.
+      runs.forEach((run) => run.finish());
       window.setTimeout(() => {
-        runs.forEach((run) => run.remove());
         if (heroSwirls.current === runs) heroSwirls.current = [];
         setHeroSwapping(false);
-      }, 120);
+      }, 260);
     });
     return () => {
       cancelled = true;
     };
-  }, [heroScope, heroPhonesScope]);
+  }, [heroScope]);
 
   useEffect(() => {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -961,9 +998,8 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
       if (performance.now() - heroLastInput.current < HERO_HOLD_AFTER_INPUT) return;
       setHeroScope((current) => (current + 1) % 3);
     }, HERO_SCOPE_MS);
-    if (heroStopped) window.clearInterval(timer);
     return () => window.clearInterval(timer);
-  }, [heroStopped]);
+  }, []);
 
   useEffect(() => {
     setTheme(document.documentElement.dataset.theme === 'light' ? 'light' : 'dark');
@@ -1153,6 +1189,10 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
                     className={s.heroScope}
                     data-step={HERO_SCOPE_STEPS[index]}
                     data-active={index === heroScope ? '' : undefined}
+                    // The next place waits on the left and the one before on
+                    // the right, small and soft behind the word in front, so
+                    // a reader sees at once that there are three.
+                    data-place={index === heroScope ? 'front' : index === (heroScope + 1) % 3 ? 'left' : 'right'}
                   >
                     {set.scope}
                   </span>
@@ -1270,18 +1310,6 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
                   <span className={s.heroScopeTabLabel}>{set.scope}</span>
                 </button>
               ))}
-              <button
-                type="button"
-                className={s.heroScopePause}
-                aria-pressed={heroStopped}
-                aria-label={heroStopped ? carousel.play : carousel.pause}
-                title={heroStopped ? carousel.play : carousel.pause}
-                onClick={() => setHeroStopped((value) => !value)}
-              >
-                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                  {heroStopped ? <path d="M8 5.5v13l10.5-6.5z" /> : <path d="M8 5h3v14H8zM13 5h3v14h-3z" />}
-                </svg>
-              </button>
             </div>
             <p className={s.srOnly} aria-live="polite">
               {`${heroSets[heroPhonesScope].scope}: ${heroPhones[activeHeroPhone].alt}`}

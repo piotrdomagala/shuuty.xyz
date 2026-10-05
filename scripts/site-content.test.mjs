@@ -136,10 +136,11 @@ test('the landing tells one four-step story in every language', async () => {
   assert.match(heroCss, /\.heroScope\[data-active\] \{[^}]*opacity: 1;/);
   assert.match(heroCss, /prefers-reduced-motion: reduce\) \{[^@]*\.heroScopes \{\s*display: none;/);
   const heroComponent = await readFile(new URL('components/HomePageClient.tsx', root), 'utf8');
-  // Autoplay stops for reduced motion, a mouse on the phones and focus inside,
-  // and a pause button stops it for good.
+  // Autoplay stops for reduced motion, a mouse on the phones and focus inside.
   assert.match(heroComponent, /if \(reduced\.matches \|\| heroHover\.current \|\| heroFocus\.current \|\| document\.visibilityState !== 'visible'\) return;/);
-  assert.match(heroComponent, /className=\{s\.heroScopePause\}[\s\S]{0,80}aria-pressed=\{heroStopped\}/);
+  // The two places waiting stay visible, small and soft, behind the one in front.
+  assert.match(heroComponent, /data-place=\{index === heroScope \? 'front'/);
+  assert.match(heroCss, /\.heroScope \{[^}]*opacity: 0\.3;/);
   assert.equal(content.pl.how.heading, 'Jedna aplikacja, cztery kroki');
   assert.equal(content.en.how.heading, 'One app, four steps');
   assert.equal(content.pl.uses.heading, 'Do czego ludzie używają Shuuty');

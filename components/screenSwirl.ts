@@ -1,9 +1,14 @@
 // A swirl between two phone screens: the picture on the screen twists into a
 // whirl around its middle, turns into the next screen at the peak and
-// untwists. Only the screen moves; the phone around it stays still. Plain
-// WebGL, one small shader, a canvas laid over the screen for the length of
-// the change. Returns false when it cannot run (no WebGL, image not loaded),
-// so the caller falls back to a plain cross-fade.
+// untwists. Only the screen moves; the phone around it stays still.
+//
+// Plain WebGL, one small shader. The swirl is drawn on a canvas laid over the
+// old screen and mirrored onto a canvas over the new one, so the screens
+// underneath can be swapped at the middle of the turn without a seam. The
+// first canvas fades in over the old picture and the second fades out over
+// the new one, so no edge shows where the WebGL picture and the browser's own
+// picture differ a little (sharpness, wide-gamut colour). Returns null when
+// it cannot run (no WebGL, image not loaded); the caller then cross-fades.
 
 const VERTEX = `
 attribute vec2 position;
@@ -43,6 +48,8 @@ void main() {
   gl_FragColor = color;
 }`;
 
+const FADE_MS = 200;
+
 function compile(gl: WebGLRenderingContext, type: number, source: string): WebGLShader | null {
   const shader = gl.createShader(type);
   if (!shader) return null;
@@ -63,9 +70,30 @@ function texture(gl: WebGLRenderingContext, image: HTMLImageElement): WebGLTextu
   return tex;
 }
 
+function overlay(canvas: HTMLCanvasElement, screen: HTMLElement, opacity: string) {
+  Object.assign(canvas.style, {
+    position: 'absolute',
+    inset: '0',
+    width: '100%',
+    height: '100%',
+    pointerEvents: 'none',
+    zIndex: '3',
+    opacity,
+    transition: `opacity ${FADE_MS}ms ease`,
+  });
+  canvas.setAttribute('aria-hidden', 'true');
+  if (getComputedStyle(screen).position === 'static') screen.style.position = 'relative';
+  screen.appendChild(canvas);
+}
+
 export interface SwirlRun {
+  // The screens underneath may be swapped from here on: both canvases show
+  // the same frame.
+  midpoint: Promise<void>;
   done: Promise<void>;
-  // Removes the canvas; call it once the new screen is shown underneath.
+  // Fades the swirl out over the new screen and removes it.
+  finish: () => void;
+  // Removes everything at once (an abandoned change).
   remove: () => void;
 }
 
@@ -75,29 +103,17 @@ export function swirlScreens(
   { duration = 1300, delay = 0 }: { duration?: number; delay?: number } = {},
 ): SwirlRun | null {
   if (!fromImage.complete || !toImage.complete || !fromImage.naturalWidth || !toImage.naturalWidth) return null;
-  // The canvas lies in the screen itself, over the picture, at 100% of it:
-  // it lines up with the image to the pixel and follows the phone if the
-  // phone moves or changes size during the swirl.
-  const screen = fromImage.parentElement;
+  const fromScreen = fromImage.parentElement;
+  const toScreen = toImage.parentElement;
   const width = fromImage.offsetWidth;
   const height = fromImage.offsetHeight;
-  if (!screen || !width || !height) return null;
+  if (!fromScreen || !toScreen || !width || !height) return null;
 
   const canvas = document.createElement('canvas');
-  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const dpr = Math.min(window.devicePixelRatio || 1, 3);
   canvas.width = Math.round(width * dpr);
   canvas.height = Math.round(height * dpr);
-  Object.assign(canvas.style, {
-    position: 'absolute',
-    inset: '0',
-    width: '100%',
-    height: '100%',
-    pointerEvents: 'none',
-    zIndex: '3',
-  });
-  canvas.setAttribute('aria-hidden', 'true');
-
-  const gl = canvas.getContext('webgl', { premultipliedAlpha: false, alpha: true });
+  const gl = canvas.getContext('webgl', { premultipliedAlpha: false, alpha: true, preserveDrawingBuffer: true });
   if (!gl) return null;
   const vertex = compile(gl, gl.VERTEX_SHADER, VERTEX);
   const fragment = compile(gl, gl.FRAGMENT_SHADER, FRAGMENT);
@@ -127,34 +143,63 @@ export function swirlScreens(
   const progressAt = gl.getUniformLocation(program, 'progress');
   gl.viewport(0, 0, canvas.width, canvas.height);
 
+  // The mirror over the new screen: a plain 2D canvas that copies each frame.
+  const mirror = document.createElement('canvas');
+  mirror.width = canvas.width;
+  mirror.height = canvas.height;
+  const mirrorCtx = mirror.getContext('2d');
+  if (!mirrorCtx) return null;
+
   const draw = (progress: number) => {
     gl.uniform1f(progressAt, progress);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    mirrorCtx.clearRect(0, 0, mirror.width, mirror.height);
+    mirrorCtx.drawImage(canvas, 0, 0);
   };
   draw(0);
-  if (getComputedStyle(screen).position === 'static') screen.style.position = 'relative';
-  screen.appendChild(canvas);
+  overlay(canvas, fromScreen, '0');
+  overlay(mirror, toScreen, '1');
 
   let frame = 0;
+  let fadeTimer = 0;
+  let reachedMiddle: () => void = () => {};
+  const midpoint = new Promise<void>((resolve) => {
+    reachedMiddle = resolve;
+  });
+  const startAt = performance.now() + delay;
+  // Fade in over the old picture as the swirl starts.
+  const fadeIn = window.setTimeout(() => {
+    canvas.style.opacity = '1';
+  }, Math.max(0, delay - FADE_MS / 2));
   const done = new Promise<void>((resolve) => {
-    const startAt = performance.now() + delay;
     const step = (now: number) => {
       const linear = Math.min(1, Math.max(0, (now - startAt) / duration));
       // Ease in and out, so the whirl gathers, peaks and settles.
       const eased = linear < 0.5 ? 4 * linear ** 3 : 1 - (-2 * linear + 2) ** 3 / 2;
       draw(eased);
+      if (linear >= 0.5) reachedMiddle();
       if (linear < 1) frame = requestAnimationFrame(step);
       else resolve();
     };
     frame = requestAnimationFrame(step);
   });
 
+  const remove = () => {
+    cancelAnimationFrame(frame);
+    window.clearTimeout(fadeIn);
+    window.clearTimeout(fadeTimer);
+    canvas.remove();
+    mirror.remove();
+    gl.getExtension('WEBGL_lose_context')?.loseContext();
+  };
+
   return {
+    midpoint,
     done,
-    remove: () => {
-      cancelAnimationFrame(frame);
-      canvas.remove();
-      gl.getExtension('WEBGL_lose_context')?.loseContext();
+    finish: () => {
+      mirror.style.opacity = '0';
+      fadeTimer = window.setTimeout(remove, FADE_MS + 40);
     },
+    remove,
   };
 }
