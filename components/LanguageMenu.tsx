@@ -64,8 +64,14 @@ export default function LanguageMenu({
     };
   }, [open, close]);
 
+  // Close only when focus moves to another element outside the menu (Tab).
+  // Safari on iOS does not focus a tapped button: the open option blurs with
+  // no relatedTarget just before the click, and closing then hid the list
+  // under the finger, so the tap never reached the language. Taps outside
+  // are handled by the pointerdown listener above.
   const onBlur = (event: FocusEvent<HTMLDivElement>) => {
-    if (open && !rootRef.current?.contains(event.relatedTarget as Node | null)) close(false);
+    const next = event.relatedTarget as Node | null;
+    if (open && next && !rootRef.current?.contains(next)) close(false);
   };
 
   const choose = (code: SiteLanguage) => {
