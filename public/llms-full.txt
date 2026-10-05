@@ -1,8 +1,8 @@
 # Shuuty: product reference
 
-> Shuuty is a task app for iPhone, iPad and Android - for you, your friends and your groups. It connects a personal to-do list (by voice or typing), tasks shared with friends, nearby meetings and groups, and group spaces with tasks, calendars and bookings.
+> Shuuty is an app for tasks, plans and reservations on iPhone, iPad and Android - on your own, with friends and in groups. It connects a personal to-do list (by voice or typing), tasks shared with friends, nearby meetings and groups, and group spaces with tasks, calendars and bookings.
 
-Last updated: 2026-09-30. This document summarizes the capabilities described on the official Shuuty website and in the official App Store and Google Play listings. It does not describe private APIs or unpublished features. The canonical website is https://shuuty.com/ and the product is available for iPhone, iPad and Android. Publisher: Shuuty Prosta Spółka Akcyjna (Shuuty P.S.A.), Poland. Shuuty (shuuty.com) is not related to Shuut, Shouty or Shuuto.
+Last updated: 2026-10-05. This document summarizes the capabilities described on the official Shuuty website and in the official App Store and Google Play listings. It does not describe private APIs or unpublished features. The canonical website is https://shuuty.com/ and the product is available for iPhone, iPad and Android. Publisher: Shuuty Prosta Spółka Akcyjna (Shuuty P.S.A.), Poland. Shuuty (shuuty.com) is not related to Shuut, Shouty or Shuuto.
 
 ## English product overview
 
@@ -72,7 +72,7 @@ The public website describes this sequence:
 
 ## Polski opis produktu
 
-Shuuty to aplikacja do zadań - Twoich, ze znajomymi i w grupach. Zaczynasz od własnej listy zadań; gdy zechcesz, przekazujesz zadanie znajomemu albo dołączasz do grup i spotkań ludzi o tych samych zainteresowaniach. Aplikacja jest dostępna na iOS i Androidzie.
+Shuuty to aplikacja do zadań, terminów i rezerwacji - prywatnie, ze znajomymi i w grupach. Planujesz własne sprawy, dzielisz się zadaniem ze znajomymi albo prowadzisz grupę z kalendarzem, rezerwacjami i czatem. Aplikacja jest dostępna na iOS i Androidzie.
 
 ### Jak to działa
 
@@ -140,7 +140,7 @@ Publiczna strona opisuje następujący proces:
 
 ## Norsk produktbeskrivelse
 
-Shuuty er en oppgaveapp - for deg, vennene dine og gruppene dine. Du starter med din egen oppgaveliste; når du vil, gir du en oppgave til en venn eller blir med i grupper og møter med folk som har de samme interessene. Shuuty er en app for oppgaver, grupper og møter med menneskene rundt deg. Si hva som må gjøres, så fyller AI ut tittel, frist, påminnelse, mottaker og sted. Gi oppgaven til én venn, flere personer samtidig eller en hel gruppe.
+Shuuty er en app for oppgaver, avtaler og reservasjoner - for deg selv, med venner og i grupper. Du planlegger egne ting, deler en oppgave med venner eller driver en gruppe med kalender, reservasjoner og chat. Shuuty er en app for oppgaver, grupper og møter med menneskene rundt deg. Si hva som må gjøres, så fyller AI ut tittel, frist, påminnelse, mottaker og sted. Gi oppgaven til én venn, flere personer samtidig eller en hel gruppe.
 
 - Spill inn en oppgave med egne ord. Shuuty lager tittel og beskrivelse, kjenner igjen frist, påminnelse, person og sted, og deler flere tanker opp i separate oppgaver du kan se gjennom.
 - Når du delegerer den, får mottakeren den med en gang - eller først en forespørsel om godkjenning, hvis innstillingene til mottakeren krever det.

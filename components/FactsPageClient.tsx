@@ -62,6 +62,7 @@ function ListedOn({ label }: Readonly<{ label: string }>) {
         target="_blank"
         rel="noopener noreferrer"
         data-goatcounter-click="outbound-alternativeto"
+        data-goatcounter-title="AlternativeTo"
       >
         {/* eslint-disable-next-line @next/next/no-img-element -- a small static vector badge; next/image adds nothing in a static export */}
         <img

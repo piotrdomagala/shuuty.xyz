@@ -82,7 +82,7 @@ test('Norwegian landing content has the same structure and story', async () => {
   );
 
   assert.deepEqual(contentShape(content.en), contentShape(content.nb));
-  assert.equal(content.nb.hero.title, 'En oppgaveapp -');
+  assert.equal(content.nb.hero.title, 'Oppgaver, avtaler og reservasjoner');
   assert.equal(content.nb.how.steps.length, 4);
   assert.equal(content.nb.uses.items.length, 5);
   assert.equal(content.nb.faq.items.length, 5);
@@ -98,15 +98,48 @@ test('the landing tells one four-step story in every language', async () => {
   );
   const captureIds = new Set(media.guideCaptures.map((capture) => capture.id));
 
-  // No-break spaces keep "i w grupach" together, so the line never ends on a lone "i".
+  // The headline names what the app is for and where: on your own, with
+  // friends, in groups. The whole sentence is in the h1 (for screen readers
+  // and search engines); three chips show the same three places. No-break
+  // spaces keep "i w grupach" together.
   assert.equal(
     `${content.pl.hero.title} ${content.pl.hero.accent}`,
-    'Aplikacja do zadań - Twoich, ze znajomymi i w grupach',
+    'Zadania, terminy i rezerwacje prywatnie, ze znajomymi i w grupach',
   );
   assert.equal(
     `${content.en.hero.title} ${content.en.hero.accent}`,
-    'A task app - for you, your friends and your groups',
+    'Tasks, plans and reservations on your own, with friends and in groups',
   );
+  // Three places, each with its own three real screens, shown together with
+  // the place in the headline: tasks on your own, with friends, in groups.
+  const heroSets = {
+    private: ['home-planner-meeting', 'home-planner-subtasks', 'home-voice'],
+    friends: ['home-assign-friends', 'home-delegated-task', 'home-meeting-page'],
+    groups: ['home-group-calendar', 'home-booking-slots', 'home-group-members'],
+  };
+  for (const lang of ['en', 'pl', 'nb']) {
+    const sets = content[lang].hero.scopeSets;
+    assert.equal(sets.length, 3, `${lang}: three places in the hero`);
+    assert.deepEqual(
+      sets.map((set) => set.screens.map((screen) => screen.media)),
+      Object.values(heroSets),
+      `${lang}: each place shows its own screens`,
+    );
+    for (const set of sets) {
+      for (const screen of set.screens) assert.ok(screen.alt.length > 20, `${lang}: ${screen.media} alt`);
+    }
+  }
+  // One place at a time in the headline; with reduced motion the whole
+  // sentence stands still.
+  const heroCss = await readFile(new URL('app/page.module.css', root), 'utf8');
+  assert.match(heroCss, /\.heroScope \{[^}]*grid-area: 1 \/ 1;/);
+  assert.match(heroCss, /\.heroScope\[data-active\] \{[^}]*opacity: 1;/);
+  assert.match(heroCss, /prefers-reduced-motion: reduce\) \{[^@]*\.heroScopes \{\s*display: none;/);
+  const heroComponent = await readFile(new URL('components/HomePageClient.tsx', root), 'utf8');
+  // Autoplay stops for reduced motion, a mouse on the phones and focus inside,
+  // and a pause button stops it for good.
+  assert.match(heroComponent, /if \(reduced\.matches \|\| heroHover\.current \|\| heroFocus\.current \|\| document\.visibilityState !== 'visible'\) return;/);
+  assert.match(heroComponent, /className=\{s\.heroScopePause\}[\s\S]{0,80}aria-pressed=\{heroStopped\}/);
   assert.equal(content.pl.how.heading, 'Jedna aplikacja, cztery kroki');
   assert.equal(content.en.how.heading, 'One app, four steps');
   assert.equal(content.pl.uses.heading, 'Do czego ludzie używają Shuuty');
@@ -131,7 +164,7 @@ test('the landing tells one four-step story in every language', async () => {
     // Every screen is a registered home capture in the locale the page shows.
     const captureLanguage = language === 'pl' ? 'pl' : 'en';
     const screens = [
-      ...page.hero.screens,
+      ...page.hero.scopeSets.flatMap((set) => set.screens),
       ...page.how.steps.flatMap((step) => step.screens),
       page.how.loop.screen,
     ];
@@ -278,13 +311,14 @@ test('reduced motion explicitly removes phone transform transitions', async () =
     'The stage must stay outside the 3D sorting, or the far chips stop taking clicks',
   );
 
-  // A chip fades out before it reaches the edge of the phone, and a fully
-  // faded one takes no taps. With reduced motion the ring stands still, so
-  // nothing fades: the override comes after every breakpoint that sets a depth.
-  assert.match(css, /\.orbitChip \{[^}]*opacity: clamp\(/);
-  assert.match(css, /\.orbitChip\[data-far\] \{[^}]*pointer-events: none;/);
-  assert.match(component, /toggleAttribute\('data-far', far\)/);
-  assert.match(component, /CSS\.supports\('opacity', 'cos\(0deg\)'\)/);
+  // A chip going round the back gets smaller and dimmer but stays visible, so
+  // it stays a button: a tap turns it to the front. With reduced motion the
+  // ring stands still, so nothing dims: the override comes after every
+  // breakpoint that sets a depth.
+  assert.match(css, /\.orbitChip \{[^}]*--orbit-near: clamp\(/);
+  assert.match(css, /\.orbitChip \{[^}]*opacity: calc\(0\.22 \+ 0\.78 \* var\(--orbit-near\)\);/);
+  assert.match(component, /toggleAttribute\('data-front', isFront\)/);
+  assert.equal(css.includes('[data-far]'), false, 'A dimmed chip at the back must stay tappable');
   const lastFade = css.lastIndexOf('--orbit-fade-to:');
   const reducedFade = css.lastIndexOf('@media (prefers-reduced-motion: reduce)');
   assert.ok(reducedFade > 0 && reducedFade < lastFade, 'The reduced-motion fade override must be last');

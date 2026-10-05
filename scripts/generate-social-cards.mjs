@@ -221,10 +221,12 @@ async function composeCard(size, content, captures, assets) {
   const headlineSize = Math.min(...headlineSizes);
   // A long tagline may wrap once it reaches its smallest readable size.
   const taglineSize = await fit(content.tagline, px(29), px(24));
-  // The first line in the text colour, the rest in the accent, like the hero.
+  // The last two lines (where: on your own, with friends, in groups) in the
+  // accent, the lines before them in the text colour, like the hero.
+  const inkLines = Math.max(1, content.headline.length - 2);
   const headlineLines = await Promise.all(
     content.headline.map((line, index) =>
-      text(line, { size: headlineSize, color: index === 0 ? colors.ink : colors.gold })),
+      text(line, { size: headlineSize, color: index < inkLines ? colors.ink : colors.gold })),
   );
   const [icon, wordmark, tagline, domain, footer] = await Promise.all([
     renderIcon(assets.icon, px(72)),

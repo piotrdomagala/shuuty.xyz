@@ -267,8 +267,25 @@
   padding: 154px 28px 104px;
   display: grid;
   grid-template-columns: minmax(0, 1.04fr) minmax(500px, 0.96fr);
-  gap: 48px;
+  grid-template-areas:
+    'copy visual'
+    'steps visual';
+  gap: 0 48px;
   align-items: center;
+}
+
+.heroCopy {
+  grid-area: copy;
+  align-self: end;
+}
+
+.heroVisual {
+  grid-area: visual;
+}
+
+.heroSteps {
+  grid-area: steps;
+  align-self: start;
 }
 
 .heroCopy {
@@ -321,6 +338,70 @@
 }
 
 .accentText {
+  color: var(--accent-text);
+}
+
+.heroScopes {
+  display: grid;
+  justify-items: start;
+}
+
+/* All three share one grid cell, so the line keeps the width of the longest
+   and nothing below it moves. The page switches them together with the
+   phones; the one shown has a line drawn under it in its step colour. */
+.heroScope {
+  --step-ink: var(--accent-text);
+  --step-rgb: var(--gold-rgb);
+  position: relative;
+  grid-area: 1 / 1;
+  color: var(--step-ink);
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(0.3em);
+  filter: blur(6px);
+  transition:
+    opacity 0.55s cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1),
+    filter 0.55s ease;
+}
+
+/* The canvas with the smoke from the word to the phones lies under the
+   text and the phones, over the page background. */
+.heroSmoke {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.heroCopy,
+.heroVisual,
+.heroSteps {
+  position: relative;
+  z-index: 1;
+}
+
+.heroScope[data-active] {
+  text-shadow: 0 0 28px rgba(var(--step-rgb), 0.45);
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+.heroScope[data-step='2'] {
+  --step-ink: var(--cool-accent-text);
+  --step-rgb: var(--blue-rgb);
+}
+
+.heroScope[data-step='4'] {
+  --step-ink: var(--group-accent);
+  --step-rgb: var(--group-rgb);
+}
+
+.heroScopesStill {
+  display: none;
   color: var(--accent-text);
 }
 
@@ -428,9 +509,132 @@
   z-index: -2;
   border-radius: 50%;
   background:
-    radial-gradient(circle at 42% 42%, rgba(var(--gold-rgb), 0.18), transparent 48%),
-    radial-gradient(circle at 68% 58%, rgba(var(--blue-rgb), 0.14), transparent 52%);
+    radial-gradient(circle at 42% 42%, rgba(var(--scope-rgb, var(--gold-rgb)), 0.22), transparent 50%),
+    radial-gradient(circle at 68% 58%, rgba(var(--blue-rgb), 0.1), transparent 52%);
   filter: blur(18px);
+  transition: background 0.8s ease;
+}
+
+.heroVisual[data-step='2'] {
+  --scope-rgb: var(--blue-rgb);
+}
+
+.heroVisual[data-step='4'] {
+  --scope-rgb: var(--group-rgb);
+}
+
+/* Each phone holds the screens of all three places; only the place shown
+   is visible, so a change is a cross-fade. */
+.heroPhoneLayer {
+  position: absolute;
+  inset: 0;
+  display: block;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.heroPhoneLayer:first-child {
+  position: relative;
+}
+
+.heroPhoneLayer[data-shown] {
+  opacity: 1;
+}
+
+.heroVisual[data-swapping] .heroPhoneLayer {
+  transition: none;
+}
+
+/* The three places under the phones: a word each and a thin bar that fills
+   while the place is shown, like stories. */
+.heroScopeTabs {
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  z-index: 7;
+  width: min(calc(100% - 32px), 400px);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) 44px;
+  align-items: start;
+  gap: 10px;
+  transform: translateX(-50%);
+}
+
+.heroScopePause {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  color: var(--text-faint);
+  background: transparent;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.heroScopePause:hover,
+.heroScopePause[aria-pressed='true'] {
+  color: var(--text);
+}
+
+.heroScopePause:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 2px;
+}
+
+.heroScopePause svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+.heroScopeTab {
+  --step-ink: var(--accent-text);
+  --step-rgb: var(--gold-rgb);
+  min-height: 44px;
+  padding: 6px 0 0;
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  border: 0;
+  color: var(--text-faint);
+  background: transparent;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.heroScopeTab[data-step='2'] {
+  --step-ink: var(--cool-accent-text);
+  --step-rgb: var(--blue-rgb);
+}
+
+.heroScopeTab[data-step='4'] {
+  --step-ink: var(--group-accent);
+  --step-rgb: var(--group-rgb);
+}
+
+.heroScopeTab:hover,
+.heroScopeTab[aria-pressed='true'] {
+  color: var(--step-ink);
+}
+
+.heroScopeTab[aria-pressed='true'] {
+  text-shadow: 0 0 16px rgba(var(--step-rgb), 0.7);
+}
+
+.heroScopeTab:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+.heroScopeTabLabel {
+  white-space: nowrap;
 }
 
 .heroVisual::after {
@@ -593,50 +797,6 @@
   outline-offset: 5px;
 }
 
-.carouselDots {
-  position: absolute;
-  bottom: -34px;
-  left: 50%;
-  z-index: 7;
-  display: flex;
-  gap: 0;
-  transform: translateX(-50%);
-}
-
-.carouselDot {
-  position: relative;
-  width: 44px;
-  height: 44px;
-  padding: 0;
-  border: 0;
-  border-radius: var(--r-full);
-  background: transparent;
-  cursor: pointer;
-}
-
-.carouselDot::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 8px;
-  height: 8px;
-  border-radius: var(--r-full);
-  background: var(--text-faint);
-  transform: translate(-50%, -50%);
-  transition: width 0.3s var(--ease-out), background-color 0.3s ease;
-}
-
-.carouselDotActive::before {
-  width: 22px;
-  background: var(--accent-text);
-}
-
-.carouselDot:focus-visible {
-  outline: 2px solid var(--accent-text);
-  outline-offset: -4px;
-}
-
 .section,
 .chapter {
   position: relative;
@@ -693,7 +853,7 @@
   margin-top: 30px;
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
   list-style: none;
 }
 
@@ -726,25 +886,73 @@
 }
 
 .heroSteps a {
-  min-height: 40px;
-  padding: 0 15px 0 11px;
+  position: relative;
+  min-height: 52px;
+  padding: 0 18px 0 14px;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  border: 1px solid var(--border);
-  border-radius: var(--r-full);
-  color: var(--text-secondary);
-  background: color-mix(in srgb, var(--bg-raised) 72%, transparent);
-  font-size: 0.8rem;
+  gap: 9px;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: 18px;
+  color: var(--text);
+  font-size: 0.86rem;
   font-weight: 650;
   white-space: nowrap;
-  transition: color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  background: linear-gradient(135deg, rgba(var(--step-rgb), 0.16), rgba(var(--step-rgb), 0.03) 70%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    inset 0 0 0 1px rgba(var(--step-rgb), 0.16);
+  transition: box-shadow 0.35s ease, transform 0.35s ease;
+}
+
+/* Mist: a soft cloud in the step colour drifts slowly inside each tile. */
+.heroSteps a::before {
+  content: '';
+  position: absolute;
+  inset: -60% -30%;
+  z-index: -1;
+  background:
+    radial-gradient(closest-side at 30% 55%, rgba(var(--step-rgb), 0.42), transparent),
+    radial-gradient(closest-side at 75% 40%, rgba(var(--step-rgb), 0.22), transparent);
+  filter: blur(14px);
+  opacity: 0.7;
+  animation: heroStepMist 9s ease-in-out infinite alternate;
+  transition: opacity 0.35s ease;
+}
+
+.heroSteps li:nth-child(2) a::before {
+  animation-delay: -2.2s;
+}
+
+.heroSteps li:nth-child(3) a::before {
+  animation-delay: -4.4s;
+}
+
+.heroSteps li:nth-child(4) a::before {
+  animation-delay: -6.6s;
 }
 
 .heroSteps a:hover {
-  color: var(--text);
-  border-color: rgba(var(--step-rgb), 0.55);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 0 0 1px rgba(var(--step-rgb), 0.38),
+    0 10px 30px rgba(var(--step-rgb), 0.22);
+}
+
+.heroSteps a:hover::before {
+  opacity: 1;
+}
+
+@keyframes heroStepMist {
+  from {
+    transform: translate3d(-8%, 4%, 0) scale(1);
+  }
+
+  to {
+    transform: translate3d(10%, -6%, 0) scale(1.15);
+  }
 }
 
 .heroStepNumber {
@@ -1207,8 +1415,8 @@
   /* Depth of a chip on the ring: cos of its angle, 1 straight behind the
      phone, -1 straight in front. A chip fades out between these two depths,
      before it reaches the edge of the phone, so it never shows half cut. */
-  --orbit-fade-from: 0.6;
-  --orbit-fade-to: 0.82;
+  --orbit-fade-from: 0.45;
+  --orbit-fade-to: 0.8;
   position: relative;
   min-width: 0;
   height: calc(var(--orbit-phone) * 2.15 + 110px);
@@ -1363,19 +1571,32 @@
   appearance: none;
   -webkit-appearance: none;
   -webkit-tap-highlight-color: transparent;
+  /* Depth on the ring: -1 straight in front of the phone, 1 straight behind.
+     --orbit-near is 1 until the chip reaches --orbit-fade-from and 0 past
+     --orbit-fade-to. A chip going round the back gets smaller, softer and
+     dimmer (never gone), and the one in front is a little larger, so the ring
+     reads as depth instead of a chip cut by the edge of the phone. Without CSS
+     cos() these declarations are invalid and the chip stays as it was. */
   --orbit-depth: cos(calc(var(--orbit-angle) + var(--orbit-rot, 0deg)));
-  opacity: clamp(
+  --orbit-near: clamp(
     0,
     calc((var(--orbit-depth) - var(--orbit-fade-to)) / (var(--orbit-fade-from) - var(--orbit-fade-to))),
     1
   );
-  transform: translate(-50%, -50%);
+  opacity: calc(0.22 + 0.78 * var(--orbit-near));
+  filter: blur(calc((1 - var(--orbit-near)) * 1.6px));
+  translate: -50% -50%;
+  scale: calc(0.9 - 0.12 * var(--orbit-depth));
   transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Set by the orbit loop when the chip is fully faded: no taps over the phone. */
-.orbitChip[data-far] {
-  pointer-events: none;
+/* The chip at the front of the ring is the step the phone shows. */
+.orbitChip[data-front] {
+  border-color: var(--step-ink);
+  box-shadow:
+    0 12px 30px rgba(var(--shadow-rgb), 0.28),
+    0 0 0 4px rgba(var(--step-rgb), 0.16),
+    0 0 28px rgba(var(--step-rgb), 0.38);
 }
 
 .orbitChip[aria-pressed='true'] {
@@ -1388,6 +1609,7 @@
 
 .orbitChip:focus-visible {
   opacity: 1;
+  filter: none;
   outline: 3px solid var(--accent-text);
   outline-offset: 3px;
 }
@@ -1769,6 +1991,26 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .heroSteps a::before {
+    animation: none;
+  }
+
+  .heroScope,
+  .heroPhoneLayer {
+    transition: none;
+  }
+
+  .heroScopes {
+    display: none;
+  }
+
+  .heroScopesStill {
+    display: block;
+    margin-top: 0.2em;
+    font-size: 0.62em;
+    line-height: 1.15;
+  }
+
   .ambient span {
     animation: none !important;
   }
@@ -1822,8 +2064,8 @@
   .orbitStage {
     --orbit-r: 180px;
     --orbit-phone: 210px;
-    --orbit-fade-from: 0.2;
-    --orbit-fade-to: 0.38;
+    --orbit-fade-from: 0.15;
+    --orbit-fade-to: 0.5;
   }
 }
 
@@ -1832,6 +2074,10 @@
     min-height: auto;
     padding-top: 140px;
     grid-template-columns: 1fr;
+    grid-template-areas:
+      'copy'
+      'visual'
+      'steps';
     gap: 40px;
   }
 
@@ -1844,6 +2090,10 @@
   .heroLead {
     margin-right: auto;
     margin-left: auto;
+  }
+
+  .heroScopes {
+    justify-items: center;
   }
 
   .heroActions,
@@ -1903,8 +2153,8 @@
     margin: 0 auto;
     --orbit-r: 215px;
     --orbit-phone: 230px;
-    --orbit-fade-from: 0.38;
-    --orbit-fade-to: 0.56;
+    --orbit-fade-from: 0.3;
+    --orbit-fade-to: 0.65;
   }
 
   .useGrid {
@@ -2000,20 +2250,19 @@
 
   /* Two by two on a phone: equal tiles, read left to right, 01 to 04. */
   .heroSteps {
-    width: min(100%, 360px);
-    margin: 26px auto 0;
+    width: min(100%, 380px);
+    margin: 56px auto 0;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 8px;
+    gap: 10px;
   }
 
   .heroSteps a {
     width: 100%;
-    min-height: 50px;
+    min-height: 54px;
     padding: 0 12px;
     gap: 9px;
-    border-radius: 16px;
-    font-size: 0.84rem;
+    font-size: 0.88rem;
   }
 
   .heroStepLabel {
@@ -2038,9 +2287,6 @@
     width: min(136px, 35vw);
   }
 
-  .carouselDots {
-    bottom: -22px;
-  }
 
   .section,
   .chapter {
@@ -2120,8 +2366,8 @@
     --orbit-r: min(31vw, 150px);
     --orbit-phone: min(44vw, 190px);
     --orbit-tilt: 70deg;
-    --orbit-fade-from: 0.16;
-    --orbit-fade-to: 0.36;
+    --orbit-fade-from: 0.1;
+    --orbit-fade-to: 0.45;
     height: calc(var(--orbit-phone) * 2.15 + 64px);
   }
 

@@ -59,7 +59,7 @@ const goatCounterSettingsScript = `
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'Shuuty - a task app with friends and groups',
+    default: 'Shuuty - tasks, plans and reservations with friends and groups',
     template: '%s | Shuuty',
   },
   description:
@@ -102,7 +102,7 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'Shuuty - a task app with friends and groups',
+    title: 'Shuuty - tasks, plans and reservations with friends and groups',
     description:
       'Start with your own to-do list, hand tasks to friends and join groups and meetings of people who share your interests.',
     url: '/',
@@ -114,7 +114,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Shuuty - a task app with friends and groups',
+    title: 'Shuuty - tasks, plans and reservations with friends and groups',
     description:
       'Start with your own to-do list, hand tasks to friends and join groups and meetings of people who share your interests.',
     images: [{ url: socialImage('en').url, alt: socialImage('en').alt }],

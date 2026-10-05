@@ -222,6 +222,7 @@ export default function GuidePageClient({ guide, article }: Readonly<GuidePageCl
               rel="noopener noreferrer"
               className={guideStyles.storeLink}
               data-goatcounter-click={`store-ios-${clickSuffix}`}
+              data-goatcounter-title="App Store"
             >
               <span className={guideStyles.storePrefix}>{labels.appStorePrefix}</span>
               <span className={guideStyles.storeName}>App Store</span>
@@ -232,6 +233,7 @@ export default function GuidePageClient({ guide, article }: Readonly<GuidePageCl
               rel="noopener noreferrer"
               className={guideStyles.storeLink}
               data-goatcounter-click={`store-android-${clickSuffix}`}
+              data-goatcounter-title="Google Play"
             >
               <span className={guideStyles.storePrefix}>{labels.googlePlayPrefix}</span>
               <span className={guideStyles.storeName}>Google Play</span>
