@@ -776,6 +776,9 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
   // The phones change when the smoke from the new word reaches them.
   const [heroPhonesScope, setHeroPhonesScope] = useState(0);
   const heroSwirls = useRef<SwirlRun[]>([]);
+  // While a swirl ends the new screen must replace the old one at once, with
+  // no cross-fade under the canvas.
+  const [heroSwapping, setHeroSwapping] = useState(false);
   // The phone the reader brought to the front stays there when the place
   // changes; the swirl only needs to know which one it is.
   const activeHeroPhoneRef = useRef(0);
@@ -925,7 +928,7 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
         const to = layers[heroScope]?.querySelector('img');
         if (!from || !to) return;
         const order = (index - activeHeroPhoneRef.current + 3) % 3; // 0 front, 1 right, 2 left
-        const run = swirlScreens(button, from, to, {
+        const run = swirlScreens(from, to, {
           duration: HERO_SWIRL_MS,
           delay: order * HERO_SWIRL_STAGGER_MS,
         });
@@ -933,10 +936,12 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
       });
     }
     if (runs.length === 0) {
+      setHeroSwapping(false);
       setHeroPhonesScope(heroScope);
       return undefined;
     }
     heroSwirls.current = runs;
+    setHeroSwapping(true);
     let cancelled = false;
     void Promise.all(runs.map((run) => run.done)).then(() => {
       if (cancelled) return;
@@ -945,7 +950,8 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
       window.setTimeout(() => {
         runs.forEach((run) => run.remove());
         if (heroSwirls.current === runs) heroSwirls.current = [];
-      }, 320);
+        setHeroSwapping(false);
+      }, 120);
     });
     return () => {
       cancelled = true;
@@ -1173,6 +1179,7 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
             aria-roledescription={carousel.roleDescription}
             aria-label={carousel.region}
             data-step={HERO_SCOPE_STEPS[heroPhonesScope]}
+            data-swapping={heroSwapping ? '' : undefined}
             onKeyDown={handleCarouselKeyDown}
             onPointerDown={handleCarouselPointerDown}
             onPointerUp={handleCarouselPointerUp}

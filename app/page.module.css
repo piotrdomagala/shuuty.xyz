@@ -541,6 +541,10 @@
   opacity: 1;
 }
 
+.heroVisual[data-swapping] .heroPhoneLayer {
+  transition: none;
+}
+
 /* The three places under the phones: a word each and a thin bar that fills
    while the place is shown, like stories. */
 .heroScopeTabs {

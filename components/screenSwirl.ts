@@ -63,19 +63,6 @@ function texture(gl: WebGLRenderingContext, image: HTMLImageElement): WebGLTextu
   return tex;
 }
 
-// Position of an element inside an ancestor, in the ancestor's own (untransformed) box.
-function offsetWithin(element: HTMLElement, ancestor: HTMLElement) {
-  let left = 0;
-  let top = 0;
-  let node: HTMLElement | null = element;
-  while (node && node !== ancestor) {
-    left += node.offsetLeft;
-    top += node.offsetTop;
-    node = node.offsetParent as HTMLElement | null;
-  }
-  return node === ancestor ? { left, top } : null;
-}
-
 export interface SwirlRun {
   done: Promise<void>;
   // Removes the canvas; call it once the new screen is shown underneath.
@@ -83,33 +70,28 @@ export interface SwirlRun {
 }
 
 export function swirlScreens(
-  host: HTMLElement,
   fromImage: HTMLImageElement,
   toImage: HTMLImageElement,
   { duration = 1300, delay = 0 }: { duration?: number; delay?: number } = {},
 ): SwirlRun | null {
   if (!fromImage.complete || !toImage.complete || !fromImage.naturalWidth || !toImage.naturalWidth) return null;
-  const place = offsetWithin(fromImage, host);
-  if (!place) return null;
+  // The canvas lies in the screen itself, over the picture, at 100% of it:
+  // it lines up with the image to the pixel and follows the phone if the
+  // phone moves or changes size during the swirl.
+  const screen = fromImage.parentElement;
   const width = fromImage.offsetWidth;
   const height = fromImage.offsetHeight;
-  if (!width || !height) return null;
+  if (!screen || !width || !height) return null;
 
   const canvas = document.createElement('canvas');
   const dpr = Math.min(window.devicePixelRatio || 1, 2);
   canvas.width = Math.round(width * dpr);
   canvas.height = Math.round(height * dpr);
-  // In percent of the phone, so the canvas follows it if the phone changes
-  // size or place during the swirl (brought to the front, sent back).
-  const hostWidth = host.offsetWidth || width;
-  const hostHeight = host.offsetHeight || height;
   Object.assign(canvas.style, {
     position: 'absolute',
-    left: `${(place.left / hostWidth) * 100}%`,
-    top: `${(place.top / hostHeight) * 100}%`,
-    width: `${(width / hostWidth) * 100}%`,
-    height: `${(height / hostHeight) * 100}%`,
-    borderRadius: getComputedStyle(fromImage.parentElement ?? fromImage).borderRadius,
+    inset: '0',
+    width: '100%',
+    height: '100%',
     pointerEvents: 'none',
     zIndex: '3',
   });
@@ -150,7 +132,8 @@ export function swirlScreens(
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
   };
   draw(0);
-  host.appendChild(canvas);
+  if (getComputedStyle(screen).position === 'static') screen.style.position = 'relative';
+  screen.appendChild(canvas);
 
   let frame = 0;
   const done = new Promise<void>((resolve) => {
