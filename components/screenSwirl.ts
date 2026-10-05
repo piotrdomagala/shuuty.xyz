@@ -99,12 +99,16 @@ export function swirlScreens(
   const dpr = Math.min(window.devicePixelRatio || 1, 2);
   canvas.width = Math.round(width * dpr);
   canvas.height = Math.round(height * dpr);
+  // In percent of the phone, so the canvas follows it if the phone changes
+  // size or place during the swirl (brought to the front, sent back).
+  const hostWidth = host.offsetWidth || width;
+  const hostHeight = host.offsetHeight || height;
   Object.assign(canvas.style, {
     position: 'absolute',
-    left: `${place.left}px`,
-    top: `${place.top}px`,
-    width: `${width}px`,
-    height: `${height}px`,
+    left: `${(place.left / hostWidth) * 100}%`,
+    top: `${(place.top / hostHeight) * 100}%`,
+    width: `${(width / hostWidth) * 100}%`,
+    height: `${(height / hostHeight) * 100}%`,
     borderRadius: getComputedStyle(fromImage.parentElement ?? fromImage).borderRadius,
     pointerEvents: 'none',
     zIndex: '3',

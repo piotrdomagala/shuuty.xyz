@@ -776,6 +776,12 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
   // The phones change when the smoke from the new word reaches them.
   const [heroPhonesScope, setHeroPhonesScope] = useState(0);
   const heroSwirls = useRef<SwirlRun[]>([]);
+  // The phone the reader brought to the front stays there when the place
+  // changes; the swirl only needs to know which one it is.
+  const activeHeroPhoneRef = useRef(0);
+  useEffect(() => {
+    activeHeroPhoneRef.current = activeHeroPhone;
+  }, [activeHeroPhone]);
   const heroLastInput = useRef(-Infinity);
   // A mouse resting on the phones holds the place shown.
   const heroHover = useRef(false);
@@ -899,7 +905,6 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
   const chooseHeroScope = useCallback((index: number) => {
     heroLastInput.current = performance.now();
     setHeroScope(index);
-    setActiveHeroPhone(0);
   }, []);
 
   // A change of place swirls every screen into its next one (WebGL over the
@@ -919,7 +924,7 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
         const from = layers[heroPhonesScope]?.querySelector('img');
         const to = layers[heroScope]?.querySelector('img');
         if (!from || !to) return;
-        const order = (index - activeHeroPhone + 3) % 3; // 0 front, 1 right, 2 left
+        const order = (index - activeHeroPhoneRef.current + 3) % 3; // 0 front, 1 right, 2 left
         const run = swirlScreens(button, from, to, {
           duration: HERO_SWIRL_MS,
           delay: order * HERO_SWIRL_STAGGER_MS,
@@ -945,7 +950,7 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
     return () => {
       cancelled = true;
     };
-  }, [heroScope, heroPhonesScope, activeHeroPhone]);
+  }, [heroScope, heroPhonesScope]);
 
   useEffect(() => {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -953,7 +958,6 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
       if (reduced.matches || heroHover.current || document.visibilityState !== 'visible') return;
       if (performance.now() - heroLastInput.current < HERO_HOLD_AFTER_INPUT) return;
       setHeroScope((current) => (current + 1) % 3);
-      setActiveHeroPhone(0);
     }, HERO_SCOPE_MS);
     return () => window.clearInterval(timer);
   }, []);
