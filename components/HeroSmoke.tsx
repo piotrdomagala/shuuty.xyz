@@ -31,7 +31,7 @@ interface Puff {
   size: number;
   color: number; // the place it belongs to, which also sets its kind of smoke
   alpha: number;
-  strand: number; // -1 or 1: which of the two threads (with friends)
+  strand: number; // which thread of the spiral, 0..strands-1
   spark: boolean;
   // Where it left the word: smoke already on its way keeps its own start
   // when the headline changes to the next place.
@@ -53,13 +53,13 @@ interface Dust {
   spark: boolean;
 }
 
-// A different smoke for each place: on your own one calm thin wisp, with
-// friends two threads winding round each other, in groups a wide, billowing
-// cloud of many puffs.
+// Every place travels as a spiral, the motif of the whole hero: on your own
+// one thread, with friends two threads winding round each other, in groups
+// three threads in a wider, breathing cloud.
 const STYLES = [
-  { rate: 42, speed: [0.16, 0.23], spread: 0.3, size: 0.75, wander: 10, helix: 0, billow: 0, sparks: 5 },
-  { rate: 50, speed: [0.18, 0.26], spread: 0.4, size: 0.75, wander: 6, helix: 36, billow: 0, sparks: 8 },
-  { rate: 64, speed: [0.12, 0.2], spread: 1.1, size: 1.05, wander: 28, helix: 0, billow: 1, sparks: 6 },
+  { rate: 42, speed: [0.16, 0.23], spread: 0.3, size: 0.75, wander: 6, helix: 24, strands: 1, billow: 0, sparks: 6 },
+  { rate: 50, speed: [0.18, 0.26], spread: 0.4, size: 0.75, wander: 6, helix: 36, strands: 2, billow: 0, sparks: 8 },
+  { rate: 60, speed: [0.14, 0.22], spread: 0.8, size: 0.95, wander: 12, helix: 40, strands: 3, billow: 1, sparks: 9 },
 ] as const;
 
 const MAX_PUFFS = 300;
@@ -148,7 +148,7 @@ export default function HeroSmoke({ sourceRef, targetRef, colors, active, classN
           size: (spark ? 0.22 + Math.random() * 0.2 : 0.6 + Math.random() * 0.8) * style.size,
           color: place,
           alpha: spark ? 0.8 + Math.random() * 0.2 : 0.45 + Math.random() * 0.55,
-          strand: Math.random() < 0.5 ? -1 : 1,
+          strand: Math.floor(Math.random() * style.strands),
           spark,
           sx,
           sy,
@@ -241,8 +241,10 @@ export default function HeroSmoke({ sourceRef, targetRef, colors, active, classN
         const a = now / 900 + p.phase + t * 6;
         const wander = (Math.sin(a) + 0.45 * Math.sin(2.3 * a + p.phase)) * kind.wander * t
           + p.drift * kind.wander * 1.4 * t * t;
-        // With friends: two threads that wind round each other.
-        const helix = kind.helix * p.strand * Math.sin(t * Math.PI * 3 + now / 650) * Math.sin(t * Math.PI);
+        // The threads wind round the path, evenly spaced around it.
+        const helix = kind.helix
+          * Math.sin(t * Math.PI * 3 + now / 650 + (p.strand * 2 * Math.PI) / kind.strands)
+          * Math.sin(t * Math.PI);
         const x = bezier(p.sx + across, cx, tx, t) + wander + (stacked ? helix : 0);
         const y = bezier(p.sy, cy, ty, t) + Math.cos(now / 1100 + p.phase) * 9 * t + (stacked ? 0 : helix);
         // Rises fast, holds, and lets go only around the phones, so the cloud

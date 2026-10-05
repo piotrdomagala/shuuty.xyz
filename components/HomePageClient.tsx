@@ -16,6 +16,7 @@ import { localizedSitePath, type SiteLanguage } from '@/components/documentLocal
 import LanguageMenu from '@/components/LanguageMenu';
 import HeroSmoke from '@/components/HeroSmoke';
 import ProductDeviceFrame from '@/components/ProductDeviceFrame';
+import { swirlScreens, type SwirlRun } from '@/components/screenSwirl';
 import { useSiteLanguage } from '@/components/useSiteLanguage';
 import guidesContent from '@/content/guides.json';
 import { asGuides, guidePath, guidesIn, type GuideEntry } from '@/lib/guides.mjs';
@@ -257,7 +258,10 @@ const STEP_ICONS: readonly IconName[] = ['task', 'people', 'map', 'group'];
 // The hero chips reuse the colours and icons of steps 1, 2 and 4.
 const HERO_SCOPE_STEPS = [1, 2, 4] as const;
 const HERO_SCOPE_MS = 6000;
-const HERO_SMOKE_TRAVEL_MS = 1100;
+// Each screen swirls into the next one; the front phone starts, then the
+// right, then the left.
+const HERO_SWIRL_MS = 1300;
+const HERO_SWIRL_STAGGER_MS = 110;
 // The same colours as --gold-rgb, --blue-rgb and --group-rgb in globals.css.
 const HERO_SMOKE_COLORS = {
   dark: [[255, 229, 160], [125, 211, 252], [139, 92, 246]],
@@ -771,7 +775,10 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
   const [heroScope, setHeroScope] = useState(0);
   // The phones change when the smoke from the new word reaches them.
   const [heroPhonesScope, setHeroPhonesScope] = useState(0);
+  const heroSwirls = useRef<SwirlRun[]>([]);
   const heroLastInput = useRef(-Infinity);
+  // A mouse resting on the phones holds the place shown.
+  const heroHover = useRef(false);
   const heroScopesRef = useRef<HTMLSpanElement | null>(null);
   const heroVisualRef = useRef<HTMLDivElement | null>(null);
   const [activeStep, setActiveStep] = useState<string | null>(null);
@@ -895,17 +902,55 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
     setActiveHeroPhone(0);
   }, []);
 
+  // A change of place swirls every screen into its next one (WebGL over the
+  // screen), then shows the new screens under it and lifts the canvases off.
+  // Without WebGL, with an image not loaded yet or with reduced motion it is a
+  // plain cross-fade.
   useEffect(() => {
     if (heroPhonesScope === heroScope) return undefined;
+    heroSwirls.current.forEach((run) => run.remove());
+    heroSwirls.current = [];
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const timer = window.setTimeout(() => setHeroPhonesScope(heroScope), reduced ? 0 : HERO_SMOKE_TRAVEL_MS);
-    return () => window.clearTimeout(timer);
-  }, [heroScope, heroPhonesScope]);
+    const runs: SwirlRun[] = [];
+    if (!reduced) {
+      heroPhoneButtons.current.forEach((button, index) => {
+        if (!button) return;
+        const layers = button.querySelectorAll<HTMLElement>('[data-hero-layer]');
+        const from = layers[heroPhonesScope]?.querySelector('img');
+        const to = layers[heroScope]?.querySelector('img');
+        if (!from || !to) return;
+        const order = (index - activeHeroPhone + 3) % 3; // 0 front, 1 right, 2 left
+        const run = swirlScreens(button, from, to, {
+          duration: HERO_SWIRL_MS,
+          delay: order * HERO_SWIRL_STAGGER_MS,
+        });
+        if (run) runs.push(run);
+      });
+    }
+    if (runs.length === 0) {
+      setHeroPhonesScope(heroScope);
+      return undefined;
+    }
+    heroSwirls.current = runs;
+    let cancelled = false;
+    void Promise.all(runs.map((run) => run.done)).then(() => {
+      if (cancelled) return;
+      setHeroPhonesScope(heroScope);
+      // Let the new screens paint under the canvases before lifting them.
+      window.setTimeout(() => {
+        runs.forEach((run) => run.remove());
+        if (heroSwirls.current === runs) heroSwirls.current = [];
+      }, 320);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [heroScope, heroPhonesScope, activeHeroPhone]);
 
   useEffect(() => {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
     const timer = window.setInterval(() => {
-      if (reduced.matches || document.visibilityState !== 'visible') return;
+      if (reduced.matches || heroHover.current || document.visibilityState !== 'visible') return;
       if (performance.now() - heroLastInput.current < HERO_HOLD_AFTER_INPUT) return;
       setHeroScope((current) => (current + 1) % 3);
       setActiveHeroPhone(0);
@@ -1149,6 +1194,12 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
                   type="button"
                   key={`slot-${index}`}
                   className={`${s.phone} ${positionClass}`}
+                  onPointerEnter={(event) => {
+                    if (event.pointerType === 'mouse') heroHover.current = true;
+                  }}
+                  onPointerLeave={() => {
+                    heroHover.current = false;
+                  }}
                   onClick={() => {
                     if (carouselDidSwipe.current) {
                       carouselDidSwipe.current = false;
@@ -1171,6 +1222,7 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
                       <span
                         key={media.id}
                         className={s.heroPhoneLayer}
+                        data-hero-layer
                         data-shown={shown ? '' : undefined}
                         aria-hidden={shown ? undefined : true}
                       >
