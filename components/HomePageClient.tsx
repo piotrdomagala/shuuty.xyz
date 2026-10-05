@@ -14,6 +14,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { localizedSitePath, type SiteLanguage } from '@/components/documentLocale';
 import LanguageMenu from '@/components/LanguageMenu';
+import HeroSmoke from '@/components/HeroSmoke';
 import ProductDeviceFrame from '@/components/ProductDeviceFrame';
 import { useSiteLanguage } from '@/components/useSiteLanguage';
 import guidesContent from '@/content/guides.json';
@@ -256,6 +257,12 @@ const STEP_ICONS: readonly IconName[] = ['task', 'people', 'map', 'group'];
 // The hero chips reuse the colours and icons of steps 1, 2 and 4.
 const HERO_SCOPE_STEPS = [1, 2, 4] as const;
 const HERO_SCOPE_MS = 6000;
+const HERO_SMOKE_TRAVEL_MS = 1100;
+// The same colours as --gold-rgb, --blue-rgb and --group-rgb in globals.css.
+const HERO_SMOKE_COLORS = {
+  dark: [[255, 229, 160], [125, 211, 252], [139, 92, 246]],
+  light: [[255, 176, 136], [137, 207, 240], [139, 92, 246]],
+} as const;
 const HERO_HOLD_AFTER_INPUT = 14000;
 
 function AppleIcon() {
@@ -762,8 +769,12 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
   const [showMobileNav, setShowMobileNav] = useState(false);
   const [activeHeroPhone, setActiveHeroPhone] = useState(0);
   const [heroScope, setHeroScope] = useState(0);
+  // The phones change when the smoke from the new word reaches them.
+  const [heroPhonesScope, setHeroPhonesScope] = useState(0);
   const [heroPaused, setHeroPaused] = useState(false);
   const heroLastInput = useRef(-Infinity);
+  const heroScopesRef = useRef<HTMLSpanElement | null>(null);
+  const heroVisualRef = useRef<HTMLDivElement | null>(null);
   const [activeStep, setActiveStep] = useState<string | null>(null);
   const [loopStep, setLoopStep] = useState<number | null>(null);
   const carouselPointerStart = useRef<number | null>(null);
@@ -798,7 +809,7 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
     scope: set.scope,
     phones: set.screens.map((screen) => screenFor(lang, screen)),
   }));
-  const heroPhones = heroSets[heroScope].phones;
+  const heroPhones = heroSets[heroPhonesScope].phones;
   const steps = c.how.steps.map((step) => ({
     ...step,
     screens: step.screens.map((screen) => screenFor(lang, screen)),
@@ -884,6 +895,13 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
     setHeroScope(index);
     setActiveHeroPhone(0);
   }, []);
+
+  useEffect(() => {
+    if (heroPhonesScope === heroScope) return undefined;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const timer = window.setTimeout(() => setHeroPhonesScope(heroScope), reduced ? 0 : HERO_SMOKE_TRAVEL_MS);
+    return () => window.clearTimeout(timer);
+  }, [heroScope, heroPhonesScope]);
 
   useEffect(() => {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -1061,6 +1079,13 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
 
       <main id="main" tabIndex={-1}>
         <section id="top" className={s.hero}>
+          <HeroSmoke
+            className={s.heroSmoke}
+            sourceRef={heroScopesRef}
+            targetRef={heroVisualRef}
+            colors={HERO_SMOKE_COLORS}
+            active={heroScope}
+          />
           <div className={s.heroCopy}>
             <span className={s.eyebrow}><span className={s.statusDot} />{c.hero.badge}</span>
             <h1 className={s.heroTitle}>
@@ -1070,7 +1095,7 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
                   phones: on your own, with friends, in groups. The sentence
                   above is what a screen reader and a search engine read; with
                   reduced motion the whole sentence stands still. */}
-              <span className={s.heroScopes} aria-hidden="true">
+              <span ref={heroScopesRef} className={s.heroScopes} aria-hidden="true">
                 {heroSets.map((set, index) => (
                   <span
                     key={set.scope}
@@ -1094,11 +1119,12 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
           </div>
 
           <div
+            ref={heroVisualRef}
             className={s.heroVisual}
             role="region"
             aria-roledescription={carousel.roleDescription}
             aria-label={carousel.region}
-            data-step={HERO_SCOPE_STEPS[heroScope]}
+            data-step={HERO_SCOPE_STEPS[heroPhonesScope]}
             onKeyDown={handleCarouselKeyDown}
             onPointerEnter={(event) => {
               if (event.pointerType === 'mouse') setHeroPaused(true);
@@ -1145,7 +1171,7 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
                 >
                   {heroSets.map((set, setIndex) => {
                     const media = set.phones[index];
-                    const shown = setIndex === heroScope;
+                    const shown = setIndex === heroPhonesScope;
                     return (
                       <span
                         key={media.id}
@@ -1179,17 +1205,11 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
                   onClick={() => chooseHeroScope(index)}
                 >
                   <span className={s.heroScopeTabLabel}>{set.scope}</span>
-                  <span
-                    key={index === heroScope ? `run-${heroScope}` : 'idle'}
-                    className={s.heroScopeTabBar}
-                    data-paused={heroPaused ? '' : undefined}
-                    aria-hidden="true"
-                  />
                 </button>
               ))}
             </div>
             <p className={s.srOnly} aria-live="polite">
-              {`${heroSets[heroScope].scope}: ${heroPhones[activeHeroPhone].alt}`}
+              {`${heroSets[heroPhonesScope].scope}: ${heroPhones[activeHeroPhone].alt}`}
             </p>
           </div>
 

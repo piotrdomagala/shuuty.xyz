@@ -365,28 +365,29 @@
     filter 0.55s ease;
 }
 
+/* The canvas with the smoke from the word to the phones lies under the
+   text and the phones, over the page background. */
+.heroSmoke {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.heroCopy,
+.heroVisual,
+.heroSteps {
+  position: relative;
+  z-index: 1;
+}
+
 .heroScope[data-active] {
+  text-shadow: 0 0 28px rgba(var(--step-rgb), 0.45);
   opacity: 1;
   transform: none;
   filter: none;
-}
-
-.heroScope::after {
-  content: '';
-  position: absolute;
-  right: 0.04em;
-  bottom: -0.02em;
-  left: 0.04em;
-  height: 0.08em;
-  border-radius: 0.04em;
-  background: linear-gradient(90deg, rgb(var(--step-rgb)), rgba(var(--step-rgb), 0.12));
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) 0.2s;
-}
-
-.heroScope[data-active]::after {
-  transform: scaleX(1);
 }
 
 .heroScope[data-step='2'] {
@@ -590,6 +591,10 @@
   color: var(--step-ink);
 }
 
+.heroScopeTab[aria-pressed='true'] {
+  text-shadow: 0 0 16px rgba(var(--step-rgb), 0.7);
+}
+
 .heroScopeTab:focus-visible {
   outline: 2px solid var(--accent-text);
   outline-offset: 2px;
@@ -598,39 +603,6 @@
 
 .heroScopeTabLabel {
   white-space: nowrap;
-}
-
-.heroScopeTabBar {
-  position: relative;
-  height: 3px;
-  overflow: hidden;
-  border-radius: 3px;
-  background: rgba(var(--step-rgb), 0.18);
-}
-
-.heroScopeTabBar::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: rgb(var(--step-rgb));
-  box-shadow: 0 0 10px rgba(var(--step-rgb), 0.7);
-  transform: scaleX(0);
-  transform-origin: left;
-}
-
-.heroScopeTab[aria-pressed='true'] .heroScopeTabBar::after {
-  animation: heroScopeFill 6s linear forwards;
-}
-
-.heroScopeTabBar[data-paused]::after {
-  animation-play-state: paused;
-}
-
-@keyframes heroScopeFill {
-  to {
-    transform: scaleX(1);
-  }
 }
 
 .heroVisual::after {
@@ -1997,7 +1969,6 @@
   }
 
   .heroScope,
-  .heroScope::after,
   .heroPhoneLayer {
     transition: none;
   }
