@@ -492,21 +492,6 @@ function LoopOrbit({
     syncReduced();
     query.addEventListener('change', syncReduced);
 
-    // A chip deeper than --orbit-fade-to is fully faded (see the CSS); it must
-    // not catch taps over the phone either. The threshold changes with the
-    // breakpoint, so it is read again on resize.
-    // Without CSS cos() the chips never fade, so none of them may be made
-    // untappable either (NaN never passes the depth test below).
-    const canFade = typeof CSS !== 'undefined' && CSS.supports('opacity', 'cos(0deg)');
-    let fadeTo = Number.NaN;
-    const readFadeTo = () => {
-      if (!stageRef.current || !canFade) return;
-      fadeTo = Number.parseFloat(
-        getComputedStyle(stageRef.current).getPropertyValue('--orbit-fade-to'),
-      );
-    };
-    window.addEventListener('resize', readFadeTo);
-
     // The loop runs only while the ring is on screen and the tab is visible.
     let frame = 0;
     let previous = performance.now();
@@ -514,7 +499,6 @@ function LoopOrbit({
     const running = () => onScreen && document.visibilityState === 'visible';
     const start = () => {
       if (frame || !running()) return;
-      readFadeTo();
       previous = performance.now();
       frame = requestAnimationFrame(tick);
     };
@@ -556,9 +540,6 @@ function LoopOrbit({
           nearestDepth = depth;
           nearest = index;
         }
-        if (!chip) return;
-        const far = depth >= fadeTo;
-        if (chip.hasAttribute('data-far') !== far) chip.toggleAttribute('data-far', far);
       });
       chipRefs.current.forEach((chip, index) => {
         const isFront = index === nearest;
@@ -584,7 +565,6 @@ function LoopOrbit({
       stop();
       observer.disconnect();
       document.removeEventListener('visibilitychange', onVisibility);
-      window.removeEventListener('resize', readFadeTo);
       query.removeEventListener('change', syncReduced);
     };
   }, []);

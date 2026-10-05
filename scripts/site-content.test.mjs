@@ -311,15 +311,14 @@ test('reduced motion explicitly removes phone transform transitions', async () =
     'The stage must stay outside the 3D sorting, or the far chips stop taking clicks',
   );
 
-  // A chip fades out before it reaches the edge of the phone, and a fully
-  // faded one takes no taps. With reduced motion the ring stands still, so
-  // nothing fades: the override comes after every breakpoint that sets a depth.
+  // A chip going round the back gets smaller and dimmer but stays visible, so
+  // it stays a button: a tap turns it to the front. With reduced motion the
+  // ring stands still, so nothing dims: the override comes after every
+  // breakpoint that sets a depth.
   assert.match(css, /\.orbitChip \{[^}]*--orbit-near: clamp\(/);
   assert.match(css, /\.orbitChip \{[^}]*opacity: calc\(0\.22 \+ 0\.78 \* var\(--orbit-near\)\);/);
   assert.match(component, /toggleAttribute\('data-front', isFront\)/);
-  assert.match(css, /\.orbitChip\[data-far\] \{[^}]*pointer-events: none;/);
-  assert.match(component, /toggleAttribute\('data-far', far\)/);
-  assert.match(component, /CSS\.supports\('opacity', 'cos\(0deg\)'\)/);
+  assert.equal(css.includes('[data-far]'), false, 'A dimmed chip at the back must stay tappable');
   const lastFade = css.lastIndexOf('--orbit-fade-to:');
   const reducedFade = css.lastIndexOf('@media (prefers-reduced-motion: reduce)');
   assert.ok(reducedFade > 0 && reducedFade < lastFade, 'The reduced-motion fade override must be last');

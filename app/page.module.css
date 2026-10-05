@@ -1599,11 +1599,6 @@
     0 0 28px rgba(var(--step-rgb), 0.38);
 }
 
-/* Set by the orbit loop when the chip is fully faded: no taps over the phone. */
-.orbitChip[data-far] {
-  pointer-events: none;
-}
-
 .orbitChip[aria-pressed='true'] {
   border-color: var(--step-ink);
   background: color-mix(in srgb, var(--bg-raised) 72%, rgb(var(--step-rgb)));
