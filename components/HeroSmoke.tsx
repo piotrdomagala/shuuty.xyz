@@ -54,10 +54,10 @@ interface Dust {
 }
 
 // Every place travels as a spiral, the motif of the whole hero: on your own
-// a thin, tight golden thread full of sparks, with friends two wider threads
-// winding round each other, in groups three threads in a breathing cloud.
+// and with friends two threads winding round each other (gold, then blue),
+// in groups three threads in a breathing cloud.
 const STYLES = [
-  { rate: 46, speed: [0.15, 0.21], spread: 0.25, size: 0.55, wander: 3, helix: 20, strands: 2, billow: 0, sparks: 14 },
+  { rate: 50, speed: [0.17, 0.25], spread: 0.4, size: 0.75, wander: 6, helix: 32, strands: 2, billow: 0, sparks: 10 },
   { rate: 50, speed: [0.18, 0.26], spread: 0.4, size: 0.75, wander: 6, helix: 36, strands: 2, billow: 0, sparks: 8 },
   { rate: 60, speed: [0.14, 0.22], spread: 0.8, size: 0.95, wander: 12, helix: 40, strands: 3, billow: 1, sparks: 9 },
 ] as const;

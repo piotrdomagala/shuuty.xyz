@@ -541,30 +541,6 @@
   opacity: 1;
 }
 
-/* When the smoke reaches a phone it lights up for a moment in the colour of
-   the place. */
-.heroPhoneLayer[data-shown]::after {
-  content: '';
-  position: absolute;
-  inset: -6% -10%;
-  z-index: 2;
-  border-radius: 40px;
-  background: radial-gradient(closest-side, rgba(var(--scope-rgb, var(--gold-rgb)), 0.5), transparent);
-  pointer-events: none;
-  opacity: 0;
-  animation: heroPhoneArrive 1.3s ease-out var(--layer-delay, 0s);
-}
-
-@keyframes heroPhoneArrive {
-  25% {
-    opacity: 0.9;
-  }
-
-  to {
-    opacity: 0;
-  }
-}
-
 /* The three places under the phones: a word each and a thin bar that fills
    while the place is shown, like stories. */
 .heroScopeTabs {
