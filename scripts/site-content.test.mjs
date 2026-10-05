@@ -111,8 +111,13 @@ test('the landing tells one four-step story in every language', async () => {
     'Tasks, plans and reservations on your own, with friends and in groups',
   );
   for (const lang of ['en', 'pl', 'nb']) {
-    assert.equal(content[lang].hero.scopes.length, 3, `${lang}: three hero chips`);
+    assert.equal(content[lang].hero.scopes.length, 3, `${lang}: three places in the hero`);
   }
+  // The three places take turns in one line; with reduced motion they stand
+  // still as the whole accent sentence.
+  const heroCss = await readFile(new URL('app/page.module.css', root), 'utf8');
+  assert.match(heroCss, /\.heroScope \{[^}]*grid-area: 1 \/ 1;[^}]*animation: heroScopeCycle/);
+  assert.match(heroCss, /prefers-reduced-motion: reduce\) \{[^@]*\.heroScopes \{\s*display: none;/);
   assert.equal(content.pl.how.heading, 'Jedna aplikacja, cztery kroki');
   assert.equal(content.en.how.heading, 'One app, four steps');
   assert.equal(content.pl.uses.heading, 'Do czego ludzie używają Shuuty');

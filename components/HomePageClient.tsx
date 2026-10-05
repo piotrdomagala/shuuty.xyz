@@ -1040,17 +1040,18 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
             <h1 className={s.heroTitle}>
               {c.hero.title}{' '}
               <span className={s.srOnly}>{c.hero.accent}</span>
-              {/* Where it works, as three chips in the step colours: on your
-                  own, with friends, in groups. The sentence above is what a
-                  screen reader and a search engine read. */}
+              {/* Where it works, one place at a time in the step colours: on
+                  your own, with friends, in groups. The sentence above is what
+                  a screen reader and a search engine read; with reduced motion
+                  the three places stand still on one line. */}
               <span className={s.heroScopes} aria-hidden="true">
                 {c.hero.scopes.map((scope, index) => (
                   <span key={scope} className={s.heroScope} data-step={HERO_SCOPE_STEPS[index]}>
-                    <Icon name={STEP_ICONS[HERO_SCOPE_STEPS[index] - 1]} />
                     {scope}
                   </span>
                 ))}
               </span>
+              <span className={s.heroScopesStill} aria-hidden="true">{c.hero.accent}</span>
             </h1>
             <p className={s.heroLead}>{c.hero.sub}</p>
             <div className={s.heroActions}>

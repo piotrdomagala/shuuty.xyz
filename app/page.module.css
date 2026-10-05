@@ -325,39 +325,46 @@
 }
 
 .heroScopes {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 22px;
-  font-family: var(--font-body);
-  font-size: clamp(0.98rem, 1.4vw, 1.12rem);
-  font-weight: 700;
-  letter-spacing: 0;
-  line-height: 1;
+  display: grid;
+  justify-items: start;
 }
 
+/* All three share one grid cell, so the line keeps the width of the longest
+   and nothing below it moves. Each one comes in, stays 2.6 s and goes, with
+   a line drawn under it in its step colour. */
 .heroScope {
   --step-ink: var(--accent-text);
   --step-rgb: var(--gold-rgb);
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 42px;
-  padding: 0 16px 0 12px;
-  border: 1px solid rgba(var(--step-rgb), 0.42);
-  border-radius: var(--r-full);
-  color: var(--text);
-  background: color-mix(in srgb, var(--bg-raised) 84%, rgb(var(--step-rgb)));
-  box-shadow: 0 8px 22px rgba(var(--step-rgb), 0.14);
-  animation: heroScopeIn 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  position: relative;
+  grid-area: 1 / 1;
+  color: var(--step-ink);
+  white-space: nowrap;
+  opacity: 0;
+  animation: heroScopeCycle 7.8s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
 }
 
-.heroScope:nth-child(2) {
-  animation-delay: 0.12s;
+.heroScope::after {
+  content: '';
+  position: absolute;
+  right: 0.04em;
+  bottom: -0.02em;
+  left: 0.04em;
+  height: 0.08em;
+  border-radius: 0.04em;
+  background: linear-gradient(90deg, rgb(var(--step-rgb)), rgba(var(--step-rgb), 0.15));
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: heroScopeLine 7.8s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
 }
 
-.heroScope:nth-child(3) {
-  animation-delay: 0.24s;
+.heroScope:nth-child(2),
+.heroScope:nth-child(2)::after {
+  animation-delay: 2.6s;
+}
+
+.heroScope:nth-child(3),
+.heroScope:nth-child(3)::after {
+  animation-delay: 5.2s;
 }
 
 .heroScope[data-step='2'] {
@@ -370,17 +377,48 @@
   --step-rgb: var(--group-rgb);
 }
 
-.heroScope svg {
-  width: 18px;
-  height: 18px;
-  flex: 0 0 18px;
-  color: var(--step-ink);
+.heroScopesStill {
+  display: none;
+  color: var(--accent-text);
 }
 
-@keyframes heroScopeIn {
-  from {
+@keyframes heroScopeCycle {
+  0% {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(0.35em);
+    filter: blur(6px);
+  }
+
+  6%,
+  29% {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+
+  35%,
+  100% {
+    opacity: 0;
+    transform: translateY(-0.3em);
+    filter: blur(6px);
+  }
+}
+
+@keyframes heroScopeLine {
+  0%,
+  6% {
+    transform: scaleX(0);
+  }
+
+  22%,
+  29% {
+    transform: scaleX(1);
+  }
+
+  35%,
+  100% {
+    transform: scaleX(1);
+    opacity: 0;
   }
 }
 
@@ -753,7 +791,7 @@
   margin-top: 30px;
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px 26px;
   list-style: none;
 }
 
@@ -786,25 +824,41 @@
 }
 
 .heroSteps a {
+  position: relative;
   min-height: 40px;
-  padding: 0 15px 0 11px;
+  padding: 12px 2px 4px;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  border: 1px solid var(--border);
-  border-radius: var(--r-full);
   color: var(--text-secondary);
-  background: color-mix(in srgb, var(--bg-raised) 72%, transparent);
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   font-weight: 650;
   white-space: nowrap;
-  transition: color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  transition: color 0.2s ease;
+}
+
+/* A short rule in the step colour above each entry, not a box: the hero
+   already has buttons, so the four steps read as a quiet table of contents. */
+.heroSteps a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 2px;
+  width: 18px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--step-ink);
+  opacity: 0.7;
+  transition: width 0.25s ease, opacity 0.25s ease;
 }
 
 .heroSteps a:hover {
   color: var(--text);
-  border-color: rgba(var(--step-rgb), 0.55);
-  transform: translateY(-1px);
+}
+
+.heroSteps a:hover::before {
+  width: calc(100% - 4px);
+  opacity: 1;
 }
 
 .heroStepNumber {
@@ -1848,8 +1902,15 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .heroScope {
-    animation: none;
+  .heroScopes {
+    display: none;
+  }
+
+  .heroScopesStill {
+    display: block;
+    margin-top: 0.2em;
+    font-size: 0.62em;
+    line-height: 1.15;
   }
 
   .ambient span {
@@ -1929,7 +1990,10 @@
     margin-left: auto;
   }
 
-  .heroScopes,
+  .heroScopes {
+    justify-items: center;
+  }
+
   .heroActions,
   .heroSteps {
     justify-content: center;
@@ -2084,20 +2148,19 @@
 
   /* Two by two on a phone: equal tiles, read left to right, 01 to 04. */
   .heroSteps {
-    width: min(100%, 360px);
+    width: min(100%, 340px);
     margin: 26px auto 0;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 8px;
+    gap: 6px 22px;
   }
 
   .heroSteps a {
     width: 100%;
-    min-height: 50px;
-    padding: 0 12px;
+    min-height: 46px;
+    padding: 12px 2px 4px;
     gap: 9px;
-    border-radius: 16px;
-    font-size: 0.84rem;
+    font-size: 0.86rem;
   }
 
   .heroStepLabel {
@@ -2414,7 +2477,7 @@
 
 @media (max-width: 360px) {
   .heroSteps a {
-    padding: 0 10px;
+    padding: 12px 2px 4px;
     gap: 7px;
     font-size: 0.78rem;
   }
