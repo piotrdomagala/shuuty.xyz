@@ -464,6 +464,21 @@ function LoopOrbit({
     syncReduced();
     query.addEventListener('change', syncReduced);
 
+    // A chip deeper than --orbit-fade-to is fully faded (see the CSS); it must
+    // not catch taps over the phone either. The threshold changes with the
+    // breakpoint, so it is read again on resize.
+    // Without CSS cos() the chips never fade, so none of them may be made
+    // untappable either (NaN never passes the depth test below).
+    const canFade = typeof CSS !== 'undefined' && CSS.supports('opacity', 'cos(0deg)');
+    let fadeTo = Number.NaN;
+    const readFadeTo = () => {
+      if (!stageRef.current || !canFade) return;
+      fadeTo = Number.parseFloat(
+        getComputedStyle(stageRef.current).getPropertyValue('--orbit-fade-to'),
+      );
+    };
+    window.addEventListener('resize', readFadeTo);
+
     // The loop runs only while the ring is on screen and the tab is visible.
     let frame = 0;
     let previous = performance.now();
@@ -471,6 +486,7 @@ function LoopOrbit({
     const running = () => onScreen && document.visibilityState === 'visible';
     const start = () => {
       if (frame || !running()) return;
+      readFadeTo();
       previous = performance.now();
       frame = requestAnimationFrame(tick);
     };
@@ -504,6 +520,11 @@ function LoopOrbit({
       // Only a custom property on the spinning plane changes: the ring and the
       // chips turn by transform, nothing is laid out again.
       spinRef.current?.style.setProperty('--orbit-rot', `${m.rotation.toFixed(2)}deg`);
+      chipRefs.current.forEach((chip, index) => {
+        if (!chip) return;
+        const far = Math.cos(((orbitAngle(index) + m.rotation) * Math.PI) / 180) >= fadeTo;
+        if (chip.hasAttribute('data-far') !== far) chip.toggleAttribute('data-far', far);
+      });
       frame = running() ? requestAnimationFrame(tick) : 0;
     };
     const observer = new IntersectionObserver(([entry]) => {
@@ -518,6 +539,7 @@ function LoopOrbit({
       stop();
       observer.disconnect();
       document.removeEventListener('visibilitychange', onVisibility);
+      window.removeEventListener('resize', readFadeTo);
       query.removeEventListener('change', syncReduced);
     };
   }, []);
@@ -642,66 +664,68 @@ function LoopOrbit({
       onPointerUp={endDrag}
       onPointerCancel={endDrag}
     >
-      <div className={s.orbitGlow} aria-hidden="true" />
-      <figure id={phoneId} className={s.orbitPhone}>
-        {screens.map((screen, index) => {
-          const isActive = screen.id === activeScreen.id;
-          return (
-            <span
-              key={screen.id}
-              className={`${s.orbitScreen} ${isActive ? s.orbitScreenActive : ''}`}
-              aria-hidden={isActive ? undefined : true}
-              data-screen={index}
-            >
-              <ProductDeviceFrame
-                media={screen}
-                alt={isActive ? screen.alt : ''}
-                sizes="(max-width: 720px) 52vw, 240px"
-              />
-            </span>
-          );
-        })}
-      </figure>
-      <p className={s.srOnly} aria-live="polite">{announce}</p>
-      <div className={s.orbitPlane}>
-        <div className={`${s.orbitRing} ${s.orbitRingBack}`} aria-hidden="true" />
-        <div className={`${s.orbitRing} ${s.orbitRingFront}`} aria-hidden="true" />
-        <div
-          ref={spinRef}
-          className={s.orbitSpin}
-          role="group"
-          aria-label={copy.ringLabel}
-          onKeyDown={handleKeyDown}
-        >
-          {items.map((item, index) => (
-            <div
-              key={item}
-              className={s.orbitItem}
-              style={{ '--orbit-angle': `${orbitAngle(index)}deg` } as CSSProperties}
-            >
-              <div className={s.orbitCounter}>
-                <div className={s.orbitFace}>
-                  <button
-                    ref={(element) => {
-                      chipRefs.current[index] = element;
-                    }}
-                    type="button"
-                    className={s.orbitChip}
-                    data-step={index + 1}
-                    aria-pressed={selected === index}
-                    aria-controls={phoneId}
-                    onClick={(event) => choose(index, event.timeStamp)}
-                  >
-                    <Icon name={STEP_ICONS[index]} />
-                    {item}
-                    {selected === index ? <span className={s.srOnly}>{` ${copy.again}`}</span> : null}
-                  </button>
+      <div className={s.orbitScene}>
+        <div className={s.orbitGlow} aria-hidden="true" />
+        <figure id={phoneId} className={s.orbitPhone}>
+          {screens.map((screen, index) => {
+            const isActive = screen.id === activeScreen.id;
+            return (
+              <span
+                key={screen.id}
+                className={`${s.orbitScreen} ${isActive ? s.orbitScreenActive : ''}`}
+                aria-hidden={isActive ? undefined : true}
+                data-screen={index}
+              >
+                <ProductDeviceFrame
+                  media={screen}
+                  alt={isActive ? screen.alt : ''}
+                  sizes="(max-width: 720px) 52vw, 240px"
+                />
+              </span>
+            );
+          })}
+        </figure>
+        <div className={s.orbitPlane}>
+          <div className={`${s.orbitRing} ${s.orbitRingBack}`} aria-hidden="true" />
+          <div className={`${s.orbitRing} ${s.orbitRingFront}`} aria-hidden="true" />
+          <div
+            ref={spinRef}
+            className={s.orbitSpin}
+            role="group"
+            aria-label={copy.ringLabel}
+            onKeyDown={handleKeyDown}
+          >
+            {items.map((item, index) => (
+              <div
+                key={item}
+                className={s.orbitItem}
+                style={{ '--orbit-angle': `${orbitAngle(index)}deg` } as CSSProperties}
+              >
+                <div className={s.orbitCounter}>
+                  <div className={s.orbitFace}>
+                    <button
+                      ref={(element) => {
+                        chipRefs.current[index] = element;
+                      }}
+                      type="button"
+                      className={s.orbitChip}
+                      data-step={index + 1}
+                      aria-pressed={selected === index}
+                      aria-controls={phoneId}
+                      onClick={(event) => choose(index, event.timeStamp)}
+                    >
+                      <Icon name={STEP_ICONS[index]} />
+                      {item}
+                      {selected === index ? <span className={s.srOnly}>{` ${copy.again}`}</span> : null}
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
+      <p className={s.srOnly} aria-live="polite">{announce}</p>
     </div>
   );
 }

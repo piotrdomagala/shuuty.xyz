@@ -1204,11 +1204,14 @@
   --orbit-r: 238px;
   --orbit-tilt: 73deg;
   --orbit-phone: 218px;
+  /* Depth of a chip on the ring: cos of its angle, 1 straight behind the
+     phone, -1 straight in front. A chip fades out between these two depths,
+     before it reaches the edge of the phone, so it never shows half cut. */
+  --orbit-fade-from: 0.6;
+  --orbit-fade-to: 0.82;
   position: relative;
   min-width: 0;
   height: calc(var(--orbit-phone) * 2.15 + 110px);
-  perspective: 1400px;
-  transform-style: preserve-3d;
   touch-action: pan-y;
   cursor: grab;
   user-select: none;
@@ -1217,6 +1220,18 @@
 
 .orbitStage:active {
   cursor: grabbing;
+}
+
+/* The 3D scene takes no pointer events of its own: as the root of the
+   preserve-3d sorting it would sit at z = 0, in front of every chip on the far
+   half of the ring, and swallow their clicks. Dragging stays on .orbitStage,
+   which is outside that sorting, so the chips always win over it. */
+.orbitScene {
+  position: absolute;
+  inset: 0;
+  perspective: 1400px;
+  transform-style: preserve-3d;
+  pointer-events: none;
 }
 
 .orbitGlow {
@@ -1348,8 +1363,19 @@
   appearance: none;
   -webkit-appearance: none;
   -webkit-tap-highlight-color: transparent;
+  --orbit-depth: cos(calc(var(--orbit-angle) + var(--orbit-rot, 0deg)));
+  opacity: clamp(
+    0,
+    calc((var(--orbit-depth) - var(--orbit-fade-to)) / (var(--orbit-fade-from) - var(--orbit-fade-to))),
+    1
+  );
   transform: translate(-50%, -50%);
   transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Set by the orbit loop when the chip is fully faded: no taps over the phone. */
+.orbitChip[data-far] {
+  pointer-events: none;
 }
 
 .orbitChip[aria-pressed='true'] {
@@ -1361,6 +1387,7 @@
 }
 
 .orbitChip:focus-visible {
+  opacity: 1;
   outline: 3px solid var(--accent-text);
   outline-offset: 3px;
 }
@@ -1795,6 +1822,8 @@
   .orbitStage {
     --orbit-r: 180px;
     --orbit-phone: 210px;
+    --orbit-fade-from: 0.2;
+    --orbit-fade-to: 0.38;
   }
 }
 
@@ -1874,6 +1903,8 @@
     margin: 0 auto;
     --orbit-r: 215px;
     --orbit-phone: 230px;
+    --orbit-fade-from: 0.38;
+    --orbit-fade-to: 0.56;
   }
 
   .useGrid {
@@ -2089,6 +2120,8 @@
     --orbit-r: min(31vw, 150px);
     --orbit-phone: min(44vw, 190px);
     --orbit-tilt: 70deg;
+    --orbit-fade-from: 0.16;
+    --orbit-fade-to: 0.36;
     height: calc(var(--orbit-phone) * 2.15 + 64px);
   }
 
@@ -2300,5 +2333,15 @@
     padding: 0 10px;
     gap: 7px;
     font-size: 0.78rem;
+  }
+}
+
+/* With reduced motion the ring stands still, so a faded chip would stay out
+   of reach for good: every chip stays visible and takes taps. Last in the file,
+   after the breakpoints that set the fade depths. */
+@media (prefers-reduced-motion: reduce) {
+  .orbitStage {
+    --orbit-fade-from: 2;
+    --orbit-fade-to: 3;
   }
 }
