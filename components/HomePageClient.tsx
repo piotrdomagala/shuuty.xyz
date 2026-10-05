@@ -926,9 +926,14 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
   // Without WebGL, with an image not loaded yet or with reduced motion it is a
   // plain cross-fade.
   useEffect(() => {
-    if (heroPhonesScope === heroScope) return undefined;
+    // A swirl still running for an abandoned change goes first, also when the
+    // reader came back to the place already shown.
     heroSwirls.current.forEach((run) => run.remove());
     heroSwirls.current = [];
+    if (heroPhonesScope === heroScope) {
+      setHeroSwapping(false);
+      return undefined;
+    }
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const runs: SwirlRun[] = [];
     if (!reduced) {
