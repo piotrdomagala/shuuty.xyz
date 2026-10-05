@@ -284,6 +284,7 @@ test('reduced motion explicitly removes phone transform transitions', async () =
   assert.match(css, /\.orbitChip \{[^}]*opacity: clamp\(/);
   assert.match(css, /\.orbitChip\[data-far\] \{[^}]*pointer-events: none;/);
   assert.match(component, /toggleAttribute\('data-far', far\)/);
+  assert.match(component, /CSS\.supports\('opacity', 'cos\(0deg\)'\)/);
   const lastFade = css.lastIndexOf('--orbit-fade-to:');
   const reducedFade = css.lastIndexOf('@media (prefers-reduced-motion: reduce)');
   assert.ok(reducedFade > 0 && reducedFade < lastFade, 'The reduced-motion fade override must be last');

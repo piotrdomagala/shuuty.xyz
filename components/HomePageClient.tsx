@@ -467,9 +467,12 @@ function LoopOrbit({
     // A chip deeper than --orbit-fade-to is fully faded (see the CSS); it must
     // not catch taps over the phone either. The threshold changes with the
     // breakpoint, so it is read again on resize.
+    // Without CSS cos() the chips never fade, so none of them may be made
+    // untappable either (NaN never passes the depth test below).
+    const canFade = typeof CSS !== 'undefined' && CSS.supports('opacity', 'cos(0deg)');
     let fadeTo = Number.NaN;
     const readFadeTo = () => {
-      if (!stageRef.current) return;
+      if (!stageRef.current || !canFade) return;
       fadeTo = Number.parseFloat(
         getComputedStyle(stageRef.current).getPropertyValue('--orbit-fade-to'),
       );
