@@ -68,8 +68,8 @@
               "alt": "Adding a booking in a Shuuty group by choosing a free session"
             },
             {
-              "media": "home-group-members",
-              "alt": "Group members in Shuuty marked as friends, with an Invite button next to a new person"
+              "media": "group-people-people",
+              "alt": "A group task in Shuuty with the person who created it, a member it is assigned to and how far each of them is"
             }
           ]
         }
@@ -409,8 +409,8 @@
               "alt": "Dodawanie rezerwacji w grupie Shuuty przez wybór wolnej sesji"
             },
             {
-              "media": "home-group-members",
-              "alt": "Członkowie grupy w Shuuty oznaczeni jako znajomi i przycisk Zaproś przy nowej osobie"
+              "media": "group-people-people",
+              "alt": "Zadanie grupowe w Shuuty: osoba, która je dodała, i dwie wybrane osoby z grupy, każda ze statusem W trakcie"
             }
           ]
         }
@@ -419,7 +419,7 @@
     "how": {
       "label": "Jak to działa",
       "heading": "Jedna aplikacja, cztery kroki",
-      "lead": "Zaczynasz od siebie. Resztę dodajesz wtedy, kiedy jej potrzebujesz.",
+      "lead": "Zaczynasz od siebie. Resztę dodajesz, gdy będzie potrzebna.",
       "steps": [
         {
           "id": "step-tasks",
@@ -750,8 +750,8 @@
               "alt": "En ny bestilling i en gruppe i Shuuty, der du velger en ledig tid"
             },
             {
-              "media": "home-group-members",
-              "alt": "Gruppemedlemmer i Shuuty merket som venner, og en Inviter-knapp ved en ny person"
+              "media": "group-people-people",
+              "alt": "En gruppeoppgave i Shuuty med den som opprettet den, et medlem den er tildelt, og hvor langt hver av dem har kommet"
             }
           ]
         }

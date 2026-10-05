@@ -139,11 +139,15 @@ export default function HeroSmoke({ sourceRef, targetRef, colors, active, classN
     let height = 0;
     let dpr = 1;
     let sparkDebt = 0;
+    let maxPuffs = MAX_PUFFS;
     let puffDebt = 0;
 
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
-      dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      // Soft smoke needs no sharp pixels; on a phone it also stays lighter.
+      const narrow = window.innerWidth < 720;
+      dpr = Math.min(window.devicePixelRatio || 1, narrow ? 1 : 1.5);
+      maxPuffs = narrow ? 170 : MAX_PUFFS;
       width = rect.width;
       height = rect.height;
       canvas.width = Math.round(width * dpr);
@@ -153,7 +157,7 @@ export default function HeroSmoke({ sourceRef, targetRef, colors, active, classN
     const spawn = (count: number, spark: boolean, sx: number, sy: number, wordWidth: number, base: number) => {
       const place = activeRef.current;
       const style = STYLES[place] ?? STYLES[0];
-      for (let i = 0; i < count && puffs.length < MAX_PUFFS; i += 1) {
+      for (let i = 0; i < count && puffs.length < maxPuffs; i += 1) {
         puffs.push({
           t: random() * 0.05,
           speed: (style.speed[0] + random() * (style.speed[1] - style.speed[0])) * (spark ? 1.25 : 1),

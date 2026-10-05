@@ -346,6 +346,11 @@
   justify-items: start;
 }
 
+/* On a narrow phone the two places waiting stand under the word in front. */
+.heroScopes[data-stacked] {
+  padding-bottom: 0.32em;
+}
+
 /* All three share one grid cell, so the line keeps the width of the longest
    and nothing below it moves. The page switches them together with the
    phones; the one shown has a line drawn under it in its step colour. */
@@ -353,16 +358,45 @@
   --step-ink: var(--accent-text);
   --step-rgb: var(--gold-rgb);
   position: relative;
+  z-index: 0;
   grid-area: 1 / 1;
   color: var(--step-ink);
   white-space: nowrap;
-  opacity: 0;
-  transform: translateY(0.3em);
-  filter: blur(6px);
+  /* The two places waiting stand small and soft behind the word in front,
+     one at each end of the line (--ghost-x is set by the page from the word
+     widths). */
+  opacity: 0.3;
+  transform: translate(var(--ghost-x, 0px), var(--ghost-y, 0px)) translateY(0.04em) scale(0.4);
+  filter: blur(0.8px);
+  /* Nothing slides: on a change every word fades and blurs out, takes its
+     new spot while unseen and fades back in (see [data-fading]). */
+  translate: 0 0;
   transition:
-    opacity 0.55s cubic-bezier(0.2, 0.8, 0.2, 1),
-    transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1),
-    filter 0.55s ease;
+    opacity 0.45s cubic-bezier(0.2, 0.8, 0.2, 1),
+    filter 0.45s ease,
+    translate 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.heroScopes[data-fading] .heroScope {
+  opacity: 0;
+  filter: blur(6px);
+  translate: 0 -0.2em;
+  transition-duration: 0.28s;
+}
+
+.heroScopes[data-front='0'] .heroScope {
+  --ghost-x: var(--x-0, 0px);
+  --ghost-y: var(--y-0, 0px);
+}
+
+.heroScopes[data-front='1'] .heroScope {
+  --ghost-x: var(--x-1, 0px);
+  --ghost-y: var(--y-1, 0px);
+}
+
+.heroScopes[data-front='2'] .heroScope {
+  --ghost-x: var(--x-2, 0px);
+  --ghost-y: var(--y-2, 0px);
 }
 
 /* The canvas with the smoke from the word to the phones lies under the
@@ -384,6 +418,7 @@
 }
 
 .heroScope[data-active] {
+  z-index: 1;
   text-shadow: 0 0 28px rgba(var(--step-rgb), 0.45);
   opacity: 1;
   transform: none;
@@ -554,39 +589,10 @@
   z-index: 7;
   width: min(calc(100% - 32px), 400px);
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr)) 44px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   align-items: start;
   gap: 10px;
   transform: translateX(-50%);
-}
-
-.heroScopePause {
-  width: 44px;
-  height: 44px;
-  display: grid;
-  place-items: center;
-  border: 0;
-  border-radius: 50%;
-  color: var(--text-faint);
-  background: transparent;
-  cursor: pointer;
-  transition: color 0.2s ease;
-}
-
-.heroScopePause:hover,
-.heroScopePause[aria-pressed='true'] {
-  color: var(--text);
-}
-
-.heroScopePause:focus-visible {
-  outline: 2px solid var(--accent-text);
-  outline-offset: 2px;
-}
-
-.heroScopePause svg {
-  width: 16px;
-  height: 16px;
-  fill: currentColor;
 }
 
 .heroScopeTab {
