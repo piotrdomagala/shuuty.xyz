@@ -110,14 +110,33 @@ test('the landing tells one four-step story in every language', async () => {
     `${content.en.hero.title} ${content.en.hero.accent}`,
     'Tasks, plans and reservations on your own, with friends and in groups',
   );
+  // Three places, each with its own three real screens, shown together with
+  // the place in the headline: tasks on your own, with friends, in groups.
+  const heroSets = {
+    private: ['home-planner-meeting', 'home-planner-subtasks', 'home-voice'],
+    friends: ['home-delegated-task', 'home-friends', 'home-meeting-page'],
+    groups: ['home-group-calendar', 'home-booking-slots', 'home-group-page'],
+  };
   for (const lang of ['en', 'pl', 'nb']) {
-    assert.equal(content[lang].hero.scopes.length, 3, `${lang}: three places in the hero`);
+    const sets = content[lang].hero.scopeSets;
+    assert.equal(sets.length, 3, `${lang}: three places in the hero`);
+    assert.deepEqual(
+      sets.map((set) => set.screens.map((screen) => screen.media)),
+      Object.values(heroSets),
+      `${lang}: each place shows its own screens`,
+    );
+    for (const set of sets) {
+      for (const screen of set.screens) assert.ok(screen.alt.length > 20, `${lang}: ${screen.media} alt`);
+    }
   }
-  // The three places take turns in one line; with reduced motion they stand
-  // still as the whole accent sentence.
+  // One place at a time in the headline; with reduced motion the whole
+  // sentence stands still.
   const heroCss = await readFile(new URL('app/page.module.css', root), 'utf8');
-  assert.match(heroCss, /\.heroScope \{[^}]*grid-area: 1 \/ 1;[^}]*animation: heroScopeCycle/);
+  assert.match(heroCss, /\.heroScope \{[^}]*grid-area: 1 \/ 1;/);
+  assert.match(heroCss, /\.heroScope\[data-active\] \{[^}]*opacity: 1;/);
   assert.match(heroCss, /prefers-reduced-motion: reduce\) \{[^@]*\.heroScopes \{\s*display: none;/);
+  const heroComponent = await readFile(new URL('components/HomePageClient.tsx', root), 'utf8');
+  assert.match(heroComponent, /reduced\.matches \|\| heroPaused/);
   assert.equal(content.pl.how.heading, 'Jedna aplikacja, cztery kroki');
   assert.equal(content.en.how.heading, 'One app, four steps');
   assert.equal(content.pl.uses.heading, 'Do czego ludzie używają Shuuty');
@@ -142,7 +161,7 @@ test('the landing tells one four-step story in every language', async () => {
     // Every screen is a registered home capture in the locale the page shows.
     const captureLanguage = language === 'pl' ? 'pl' : 'en';
     const screens = [
-      ...page.hero.screens,
+      ...page.hero.scopeSets.flatMap((set) => set.screens),
       ...page.how.steps.flatMap((step) => step.screens),
       page.how.loop.screen,
     ];

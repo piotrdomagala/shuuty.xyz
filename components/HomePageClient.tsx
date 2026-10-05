@@ -168,7 +168,7 @@ const createSiteSchema = (language: Lang, copy: Copy) => {
         image: socialImage(language).url,
         downloadUrl: [APP_STORE_URL, GOOGLE_PLAY_URL],
         sameAs: [APP_STORE_URL, GOOGLE_PLAY_URL],
-        screenshot: copy.hero.screens.map(
+        screenshot: copy.hero.scopeSets.flatMap((set) => set.screens).map(
           (screen) => `${SITE_URL}${screenFor(language, screen).path}`,
         ),
         description: copy.hero.sub,
@@ -255,6 +255,8 @@ function Icon({ name }: Readonly<{ name: IconName }>) {
 const STEP_ICONS: readonly IconName[] = ['task', 'people', 'map', 'group'];
 // The hero chips reuse the colours and icons of steps 1, 2 and 4.
 const HERO_SCOPE_STEPS = [1, 2, 4] as const;
+const HERO_SCOPE_MS = 6000;
+const HERO_HOLD_AFTER_INPUT = 14000;
 
 function AppleIcon() {
   return (
@@ -759,6 +761,9 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
   const [theme, setTheme] = useState<Theme>('dark');
   const [showMobileNav, setShowMobileNav] = useState(false);
   const [activeHeroPhone, setActiveHeroPhone] = useState(0);
+  const [heroScope, setHeroScope] = useState(0);
+  const [heroPaused, setHeroPaused] = useState(false);
+  const heroLastInput = useRef(-Infinity);
   const [activeStep, setActiveStep] = useState<string | null>(null);
   const [loopStep, setLoopStep] = useState<number | null>(null);
   const carouselPointerStart = useRef<number | null>(null);
@@ -786,13 +791,14 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
     }, 2200);
   }, [clearMobileNavTimer]);
 
-  const heroPhones = c.hero.screens.map((screen, index) => ({
-    ...screenFor(lang, screen),
-    // Index 0 is the front screen and the LCP image; index 2 sits in view on
-    // the left, so both load eagerly.
-    loading: index === 1 ? ('lazy' as const) : ('eager' as const),
-    fetchPriority: index === 0 ? ('high' as const) : undefined,
+  // Three places (on your own, with friends, in groups), three phones each.
+  // Every phone slot holds the screen of all three sets, so a change of place
+  // is a cross-fade between images that have already loaded.
+  const heroSets = c.hero.scopeSets.map((set) => ({
+    scope: set.scope,
+    phones: set.screens.map((screen) => screenFor(lang, screen)),
   }));
+  const heroPhones = heroSets[heroScope].phones;
   const steps = c.how.steps.map((step) => ({
     ...step,
     screens: step.screens.map((screen) => screenFor(lang, screen)),
@@ -869,6 +875,26 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
     },
     [rotateHeroPhones],
   );
+
+  // The place in the headline and the phones change together every few
+  // seconds; a choice by the reader holds it for a while, hovering pauses it,
+  // and with reduced motion it never changes by itself.
+  const chooseHeroScope = useCallback((index: number) => {
+    heroLastInput.current = performance.now();
+    setHeroScope(index);
+    setActiveHeroPhone(0);
+  }, []);
+
+  useEffect(() => {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const timer = window.setInterval(() => {
+      if (reduced.matches || heroPaused || document.visibilityState !== 'visible') return;
+      if (performance.now() - heroLastInput.current < HERO_HOLD_AFTER_INPUT) return;
+      setHeroScope((current) => (current + 1) % 3);
+      setActiveHeroPhone(0);
+    }, HERO_SCOPE_MS);
+    return () => window.clearInterval(timer);
+  }, [heroPaused]);
 
   useEffect(() => {
     setTheme(document.documentElement.dataset.theme === 'light' ? 'light' : 'dark');
@@ -1040,14 +1066,19 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
             <h1 className={s.heroTitle}>
               {c.hero.title}{' '}
               <span className={s.srOnly}>{c.hero.accent}</span>
-              {/* Where it works, one place at a time in the step colours: on
-                  your own, with friends, in groups. The sentence above is what
-                  a screen reader and a search engine read; with reduced motion
-                  the three places stand still on one line. */}
+              {/* One place at a time in the step colours, together with the
+                  phones: on your own, with friends, in groups. The sentence
+                  above is what a screen reader and a search engine read; with
+                  reduced motion the whole sentence stands still. */}
               <span className={s.heroScopes} aria-hidden="true">
-                {c.hero.scopes.map((scope, index) => (
-                  <span key={scope} className={s.heroScope} data-step={HERO_SCOPE_STEPS[index]}>
-                    {scope}
+                {heroSets.map((set, index) => (
+                  <span
+                    key={set.scope}
+                    className={s.heroScope}
+                    data-step={HERO_SCOPE_STEPS[index]}
+                    data-active={index === heroScope ? '' : undefined}
+                  >
+                    {set.scope}
                   </span>
                 ))}
               </span>
@@ -1060,19 +1091,6 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
                 {c.hero.secondaryCta}<Icon name="arrow" />
               </a>
             </div>
-            <ol className={s.heroSteps} aria-label={c.how.heading}>
-              {navItems.map((item, index) => (
-                <li key={item.href} data-step={index + 1}>
-                  <a href={item.href}>
-                    <span className={s.heroStepNumber} aria-hidden="true">
-                      {String(index + 1).padStart(2, '0')}
-                    </span>
-                    <Icon name={STEP_ICONS[index]} />
-                    <span className={s.heroStepLabel}>{item.label}</span>
-                  </a>
-                </li>
-              ))}
-            </ol>
           </div>
 
           <div
@@ -1080,7 +1098,12 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
             role="region"
             aria-roledescription={carousel.roleDescription}
             aria-label={carousel.region}
+            data-step={HERO_SCOPE_STEPS[heroScope]}
             onKeyDown={handleCarouselKeyDown}
+            onPointerEnter={(event) => {
+              if (event.pointerType === 'mouse') setHeroPaused(true);
+            }}
+            onPointerLeave={() => setHeroPaused(false)}
             onPointerDown={handleCarouselPointerDown}
             onPointerUp={handleCarouselPointerUp}
             onPointerCancel={() => {
@@ -1103,13 +1126,14 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
                     heroPhoneButtons.current[index] = element;
                   }}
                   type="button"
-                  key={phone.id}
+                  key={`slot-${index}`}
                   className={`${s.phone} ${positionClass}`}
                   onClick={() => {
                     if (carouselDidSwipe.current) {
                       carouselDidSwipe.current = false;
                       return;
                     }
+                    heroLastInput.current = performance.now();
                     selectHeroPhone(index);
                   }}
                   aria-label={`${phone.alt}. ${
@@ -1119,42 +1143,69 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
                   }`}
                   aria-pressed={isActive}
                 >
-                  <ProductDeviceFrame
-                    media={phone}
-                    alt={phone.alt}
-                    loading={phone.loading}
-                    fetchPriority={phone.fetchPriority}
-                    sizes={isActive ? '(max-width: 720px) 55vw, 290px' : '(max-width: 720px) 34vw, 190px'}
-                  />
+                  {heroSets.map((set, setIndex) => {
+                    const media = set.phones[index];
+                    const shown = setIndex === heroScope;
+                    return (
+                      <span
+                        key={media.id}
+                        className={s.heroPhoneLayer}
+                        data-shown={shown ? '' : undefined}
+                        aria-hidden={shown ? undefined : true}
+                      >
+                        <ProductDeviceFrame
+                          media={media}
+                          alt={shown ? media.alt : ''}
+                          // The first set holds the LCP picture; the other two
+                          // load right after, so a change of place never waits.
+                          loading={setIndex === 0 && index !== 1 ? 'eager' : 'lazy'}
+                          fetchPriority={setIndex === 0 && index === 0 ? 'high' : undefined}
+                          sizes={isActive ? '(max-width: 720px) 55vw, 290px' : '(max-width: 720px) 34vw, 190px'}
+                        />
+                      </span>
+                    );
+                  })}
                 </button>
               );
             })}
-            <div
-              className={s.carouselDots}
-              role="group"
-              aria-label={carousel.choose}
-            >
-              {heroPhones.map((phone, index) => (
+            <div className={s.heroScopeTabs} role="group" aria-label={carousel.choose}>
+              {heroSets.map((set, index) => (
                 <button
                   type="button"
-                  key={`${phone.id}-dot`}
-                  className={`${s.carouselDot} ${index === activeHeroPhone ? s.carouselDotActive : ''}`}
-                  onClick={() => {
-                    if (carouselDidSwipe.current) {
-                      carouselDidSwipe.current = false;
-                      return;
-                    }
-                    selectHeroPhone(index);
-                  }}
-                  aria-label={`${carousel.preview} ${index + 1}: ${phone.alt}`}
-                  aria-pressed={index === activeHeroPhone}
-                />
+                  key={`${set.scope}-tab`}
+                  className={s.heroScopeTab}
+                  data-step={HERO_SCOPE_STEPS[index]}
+                  aria-pressed={index === heroScope}
+                  onClick={() => chooseHeroScope(index)}
+                >
+                  <span className={s.heroScopeTabLabel}>{set.scope}</span>
+                  <span
+                    key={index === heroScope ? `run-${heroScope}` : 'idle'}
+                    className={s.heroScopeTabBar}
+                    data-paused={heroPaused ? '' : undefined}
+                    aria-hidden="true"
+                  />
+                </button>
               ))}
             </div>
             <p className={s.srOnly} aria-live="polite">
-              {`${activeHeroPhone + 1} / ${heroPhones.length}: ${heroPhones[activeHeroPhone].alt}`}
+              {`${heroSets[heroScope].scope}: ${heroPhones[activeHeroPhone].alt}`}
             </p>
           </div>
+
+          <ol className={s.heroSteps} aria-label={c.how.heading}>
+            {navItems.map((item, index) => (
+              <li key={item.href} data-step={index + 1}>
+                <a href={item.href}>
+                  <span className={s.heroStepNumber} aria-hidden="true">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <Icon name={STEP_ICONS[index]} />
+                  <span className={s.heroStepLabel}>{item.label}</span>
+                </a>
+              </li>
+            ))}
+          </ol>
         </section>
 
         <section id="how-it-works" className={`${s.section} ${s.howSection}`}>

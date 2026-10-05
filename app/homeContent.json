@@ -19,21 +19,59 @@
       "badge": "Available on iOS and Android",
       "title": "Tasks, plans and reservations",
       "accent": "on your own, with friends and in groups",
-      "scopes": ["on your own", "with friends", "in groups"],
       "sub": "Plan your own things, share a task with friends or run a group with a calendar, reservations and chat - all in one app.",
       "secondaryCta": "See how it works",
-      "screens": [
+      "scopeSets": [
         {
-          "media": "home-planner-meeting",
-          "alt": "Shuuty planner with colourful tasks and a board games meeting with a photo"
+          "scope": "on your own",
+          "screens": [
+            {
+              "media": "home-planner-meeting",
+              "alt": "Shuuty planner with colourful tasks and a board games meeting with a photo"
+            },
+            {
+              "media": "home-planner-subtasks",
+              "alt": "A Shuuty task with a subtask checklist and a timer"
+            },
+            {
+              "media": "home-voice",
+              "alt": "A new voice task in Shuuty, ready to record"
+            }
+          ]
         },
         {
-          "media": "home-group-page",
-          "alt": "A dance group page in Shuuty with its description, location and members"
+          "scope": "with friends",
+          "screens": [
+            {
+              "media": "home-delegated-task",
+              "alt": "A task handed to a friend in Shuuty, with a discussion under the description"
+            },
+            {
+              "media": "home-friends",
+              "alt": "The friends list in Shuuty with an invitation link and QR code"
+            },
+            {
+              "media": "home-meeting-page",
+              "alt": "A meeting page in Shuuty with the place, participants and description"
+            }
+          ]
         },
         {
-          "media": "home-discover-meetings",
-          "alt": "The Shuuty Discover map with a board game meeting nearby"
+          "scope": "in groups",
+          "screens": [
+            {
+              "media": "home-group-calendar",
+              "alt": "A group calendar in Shuuty with a trip, its place and a cost of 180 PLN"
+            },
+            {
+              "media": "home-booking-slots",
+              "alt": "Adding a booking in a Shuuty group by choosing a free session"
+            },
+            {
+              "media": "home-group-page",
+              "alt": "A dance group page in Shuuty with its description, location and members"
+            }
+          ]
         }
       ]
     },
@@ -322,21 +360,59 @@
       "badge": "Dostępne na iOS i Android",
       "title": "Zadania, terminy i rezerwacje",
       "accent": "prywatnie, ze znajomymi i w grupach",
-      "scopes": ["prywatnie", "ze znajomymi", "w grupach"],
       "sub": "Zaplanuj własne sprawy, podziel się zadaniem ze znajomymi albo prowadź grupę z kalendarzem, rezerwacjami i czatem - wszystko w jednej aplikacji.",
       "secondaryCta": "Zobacz, jak to działa",
-      "screens": [
+      "scopeSets": [
         {
-          "media": "home-planner-meeting",
-          "alt": "Planer Shuuty z kolorowymi zadaniami i spotkaniem planszówkowym ze zdjęciem"
+          "scope": "prywatnie",
+          "screens": [
+            {
+              "media": "home-planner-meeting",
+              "alt": "Planer Shuuty z kolorowymi zadaniami i spotkaniem planszówkowym ze zdjęciem"
+            },
+            {
+              "media": "home-planner-subtasks",
+              "alt": "Zadanie w Shuuty z listą podzadań i stoperem"
+            },
+            {
+              "media": "home-voice",
+              "alt": "Nowe zadanie głosowe w Shuuty, gotowe do nagrania"
+            }
+          ]
         },
         {
-          "media": "home-group-page",
-          "alt": "Strona grupy tanecznej w Shuuty z opisem, lokalizacją i członkami"
+          "scope": "ze znajomymi",
+          "screens": [
+            {
+              "media": "home-delegated-task",
+              "alt": "Zadanie przekazane znajomemu w Shuuty z dyskusją pod opisem"
+            },
+            {
+              "media": "home-friends",
+              "alt": "Lista znajomych w Shuuty z linkiem i kodem QR zaproszenia"
+            },
+            {
+              "media": "home-meeting-page",
+              "alt": "Strona spotkania w Shuuty z miejscem, uczestnikami i opisem"
+            }
+          ]
         },
         {
-          "media": "home-discover-meetings",
-          "alt": "Mapa Odkrywaj w Shuuty ze spotkaniem planszówkowym w pobliżu"
+          "scope": "w grupach",
+          "screens": [
+            {
+              "media": "home-group-calendar",
+              "alt": "Kalendarz grupy w Shuuty z wyjazdem, miejscem i kosztem 180 zł"
+            },
+            {
+              "media": "home-booking-slots",
+              "alt": "Dodawanie rezerwacji w grupie Shuuty przez wybór wolnej sesji"
+            },
+            {
+              "media": "home-group-page",
+              "alt": "Strona grupy tanecznej w Shuuty z opisem, lokalizacją i członkami"
+            }
+          ]
         }
       ]
     },
@@ -625,21 +701,59 @@
       "badge": "Tilgjengelig for iOS og Android",
       "title": "Oppgaver, avtaler og reservasjoner",
       "accent": "for deg selv, med venner og i grupper",
-      "scopes": ["for deg selv", "med venner", "i grupper"],
       "sub": "Planlegg egne ting, del en oppgave med venner eller driv en gruppe med kalender, reservasjoner og chat - alt i én app.",
       "secondaryCta": "Se hvordan det fungerer",
-      "screens": [
+      "scopeSets": [
         {
-          "media": "home-planner-meeting",
-          "alt": "Shuuty-planleggeren med fargerike oppgaver og et brettspillmøte med bilde"
+          "scope": "for deg selv",
+          "screens": [
+            {
+              "media": "home-planner-meeting",
+              "alt": "Shuuty-planleggeren med fargerike oppgaver og et brettspillmøte med bilde"
+            },
+            {
+              "media": "home-planner-subtasks",
+              "alt": "En oppgave i Shuuty med deloppgaver og tidtaker"
+            },
+            {
+              "media": "home-voice",
+              "alt": "En ny oppgave med stemmen i Shuuty, klar til innspilling"
+            }
+          ]
         },
         {
-          "media": "home-group-page",
-          "alt": "Siden til en dansegruppe i Shuuty med beskrivelse, sted og medlemmer"
+          "scope": "med venner",
+          "screens": [
+            {
+              "media": "home-delegated-task",
+              "alt": "En oppgave gitt til en venn i Shuuty, med diskusjon under beskrivelsen"
+            },
+            {
+              "media": "home-friends",
+              "alt": "Vennelisten i Shuuty med invitasjonslenke og QR-kode"
+            },
+            {
+              "media": "home-meeting-page",
+              "alt": "Siden til et møte i Shuuty med sted, deltakere og beskrivelse"
+            }
+          ]
         },
         {
-          "media": "home-discover-meetings",
-          "alt": "Utforsk-kartet i Shuuty med et brettspillmøte i nærheten"
+          "scope": "i grupper",
+          "screens": [
+            {
+              "media": "home-group-calendar",
+              "alt": "Gruppekalenderen i Shuuty med en tur, sted og en kostnad på 180 PLN"
+            },
+            {
+              "media": "home-booking-slots",
+              "alt": "En ny bestilling i en gruppe i Shuuty, der du velger en ledig tid"
+            },
+            {
+              "media": "home-group-page",
+              "alt": "Siden til en dansegruppe i Shuuty med beskrivelse, sted og medlemmer"
+            }
+          ]
         }
       ]
     },
