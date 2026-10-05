@@ -980,7 +980,12 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
   }, []);
 
   useEffect(() => {
-    if (heroWordScope === heroScope) return undefined;
+    // Back at the word already in front (a change given up on before it
+    // swapped): it has to show again, or it would stay faded out for good.
+    if (heroWordScope === heroScope) {
+      setHeroWordsFading(false);
+      return undefined;
+    }
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       setHeroWordScope(heroScope);
       return undefined;
