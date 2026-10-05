@@ -115,7 +115,7 @@ test('the landing tells one four-step story in every language', async () => {
   const heroSets = {
     private: ['home-planner-meeting', 'home-planner-subtasks', 'home-voice'],
     friends: ['home-assign-friends', 'home-delegated-task', 'home-meeting-page'],
-    groups: ['home-group-calendar', 'home-booking-slots', 'home-group-members'],
+    groups: ['home-group-calendar', 'home-booking-slots', 'group-people-people'],
   };
   for (const lang of ['en', 'pl', 'nb']) {
     const sets = content[lang].hero.scopeSets;
