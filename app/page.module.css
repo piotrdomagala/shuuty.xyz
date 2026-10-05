@@ -1267,8 +1267,8 @@
   /* Depth of a chip on the ring: cos of its angle, 1 straight behind the
      phone, -1 straight in front. A chip fades out between these two depths,
      before it reaches the edge of the phone, so it never shows half cut. */
-  --orbit-fade-from: 0.6;
-  --orbit-fade-to: 0.82;
+  --orbit-fade-from: 0.45;
+  --orbit-fade-to: 0.8;
   position: relative;
   min-width: 0;
   height: calc(var(--orbit-phone) * 2.15 + 110px);
@@ -1423,14 +1423,32 @@
   appearance: none;
   -webkit-appearance: none;
   -webkit-tap-highlight-color: transparent;
+  /* Depth on the ring: -1 straight in front of the phone, 1 straight behind.
+     --orbit-near is 1 until the chip reaches --orbit-fade-from and 0 past
+     --orbit-fade-to. A chip going round the back gets smaller, softer and
+     dimmer (never gone), and the one in front is a little larger, so the ring
+     reads as depth instead of a chip cut by the edge of the phone. Without CSS
+     cos() these declarations are invalid and the chip stays as it was. */
   --orbit-depth: cos(calc(var(--orbit-angle) + var(--orbit-rot, 0deg)));
-  opacity: clamp(
+  --orbit-near: clamp(
     0,
     calc((var(--orbit-depth) - var(--orbit-fade-to)) / (var(--orbit-fade-from) - var(--orbit-fade-to))),
     1
   );
-  transform: translate(-50%, -50%);
+  opacity: calc(0.22 + 0.78 * var(--orbit-near));
+  filter: blur(calc((1 - var(--orbit-near)) * 1.6px));
+  translate: -50% -50%;
+  scale: calc(0.9 - 0.12 * var(--orbit-depth));
   transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* The chip at the front of the ring is the step the phone shows. */
+.orbitChip[data-front] {
+  border-color: var(--step-ink);
+  box-shadow:
+    0 12px 30px rgba(var(--shadow-rgb), 0.28),
+    0 0 0 4px rgba(var(--step-rgb), 0.16),
+    0 0 28px rgba(var(--step-rgb), 0.38);
 }
 
 /* Set by the orbit loop when the chip is fully faded: no taps over the phone. */
@@ -1448,6 +1466,7 @@
 
 .orbitChip:focus-visible {
   opacity: 1;
+  filter: none;
   outline: 3px solid var(--accent-text);
   outline-offset: 3px;
 }
@@ -1886,8 +1905,8 @@
   .orbitStage {
     --orbit-r: 180px;
     --orbit-phone: 210px;
-    --orbit-fade-from: 0.2;
-    --orbit-fade-to: 0.38;
+    --orbit-fade-from: 0.15;
+    --orbit-fade-to: 0.5;
   }
 }
 
@@ -1968,8 +1987,8 @@
     margin: 0 auto;
     --orbit-r: 215px;
     --orbit-phone: 230px;
-    --orbit-fade-from: 0.38;
-    --orbit-fade-to: 0.56;
+    --orbit-fade-from: 0.3;
+    --orbit-fade-to: 0.65;
   }
 
   .useGrid {
@@ -2185,8 +2204,8 @@
     --orbit-r: min(31vw, 150px);
     --orbit-phone: min(44vw, 190px);
     --orbit-tilt: 70deg;
-    --orbit-fade-from: 0.16;
-    --orbit-fade-to: 0.36;
+    --orbit-fade-from: 0.1;
+    --orbit-fade-to: 0.45;
     height: calc(var(--orbit-phone) * 2.15 + 64px);
   }
 

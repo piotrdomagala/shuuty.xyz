@@ -5,7 +5,7 @@ const description =
   'Lista zadań, zadania dla znajomych i grupy z kalendarzem, rezerwacjami i spotkaniami w pobliżu. Zacznij od własnych zadań. iOS i Android.';
 
 export const metadata = createPublicPageMetadata({
-  title: 'Shuuty - aplikacja do zadań ze znajomymi i w grupach',
+  title: 'Shuuty - zadania, terminy i rezerwacje ze znajomymi i w grupach',
   absoluteTitle: true,
   description,
   path: '/pl/',

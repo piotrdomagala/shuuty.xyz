@@ -5,7 +5,7 @@ const description =
   'En oppgaveliste, oppgaver til venner og grupper med kalender, bestillinger og møter i nærheten. Start med dine egne oppgaver. iOS og Android.';
 
 export const metadata = createPublicPageMetadata({
-  title: 'Shuuty - oppgaveapp med venner og grupper',
+  title: 'Shuuty - oppgaver, avtaler og reservasjoner med venner og grupper',
   absoluteTitle: true,
   description,
   path: '/nb/',

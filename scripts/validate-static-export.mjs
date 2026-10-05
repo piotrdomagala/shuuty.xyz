@@ -102,8 +102,8 @@ const pages = {
     path: 'out/index.html',
     route: '/',
     required: [
-      'A task app -',
-      'for you, your friends and your groups',
+      'Tasks, plans and reservations',
+      'on your own, with friends and in groups',
       'One app, four steps',
       'Your to-do list',
       'Friends and shared tasks',
@@ -134,7 +134,7 @@ const pages = {
       /<h1[^>]*>/,
       /<script type="application\/ld\+json">/,
       /<details[^>]*open=""/,
-      /<title>Shuuty - a task app with friends and groups<\/title>/,
+      /<title>Shuuty - tasks, plans and reservations with friends and groups<\/title>/,
     ],
     forbiddenPatterns: [
       /\/images\/image[1-5]\.webp/,
@@ -152,8 +152,8 @@ const pages = {
     path: 'out/pl/index.html',
     route: '/pl/',
     required: [
-      'Aplikacja do zadań -',
-      'Twoich, ze znajomymi i w grupach',
+      'Zadania, terminy i rezerwacje',
+      'prywatnie, ze znajomymi i w grupach',
       'Jedna aplikacja, cztery kroki',
       'Twoja lista zadań',
       'Znajomi i wspólne zadania',
@@ -177,7 +177,7 @@ const pages = {
       /<h1[^>]*>/,
       /<script type="application\/ld\+json">/,
       /<details[^>]*open=""/,
-      /<title>Shuuty - aplikacja do zadań ze znajomymi i w grupach<\/title>/,
+      /<title>Shuuty - zadania, terminy i rezerwacje ze znajomymi i w grupach<\/title>/,
     ],
     forbiddenPatterns: [
       /\/images\/app\/(?:create-menu|discover-groups|discover-meetings|profile-settings)\.(?:jpe?g|png)/,
@@ -193,8 +193,8 @@ const pages = {
     path: 'out/nb/index.html',
     route: '/nb/',
     required: [
-      'En oppgaveapp -',
-      'for deg, vennene dine og gruppene dine',
+      'Oppgaver, avtaler og reservasjoner',
+      'for deg selv, med venner og i grupper',
       'Én app, fire steg',
       'Din oppgaveliste',
       'Én app, mange muligheter',
@@ -213,7 +213,7 @@ const pages = {
       /<h1[^>]*>/,
       /<script type="application\/ld\+json">/,
       /<details[^>]*open=""/,
-      /<title>Shuuty - oppgaveapp med venner og grupper<\/title>/,
+      /<title>Shuuty - oppgaver, avtaler og reservasjoner med venner og grupper<\/title>/,
     ],
     forbiddenPatterns: [
       /\/images\/product\/[a-z-]+-2026\/pl-PL\//,

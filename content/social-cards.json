@@ -16,13 +16,14 @@
   "cards": {
     "en": {
       "headline": [
-        "A task app -",
-        "for you, your friends",
-        "and your groups"
+        "Tasks, plans",
+        "and reservations",
+        "on your own, with friends",
+        "and in groups"
       ],
       "tagline": "Tasks, friends, meetings and groups",
       "footer": "Available on iOS and Android",
-      "alt": "Shuuty - a task app for you, your friends and your groups. Real Shuuty app screens.",
+      "alt": "Shuuty - tasks, plans and reservations on your own, with friends and in groups. Real Shuuty app screens.",
       "screens": [
         "en-home-group-page",
         "en-home-planner-subtasks",
@@ -38,19 +39,20 @@
         "mediaType": "image/jpeg",
         "width": 1200,
         "height": 630,
-        "byteLength": 109233,
-        "sha256": "75f9a2386a069a7ab7c85fc322a037f5f36e0cd54096870ba1db451608bedf07"
+        "byteLength": 109130,
+        "sha256": "b472e25a6d88aeecb4dfb414bd2dcd375da70f319430055d9e034c27c9ba19ff"
       }
     },
     "pl": {
       "headline": [
-        "Aplikacja do zadań -",
-        "Twoich, ze znajomymi",
+        "Zadania, terminy",
+        "i rezerwacje",
+        "prywatnie, ze znajomymi",
         "i w grupach"
       ],
       "tagline": "Zadania, znajomi, spotkania i grupy",
       "footer": "Dostępne na iOS i Android",
-      "alt": "Shuuty - aplikacja do zadań Twoich, ze znajomymi i w grupach. Prawdziwe ekrany aplikacji Shuuty.",
+      "alt": "Shuuty - zadania, terminy i rezerwacje prywatnie, ze znajomymi i w grupach. Prawdziwe ekrany aplikacji Shuuty.",
       "screens": [
         "pl-home-group-page",
         "pl-home-planner-subtasks",
@@ -66,19 +68,20 @@
         "mediaType": "image/jpeg",
         "width": 1200,
         "height": 630,
-        "byteLength": 107357,
-        "sha256": "e23a39cbe96e38f98b1989ce6353eef125985962f2f6108f901a1a078bb072be"
+        "byteLength": 108580,
+        "sha256": "c1a370affecc38fdc2cddc06eb1bea67ec2cdf9be537884194362ee647a9e138"
       }
     },
     "nb": {
       "headline": [
-        "En oppgaveapp -",
-        "for deg, vennene dine",
-        "og gruppene dine"
+        "Oppgaver, avtaler",
+        "og reservasjoner",
+        "for deg selv, med venner",
+        "og i grupper"
       ],
       "tagline": "Oppgaver, venner, møter og grupper",
       "footer": "Tilgjengelig for iOS og Android",
-      "alt": "Shuuty - en oppgaveapp for deg, vennene dine og gruppene dine. Ekte skjermbilder fra Shuuty.",
+      "alt": "Shuuty - oppgaver, avtaler og reservasjoner for deg selv, med venner og i grupper. Ekte skjermbilder fra Shuuty.",
       "screens": [
         "en-home-group-page",
         "en-home-planner-subtasks",
@@ -94,8 +97,8 @@
         "mediaType": "image/jpeg",
         "width": 1200,
         "height": 630,
-        "byteLength": 111270,
-        "sha256": "90988f9f18b4e7faeef49cd5b561b435f935580044236824973db4e00029224a"
+        "byteLength": 109180,
+        "sha256": "2ce9d3da571716747ff63b2ab811d937e67c889e8637267d0303b68d9cc85111"
       }
     }
   },

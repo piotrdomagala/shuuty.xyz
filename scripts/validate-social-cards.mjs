@@ -91,8 +91,8 @@ async function checkCardImage(language, card, root, failures) {
 }
 
 function checkHeadline(label, headline, failures) {
-  if (!Array.isArray(headline) || headline.length < 2 || headline.length > 3) {
-    failures.push(`${label}.headline must have two or three lines.`);
+  if (!Array.isArray(headline) || headline.length < 2 || headline.length > 4) {
+    failures.push(`${label}.headline must have two to four lines.`);
     return false;
   }
   headline.forEach((line, index) => checkText(`${label}.headline[${index}]`, line, failures));

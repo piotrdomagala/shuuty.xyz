@@ -74,9 +74,9 @@ const guideFor = (language: Lang, topic: string): GuideEntry | undefined =>
   GUIDES.find((guide) => guide.language === language && guide.topic === topic);
 
 const pageNames: Record<Lang, string> = {
-  en: 'Shuuty - a task app with friends and groups',
-  pl: 'Shuuty - aplikacja do zadań ze znajomymi i w grupach',
-  nb: 'Shuuty - oppgaveapp med venner og grupper',
+  en: 'Shuuty - tasks, plans and reservations with friends and groups',
+  pl: 'Shuuty - zadania, terminy i rezerwacje ze znajomymi i w grupach',
+  nb: 'Shuuty - oppgaver, avtaler og reservasjoner med venner og grupper',
 };
 
 const carouselLabels: Record<
@@ -295,6 +295,7 @@ function StoreButton({
       rel="noopener noreferrer"
       className={s.storeBtn}
       data-goatcounter-click={clickEvent}
+      data-goatcounter-title={`${prefix} ${label}`}
     >
       {platform === 'apple' ? <AppleIcon /> : <PlayIcon />}
       <span className={s.storeBtnText}>
@@ -436,6 +437,7 @@ function LoopOrbit({
   const stageRef = useRef<HTMLDivElement | null>(null);
   const spinRef = useRef<HTMLDivElement | null>(null);
   const chipRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const frontRef = useRef<number | null>(null);
   const [announce, setAnnounce] = useState('');
   const phoneId = useId();
   const motion = useRef({
@@ -455,7 +457,10 @@ function LoopOrbit({
     lastTime: 0,
     suppressClick: false,
   });
-  const activeScreen = selected === null ? screens[0] : screens[selected + 1];
+  // Until a step is chosen, the phone follows the chip at the front of the ring.
+  const [front, setFront] = useState<number | null>(null);
+  const shown = selected ?? front;
+  const activeScreen = shown === null ? screens[0] : screens[shown + 1];
 
   useEffect(() => {
     const m = motion.current;
@@ -522,11 +527,28 @@ function LoopOrbit({
       // Only a custom property on the spinning plane changes: the ring and the
       // chips turn by transform, nothing is laid out again.
       spinRef.current?.style.setProperty('--orbit-rot', `${m.rotation.toFixed(2)}deg`);
+      let nearest = 0;
+      let nearestDepth = Infinity;
       chipRefs.current.forEach((chip, index) => {
+        const depth = Math.cos(((orbitAngle(index) + m.rotation) * Math.PI) / 180);
+        if (depth < nearestDepth) {
+          nearestDepth = depth;
+          nearest = index;
+        }
         if (!chip) return;
-        const far = Math.cos(((orbitAngle(index) + m.rotation) * Math.PI) / 180) >= fadeTo;
+        const far = depth >= fadeTo;
         if (chip.hasAttribute('data-far') !== far) chip.toggleAttribute('data-far', far);
       });
+      chipRefs.current.forEach((chip, index) => {
+        const isFront = index === nearest;
+        if (chip && chip.hasAttribute('data-front') !== isFront) {
+          chip.toggleAttribute('data-front', isFront);
+        }
+      });
+      if (nearest !== frontRef.current) {
+        frontRef.current = nearest;
+        setFront(nearest);
+      }
       frame = running() ? requestAnimationFrame(tick) : 0;
     };
     const observer = new IntersectionObserver(([entry]) => {

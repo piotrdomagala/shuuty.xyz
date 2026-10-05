@@ -82,7 +82,7 @@ test('Norwegian landing content has the same structure and story', async () => {
   );
 
   assert.deepEqual(contentShape(content.en), contentShape(content.nb));
-  assert.equal(content.nb.hero.title, 'En oppgaveapp -');
+  assert.equal(content.nb.hero.title, 'Oppgaver, avtaler og reservasjoner');
   assert.equal(content.nb.how.steps.length, 4);
   assert.equal(content.nb.uses.items.length, 5);
   assert.equal(content.nb.faq.items.length, 5);
@@ -98,15 +98,21 @@ test('the landing tells one four-step story in every language', async () => {
   );
   const captureIds = new Set(media.guideCaptures.map((capture) => capture.id));
 
-  // No-break spaces keep "i w grupach" together, so the line never ends on a lone "i".
+  // The headline names what the app is for and where: on your own, with
+  // friends, in groups. The whole sentence is in the h1 (for screen readers
+  // and search engines); three chips show the same three places. No-break
+  // spaces keep "i w grupach" together.
   assert.equal(
     `${content.pl.hero.title} ${content.pl.hero.accent}`,
-    'Aplikacja do zadań - Twoich, ze znajomymi i w grupach',
+    'Zadania, terminy i rezerwacje prywatnie, ze znajomymi i w grupach',
   );
   assert.equal(
     `${content.en.hero.title} ${content.en.hero.accent}`,
-    'A task app - for you, your friends and your groups',
+    'Tasks, plans and reservations on your own, with friends and in groups',
   );
+  for (const lang of ['en', 'pl', 'nb']) {
+    assert.equal(content[lang].hero.scopes.length, 3, `${lang}: three hero chips`);
+  }
   assert.equal(content.pl.how.heading, 'Jedna aplikacja, cztery kroki');
   assert.equal(content.en.how.heading, 'One app, four steps');
   assert.equal(content.pl.uses.heading, 'Do czego ludzie używają Shuuty');
@@ -281,7 +287,9 @@ test('reduced motion explicitly removes phone transform transitions', async () =
   // A chip fades out before it reaches the edge of the phone, and a fully
   // faded one takes no taps. With reduced motion the ring stands still, so
   // nothing fades: the override comes after every breakpoint that sets a depth.
-  assert.match(css, /\.orbitChip \{[^}]*opacity: clamp\(/);
+  assert.match(css, /\.orbitChip \{[^}]*--orbit-near: clamp\(/);
+  assert.match(css, /\.orbitChip \{[^}]*opacity: calc\(0\.22 \+ 0\.78 \* var\(--orbit-near\)\);/);
+  assert.match(component, /toggleAttribute\('data-front', isFront\)/);
   assert.match(css, /\.orbitChip\[data-far\] \{[^}]*pointer-events: none;/);
   assert.match(component, /toggleAttribute\('data-far', far\)/);
   assert.match(component, /CSS\.supports\('opacity', 'cos\(0deg\)'\)/);
