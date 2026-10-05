@@ -63,6 +63,19 @@ const STYLES = [
 ] as const;
 
 const MAX_PUFFS = 300;
+
+// The smoke only needs varied numbers, never secure ones: a small seeded
+// generator (mulberry32) keeps it independent of Math.random.
+function makeRandom(seed: number) {
+  let state = seed >>> 0;
+  return () => {
+    state = (state + 0x6d2b79f5) >>> 0;
+    let t = state;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
 const SPRITE_SIZE = 128;
 
 function makeSprite([r, g, b]: Rgb, spark: boolean): HTMLCanvasElement {
@@ -116,6 +129,7 @@ export default function HeroSmoke({ sourceRef, targetRef, colors, active, classN
       darkSpark: colors.dark.map((color) => makeSprite(color, true)),
       lightSpark: colors.light.map((color) => makeSprite(color, true)),
     };
+    const random = makeRandom(0x5ead5);
     const puffs: Puff[] = [];
     const dust: Dust[] = [];
     let frame = 0;
@@ -125,6 +139,7 @@ export default function HeroSmoke({ sourceRef, targetRef, colors, active, classN
     let height = 0;
     let dpr = 1;
     let sparkDebt = 0;
+    let puffDebt = 0;
 
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
@@ -140,15 +155,15 @@ export default function HeroSmoke({ sourceRef, targetRef, colors, active, classN
       const style = STYLES[place] ?? STYLES[0];
       for (let i = 0; i < count && puffs.length < MAX_PUFFS; i += 1) {
         puffs.push({
-          t: Math.random() * 0.05,
-          speed: (style.speed[0] + Math.random() * (style.speed[1] - style.speed[0])) * (spark ? 1.25 : 1),
-          offset: Math.random() - 0.5,
-          drift: (Math.random() - 0.5) * 2,
-          phase: Math.random() * Math.PI * 2,
-          size: (spark ? 0.22 + Math.random() * 0.2 : 0.6 + Math.random() * 0.8) * style.size,
+          t: random() * 0.05,
+          speed: (style.speed[0] + random() * (style.speed[1] - style.speed[0])) * (spark ? 1.25 : 1),
+          offset: random() - 0.5,
+          drift: (random() - 0.5) * 2,
+          phase: random() * Math.PI * 2,
+          size: (spark ? 0.22 + random() * 0.2 : 0.6 + random() * 0.8) * style.size,
           color: place,
-          alpha: spark ? 0.8 + Math.random() * 0.2 : 0.45 + Math.random() * 0.55,
-          strand: Math.floor(Math.random() * style.strands),
+          alpha: spark ? 0.8 + random() * 0.2 : 0.45 + random() * 0.55,
+          strand: Math.floor(random() * style.strands),
           spark,
           sx,
           sy,
@@ -162,15 +177,15 @@ export default function HeroSmoke({ sourceRef, targetRef, colors, active, classN
     const dissolve = (rect: DOMRect, box: DOMRect, color: number) => {
       for (let i = 0; i < 70; i += 1) {
         const spark = i % 5 === 0;
-        const total = 0.9 + Math.random() * 0.9;
+        const total = 0.9 + random() * 0.9;
         dust.push({
-          x: rect.left - box.left + Math.random() * rect.width,
-          y: rect.top - box.top + rect.height * (0.25 + Math.random() * 0.6),
-          vx: (Math.random() - 0.5) * 70,
-          vy: -20 - Math.random() * 60,
+          x: rect.left - box.left + random() * rect.width,
+          y: rect.top - box.top + rect.height * (0.25 + random() * 0.6),
+          vx: (random() - 0.5) * 70,
+          vy: -20 - random() * 60,
           life: total,
           total,
-          size: spark ? 10 + Math.random() * 10 : 26 + Math.random() * 40,
+          size: spark ? 10 + random() * 10 : 26 + random() * 40,
           color,
           spark,
         });
@@ -210,7 +225,13 @@ export default function HeroSmoke({ sourceRef, targetRef, colors, active, classN
       const style = STYLES[activeRef.current] ?? STYLES[0];
       const base = Math.max(22, Math.min(56, s.height * 0.75));
 
-      spawn(Math.round(seconds * style.rate + Math.random() * 0.6), false, wordX, wordY, s.width, base);
+      // Carry the fraction between frames, so the rate is per second and not
+      // per frame (a 120 Hz screen would otherwise emit twice as much).
+      puffDebt += seconds * style.rate;
+      if (puffDebt >= 1) {
+        spawn(Math.floor(puffDebt), false, wordX, wordY, s.width, base);
+        puffDebt -= Math.floor(puffDebt);
+      }
       sparkDebt += seconds * style.sparks;
       if (sparkDebt >= 1) {
         spawn(Math.floor(sparkDebt), true, wordX, wordY, s.width, base);

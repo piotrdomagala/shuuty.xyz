@@ -90,6 +90,8 @@ const carouselLabels: Record<
     bringToFront: string;
     choose: string;
     preview: string;
+    pause: string;
+    play: string;
   }>
 > = {
   en: {
@@ -99,6 +101,8 @@ const carouselLabels: Record<
     bringToFront: 'Bring to front',
     choose: 'Choose a preview',
     preview: 'Preview',
+    pause: 'Pause the change',
+    play: 'Resume the change',
   },
   pl: {
     roleDescription: 'karuzela',
@@ -107,6 +111,8 @@ const carouselLabels: Record<
     bringToFront: 'Pokaż na pierwszym planie',
     choose: 'Wybierz podgląd',
     preview: 'Podgląd',
+    pause: 'Zatrzymaj zmianę',
+    play: 'Wznów zmianę',
   },
   nb: {
     roleDescription: 'karusell',
@@ -115,6 +121,8 @@ const carouselLabels: Record<
     bringToFront: 'Flytt fremst',
     choose: 'Velg forhåndsvisning',
     preview: 'Forhåndsvisning',
+    pause: 'Stopp vekslingen',
+    play: 'Fortsett vekslingen',
   },
 };
 
@@ -788,6 +796,9 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
   const heroLastInput = useRef(-Infinity);
   // A mouse resting on the phones holds the place shown.
   const heroHover = useRef(false);
+  // Focus inside the hero holds it too; the pause button holds it for good.
+  const heroFocus = useRef(false);
+  const [heroStopped, setHeroStopped] = useState(false);
   const heroScopesRef = useRef<HTMLSpanElement | null>(null);
   const heroVisualRef = useRef<HTMLDivElement | null>(null);
   const [activeStep, setActiveStep] = useState<string | null>(null);
@@ -961,12 +972,13 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
   useEffect(() => {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
     const timer = window.setInterval(() => {
-      if (reduced.matches || heroHover.current || document.visibilityState !== 'visible') return;
+      if (reduced.matches || heroHover.current || heroFocus.current || document.visibilityState !== 'visible') return;
       if (performance.now() - heroLastInput.current < HERO_HOLD_AFTER_INPUT) return;
       setHeroScope((current) => (current + 1) % 3);
     }, HERO_SCOPE_MS);
+    if (heroStopped) window.clearInterval(timer);
     return () => window.clearInterval(timer);
-  }, []);
+  }, [heroStopped]);
 
   useEffect(() => {
     setTheme(document.documentElement.dataset.theme === 'light' ? 'light' : 'dark');
@@ -1180,6 +1192,14 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
             aria-label={carousel.region}
             data-step={HERO_SCOPE_STEPS[heroPhonesScope]}
             data-swapping={heroSwapping ? '' : undefined}
+            onFocus={() => {
+              heroFocus.current = true;
+            }}
+            onBlur={(event) => {
+              if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+                heroFocus.current = false;
+              }
+            }}
             onKeyDown={handleCarouselKeyDown}
             onPointerDown={handleCarouselPointerDown}
             onPointerUp={handleCarouselPointerUp}
@@ -1265,6 +1285,18 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
                   <span className={s.heroScopeTabLabel}>{set.scope}</span>
                 </button>
               ))}
+              <button
+                type="button"
+                className={s.heroScopePause}
+                aria-pressed={heroStopped}
+                aria-label={heroStopped ? carousel.play : carousel.pause}
+                title={heroStopped ? carousel.play : carousel.pause}
+                onClick={() => setHeroStopped((value) => !value)}
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  {heroStopped ? <path d="M8 5.5v13l10.5-6.5z" /> : <path d="M8 5h3v14H8zM13 5h3v14h-3z" />}
+                </svg>
+              </button>
             </div>
             <p className={s.srOnly} aria-live="polite">
               {`${heroSets[heroPhonesScope].scope}: ${heroPhones[activeHeroPhone].alt}`}
