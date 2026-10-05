@@ -464,6 +464,18 @@ function LoopOrbit({
     syncReduced();
     query.addEventListener('change', syncReduced);
 
+    // A chip deeper than --orbit-fade-to is fully faded (see the CSS); it must
+    // not catch taps over the phone either. The threshold changes with the
+    // breakpoint, so it is read again on resize.
+    let fadeTo = Number.NaN;
+    const readFadeTo = () => {
+      if (!stageRef.current) return;
+      fadeTo = Number.parseFloat(
+        getComputedStyle(stageRef.current).getPropertyValue('--orbit-fade-to'),
+      );
+    };
+    window.addEventListener('resize', readFadeTo);
+
     // The loop runs only while the ring is on screen and the tab is visible.
     let frame = 0;
     let previous = performance.now();
@@ -471,6 +483,7 @@ function LoopOrbit({
     const running = () => onScreen && document.visibilityState === 'visible';
     const start = () => {
       if (frame || !running()) return;
+      readFadeTo();
       previous = performance.now();
       frame = requestAnimationFrame(tick);
     };
@@ -504,6 +517,11 @@ function LoopOrbit({
       // Only a custom property on the spinning plane changes: the ring and the
       // chips turn by transform, nothing is laid out again.
       spinRef.current?.style.setProperty('--orbit-rot', `${m.rotation.toFixed(2)}deg`);
+      chipRefs.current.forEach((chip, index) => {
+        if (!chip) return;
+        const far = Math.cos(((orbitAngle(index) + m.rotation) * Math.PI) / 180) >= fadeTo;
+        if (chip.hasAttribute('data-far') !== far) chip.toggleAttribute('data-far', far);
+      });
       frame = running() ? requestAnimationFrame(tick) : 0;
     };
     const observer = new IntersectionObserver(([entry]) => {
@@ -518,6 +536,7 @@ function LoopOrbit({
       stop();
       observer.disconnect();
       document.removeEventListener('visibilitychange', onVisibility);
+      window.removeEventListener('resize', readFadeTo);
       query.removeEventListener('change', syncReduced);
     };
   }, []);
