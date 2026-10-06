@@ -2752,6 +2752,17 @@
   }
 }
 
+/* The smallest phones keep the icon and both stores, nothing else. */
+@media (max-width: 360px) {
+  .storeDockText {
+    display: none;
+  }
+
+  .storeDock .storeBtn {
+    padding: 6px 8px;
+  }
+}
+
 @media (max-width: 720px) and (prefers-reduced-motion: reduce) {
   .storeDock {
     transition: opacity 0.2s ease;
