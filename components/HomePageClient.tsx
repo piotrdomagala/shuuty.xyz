@@ -1557,7 +1557,14 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
           </div>
         </section>
 
-        <div className={s.storeDock} data-shown={dockShown ? '' : undefined} aria-hidden={!dockShown}>
+        {/* The section bar slides up from the same edge when the reader scrolls
+            back, so the dock steps aside while it is there. Hidden, the dock is
+            inert: its store links leave the tab order too. */}
+        <div
+          className={s.storeDock}
+          data-shown={dockShown && !showMobileNav ? '' : undefined}
+          inert={!(dockShown && !showMobileNav)}
+        >
           <span className={s.storeDockBrand}>
             <Image src="/images/brand/shuuty-app-icon.png" alt="" width={36} height={36} />
             <span className={s.storeDockText}>
