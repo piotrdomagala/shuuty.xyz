@@ -52,7 +52,7 @@ type IconName =
   | 'task'
   | 'work';
 
-type StorePlacement = 'hero' | 'download';
+type StorePlacement = 'hero' | 'download' | 'dock';
 type ScreenCopy = Readonly<{ media: string; alt: string }>;
 type Screen = ProductMediaPlacement & Readonly<{ alt: string }>;
 
@@ -778,6 +778,28 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
   // Focus inside the hero holds it too.
   const heroFocus = useRef(false);
   const heroScopesRef = useRef<HTMLSpanElement | null>(null);
+  const heroActionsRef = useRef<HTMLDivElement | null>(null);
+  const downloadRef = useRef<HTMLElement | null>(null);
+  // The dock comes up once the hero's store buttons have scrolled away and
+  // steps aside again at the closing download section, which has its own.
+  const [dockShown, setDockShown] = useState(false);
+  useEffect(() => {
+    const actions = heroActionsRef.current;
+    const download = downloadRef.current;
+    if (!actions || !download || typeof IntersectionObserver === 'undefined') return undefined;
+    const seen = new Map<Element, boolean>([
+      [actions, true],
+      [download, false],
+    ]);
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) seen.set(entry.target, entry.isIntersecting);
+      const actionsGone = !seen.get(actions) && actions.getBoundingClientRect().bottom < 0;
+      setDockShown(actionsGone && !seen.get(download));
+    });
+    observer.observe(actions);
+    observer.observe(download);
+    return () => observer.disconnect();
+  }, []);
   const heroVisualRef = useRef<HTMLDivElement | null>(null);
   const [activeStep, setActiveStep] = useState<string | null>(null);
   const [loopStep, setLoopStep] = useState<number | null>(null);
@@ -1232,7 +1254,6 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
             active={heroScope}
           />
           <div className={s.heroCopy}>
-            <span className={s.eyebrow}><span className={s.statusDot} />{c.hero.badge}</span>
             <h1 className={s.heroTitle}>
               {c.hero.title}{' '}
               <span className={s.srOnly}>{c.hero.accent}</span>
@@ -1264,12 +1285,25 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
               </span>
               <span className={s.heroScopesStill} aria-hidden="true">{c.hero.accent}</span>
             </h1>
-            <p className={s.heroLead}>{c.hero.sub}</p>
-            <div className={s.heroActions}>
+            <p className={s.heroLead}>{c.hero.lead}</p>
+            <div ref={heroActionsRef} className={s.heroActions}>
               <StoreButtons copy={c.store} language={lang} placement="hero" />
-              <a href="#how-it-works" className={s.textCta}>
-                {c.hero.secondaryCta}<Icon name="arrow" />
-              </a>
+              {/* On a computer nobody installs a phone app: a code takes the
+                  page straight to the phone, where both stores wait. */}
+              <div className={s.heroQr} tabIndex={0} title={`${c.hero.qr} ${c.hero.qrNote}`}>
+                <Image
+                  src={`/images/qr/shuuty-${lang}.svg`}
+                  alt=""
+                  width={46}
+                  height={46}
+                  className={s.heroQrCode}
+                  unoptimized
+                />
+                <span className={s.heroQrText}>
+                  <strong>{c.hero.qr}</strong>
+                  <span>{c.hero.qrNote}</span>
+                </span>
+              </div>
             </div>
           </div>
 
@@ -1379,6 +1413,10 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
               {`${heroSets[heroPhonesScope].scope}: ${heroPhones[activeHeroPhone].alt}`}
             </p>
           </div>
+
+          <a href="#how-it-works" className={s.heroScrollCue} aria-label={c.hero.secondaryCta}>
+            <Icon name="arrow" />
+          </a>
 
           <ol className={s.heroSteps} aria-label={c.how.heading}>
             {navItems.map((item, index) => (
@@ -1519,7 +1557,18 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
           </div>
         </section>
 
-        <section id="download" className={`${s.cta} ${s.reveal}`} data-reveal>
+        <div className={s.storeDock} data-shown={dockShown ? '' : undefined} aria-hidden={!dockShown}>
+          <span className={s.storeDockBrand}>
+            <Image src="/images/brand/shuuty-app-icon.png" alt="" width={36} height={36} />
+            <span className={s.storeDockText}>
+              <strong>Shuuty</strong>
+              <span>{c.hero.dock}</span>
+            </span>
+          </span>
+          <StoreButtons copy={c.store} language={lang} placement="dock" />
+        </div>
+
+        <section ref={downloadRef} id="download" className={`${s.cta} ${s.reveal}`} data-reveal>
           <div className={s.ctaGlow} aria-hidden />
           <div className={s.ctaInner}>
             <span className={s.sectionLabel}>{c.cta.eyebrow}</span>

@@ -2032,6 +2032,86 @@
   }
 }
 
+/* A computer gets a code to scan next to the stores; a phone does not. It
+   is as tall as the store buttons and grows when the pointer comes to it,
+   so it can be scanned without crowding the line. */
+.heroQr {
+  position: relative;
+  min-height: 56px;
+  padding: 4px 14px 4px 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  background: var(--bg-raised);
+  cursor: default;
+}
+
+.heroQrCode {
+  width: 46px;
+  height: 46px;
+  border-radius: 9px;
+  background: #fff;
+  position: relative;
+  transform-origin: left bottom;
+  transition:
+    transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.35s ease;
+}
+
+.heroQr:hover .heroQrCode,
+.heroQr:focus-within .heroQrCode {
+  transform: scale(3);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.45);
+  z-index: 2;
+}
+
+.heroQrText {
+  display: grid;
+  gap: 1px;
+  color: var(--text-secondary);
+  font-size: 0.74rem;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.heroQrText strong {
+  color: var(--text);
+  font-size: 0.82rem;
+}
+
+@media not ((hover: hover) and (pointer: fine)) {
+  .heroQr {
+    display: none;
+  }
+}
+
+/* Where the copy column is narrow the code stands alone beside the stores. */
+@media (max-width: 1180px) {
+  .heroQr {
+    padding-right: 4px;
+  }
+
+  .heroQrText {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+}
+
+/* A quiet arrow under the phones in place of the text link. */
+.heroScrollCue {
+  display: none;
+}
+
+/* Both stores at the bottom of a phone screen once the hero buttons are gone. */
+.storeDock {
+  display: none;
+}
+
 @media (max-width: 1120px) {
   .nav {
     gap: 18px;
@@ -2546,6 +2626,136 @@
     color: var(--accent-ink);
     background: var(--gold);
     box-shadow: 0 6px 16px rgba(var(--gold-rgb), 0.3);
+  }
+}
+
+@media (max-width: 720px) {
+  .heroQr {
+    display: none;
+  }
+
+  .heroScrollCue {
+    grid-area: steps;
+    justify-self: center;
+    align-self: start;
+    margin-top: -18px;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--border);
+    border-radius: var(--r-full);
+    color: var(--text-secondary);
+    background: var(--bg-raised);
+  }
+
+  .heroScrollCue svg {
+    width: 16px;
+    height: 16px;
+    transform: rotate(90deg);
+  }
+
+  .storeDock {
+    position: fixed;
+    right: 10px;
+    bottom: max(10px, env(safe-area-inset-bottom));
+    left: 10px;
+    z-index: 40;
+    padding: 8px 8px 8px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    background: var(--bg-raised);
+    background: color-mix(in srgb, var(--bg-raised) 94%, transparent);
+    backdrop-filter: blur(20px) saturate(1.2);
+    -webkit-backdrop-filter: blur(20px) saturate(1.2);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+    opacity: 0;
+    transform: translateY(calc(100% + 24px));
+    pointer-events: none;
+    transition:
+      opacity 0.3s ease,
+      transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .storeDock[data-shown] {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+
+  .storeDockBrand {
+    min-width: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .storeDockBrand img {
+    width: 36px;
+    height: 36px;
+    flex: none;
+    border-radius: 10px;
+  }
+
+  .storeDockText {
+    min-width: 0;
+    display: grid;
+    line-height: 1.2;
+  }
+
+  .storeDockText strong {
+    font-size: 0.9rem;
+  }
+
+  .storeDockText span {
+    overflow: hidden;
+    color: var(--text-secondary);
+    font-size: 0.72rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .storeDock .storeRow {
+    flex-wrap: nowrap;
+    gap: 6px;
+  }
+
+  .storeDock .storeBtn {
+    min-height: 44px;
+    padding: 6px 10px;
+    gap: 6px;
+  }
+
+  .storeDock .storeBtnSmall {
+    display: none;
+  }
+
+  .storeDock .storeBtnName {
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+
+  .storeDock .storeSvg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* A narrow phone keeps the name and both stores; the call to action is the buttons. */
+@media (max-width: 420px) {
+  .storeDockText span {
+    display: none;
+  }
+}
+
+@media (max-width: 720px) and (prefers-reduced-motion: reduce) {
+  .storeDock {
+    transition: opacity 0.2s ease;
+    transform: none;
   }
 }
 

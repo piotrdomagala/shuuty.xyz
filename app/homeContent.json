@@ -20,6 +20,10 @@
       "title": "Tasks, plans and reservations",
       "accent": "on your own, with friends and in groups",
       "sub": "Plan your own things, share a task with friends or run a group with a calendar, reservations and chat - all in one app.",
+      "lead": "Your private plan, tasks and meetups with friends, and a group shaped around your needs - in one app.",
+      "qr": "Scan with your phone",
+      "qrNote": "and get the app",
+      "dock": "Get the app",
       "secondaryCta": "See how it works",
       "scopeSets": [
         {
@@ -361,6 +365,10 @@
       "title": "Zadania, terminy i rezerwacje",
       "accent": "prywatnie, ze znajomymi i w grupach",
       "sub": "Zaplanuj własne sprawy, podziel się zadaniem ze znajomymi albo prowadź grupę z kalendarzem, rezerwacjami i czatem - wszystko w jednej aplikacji.",
+      "lead": "Twój prywatny plan, zadania i spotkania ze znajomymi oraz grupa dopasowana do Twoich potrzeb - w jednej aplikacji.",
+      "qr": "Zeskanuj telefonem",
+      "qrNote": "i pobierz aplikację",
+      "dock": "Pobierz aplikację",
       "secondaryCta": "Zobacz, jak to działa",
       "scopeSets": [
         {
@@ -702,6 +710,10 @@
       "title": "Oppgaver, avtaler og reservasjoner",
       "accent": "for deg selv, med venner og i grupper",
       "sub": "Planlegg egne ting, del en oppgave med venner eller driv en gruppe med kalender, reservasjoner og chat - alt i én app.",
+      "lead": "Din private plan, oppgaver og møter med venner, og en gruppe tilpasset dine behov - i én app.",
+      "qr": "Skann med telefonen",
+      "qrNote": "og last ned appen",
+      "dock": "Last ned appen",
       "secondaryCta": "Se hvordan det fungerer",
       "scopeSets": [
         {
