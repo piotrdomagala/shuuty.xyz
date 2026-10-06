@@ -794,7 +794,10 @@ export default function HomePageClient({ initialLanguage }: { initialLanguage: L
     const observer = new IntersectionObserver((entries) => {
       for (const entry of entries) seen.set(entry.target, entry.isIntersecting);
       const actionsGone = !seen.get(actions) && actions.getBoundingClientRect().bottom < 0;
-      setDockShown(actionsGone && !seen.get(download));
+      // Reached or already passed (a short landscape screen can scroll the
+      // whole section away above the footer): the dock stays down either way.
+      const downloadReached = seen.get(download) || download.getBoundingClientRect().top < window.innerHeight;
+      setDockShown(actionsGone && !downloadReached);
     });
     observer.observe(actions);
     observer.observe(download);
