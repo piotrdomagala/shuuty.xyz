@@ -1,6 +1,6 @@
 # Privacy Policy of the Shuuty Mobile Application
 
-Last updated: September 27, 2026
+Last updated: October 17, 2026
 
 ## 1. Controller and contact details
 The personal data controller is **Shuuty Prosta Spółka Akcyjna**, ul. Południowa 13, 32-353 Trzyciąż, Poland, entered in the National Court Register under **KRS 0000947279**, tax identification number (NIP) **6372215912**, and statistical number (REGON) **52098153800000** (hereinafter “Shuuty,” “we,” or the “Controller”).
@@ -16,6 +16,7 @@ Depending on the features selected, we may process:
 - account and sign-in data: email address, user identifier, username, display name, password hash, or an identifier associated with a Google, Apple, or Meta/Facebook account; Shuuty does not store a password in plain text;
 - registration and profile data such as date of birth, gender, language, time zone, nationality, interests, and profile photo;
 - content created or shared in the Application, including tasks, messages, reactions, meetings, groups, dates, locations, photos, and other media;
+- document attachments, including their contents, file names, types, sizes, and text extracted from their contents;
 - voice recordings, transcripts, queries, and limited context submitted to voice or artificial intelligence features when the user selects such a feature;
 - location information provided by the user or obtained with device-level permission for a task, meeting, group, map, or search;
 - the content of support requests and correspondence.
@@ -49,8 +50,10 @@ We disclose data only to the extent required for the relevant purpose:
 - **Expo**, Apple Push Notification service, and Firebase Cloud Messaging to deliver push notifications;
 - **Brevo** to send transactional messages such as email verification and password resets;
 - **Geoapify** and **Google Maps** for place search, geocoding, and map display when the user uses location features;
-- **Cloudflare R2** and **Cloudinary** to store, process, and deliver photos and other media;
+- **Cloudflare R2** to store and deliver photos, other media, and document attachments;
+- **Cloudinary** to store, process, and deliver photos and other media;
 - infrastructure providers, including **Railway** for the backend, **Neon** for the database, and **GitHub Pages** for the public Shuuty website;
+- **OVH sp. z o.o. (OVHcloud)** as a processor acting on Shuuty's behalf, to provide a server in Gravelines, France (EU), where Shuuty validates and sanitizes document attachments, scans them for malware, and extracts their text;
 - **GoatCounter** to keep aggregate visit statistics for the public Shuuty website, based on Shuuty's legitimate interest in understanding where visitors come from and whether the website helps them find the Application (Article 6(1)(f) GDPR). GoatCounter does not use cookies and stores nothing on the device; it receives the visited page address, the referring page address, campaign parameters, browser and system type, browser language, screen width, and a country derived from the IP address, which is not stored. Data is kept only in aggregate form, on servers in the European Union. Account verification and password reset pages are not counted;
 - professional advisers, public authorities, courts, or law enforcement where required to protect rights or comply with law.
 

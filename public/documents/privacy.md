@@ -1,6 +1,6 @@
 # Polityka prywatności aplikacji mobilnej Shuuty
 
-Ostatnia aktualizacja: 27 września 2026 r.
+Ostatnia aktualizacja: 17 października 2026 r.
 
 ## 1. Administrator i dane kontaktowe
 Administratorem danych osobowych jest **Shuuty Prosta Spółka Akcyjna**, ul. Południowa 13, 32-353 Trzyciąż, Polska, wpisana do Krajowego Rejestru Sądowego pod numerem **KRS 0000947279**, NIP **6372215912**, REGON **52098153800000** (dalej „Shuuty”, „my” lub „Administrator”).
@@ -16,6 +16,7 @@ Zależnie od wybranych funkcji możemy przetwarzać:
 - dane konta i logowania: adres e-mail, identyfikator użytkownika, nazwa użytkownika, nazwa wyświetlana, skrót hasła albo identyfikator konta Google, Apple lub Meta/Facebook; Shuuty nie przechowuje hasła w postaci jawnej;
 - dane podawane podczas rejestracji i w profilu, takie jak data urodzenia, płeć, język, strefa czasowa, narodowość, zainteresowania i zdjęcie profilowe;
 - treści tworzone lub udostępniane w Aplikacji, w tym zadania, wiadomości, reakcje, spotkania, grupy, terminy, lokalizacje, zdjęcia i inne multimedia;
+- załączniki dokumentowe, w tym ich treść, nazwę pliku, typ, rozmiar oraz tekst wyodrębniony z treści;
 - nagrania głosowe, transkrypcje, zapytania i ograniczony kontekst przekazywany do funkcji głosowych lub wykorzystujących sztuczną inteligencję, gdy użytkownik wybiera taką funkcję;
 - dane lokalizacyjne podane przez użytkownika lub uzyskane za zgodą systemową urządzenia dla zadania, spotkania, grupy, mapy albo wyszukiwania;
 - treść zgłoszeń i korespondencji z pomocą techniczną.
@@ -49,8 +50,10 @@ Dane przekazujemy wyłącznie w zakresie potrzebnym do danego celu:
 - **Expo**, Apple Push Notification service i Firebase Cloud Messaging w celu dostarczania powiadomień push;
 - **Brevo** w celu wysyłania wiadomości transakcyjnych, takich jak weryfikacja adresu e-mail i reset hasła;
 - **Geoapify** i **Google Maps** w celu wyszukiwania miejsc, geokodowania i wyświetlania map, gdy użytkownik korzysta z funkcji lokalizacyjnych;
-- **Cloudflare R2** i **Cloudinary** w celu przechowywania, przetwarzania i dostarczania zdjęć oraz innych multimediów;
+- **Cloudflare R2** w celu przechowywania i dostarczania zdjęć, innych multimediów oraz załączników dokumentowych;
+- **Cloudinary** w celu przechowywania, przetwarzania i dostarczania zdjęć oraz innych multimediów;
 - dostawcom infrastruktury, w tym **Railway** dla backendu, **Neon** dla bazy danych i **GitHub Pages** dla publicznej strony Shuuty;
+- **OVH sp. z o.o. (OVHcloud)** jako podmiotowi przetwarzającemu na zlecenie Shuuty, w celu zapewnienia serwera w Gravelines we Francji (UE), na którym Shuuty weryfikuje i zabezpiecza załączniki dokumentowe, skanuje je pod kątem złośliwego oprogramowania oraz wyodrębnia ich tekst;
 - **GoatCounter** w celu prowadzenia zbiorczych statystyk odwiedzin publicznej strony Shuuty, na podstawie prawnie uzasadnionego interesu Shuuty w ocenie, skąd przychodzą odwiedzający i czy strona pomaga im znaleźć Aplikację (art. 6 ust. 1 lit. f RODO). GoatCounter nie używa plików cookie i nie zapisuje niczego na urządzeniu; otrzymuje adres odwiedzanej strony, adres strony odsyłającej, parametry kampanii, typ przeglądarki i systemu, język przeglądarki, szerokość ekranu oraz kraj ustalony z adresu IP, który nie jest przechowywany. Dane są przechowywane wyłącznie w postaci zbiorczej, na serwerach w Unii Europejskiej. Strony służące do weryfikacji konta i resetu hasła nie są zliczane;
 - profesjonalnym doradcom, organom publicznym, sądom lub organom ścigania, gdy jest to niezbędne do ochrony praw albo wymagane przez prawo.
 
