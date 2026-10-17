@@ -178,11 +178,13 @@ const providers = [
   'Cloudinary',
   'Railway',
   'Neon',
+  'OVH sp. z o.o. (OVHcloud)',
   'GitHub Pages',
   'GoatCounter',
 ];
 requireText('privacyPl', [
   ...providers,
+  'załączniki dokumentowe',
   'wybrany motyw (jasny lub ciemny) w pamięci przeglądarki (localStorage)',
   'art. 6 ust. 1 lit. b RODO',
   'art. 6 ust. 1 lit. f RODO',
@@ -205,6 +207,7 @@ requireText('privacyPl', [
 ]);
 requireText('privacyEn', [
   ...providers,
+  'document attachments',
   'the selected theme (light or dark) in browser storage (localStorage)',
   'Article 6(1)(b) GDPR',
   'Article 6(1)(f) GDPR',
