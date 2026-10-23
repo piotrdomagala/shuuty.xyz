@@ -141,6 +141,12 @@ test('the landing tells one four-step story in every language', async () => {
   // The two places waiting stay visible, small and soft, behind the one in front.
   assert.match(heroComponent, /data-place=\{index === heroWordScope \? 'front'/);
   assert.match(heroCss, /\.heroScope \{[^}]*opacity: 0\.3;/);
+  // A change given up on before the words swapped lets them show again; without
+  // this the headline keeps [data-fading] and the word in front stays blank.
+  assert.match(
+    heroComponent,
+    /if \(heroWordScope === heroScope\) \{\s*setHeroWordsFading\(false\);\s*return undefined;\s*\}/,
+  );
   assert.equal(content.pl.how.heading, 'Jedna aplikacja, cztery kroki');
   assert.equal(content.en.how.heading, 'One app, four steps');
   assert.equal(content.pl.uses.heading, 'Do czego ludzie używają Shuuty');
